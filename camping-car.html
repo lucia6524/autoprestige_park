@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camping-car — AutoPrestige</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_rv">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1527786356703-4b100091cd2c?w=1920&q=80"
+          alt="Camping-car"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Camping-car</span>
+        <h1>Camping-cars & Fourgons</h1>
+        <p>
+          Découvrez notre sélection de camping-cars et vans aménagés.
+          Contactez-nous pour connaître les disponibilités actuelles.
+        </p>
+        <div style="margin-top: 30px">
+          <a href="contact.html" class="btn btn-primary btn-lg"
+            >Nous contacter</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom" style="border: none; padding: 40px 0">
+          <span>© 2026 AutoPrestige</span>
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

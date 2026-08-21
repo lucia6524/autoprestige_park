@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avis clients — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Découvrez les avis de nos clients satisfaits. Note moyenne 4.9/5."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_reviews">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&q=80"
+          alt="Avis clients"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Avis clients</span>
+        <h1>Ce que disent nos clients</h1>
+        <p style="font-size: 1.4rem; margin-top: 12px">
+          4.9 ★★★★★
+          <span style="color: var(--text-muted); font-size: 1rem"
+            >(30 avis)</span
+          >
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 40px 0 80px">
+      <div class="container">
+        <div class="stats-grid" style="margin-bottom: 50px">
+          <div class="stat-item">
+            <strong>4.9★</strong><span>Note moyenne</span>
+          </div>
+          <div class="stat-item">
+            <strong>30</strong><span>Avis vérifiés</span>
+          </div>
+          <div class="stat-item">
+            <strong>98%</strong><span>Clients satisfaits</span>
+          </div>
+        </div>
+
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">MH</div>
+              <div>
+                <strong>Marcus Hoffmann</strong>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              « Excellent service ! J’ai trouvé ma BMW idéale, financement au
+              meilleur taux. Je recommande. »
+            </p>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">SB</div>
+              <div>
+                <strong>Sophie Becker</strong>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              « Super concessionnaire ! Très professionnel, large choix, équipe
+              disponible et à l’écoute. »
+            </p>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">TR</div>
+              <div>
+                <strong>Thomas Reinhardt</strong>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              « Vendeur honnête et fiable. Voiture de qualité, prix juste,
+              livraison rapide. Parfait. »
+            </p>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">AM</div>
+              <div>
+                <strong>Anna Müller</strong>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              « Équipe très compétente. Ils ont trouvé la Volkswagen parfaite
+              pour moi. Merci ! »
+            </p>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">LR</div>
+              <div>
+                <strong>Luca Rossi</strong>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              « Incroyable expérience. J’ai acheté une Audi A4, tout s’est
+              parfaitement passé. Livraison impeccable. »
+            </p>
+          </div>
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">CD</div>
+              <div>
+                <strong>Camille Dupont</strong>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              « Équipe formidable, prix compétitifs. Ma Renault Clio est arrivée
+              en parfait état. Je suis ravie ! »
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-form">
+        <h3 style="margin-bottom: 8px">Donnez votre avis</h3>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+          "
+        >
+          Partagez votre expérience avec Auto-prestige.
+        </p>
+        <form id="review-form">
+          <div class="star-rating" aria-label="Note">
+            <span data-v="1">★</span><span data-v="2">★</span
+            ><span data-v="3">★</span><span data-v="4">★</span
+            ><span data-v="5">★</span>
+          </div>
+          <div class="form-group">
+            <label>Votre nom</label>
+            <input type="text" name="name" placeholder="Jean Dupont" required />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              placeholder="jean@email.com"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label>Votre avis</label>
+            <textarea
+              name="message"
+              rows="4"
+              placeholder="Racontez votre expérience..."
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            style="width: 100%"
+          >
+            Envoyer mon avis
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo"
+              ><img src="Logo.svg" alt="Auto-prestige" />Auto-<span
+                >prestige</span
+              ></a
+            >
+            <p>Votre partenaire de confiance.</p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a
+              ><a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a
+              ><a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a
+              ><a href="livraison.html" data-i18n="nav.delivery">Livraison</a
+              ><a href="entretien.html" data-i18n="nav.maintenance"
+                >Entretien</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a
+              ><a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 AutoPrestige</span
+          ><span
+            ><a href="mentions-legales.html" data-i18n="footer.legal"
+              >Mentions légales</a
+            >
+            ·
+            <a href="mentions-legales.html#cgv" data-i18n="footer.cgv"
+              >CGV</a
+            ></span
+          >
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,4733 @@
+// ===== VEHICLE DATA =====
+const vehicles = [
+  {
+    "id": 1,
+    "brand": "Mercedes-Benz",
+    "model": "Classe E Cabriolet",
+    "year": 2010,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 100000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Cabriolet",
+    "power": 292,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-0-inbound868457110491746255.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-0-inbound868457110491746255.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-1-inbound2183759862360061393.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-2-inbound3177537155436851480.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-3-inbound3854678053499524392.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-4-inbound4100730620448397159.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-5-inbound5142274089736407784.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-6-inbound5344570293058081911.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-7-inbound5968510347354464045.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-8-inbound6317394837955523768.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-9-inbound6674652249616721729.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-10-inbound8339741580231969049.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E Cabriolet\nVersion : E 350 CGI\nAnnée : 04/2010\nKilométrage : 100 000 km\nMoteur : V6 essence 3.5 L\nCylindrée : 3 498 cm³\nPuissance : 292 ch / 215 kW\nBoîte de vitesses : automatique 7G-Tronic, 7 rapports\nTransmission : propulsion\nCarrosserie : Cabriolet, 2 portes\nPlaces : 4\nÉnergie : Essence\n\nFinition/version : E 350 CGI\n\nOrigine : Allemagne 🇩🇪\n\nCouleur extérieure : non précisée\n\nIntérieur : cuir\n\nÉquipements mentionnés : cuir, boîte automatique\n\nPrix annoncé : 3 000 €"
+  },
+  {
+    "id": 2,
+    "brand": "Renault",
+    "model": "Clio",
+    "year": 2023,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 5000,
+    "price": 6500,
+    "monthly": 126,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 90,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381631-0-inbound8280021268527145.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381631-0-inbound8280021268527145.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-1-inbound807276647046259240.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-2-inbound2150444105323193192.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-3-inbound2786425049139070960.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-4-inbound3136580469713355532.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-5-inbound3345648806511515464.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-6-inbound3820296350816922154.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-7-inbound4495681617586841133.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-8-inbound6489565453475160492.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-9-inbound6738111271329787427.jpg"
+    ],
+    "description": "🚗 Renault Clio TCe 90 Esprit Alpine\nPrix annoncé : 3 500 €\nModèle : Renault Clio\nFinition : Esprit Alpine\nMotorisation : TCe 90 essence\nPuissance : 90/91 ch\nBoîte : Manuelle\nÉtat : Neuve\nGarantie : 24 mois"
+  },
+  {
+    "id": 3,
+    "brand": "Renault",
+    "model": "Clio",
+    "year": 2026,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 120000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 90,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-0-inbound476043994225251855.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-0-inbound476043994225251855.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-1-inbound628639345872404363.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-2-inbound1201984677334523087.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-3-inbound1409308222435983649.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-4-inbound1683024612036161660.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-5-inbound2004964419943532689.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-6-inbound2059218683324303148.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-7-inbound2391834404227995805.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-8-inbound2948965903962607114.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-9-inbound3843446140664604991.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-10-inbound5193173465275663227.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-11-inbound5839706040476813595.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-12-inbound5843957094590228532.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-13-inbound7182712818227242024.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-14-inbound8450303765277078848.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-15-inbound8680553527956837577.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-16-inbound8759217145206103300.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-17-inbound8969221325961447842.jpg"
+    ],
+    "description": "🚗 Renault Clio 1.5 dCi 90\n\nPrix annoncé : 3 000 €\n\nModèle : Renault Clio\n\nMoteur : 1.5 dCi\n\nPuissance : 90 ch\n\nAnnée : 2015\n\nKilométrage : 120 000 km certifiés\n\nCarburant : Diesel\n\nBoîte : Manuelle\n\nÉquipement : Régulateur de vitesse\n\nHomologation UE : jusqu'en 08/2026\n"
+  },
+  {
+    "id": 4,
+    "brand": "BMW",
+    "model": "M135i xDrive",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 83900,
+    "price": 10500,
+    "monthly": 203,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 306,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779877-0-inbound1004233213278819071.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779877-0-inbound1004233213278819071.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779878-1-inbound1418021272673966923.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779878-2-inbound2142505848726706385.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-3-inbound3216837854992255303.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-4-inbound3600633628680632862.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-5-inbound3873097375695774824.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-6-inbound4825216457754141513.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-7-inbound4889079040388346696.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-8-inbound4903196045973918989.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-9-inbound5483437621313130005.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-10-inbound5556376489485938928.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-11-inbound8230268632265748531.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-12-inbound8952747973372602130.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-13-inbound9133421003451547380.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-14-inbound9212244572068724741.jpg"
+    ],
+    "description": "🚗 BMW M135i xDrive M Performance\n\nPrix annoncé : 7 500 €\n\nAnnée / 1ère immatriculation : 10/2020\n\nKilométrage : 83 900 km\n\nMotorisation : Essence\n\nPuissance : 306 ch (225 kW)\n\nBoîte : Automatique\n\nTransmission : xDrive 4×4\n\nFinition : M Performance\n\nÉtat : Occasion, non accidentée\n\nCatégorie : Berline"
+  },
+  {
+    "id": 5,
+    "brand": "Mercedes-Benz",
+    "model": "AMG GLE 53 4MATIC+ Coupé",
+    "year": 2023,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 48000,
+    "price": 19000,
+    "monthly": 368,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 429,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-0-inbound26162312889995650.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-0-inbound26162312889995650.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-1-inbound954097721969387926.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-2-inbound1024476030402263098.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-3-inbound1326179215740039108.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-4-inbound1607543276353622561.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-5-inbound1756274958811686057.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-6-inbound2304273204717520663.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-7-inbound3453879722637445003.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-8-inbound3684614432092177187.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-9-inbound3758985285029820973.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-10-inbound3778080446992003641.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417129-11-inbound4411889143587898999.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-12-inbound4413729893072422405.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-13-inbound4418277157612900503.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-14-inbound5290037398253512307.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-15-inbound6539520131567033631.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-16-inbound8097870240710738211.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-17-inbound8239785604934928015.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-18-inbound8624863818187198286.jpg"
+    ],
+    "description": "Marque : Mercedes-AMG\nModèle : GLE 53 4MATIC+ Coupé\nAnnée : 2022/2023\nMotorisation : Essence 3.0 L, 6 cylindres turbo + EQ Boost\nPuissance : environ 429 ch\nBoîte : Automatique AMG SPEEDSHIFT 9 rapports\nTransmission : 4MATIC+ – 4×4\nCarrosserie : SUV Coupé\nPrix : 16 000 €\nGarantie annoncée : 24 mois\nOrigine : Importation allemande 🇩🇪\n"
+  },
+  {
+    "id": 6,
+    "brand": "Ford",
+    "model": "Kuga 2.0 TDCi ST-Line",
+    "year": 2017,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 12,
+    "price": 9000,
+    "monthly": 174,
+    "type": "neuf",
+    "category": "SUV",
+    "power": 250,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989106-0-inbound559912862970748984.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989106-0-inbound559912862970748984.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-1-inbound954149133446668357.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-2-inbound1072691727275790986.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-3-inbound2760381198812887903.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-4-inbound3475059048342053666.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-5-inbound3493196475638324588.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-6-inbound3590497020271621606.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-7-inbound3853039676823741412.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-8-inbound4085559953648855936.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-9-inbound4256711730096046041.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-10-inbound4648375634657344646.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-11-inbound5245325502288480088.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-12-inbound5372230927003959510.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-13-inbound5625180743495076833.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-14-inbound6109127247635743606.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-15-inbound6255170142608715126.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-16-inbound8328500774877675052.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-17-inbound8635964491263997638.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-18-inbound9027146924494384007.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-19-inbound9098044146450514767.jpg"
+    ],
+    "description": "🚗 Ford Kuga 2.0 TDCi ST-Line\nPrix annoncé : 6000 €\nAnnée : 2017\nKilométrage : 120 000 km certifiés\nMoteur : 2.0 TDCi Diesel\nPuissance : 150 ch\nBoîte : Automatique\nFinition : ST-Line\nPlaces : 5\nPoids à vide : 1 641 kg\n\n"
+  },
+  {
+    "id": 7,
+    "brand": "BMW",
+    "model": "Série 1 120i",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 31786,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 184,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-0-57950.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-0-57950.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-1-57951.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-2-57952.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-3-57953.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-4-57954.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-5-57956.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-6-57957.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-7-57958.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-8-57959.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-9-57960.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-10-57961.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-11-57962.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-12-57963.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : Série 1 120i\nAnnée : 2018\nMotorisation : Essence\nPuissance : 184 ch\nBoîte : Automatique 8 rapports (BVA8)\nKilométrage : 31 786 km certifiés\nPrix : 4 000 €\nGarantie : 24 mois\nLivraison : À domicile annoncée."
+  },
+  {
+    "id": 8,
+    "brand": "Mercedes-Benz",
+    "model": "E 400 Cabriolet AMG",
+    "year": 2015,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 31350,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Cabriolet",
+    "power": 333,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-0-57936.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-0-57936.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-1-57937.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-2-57938.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-3-57939.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-4-57940.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-5-57941.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-6-57942.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-7-57943.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-8-57944.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068302-9-57945.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068303-10-57946.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068303-11-57947.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068303-12-57948.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068303-13-57949.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : E 400 Cabriolet AMG\nAnnée : 2015\nMotorisation : Essence\nPuissance : 333 ch\nBoîte : Automatique\nCarrosserie : Cabriolet\nKilométrage : 31 350 km\nPrix : 2500 €\nGarantie : 24 mois\nÉquipements mentionnés : Pack AMG, AirScarf, radio numérique DAB+, navigation, sellerie cuir et roue de secours."
+  },
+  {
+    "id": 9,
+    "brand": "Mercedes-Benz",
+    "model": "GLK 220 4MATIC",
+    "year": 2009,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 102000,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 170,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-0-57917.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-0-57917.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-1-57918.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-2-57919.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-3-57920.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-4-57921.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-5-57922.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-6-57923.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-7-57924.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-8-57925.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-9-57926.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-10-57927.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-11-57928.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-12-57929.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-13-57930.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-14-57931.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887568-15-57932.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887569-16-57933.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887569-17-57934.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887569-18-57935.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLK 220 4MATIC\nAnnée : 2009\nPremière immatriculation : 06/2009\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV / 4x4\nKilométrage : 102 000 km certifiés\nPrix : 2000 € TTC\nOrigine : Importation allemande 🇩🇪\nLivraison annoncée : 5 jours en Europe\nRemise annoncée : 15 % en cas de paiement intégral à la commande."
+  },
+  {
+    "id": 10,
+    "brand": "Audi",
+    "model": "RS Q3 2.5 TFSI",
+    "year": 2016,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 98000,
+    "price": 8600,
+    "monthly": 166,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 340,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-0-57904.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-0-57904.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-1-57905.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-2-57906.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-3-57907.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-4-57908.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-5-57909.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-6-57911.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-7-57912.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-8-57913.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-9-57914.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-10-57915.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-11-57916.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : RS Q3 2.5 TFSI\nAnnée : 2016\nMotorisation : Essence 2.5 TFSI\nPuissance : 340 ch\nBoîte : Automatique\nKilométrage : 98 000 km certifiés\nCarrosserie : SUV / Off-road\nPrix : 5 600 €\nTransmission : quattro (4×4)"
+  },
+  {
+    "id": 11,
+    "brand": "BMW",
+    "model": "Série 1 118d M Sport",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 113000,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-0-57895.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-0-57895.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-1-57896.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-2-57897.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-3-57898.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-4-57899.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-5-57900.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-6-57901.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-7-57902.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-8-57903.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : Série 1 118d M Sport\nAnnée : 2020\nMotorisation : Diesel 2.0 L\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : Traction avant\nKilométrage : 133 000 km certifiés\nFinition : M Sport\nÉquipement mentionné : Toit panoramique\nPrix : 4 000 €"
+  },
+  {
+    "id": 12,
+    "brand": "BMW",
+    "model": "X4 M40d xDrive",
+    "year": 2021,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 106100,
+    "price": 8900,
+    "monthly": 172,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 326,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-0-57885.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-0-57885.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-1-57886.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-2-57887.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-3-57888.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-4-57889.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-5-57890.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-6-57891.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-7-57892.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-8-57893.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-9-57894.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : X4 M40d xDrive\nAnnée : 2021\nMotorisation : Diesel 3.0\nPuissance : 326 ch (240 kW)\nBoîte : Automatique Sport\nTransmission : xDrive – 4×4\nCarrosserie : SUV Coupé\nKilométrage : 106 100 km\nNorme : Euro 6d-TEMP\nPlaces : 5\nCouleur : Blanc Alpinweiss III\nPropriétaires : 1\nPrix : 5 900 €"
+  },
+  {
+    "id": 13,
+    "brand": "Mercedes-Benz",
+    "model": "CLS 250 CDI AMG",
+    "year": 2011,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 283000,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 204,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-0-57875.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-0-57875.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-1-57876.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-2-57877.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-3-57878.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-4-57879.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-5-57880.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-6-57881.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-7-57882.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-8-57883.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-9-57884.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : CLS 250 CDI AMG\nAnnée : 2011\nMotorisation : Diesel 2.1 CDI\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Propulsion arrière (RWD)\nCarrosserie : Berline coupé\nKilométrage : 283 000 km\nPlaces : 4\nCouleur : Gris indium métallisé\nPrix : 2 000 €\nÉquipements : Pack AMG, toit ouvrant, phares xénon et sellerie cuir."
+  },
+  {
+    "id": 14,
+    "brand": "Mercedes-Benz",
+    "model": "Classe A 250 4MATIC AMG Line",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 45000,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 224,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-0-57854.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-0-57854.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-1-57855.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-2-57856.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-3-57857.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-4-57858.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-5-57859.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854648-6-57860.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-7-57861.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-8-57862.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-9-57863.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-10-57864.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-11-57865.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-12-57866.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-13-57867.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-14-57868.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-15-57869.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-16-57870.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-17-57871.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-18-57873.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-19-57874.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe A 250 4MATIC AMG Line\nAnnée : 2021\nKilométrage : 45 000 km certifiés\nMotorisation : Essence\nTransmission : 4MATIC – 4×4\nBoîte : Automatique 7G-DCT\nCarrosserie : Berline compacte\nPrix : 6 000 €"
+  },
+  {
+    "id": 15,
+    "brand": "Audi",
+    "model": "Q8 60 TFSI e quattro",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 57700,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 340,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-0-57830.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-0-57830.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-1-57831.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-2-57832.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-3-57833.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-4-57834.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-5-57835.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-6-57836.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-7-57837.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645928-8-57838.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-9-57839.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-10-57840.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-11-57841.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-12-57842.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-13-57843.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-14-57844.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-15-57845.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-16-57846.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-17-57851.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-18-57852.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-19-57853.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : Q8 60 TFSI e quattro\nAnnée : 2021\nMotorisation : Hybride rechargeable Essence/Électrique\nPuissance annoncée : 340 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nKilométrage : 57 700 km certifiés\nPrix : 8000 €\nOrigine : Allemagne 🇩🇪\nGarantie : 12 mois chez le concessionnaire\nÉtat : Véhicule non-fumeur\n\n"
+  },
+  {
+    "id": 16,
+    "brand": "Audi",
+    "model": "A4 2.0 TDI",
+    "year": 2012,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 164000,
+    "price": 6400,
+    "monthly": 124,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 143,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-0-57814.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-0-57814.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-1-57815.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-2-57816.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-3-57817.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-4-57818.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-5-57819.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-6-57820.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-7-57821.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-8-57822.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-9-57823.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-10-57824.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-11-57825.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-12-57826.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-13-57827.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-14-57828.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A4 2.0 TDI\nAnnée : 2012\nPremière immatriculation : 12/2012\nMotorisation : Diesel 2.0 L\nPuissance : 143 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 164 000 km certifiés\nPrix : 3 400 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nÉtat : Jamais accidenté\nServices annoncés : Véhicule contrôlé, documents fournis et plaques annoncées incluses.\n"
+  },
+  {
+    "id": 17,
+    "brand": "Peugeot",
+    "model": "208 1.2 VTi Active",
+    "year": 2013,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 114300,
+    "price": 4500,
+    "monthly": 87,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 82,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-0-57801.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-0-57801.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-1-57802.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-2-57803.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-3-57804.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-4-57805.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-5-57806.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-6-57807.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-7-57808.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-8-57809.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-9-57810.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-10-57811.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-11-57812.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-12-57813.jpg"
+    ],
+    "description": "Marque : Peugeot\nModèle : 208 1.2 VTi Active\nAnnée : 2013\nMotorisation : Essence 1.2 VTi\nPuissance : 82 ch\nBoîte : Automatique\nCarrosserie : Citadine\nKilométrage : 114 300 km\nPrix : 1 500 €\nVIN : VF3CCHMZ0DW071125\nHomologation UE annoncée : 02/2027\nOrigine : Importation allemande 🇩🇪\nGarantie annoncée : 24 mois\nLivraison annoncée : 5 jours"
+  },
+  {
+    "id": 18,
+    "brand": "SEAT",
+    "model": "Ateca FR",
+    "year": 2023,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 42000,
+    "price": 6800,
+    "monthly": 132,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354930-0-57787.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354930-0-57787.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354930-1-57788.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354930-2-57789.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354930-3-57790.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-4-57791.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-5-57792.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-6-57793.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-7-57794.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-8-57795.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-9-57796.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-10-57797.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-11-57798.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-12-57799.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-13-57800.jpg"
+    ],
+    "description": "Marque : SEAT\nModèle : Ateca FR\nAnnée : 2023\nMotorisation : Essence 1.5 TSI\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : SUV\nFinition : FR Full Option\nKilométrage : 42 000 km\nPrix : 3 800 €\n"
+  },
+  {
+    "id": 19,
+    "brand": "Mercedes-Benz",
+    "model": "GLA 200 Business",
+    "year": 2016,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 178000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 136,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074885-0-57768.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074885-0-57768.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-1-57769.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-2-57770.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-3-57771.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-4-57772.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-5-57773.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-6-57774.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-7-57775.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-8-57776.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-9-57777.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-10-57778.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-11-57779.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-12-57780.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-13-57781.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-14-57782.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-15-57783.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-16-57784.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-17-57785.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-18-57786.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLA 200 Business\nAnnée : 2016\nPremière immatriculation : 01/2016\nMotorisation : Diesel 2.0\nPuissance : 136 ch\nBoîte : Manuelle\nCarrosserie : SUV compact\nKilométrage : 178 000 km\nPrix : 2 500 €\nGarantie : 12 mois\n\nÉquipements principaux : intérieur cuir/tissu, bi-xénon, antibrouillards, climatisation, GPS, radar avant/arrière, USB, Isofix, ordinateur de bord, volant multifonction, limiteur de vitesse et commande vocale."
+  },
+  {
+    "id": 20,
+    "brand": "SEAT",
+    "model": "Arona 1.0 TSI",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 120000,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 116,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-0-57760.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-0-57760.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-1-57761.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-2-57762.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-3-57763.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-4-57764.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-5-57765.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-6-57766.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-7-57767.jpg"
+    ],
+    "description": "Marque : SEAT\nModèle : Arona 1.0 TSI\nAnnée : 2018\nMotorisation : Essence 1.0 TSI\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : SUV urbain / Crossover\nKilométrage : 120 000 km certifiés\nPrix : 4 000 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nÉtat : Jamais accidenté\nLivraison : Véhicule disponible sur commande\nServices annoncés : Documents et plaques inclus, véhicule contrôlé avant annonce, "
+  },
+  {
+    "id": 21,
+    "brand": "Volvo",
+    "model": "V40 Cross Country 1.6 D2",
+    "year": 2014,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 128054,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 114,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-0-57740.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-0-57740.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-1-57741.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-2-57742.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-3-57743.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-4-57744.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-5-57745.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-6-57746.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-7-57747.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-8-57748.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-9-57749.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-10-57750.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-11-57751.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-12-57752.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-13-57754.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-14-57755.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-15-57756.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-16-57757.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-17-57758.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-18-57759.jpg"
+    ],
+    "description": "Marque : Volvo\nModèle : V40 Cross Country 1.6 D2\nAnnée : 2014\nMotorisation : Diesel 1.6\nPuissance : 114 ch\nBoîte : Automatique\nCarrosserie : Crossover\nKilométrage : 128 054 km certifiés\nPrix : 2 500 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison annoncée : 5 jours"
+  },
+  {
+    "id": 22,
+    "brand": "Mercedes-Benz",
+    "model": "AMG GT 43 4MATIC+",
+    "year": 2022,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 18854,
+    "price": 23000,
+    "monthly": 445,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 367,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-0-57722.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-0-57722.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-1-57723.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-2-57724.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-3-57725.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-4-57726.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-5-57727.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-6-57728.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-7-57729.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-8-57730.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-9-57731.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-10-57732.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-11-57733.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-12-57734.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-13-57735.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-14-57736.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-15-57737.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-16-57738.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-17-57739.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : AMG GT 43 4MATIC+\nAnnée : 2022\nPremière immatriculation : 09/2022\nMotorisation : Essence\nPuissance : 367 ch (270 kW)\nBoîte : Automatique\nTransmission : 4MATIC+ – transmission intégrale\nCarrosserie : Sport/Coupé 4 portes\nKilométrage : 18 854 km\nPlaces : 4\nPrix : 20 000 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Occasion, non accidenté\nGarantie : 24 mois\nLivraison annoncée : 5 jours"
+  },
+  {
+    "id": 23,
+    "brand": "Mercedes-Benz",
+    "model": "A 180d AMG Line",
+    "year": 2025,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 3000,
+    "price": 9700,
+    "monthly": 188,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 116,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-0-57714.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-0-57714.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-1-57715.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-2-57716.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-3-57717.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-4-57718.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-5-57719.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-6-57720.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066691-7-57721.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : A 180d AMG Line\nAnnée : 2025\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : Compacte\nKilométrage : 3 000 km\nFinition : AMG Line\nPrix : 6 700 €\nÉtat : Quasi neuve\n\nÉquipements principaux : tableau de bord numérique, grand écran avec navigation, Apple CarPlay/Android Auto, caméra de recul, radars de stationnement, LED, jantes AMG, régulateur de vitesse, démarrage sans clé et sellerie premium."
+  },
+  {
+    "id": 24,
+    "brand": "Citroen",
+    "model": "C4 Cactus Shine",
+    "year": 2016,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 113959,
+    "price": 6500,
+    "monthly": 126,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 99,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-0-57687.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-0-57687.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-1-57688.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-2-57689.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-3-57690.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-4-57691.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-5-57692.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-6-57693.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-7-57694.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-8-57695.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-9-57696.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-10-57697.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-11-57698.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-12-57699.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-13-57701.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-14-57703.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-15-57704.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-16-57706.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-17-57707.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-18-57712.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-19-57713.jpg"
+    ],
+    "description": "Marque : Citroën\nModèle : C4 Cactus Shine\nAnnée : 2016\nMotorisation : Diesel\nPuissance : 99 ch\nBoîte : Automatique\nCarrosserie : SUV/Crossover\nKilométrage : 113 959 km certifiés\nPrix : 3 500 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nÉtat : Jamais accidenté\nÉquipements/services : Véhicule contrôlé, documents fournis, formalités d’importation et plaques annoncées incluses."
+  },
+  {
+    "id": 25,
+    "brand": "Citroen",
+    "model": "C3 HDi 70 Séduction",
+    "year": 2011,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 107000,
+    "price": 4000,
+    "monthly": 77,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 68,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699290-0-57677.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699290-0-57677.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-1-57678.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-2-57679.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-3-57680.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-4-57681.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-5-57682.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-6-57683.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-7-57684.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-8-57685.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-9-57686.jpg"
+    ],
+    "description": "Marque : Citroën\nModèle : C3 HDi 70 Séduction\nAnnée : 2011\nMotorisation : Diesel 1.4 HDi\nPuissance : 68 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 107 000 km\nPrix : 1 000 €\nVIN : VF7SC8HR0BA560638\nOrigine : Importation allemande 🇩🇪\nGarantie annoncée : 24 mois\nLivraison annoncée : 5 jours"
+  },
+  {
+    "id": 26,
+    "brand": "Mercedes-Benz",
+    "model": "A 180 1.6 AMG Style",
+    "year": 2014,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 144000,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 122,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-0-57656.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-0-57656.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-1-57657.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-2-57658.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-3-57659.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-4-57660.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-5-57661.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-6-57662.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-7-57663.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-8-57664.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-9-57665.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-10-57666.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-11-57667.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-12-57668.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-13-57669.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-14-57670.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-15-57671.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-16-57672.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : A 180 1.6 AMG Style\nAnnée : 2014\nMotorisation : Essence 1.6 L\nPuissance : 122 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nKilométrage : 144 000 km certifiés\nPrix : 5 000 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison annoncée : 7 jours\n"
+  },
+  {
+    "id": 27,
+    "brand": "Nissan",
+    "model": "X-Trail 1.6 dCi",
+    "year": 2026,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 190000,
+    "price": 5600,
+    "monthly": 108,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 130,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-0-57638.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-0-57638.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-1-57639.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-2-57640.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-3-57641.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-4-57642.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-5-57643.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-6-57644.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-7-57645.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-8-57646.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-9-57647.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-10-57648.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-11-57649.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-12-57650.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-13-57651.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-14-57652.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-15-57653.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-16-57654.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-17-57655.jpg"
+    ],
+    "description": "Marque : Nissan\nModèle : X-Trail 1.6 dCi\nAnnée : 2016\nMotorisation : Diesel 1.6\nPuissance : 130 ch\nBoîte : Manuelle\nCarrosserie : SUV\nKilométrage : 190 000 km certifiés\nPrix : 2 600 €"
+  },
+  {
+    "id": 28,
+    "brand": "Mercedes-Benz",
+    "model": "Classe E 200 Coupé AMG",
+    "year": 2017,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 88000,
+    "price": 6500,
+    "monthly": 126,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 184,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258647-0-57627.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258647-0-57627.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258648-1-57629.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258648-2-57630.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258648-3-57631.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258648-4-57632.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258648-5-57633.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258648-6-57634.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258649-7-57635.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258649-8-57636.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258649-9-57637.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 200 Coupé AMG\nAnnée : 2017\nMotorisation : Essence 2.0 L\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Coupé\nFinition : AMG\nKilométrage : 88 000 km\nPlaces : 4\nCouleur : Gris métallisé\nPrix : 6 500 €\nOrigine : Importation allemande 🇩🇪\nÉtat : Jamais accidenté\nGarantie : 24 mois\nTVA : Incluse\nLivraison annoncée : 5 jours\n\nÉquipements principaux : Pack AMG, sièges multicontours électriques avec massage, caméra 360°, toit panoramique, système Burmester, Head-Up Display, suspension AIRMATIC, MULTIBEAM LED, DISTRONIC, Apple CarPlay/Android Auto et jantes AMG 20\"."
+  },
+  {
+    "id": 29,
+    "brand": "Mercedes-Benz",
+    "model": "CLA 220 CDI 2.1",
+    "year": 2016,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 122415,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 170,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-0-57618.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-0-57618.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-1-57619.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-2-57620.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-3-57621.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-4-57622.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-5-57623.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-6-57624.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-7-57625.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-8-57626.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : CLA 220 CDI 2.1\nAnnée : 2016\nMotorisation : Diesel 2.1\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : Coupé 4 portes\nKilométrage : 122 415 km certifiés\nPrix : 4 000 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)\nLivraison annoncée : 5 jours\nDisponibilité : Sur commande"
+  },
+  {
+    "id": 30,
+    "brand": "Kia",
+    "model": "Picanto / Morning 1.0 Eco Dynamics",
+    "year": 2015,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 95000,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 69,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676796-0-57600.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676796-0-57600.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-1-57601.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-2-57602.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-3-57603.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-4-57604.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-5-57605.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-6-57606.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-7-57607.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-8-57608.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-9-57609.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-10-57610.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-11-57611.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-12-57612.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-13-57613.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-14-57614.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-15-57615.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-16-57616.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-17-57617.jpg"
+    ],
+    "description": "Marque : Kia\nModèle : Picanto / Morning 1.0 Eco Dynamics\nAnnée : 2015\nMotorisation : Essence 1.0\nPuissance : 69 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 95 000 km\nPrix : 2 000 €\nVIN : KNABX511AFT878680\nOrigine : Allemagne 🇩🇪\nHomologation UE : Jusqu’en juin 2027\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : Climatisation, sièges et volant chauffants, cuir, Bluetooth, AUX/USB, régulateur de vitesse, Isofix, jantes alliage été/hiver, vitres électriques et rétroviseurs chauffants."
+  },
+  {
+    "id": 31,
+    "brand": "Hyundai",
+    "model": "i20 1.0 T-GDI",
+    "year": 2026,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 10729,
+    "price": 9000,
+    "monthly": 174,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 90,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325570-0-57588.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325570-0-57588.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325570-1-57589.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-2-57590.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-3-57591.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-4-57592.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-5-57593.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-6-57594.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-7-57595.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-8-57596.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-9-57597.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-10-57598.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-11-57599.jpg"
+    ],
+    "description": "Marque : Hyundai\nModèle : i20 1.0 T-GDI\nAnnée : 2026\nPremière immatriculation : 02/2026\nMotorisation : Essence 1.0 T-GDI\nPuissance : 90 ch (66 kW)\nBoîte : Automatique\nCarrosserie : Citadine\nKilométrage : 10 729 km\nPrix : 6 000 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nÉquipements : Navigation, caméra de recul, régulateur de vitesse."
+  },
+  {
+    "id": 32,
+    "brand": "BMW",
+    "model": "X5 xDrive30d M Sport",
+    "year": 2014,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 95000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 258,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992203-0-57575.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992203-0-57575.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992203-1-57576.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-2-57577.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-3-57578.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-4-57579.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-5-57580.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-6-57581.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-7-57582.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-8-57583.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-9-57584.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-10-57585.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-11-57586.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-12-57587.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : X5 xDrive30d M Sport\nAnnée : 2014\nPremière immatriculation : 11/2014\nMotorisation : Diesel 3.0\nPuissance : 258 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 95 000 km certifiés\nPrix : 3.000 €\nOrigine : Allemagne 🇩🇪\nGarantie : 24 mois, valable dans toute l’Europe\nÉquipements principaux : ACC, affichage tête haute (HUD), toit panoramique, Harman Kardon, caméra, attelage, Webasto."
+  },
+  {
+    "id": 33,
+    "brand": "Mercedes-Benz",
+    "model": "Classe CLS 400",
+    "year": 2015,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 120000,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 333,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735395-0-57566.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735395-0-57566.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-1-57567.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-2-57568.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-3-57569.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-4-57570.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-5-57571.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-6-57572.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-7-57573.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-8-57574.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe CLS 400\nAnnée : 2015\nMotorisation : Essence – V6 3.0 Biturbo\nPuissance : 333 ch\nBoîte : Automatique 7G-TRONIC PLUS\nCarrosserie : Coupé 4 portes\nPrix : 8.000 €\nTransport : Environ 5 jours après chargement"
+  },
+  {
+    "id": 34,
+    "brand": "BMW",
+    "model": "Série 1 116d Sport",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 181000,
+    "price": 6500,
+    "monthly": 126,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 116,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-0-57534.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-0-57534.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-1-57535.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-2-57536.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-3-57537.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-4-57538.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-5-57539.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-6-57540.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-7-57542.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-8-57543.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-9-57545.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546082-10-57546.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-11-57547.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-12-57548.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-13-57549.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-14-57550.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-15-57551.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-16-57552.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-17-57553.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-18-57556.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-19-57558.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : Série 1 116d Sport\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : Compacte\nKilométrage : 181 000 km\nPrix : 3 400 €\nVIN : WBA1C71010J045636\nOrigine : Allemagne 🇩🇪\nHomologation UE : Jusqu’en février 2027\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : Régulateur de vitesse, DAB+, Bluetooth, Keyless, sièges chauffants, climatisation, phares xénon, jantes alliage été/hiver et volant multifonction."
+  },
+  {
+    "id": 35,
+    "brand": "Skoda",
+    "model": "Superb 1.4 TSI DSG",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 92000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194190-0-57510.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194190-0-57510.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-1-57511.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-2-57512.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-3-57513.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-4-57514.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-5-57515.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-6-57516.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-7-57517.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-8-57518.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-9-57519.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-10-57520.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-11-57521.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-12-57522.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-13-57523.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-14-57524.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-15-57525.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-16-57526.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-17-57527.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-18-57531.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-19-57532.jpg"
+    ],
+    "description": "Marque : Škoda\nModèle : Superb 1.4 TSI DSG\nAnnée : 2018\nMotorisation : Essence 1.4 TSI\nPuissance : 150 ch\nBoîte : Automatique DSG\nTransmission : Traction avant\nCarrosserie : Berline familiale\nKilométrage : 92 000 km\nPrix : 3 000 €\nVIN : TMBAB9NP4J7511633\nOrigine : Allemagne 🇩🇪\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : ACC, toit panoramique, caméra de recul, attelage, navigation, Apple CarPlay/Android Auto, sièges Alcantara chauffants, hayon électrique, Keyless, phares bi-xénon/LED et radars de stationnement."
+  },
+  {
+    "id": 36,
+    "brand": "Renault",
+    "model": "Clio 1.0",
+    "year": 2019,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 101000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 90,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-0-57476.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-0-57476.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-1-57477.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-2-57478.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-3-57479.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-4-57480.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-5-57481.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-6-57482.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-7-57483.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-8-57484.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-9-57485.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-10-57486.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-11-57487.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-12-57488.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-13-57489.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-14-57490.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-15-57491.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-16-57492.jpg"
+    ],
+    "description": "Marque : Renault\nModèle : Clio 1.0\nAnnée : 2019\nMotorisation : Essence 1.0 L\nPuissance : 90 ch\nBoîte : Manuelle\nTransmission : Traction avant\nCarrosserie : Citadine\nKilométrage : 101 000 km\nÉmissions CO₂ : 135 g/km\nPlaces : 5\nPortes : 5\nCouleur : Noir\nPrix : 2 500 €\nGarantie : 24 mois\nOrigine : Importation allemande 🇩🇪\nÉquipements : DAB, navigation, Bluetooth, régulateur de vitesse."
+  },
+  {
+    "id": 37,
+    "brand": "Mercedes-Benz",
+    "model": "Classe A 200 7G-DCT",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 24100,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 163,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-0-57493.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-0-57493.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-1-57494.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-2-57495.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-3-57496.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-4-57497.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-5-57498.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-6-57499.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-7-57500.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-8-57501.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-9-57502.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-10-57503.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-11-57504.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-12-57505.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-13-57506.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-14-57507.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-15-57508.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-16-57509.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe A 200 7G-DCT\nAnnée : 2021\nMotorisation : Essence 1.3 L\nPuissance : 163 ch\nBoîte : Automatique 7G-DCT\nTransmission : Traction avant\nCarrosserie : Berline compacte\nKilométrage : 24 100 km\nPlaces : 5\nPrix : 6 000 €"
+  },
+  {
+    "id": 38,
+    "brand": "Mercedes-Benz",
+    "model": "E 200",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 197250,
+    "price": 6500,
+    "monthly": 126,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 136,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-0-57467.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-0-57467.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-1-57468.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-2-57469.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-3-57470.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-4-57471.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-5-57472.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-6-57473.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-7-57475.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : E 200\nAnnée : 2013\nMotorisation : Diesel 2.1\nPuissance : 136 ch (100 kW)\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Berline\nKilométrage : 197 250 km\nCouleur : Noir\nJantes : 19 pouces\nPlaces : 5\nPrix : 3 500 €\nCT : Valide jusqu’en septembre 2026"
+  },
+  {
+    "id": 39,
+    "brand": "Audi",
+    "model": "A3 Limousine 2.0 TDI Quattro S line",
+    "year": 2018,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 91800,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 184,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-0-57456.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-0-57456.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-1-57457.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-2-57458.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-3-57459.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-4-57460.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-5-57461.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-6-57462.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-7-57463.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-8-57464.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-9-57465.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-10-57466.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A3 Limousine 2.0 TDI Quattro S line\nAnnée : 2018\nMotorisation : Diesel 2.0 TDI\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Berline / Limousine\nFinition : S line\nKilométrage : 91 800 km certifiés\nPrix : 5 000 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison : 5 jours\nÉquipements principaux : ACC, système audio Bang & Olufsen, phares LED, toit panoramique, jantes 19\"."
+  },
+  {
+    "id": 40,
+    "brand": "Jaguar",
+    "model": "XE D200 R-Dynamic Black",
+    "year": 2023,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 67935,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 204,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-0-57447.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-0-57447.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-1-57448.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-2-57449.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-3-57450.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-4-57451.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-5-57452.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-6-57453.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-7-57454.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-8-57455.jpg"
+    ],
+    "description": "Marque : Jaguar\nModèle : XE D200 R-Dynamic Black\nAnnée : 2023\nPremière immatriculation : 01/2023\nMotorisation : Diesel 2.0 D200\nPuissance : 204 ch (150 kW)\nBoîte : Automatique 8 rapports\nTransmission : Propulsion\nCarrosserie : Berline\nFinition : R-Dynamic Black\nKilométrage : 67 935 km\nPrix : 9 800 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Non accidentée\nDisponibilité : Immédiate\nÉquipements principaux : Black Pack, jantes 19\", sellerie cuir, sièges électriques chauffants à mémoire, Meridian 400 W, Pivi Pro Navigation, Apple CarPlay/Android Auto, ACC, caméra de recul, Keyless et Winter Pack."
+  },
+  {
+    "id": 41,
+    "brand": "BMW",
+    "model": "X3 20d xDrive M Sport",
+    "year": 2017,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 98000,
+    "price": 6800,
+    "monthly": 132,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 163,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682803-0-57435.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682803-0-57435.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682803-1-57436.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682803-2-57437.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682803-3-57438.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-4-57439.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-5-57440.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-6-57441.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-7-57442.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-8-57443.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-9-57444.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-10-57445.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-11-57446.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : X3 20d xDrive M Sport\nAnnée : 2017\nMotorisation : Diesel 2.0\nPuissance : 163 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 98 000 km certifiés\nPlaces : 5\nPrix : 3 500 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison : 5 jours\nDisponibilité : Sur commande\nÉquipements : Keyless, cuir, navigation, LED/Xénon, DAB+, régulateur de vitesse, PDC, crochet d’attelage, caméra/capteurs, système multimédia."
+  },
+  {
+    "id": 42,
+    "brand": "Mercedes-Benz",
+    "model": "Classe E 220 CDI Avantgarde",
+    "year": 2012,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 150000,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 170,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-0-57423.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-0-57423.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-1-57424.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-2-57425.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-3-57426.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-4-57427.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-5-57428.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-6-57429.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-7-57430.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-8-57431.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-9-57432.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-10-57433.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 220 CDI Avantgarde\nAnnée : 2012\nMotorisation : Diesel 2.1 L\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 150 000 km certifiés\nFinition : Avantgarde\nPrix : 2 000 € 🇩🇪\nÉquipements : Sellerie cuir, sièges à mémoire, réglages électriques/multidirectionnels."
+  },
+  {
+    "id": 43,
+    "brand": "Audi",
+    "model": "A1 1.2 TFSI S-Line",
+    "year": 2014,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 126000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 85,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-0-57414.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-0-57414.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-1-57415.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-2-57416.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-3-57417.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-4-57418.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295620-5-57419.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295621-6-57420.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295621-7-57421.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295621-8-57422.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A1 1.2 TFSI S-Line\nAnnée : 2014\nPremière mise en circulation : 03/2014\nMotorisation : Essence 1.2 TFSI\nPuissance : 85 ch (63 kW)\nBoîte : Manuelle\nCarrosserie : Citadine\nFinition : S-Line\nKilométrage : 126 000 km\nNorme : Euro 5\nPrix : 2.500 €\nOrigine : Allemagne 🇩🇪"
+  },
+  {
+    "id": 44,
+    "brand": "BMW",
+    "model": "318d Touring Luxury Line",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 61464,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Break",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-0-57391.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-0-57391.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-1-57392.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-2-57393.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-3-57394.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-4-57395.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-5-57397.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-6-57398.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-7-57399.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-8-57400.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-9-57401.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-10-57402.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-11-57403.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102937-12-57404.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-13-57406.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-14-57407.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-15-57408.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-16-57409.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-17-57410.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-18-57412.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-19-57413.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : 318d Touring Luxury Line\nAnnée : 2020\nMotorisation : Diesel 2.0\nPuissance : 150 ch (110 kW)\nBoîte : Automatique\nCarrosserie : Break / Touring\nFinition : Luxury Line\nKilométrage : 61 464 km certifiés\nPrix : 5 000 €\nÉquipements : Live Cockpit, pack Innovation."
+  },
+  {
+    "id": 45,
+    "brand": "Audi",
+    "model": "A4 Turbo quattro",
+    "year": 2013,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 80100,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 211,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-0-57379.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-0-57379.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-1-57381.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-2-57382.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-3-57383.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-4-57384.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-5-57385.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-6-57386.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-7-57388.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-8-57389.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-9-57390.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A4 Turbo quattro\nAnnée : 2013\nMotorisation : Essence\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Berline\nKilométrage : 80 100 km certifiés\nPrix : 2 000 €"
+  },
+  {
+    "id": 46,
+    "brand": "Volkswagen",
+    "model": "Tayron 2.0 TDI DSG 4MOTION R-Line",
+    "year": 2025,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 19380,
+    "price": 18000,
+    "monthly": 348,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 193,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593444-0-57350.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593444-0-57350.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-1-57351.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-2-57352.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-3-57353.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-4-57354.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-5-57355.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-6-57356.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-7-57357.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-8-57358.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-9-57359.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-10-57360.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-11-57361.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-12-57362.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-13-57364.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-14-57368.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-15-57370.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-16-57372.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593445-17-57375.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593446-18-57377.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593446-19-57378.jpg"
+    ],
+    "description": "Marque : Volkswagen\nModèle : Tayron 2.0 TDI DSG 4MOTION R-Line\nAnnée : 2025\nPremière immatriculation : 05/2025\nMotorisation : Diesel 2.0 TDI\nPuissance : 193 ch (142 kW)\nBoîte : Automatique DSG\nTransmission : 4MOTION – 4×4\nCarrosserie : SUV\nFinition : R-Line\nKilométrage : 19 380 km\nPlaces : 7\nPortes : 5\nPrix : 15 000 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Occasion\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)\nLivraison : 5 jours"
+  },
+  {
+    "id": 47,
+    "brand": "Mercedes-Benz",
+    "model": "GLA 180 d AMG Line",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 65127,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 116,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-0-57338.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-0-57338.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-1-57339.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-2-57340.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-3-57341.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-4-57342.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-5-57343.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-6-57344.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-7-57345.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-8-57346.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-9-57347.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-10-57348.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-11-57349.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLA 180 d AMG Line\nAnnée : 2020\nPremière immatriculation : 09/2020\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : SUV compact\nFinition : AMG Line\nKilométrage : 65 127 km certifiés\nPrix : 4 000 €\nOrigine : Importation allemande 🇩🇪\nÉtat : Jamais accidenté\nGarantie : 24 mois\nDisponibilité : Sur commande\nLivraison : Possible\nPaiement : Possibilité de mensualités selon les conditions indiquées"
+  },
+  {
+    "id": 48,
+    "brand": "Mercedes-Benz",
+    "model": "E 220 d Avantgarde",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 39995,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 194,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-0-57305.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-0-57305.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-1-57306.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-2-57307.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-3-57308.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-4-57309.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-5-57310.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-6-57311.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-7-57312.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-8-57313.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-9-57314.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-10-57315.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-11-57316.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-12-57317.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-13-57318.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-14-57319.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-15-57323.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-16-57326.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-17-57335.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-18-57336.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-19-57337.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : E 220 d Avantgarde\nAnnée : 2020\nPremière immatriculation : 11/2020\nMotorisation : Diesel 2.0 CDI\nPuissance : 194 ch (143 kW)\nBoîte : Automatique 9G-Tronic\nTransmission : Propulsion\nCarrosserie : Berline / Limousine\nFinition : Avantgarde\nKilométrage : 39 995 km\nCouleur : Noir Obsidienne métallisé\nPrix : 9 800 €\nOrigine : Allemagne 🇩🇪\nPropriétaire : 1ère main – véhicule administratif\nÉtat : Non-fumeur, non loué, non accidenté\nEntretien : Exclusivement chez Mercedes-Benz\nDernier entretien : 28/07/2025 à 38 169 km\nDisponibilité : Immédiate\nÉquipements principaux : DISTRONIC PLUS, caméra 360°, Pack Assistance, Park-Paket, MBUX, navigation, Apple CarPlay/Android Auto, recharge sans fil, sièges chauffants, KeyFree-Start et phares LED."
+  },
+  {
+    "id": 49,
+    "brand": "Honda",
+    "model": "Civic Type R GT 2.0 i-VTEC",
+    "year": 2019,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 35541,
+    "price": 15000,
+    "monthly": 290,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 320,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405929-0-57266.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405929-0-57266.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-1-57267.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-2-57268.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-3-57269.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-4-57270.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-5-57271.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-6-57272.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-7-57273.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-8-57274.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-9-57275.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-10-57276.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-11-57277.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-12-57278.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-13-57281.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-14-57285.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-15-57286.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-16-57287.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-17-57288.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-18-57289.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-19-57290.jpg"
+    ],
+    "description": "Marque : Honda\nModèle : Civic Type R GT 2.0 i-VTEC\nAnnée : 2019\nPremière immatriculation : 09/09/2019\nMotorisation : Essence 2.0 i-VTEC VTEC\nPuissance : 320 ch (235 kW)\nBoîte : Manuelle 6 rapports\nTransmission : Traction avant\nCarrosserie : 5 portes\nFinition : Type R GT\nKilométrage : 35 541 km\nCouleur : Sonic Grey Perleffekt\nPrix : 16 000 €\nOrigine : Allemagne 🇩🇪\nPropriétaires : 2e main\nÉtat : Non accidenté, non-fumeur\nDisponibilité : Immédiate\nEntretien : Historique suivi, 4e entretien effectué récemment\nÉquipements principaux : Sièges baquets Alcantara, châssis adaptatif, échappement sport, jantes 20\", navigation, Apple CarPlay/Android Auto, caméra de recul, Keyless, phares LED, audio 11 haut-parleurs et aides à la conduite."
+  },
+  {
+    "id": 50,
+    "brand": "Opel",
+    "model": "Corsa 1.2 Elegance",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 44131,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 100,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-0-57245.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-0-57245.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-1-57246.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-2-57247.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-3-57248.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-4-57249.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-5-57250.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-6-57251.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-7-57252.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-8-57253.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-9-57254.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-10-57255.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-11-57256.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-12-57257.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-13-57259.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-14-57260.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-15-57261.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-16-57262.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-17-57263.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-18-57264.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-19-57265.jpg"
+    ],
+    "description": "Marque : Opel\nModèle : Corsa 1.2 Elegance\nAnnée : 2020\nMotorisation : Essence 1.2\nPuissance : 100 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : Elegance\nKilométrage : 44 131 km certifiés\nPropriétaire : 1er propriétaire\nPrix : 4 000 €\nLivraison : 5 jours\nÉquipements : Phares LED Matrix, sellerie cuir, sièges massants, toit panoramique."
+  },
+  {
+    "id": 51,
+    "brand": "Audi",
+    "model": "Q3 35 TFSI S line S tronic",
+    "year": 2014,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 91000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 313,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-0-57228.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-0-57228.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-1-57229.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-2-57230.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-3-57231.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-4-57232.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-5-57233.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-6-57234.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-7-57235.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-8-57236.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-9-57237.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-10-57238.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-11-57239.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-12-57240.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-13-57241.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-14-57242.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-15-57243.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-16-57244.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : Q3 35 TFSI S line S tronic\nAnnée : 2014\nMotorisation : Diesel (à vérifier : « TFSI » désigne normalement une motorisation essence)\nPuissance annoncée : 313 ch (à vérifier : cette puissance paraît inhabituelle pour un Q3 35 TFSI de 2014)\nCylindrée annoncée : 3.0 L (à vérifier)\nBoîte : Automatique S tronic\nCarrosserie : SUV\nKilométrage : 91 000 km\nPlaces : 5\nPrix : 2 500 €"
+  },
+  {
+    "id": 52,
+    "brand": "Mercedes-Benz",
+    "model": "GLC 220 d 4MATIC Coupé AMG Line",
+    "year": 2025,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 29500,
+    "price": 23000,
+    "monthly": 445,
+    "type": "neuf",
+    "category": "SUV",
+    "power": 197,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591219-0-57212.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591219-0-57212.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591219-1-57213.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591219-2-57214.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591219-3-57215.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591219-4-57216.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-5-57217.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-6-57218.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-7-57219.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-8-57220.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-9-57221.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-10-57222.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-11-57223.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-12-57224.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-13-57225.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-14-57226.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-15-57227.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d 4MATIC Coupé AMG Line\nAnnée : 2025\nPremière immatriculation : 10/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV Coupé\nFinition : AMG Line\nKilométrage : 29 500 km\nPlaces : 5\nPortes : 5\nPrix : 20 000 €\nOrigine : Édition allemande\nÉtat : Occasion"
+  },
+  {
+    "id": 53,
+    "brand": "Mercedes-Benz",
+    "model": "GLC 220 d AMG-Line 4MATIC",
+    "year": 2018,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 87000,
+    "price": 10000,
+    "monthly": 193,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 170,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-0-57197.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-0-57197.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-1-57198.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-2-57199.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-3-57200.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-4-57201.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-5-57202.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-6-57203.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-7-57204.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-8-57205.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-9-57206.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-10-57207.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-11-57208.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-12-57209.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-13-57210.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-14-57211.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d AMG-Line 4MATIC\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG-Line\nKilométrage : 87 000 km certifiés\nPrix : 7 000 €\nGarantie : 24 mois\nÉquipements principaux : Toit panoramique, phares LED, GPS, sièges chauffants et électriques, hayon électrique, caméra/assistances de conduite, régulateur de vitesse, Bluetooth, jantes alliage."
+  },
+  {
+    "id": 54,
+    "brand": "Mercedes-Benz",
+    "model": "GLC 220 d 4MATIC Coupé AMG Line",
+    "year": 2025,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 16000,
+    "price": 19000,
+    "monthly": 368,
+    "type": "neuf",
+    "category": "SUV",
+    "power": 197,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-0-57182.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-0-57182.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-1-57183.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-2-57184.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-3-57185.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-4-57186.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-5-57187.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-6-57188.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-7-57189.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-8-57190.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-9-57191.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-10-57192.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-11-57193.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-12-57194.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-13-57195.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-14-57196.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d 4MATIC Coupé AMG Line\nAnnée : 2025\nPremière immatriculation : 09/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV Coupé\nFinition : AMG Line\nKilométrage : 16 000 km\nPlaces : 5\nPortes : 5\nPrix : 16 000 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+  },
+  {
+    "id": 55,
+    "brand": "Audi",
+    "model": "A5 2.0 TFSI Sportback Quattro S Line",
+    "year": 2017,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 112000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 211,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807667-0-57163.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807667-0-57163.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-1-57164.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-2-57165.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-3-57166.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-4-57167.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-5-57168.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-6-57169.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-7-57170.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-8-57171.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-9-57172.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-10-57173.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-11-57174.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-12-57175.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-13-57176.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-14-57177.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-15-57178.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-16-57179.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-17-57180.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-18-57181.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A5 2.0 TFSI Sportback Quattro S Line\nAnnée : 2017\nMotorisation : Essence 2.0 TFSI\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Sportback\nFinition : S Line\nKilométrage : 112 000 km certifiés\nPrix : 2 500 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nLivraison : 5 jours\nDisponibilité : Sur commande\nÉquipements : ACC, cuir, crochet d’attelage, Bluetooth, navigation, caméra de recul, USB, AUX, DAB+"
+  },
+  {
+    "id": 56,
+    "brand": "Jaguar",
+    "model": "E-PACE P200 AWD R-Dynamic S",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 59800,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 200,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-0-57144.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-0-57144.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-1-57145.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-2-57146.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-3-57147.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-4-57148.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-5-57149.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-6-57150.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-7-57152.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-8-57153.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-9-57154.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-10-57155.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-11-57156.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-12-57157.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-13-57158.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-14-57159.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-15-57160.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-16-57161.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-17-57162.jpg"
+    ],
+    "description": "Marque : Jaguar\nModèle : E-PACE P200 AWD R-Dynamic S\nAnnée : 2021\nMotorisation : Essence 2.0 P200\nPuissance : 200 ch (147 kW)\nBoîte : Automatique 9 rapports\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : R-Dynamic S\nKilométrage : 59 800 km\nPrix : 8 000 €\nOrigine : Édition allemande\nPropriétaire : 1ère main – ancien véhicule de leasing\nEntretien : Carnet suivi, dernière révision à 59 612 km en mars 2026\nGarantie : Possible jusqu’à 5 ans / 250 000 km selon conditions"
+  },
+  {
+    "id": 57,
+    "brand": "BMW",
+    "model": "X3 xDrive20d M",
+    "year": 2025,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 15000,
+    "price": 15000,
+    "monthly": 290,
+    "type": "neuf",
+    "category": "SUV",
+    "power": 197,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-0-57122.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-0-57122.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-1-57123.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-2-57124.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-3-57125.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-4-57126.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-5-57127.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-6-57128.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-7-57129.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-8-57130.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-9-57131.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-10-57132.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-11-57133.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-12-57134.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-13-57135.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127939-14-57136.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-15-57137.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-16-57138.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-17-57139.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-18-57141.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-19-57142.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : X3 xDrive20d M\nAnnée : 2025\nPremière immatriculation : 10/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M\nKilométrage : 15 000 km\nPlaces : 5\nPortes : 5\nPrix : 12 000 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+  },
+  {
+    "id": 58,
+    "brand": "Audi",
+    "model": "Q5 TDI quattro S-Line",
+    "year": 2025,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 20500,
+    "price": 17000,
+    "monthly": 329,
+    "type": "neuf",
+    "category": "SUV",
+    "power": 204,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848074-0-57096.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848074-0-57096.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848074-1-57097.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-2-57098.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-3-57099.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-4-57100.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-5-57101.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-6-57102.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-7-57103.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-8-57104.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-9-57105.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-10-57106.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-11-57109.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-12-57110.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-13-57114.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-14-57115.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-15-57116.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-16-57117.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-17-57119.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-18-57120.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-19-57121.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : Q5 TDI quattro S-Line\nAnnée : 2025\nPremière immatriculation : 08/2025\nMotorisation : Diesel 2.0 TDI\nPuissance : 204 ch (150 kW)\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nFinition : S-Line\nKilométrage : 20 500 km\nPlaces : 5\nPortes : 5\nÉtat : Occasion – non accidenté\nPrix : 14 000 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+  },
+  {
+    "id": 59,
+    "brand": "Mercedes-Benz",
+    "model": "AMG G 63",
+    "year": 2023,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 43700,
+    "price": 57700,
+    "monthly": 1116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 577,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-0-57076.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-0-57076.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-1-57077.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-2-57078.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-3-57079.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-4-57080.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-5-57081.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-6-57082.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-7-57083.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-8-57084.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-9-57085.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-10-57086.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-11-57087.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-12-57088.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-13-57089.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-14-57090.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-15-57091.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-16-57092.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-17-57093.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-18-57094.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-19-57095.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : AMG G 63\nAnnée : 2023\nMotorisation : Essence – V8 4.0L Biturbo\nPuissance : 577 ch\nCouple : 627 lb-ft (≈ 850 Nm)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nKilométrage : 27 156 miles (≈ 43 700 km)\nCouleur : MANUFAKTUR Olive Green Metallic\nPrix : 54 700 €\nÉtat : Sans accident\nGarantie : 24 mois\nLivraison : 5 jours\nImportation : Allemagne 🇩🇪"
+  },
+  {
+    "id": 60,
+    "brand": "Mercedes-Benz",
+    "model": "ML 350",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 175489,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 112,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-0-57066.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-0-57066.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-1-57067.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-2-57068.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-3-57069.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-4-57070.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-5-57071.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-6-57072.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-7-57073.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-8-57074.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-9-57075.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : ML 350\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 112 ch (à vérifier : cette puissance paraît inhabituelle pour un ML 350)\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 175 489 km\nPrix : 5 000 €\nÉtat : Jamais accidenté\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
+  },
+  {
+    "id": 61,
+    "brand": "Mercedes-Benz",
+    "model": "V 250 d Avantgarde Extralong",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 71200,
+    "price": 16000,
+    "monthly": 309,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 190,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129850-0-56985.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129850-0-56985.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-1-56986.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-2-56987.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-3-56988.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-4-56989.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-5-56990.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-6-56991.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-7-56992.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-8-56993.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-9-56994.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-10-56995.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-11-56996.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-12-56997.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-13-56998.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-14-56999.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-15-57000.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-16-57001.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-17-57002.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-18-57003.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-19-57004.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : V 250 d Avantgarde Extralong\nAnnée : 2020\nMotorisation : Diesel\nPuissance : 190 ch\nBoîte : Automatique\nCarrosserie : Van / Monospace\nNombre de places : 8\nKilométrage : 71 200 km certifiés\nÉquipements : MBUX, portes électriques\nPrix : 13 000 €"
+  },
+  {
+    "id": 62,
+    "brand": "Mercedes-Benz",
+    "model": "Classe C C 220 BlueTEC",
+    "year": 2014,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 195000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 170,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701836-0-56973.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701836-0-56973.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701836-1-56974.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701836-2-56975.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701836-3-56976.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701836-4-56977.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-5-56978.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-6-56979.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-7-56980.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-8-56981.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-9-56982.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-10-56983.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-11-56984.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe C C 220 BlueTEC\nAnnée : 2014\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 195 000 km certifiés\nPrix : 3 000 €\nÉquipements : Caméra de recul, régulateur de vitesse, navigation"
+  },
+  {
+    "id": 63,
+    "brand": "Mercedes-Benz",
+    "model": "GLC 200 Coupé AMG Premium Pack Night",
+    "year": 2024,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 60000,
+    "price": 15000,
+    "monthly": 290,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 204,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-0-56963.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-0-56963.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-1-56964.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-2-56965.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-3-56966.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-4-56967.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-5-56968.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-6-56969.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516450-7-56970.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516451-8-56971.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516451-9-56972.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 200 Coupé AMG Premium Pack Night\nAnnée : 2024\nMotorisation : Essence\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Propulsion\nCarrosserie : SUV Coupé\nFinition : AMG\nCouleur : Noir métallisé\nIntérieur : Cuir cognac\nPrix : 12 000 €"
+  },
+  {
+    "id": 64,
+    "brand": "SEAT",
+    "model": "Ateca FR 1.4 TSI 4Drive",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 69553,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-0-56949.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-0-56949.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-1-56950.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-2-56951.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-3-56952.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-4-56953.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-5-56954.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-6-56955.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-7-56956.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-8-56957.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-9-56958.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-10-56959.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-11-56960.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-12-56961.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-13-56962.jpg"
+    ],
+    "description": "Marque : SEAT\nModèle : Ateca FR 1.4 TSI 4Drive\nAnnée : 2018\nMotorisation : Essence 1.4 TSI\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : 4Drive – 4×4\nCarrosserie : SUV\nFinition : FR\nKilométrage : 69 553 km certifiés\nÉmissions CO₂ : 144 g/km\nCouleur : Orange\nPrix : 4 000 €\nGarantie : 24 mois incluse\nÉquipements : Webasto, navigation, système Keyless, charge/équipement de recharge"
+  },
+  {
+    "id": 65,
+    "brand": "Peugeot",
+    "model": "e-2008 Allure",
+    "year": 2016,
+    "fuel": "Électrique",
+    "transmission": "Automatique",
+    "mileage": 7548,
+    "price": 9000,
+    "monthly": 174,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 136,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-0-inbound211334936695471629.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-0-inbound211334936695471629.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-1-inbound414318372081249614.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-2-inbound653731271904115572.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-3-inbound671962735849239748.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-4-inbound1187004946222438437.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-5-inbound1766094179716312129.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-6-inbound3299678357249641183.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-7-inbound3795626971030450099.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-8-inbound4049086447524485632.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782791-9-inbound5382364397843521716.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782792-10-inbound5788783189569221291.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782792-11-inbound5946513683223995983.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782792-12-inbound8613304587032009188.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782792-13-inbound9137365879588879611.jpg"
+    ],
+    "description": "Marque : Peugeot\nModèle : e-2008 Allure\nAnnée : 2016\nMotorisation : Électrique\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : SUV compact\nFinition : Allure\nKilométrage : 7 548 km\nPrix : 6 000 €\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+  },
+  {
+    "id": 66,
+    "brand": "Volkswagen",
+    "model": "T6 Transporter 4MOTION",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 131000,
+    "price": 9500,
+    "monthly": 184,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 199,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109356-0-inbound1242310168314076949.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109356-0-inbound1242310168314076949.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109356-1-inbound1333298287074040475.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-2-inbound2063866544759875164.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-3-inbound2830053250782720122.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-4-inbound3004716321395027137.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-5-inbound3390332027717408105.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-6-inbound3875732255371293370.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-7-inbound4288150038829254065.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-8-inbound4425807434777639348.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-9-inbound4529413683447989359.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-10-inbound5395893578470145600.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-11-inbound5939339304460682151.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-12-inbound6147452293333786098.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-13-inbound6243348971897072730.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-14-inbound7488401808722797240.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-15-inbound7591812726241943035.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-16-inbound7983607203039514244.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-17-inbound8665056111892912682.jpg"
+    ],
+    "description": "Marque : Volkswagen\nModèle : T6 Transporter 4MOTION\nAnnée : 2020\nMotorisation : Diesel\nPuissance : 199 ch\nBoîte : Automatique\nTransmission : 4MOTION – 4×4\nCarrosserie : Utilitaire / Van\nKilométrage : 131 000 km certifiés\nPrix : 6 500 €\nÉquipements : Phares LED, chauffage stationnaire, régulateur de vitesse adaptatif (ACC), caméra de recul"
+  },
+  {
+    "id": 67,
+    "brand": "Toyota",
+    "model": "RAV4 2.5 Active AWD Hybrid",
+    "year": 2017,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 89050,
+    "price": 5800,
+    "monthly": 112,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 298,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-0-inbound559377524092761304.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-0-inbound559377524092761304.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-1-inbound917354555670011901.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-2-inbound1076790594935236689.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-3-inbound1296428470693272672.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-4-inbound1763489488229635941.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-5-inbound3470262885802803833.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-6-inbound3604925381413617564.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-7-inbound4484663128055656219.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-8-inbound4633358611921669352.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-9-inbound5294311081223691776.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-10-inbound5419201294532727090.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-11-inbound6172862932404060625.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-12-inbound6326271635025465256.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-13-inbound7369912352918937884.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-14-inbound8341526224213526115.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-15-inbound9097048627148953527.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-16-inbound9105912111435102217.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-17-inbound9108296376479216410.jpg"
+    ],
+    "description": "Marque : Toyota\nModèle : RAV4 2.5 Active AWD Hybrid\nAnnée : 2017\nMotorisation : Hybride – Essence + Électrique\nPuissance : 298 ch\nBoîte : Automatique\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : Active\nKilométrage : 89 050 km certifiés\nPrix : 2 800 €\nÉtat : Jamais accidenté\nGarantie : 24 mois incluse"
+  },
+  {
+    "id": 68,
+    "brand": "Audi",
+    "model": "A3 40 TFSI e",
+    "year": 2022,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 17629,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 204,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-0-56803.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-0-56803.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-1-56804.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-2-56805.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-3-56806.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-4-56807.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-5-56808.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-6-56809.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-7-56810.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-8-56811.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-9-56812.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-10-56813.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A3 40 TFSI e\nAnnée : 2022\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 204 ch\nCylindrée : 1,4 L\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : Compacte\nKilométrage : 17 629 km\nPlaces : 5\nPrix : 6 000 €"
+  },
+  {
+    "id": 69,
+    "brand": "Volkswagen",
+    "model": "Amarok 3.0 TDI V6 Aventura",
+    "year": 2023,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 50000,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 240,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-0-56780.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-0-56780.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-1-56781.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-2-56783.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-3-56784.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-4-56785.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-5-56786.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-6-56787.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668093-7-56788.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-8-56789.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-9-56791.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-10-56792.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-11-56793.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-12-56794.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-13-56795.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-14-56796.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-15-56797.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-16-56798.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-17-56800.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-18-56801.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-19-56802.jpg"
+    ],
+    "description": "Marque : Volkswagen\nModèle : Amarok 3.0 TDI V6 Aventura\nAnnée : 2023\nMotorisation : Diesel 3.0 TDI V6\nPuissance : 240 ch\nBoîte : Automatique\nTransmission : 4×4\nCarrosserie : Pick-up\nFinition : Aventura\nKilométrage : 50 000 km certifiés\nPrix : 8 000 €\nGarantie : 24 mois\nÉquipements : Attelage, Webasto, phares Matrix LED, système audio Harman Kardon"
+  },
+  {
+    "id": 70,
+    "brand": "Mercedes-Benz",
+    "model": "GLE 63 S AMG 4MATIC+",
+    "year": 2026,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 68450,
+    "price": 18000,
+    "monthly": 348,
+    "type": "neuf",
+    "category": "SUV",
+    "power": 612,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-0-56759.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-0-56759.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-1-56760.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-2-56761.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-3-56762.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-4-56763.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-5-56764.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-6-56765.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-7-56766.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-8-56767.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-9-56768.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-10-56769.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-11-56771.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-12-56772.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-13-56773.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-14-56774.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-15-56775.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-16-56776.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-17-56777.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-18-56778.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-19-56779.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLE 63 S AMG 4MATIC+\nAnnée : 2022\nMotorisation : Essence – V8 AMG\nPuissance : 612 ch\nBoîte : Automatique AMG SPEEDSHIFT 9G\nTransmission : 4MATIC+ – 4×4\nCarrosserie : SUV\nFinition : AMG GLE 63 S\nCouleur : Noir\nKilométrage : 68 450 km certifiés\nPrix : 15 000 €"
+  },
+  {
+    "id": 71,
+    "brand": "Audi",
+    "model": "A6 Avant 40 TDI Quattro S-Line",
+    "year": 2022,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 14000,
+    "price": 13000,
+    "monthly": 251,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 204,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-0-56731.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-0-56731.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-1-56732.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-2-56733.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-3-56734.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-4-56735.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-5-56736.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-6-56737.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-7-56738.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-8-56739.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-9-56741.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-10-56745.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-11-56747.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-12-56748.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-13-56749.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-14-56753.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-15-56754.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-16-56755.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-17-56756.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-18-56757.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-19-56758.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A6 Avant 40 TDI Quattro S-Line\nAnnée : 2022\nMotorisation : Diesel\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Break / Avant\nFinition : S-Line\nKilométrage : 14 000 km certifiés\nÉquipements : Pack noir, attelage, Virtual Cockpit\nPrix : 10 000 €"
+  },
+  {
+    "id": 72,
+    "brand": "Land Rover",
+    "model": "Range Rover Evoque P300e R-Dynamic SE AWD",
+    "year": 2022,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 65000,
+    "price": 15000,
+    "monthly": 290,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 309,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-0-56712.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-0-56712.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-1-56713.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-2-56714.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-3-56715.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-4-56716.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-5-56717.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-6-56718.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-7-56719.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-8-56720.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-9-56721.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-10-56722.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-11-56723.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-12-56724.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-13-56725.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-14-56726.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-15-56727.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-16-56728.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-17-56729.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883889-18-56730.jpg"
+    ],
+    "description": "Marque : Land Rover\nModèle : Range Rover Evoque P300e R-Dynamic SE AWD\nAnnée : 2022\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 309 ch (227 kW)\nBoîte : Automatique\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : R-Dynamic SE\nKilométrage : 65 000 km certifiés\nPrix : 12 000 €\nÉquipement : Phares Matrix LED"
+  },
+  {
+    "id": 73,
+    "brand": "Skoda",
+    "model": "Kodiaq Sportline 2.0 TSI 4×4",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 54000,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 190,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646290-0-56689.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646290-0-56689.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-1-56690.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-2-56691.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-3-56692.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-4-56693.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-5-56694.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-6-56695.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-7-56696.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-8-56697.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-9-56698.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-10-56699.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-11-56700.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-12-56701.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-13-56702.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-14-56703.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-15-56704.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-16-56705.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-17-56706.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-18-56709.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-19-56710.jpg"
+    ],
+    "description": "Marque : Škoda\nModèle : Kodiaq Sportline 2.0 TSI 4×4\nAnnée : 2020\nMotorisation : Essence 2.0 TSI\nPuissance : 190 ch\nBoîte : Automatique DSG\nTransmission : 4×4\nCarrosserie : SUV\nFinition : Sportline\nKilométrage : 54 000 km\nSérie : NS\nPrix : 8 000 €\nDisponibilité : Immédiate"
+  },
+  {
+    "id": 74,
+    "brand": "BMW",
+    "model": "Série 5 530e xDrive",
+    "year": 2015,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 33000,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 296,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044769-0-56676.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044769-0-56676.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-1-56677.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-2-56678.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-3-56679.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-4-56680.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-5-56681.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-6-56682.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-7-56683.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-8-56684.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-9-56685.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-10-56686.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-11-56687.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-12-56688.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : Série 5 530e xDrive iPerformance M Sport\nAnnée : 2015\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 296 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : Berline\nFinition : M Sport\nKilométrage : 33 000 km certifiés\nPrix : 4 000 €\nGarantie : 24 mois incluse"
+  },
+  {
+    "id": 75,
+    "brand": "Land Rover",
+    "model": "Range Rover Evoque 4×4",
+    "year": 2012,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 132600,
+    "price": 7500,
+    "monthly": 145,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555850-0-56649.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555850-0-56649.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-1-56650.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-2-56651.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-3-56652.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-4-56653.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-5-56654.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-6-56655.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-7-56656.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-8-56657.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-9-56658.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-10-56659.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-11-56660.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-12-56661.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-13-56662.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-14-56663.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-15-56664.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-16-56665.jpg"
+    ],
+    "description": "Marque : Land Rover\nModèle : Range Rover Evoque 4×4\nAnnée : 2012\nMotorisation : Diesel\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : 4×4\nCarrosserie : SUV\nKilométrage : 132 600 km\nPrix : 4 500 €\nGarantie : 24 mois inbegrepen"
+  },
+  {
+    "id": 76,
+    "brand": "Audi",
+    "model": "Q3 2.0 TDI Quattro",
+    "year": 2015,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 92000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 184,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-0-56630.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-0-56630.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-1-56631.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-2-56632.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-3-56633.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-4-56634.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-5-56635.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-6-56636.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291700-7-56637.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-8-56638.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-9-56639.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-10-56640.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-11-56641.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-12-56642.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-13-56643.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-14-56644.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-15-56645.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-16-56646.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-17-56647.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-18-56648.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : Q3 2.0 TDI Quattro\nAnnée : 2015\nMotorisation : Diesel 2.0 L\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nKilométrage : 92 000 km\nCouleur : Blanc\nPlaces : 5\nPortes : 5\nÉmissions CO₂ : 146 g/km\nPrix : 2 500 €\nÉtat : Occasion – sans accident\nGarantie : 24 mois"
+  },
+  {
+    "id": 77,
+    "brand": "BMW",
+    "model": "X3 20d xDrive M Sport",
+    "year": 2017,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 110000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 190,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929904-0-56615.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929904-0-56615.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-1-56616.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-2-56617.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-3-56618.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-4-56619.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-5-56620.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-6-56621.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-7-56622.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-8-56623.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-9-56624.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-10-56625.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-11-56626.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-12-56627.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-13-56628.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-14-56629.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : X3 20d xDrive M Sport\nAnnée : 2017\nMotorisation : Diesel 2.0\nPuissance : 190 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 110 000 km certifiés\nPrix : 3 000 €\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours\nÉquipements : Toit ouvrant panoramique, attelage, navigation, régulateur de vitesse"
+  },
+  {
+    "id": 78,
+    "brand": "Mercedes-Benz",
+    "model": "V 250 d AMG 4MATIC",
+    "year": 2016,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 119700,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 190,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483107-0-56602.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483107-0-56602.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483107-1-56603.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-2-56604.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-3-56605.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-4-56606.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-5-56607.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-6-56608.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-7-56609.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-8-56610.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-9-56611.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-10-56612.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-11-56613.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-12-56614.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : V 250 d AMG 4MATIC\nAnnée : 2016\nMotorisation : Diesel\nPuissance : 190 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : Monospace / Van\nFinition : AMG\nKilométrage : 119 700 km certifiés\nNombre de places : 6\nÉquipements : Toit panoramique, console centrale\nPrix : 4 000 €\nLivraison : 5 jours"
+  },
+  {
+    "id": 79,
+    "brand": "Opel",
+    "model": "Grandland X",
+    "year": 2018,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 82713,
+    "price": 5800,
+    "monthly": 112,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 120,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-0-56591.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-0-56591.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-1-56592.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-2-56593.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-3-56594.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-4-56595.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-5-56596.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-6-56597.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-7-56598.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-8-56599.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-9-56600.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-10-56601.jpg"
+    ],
+    "description": "Marque : Opel\nModèle : Grandland X\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 120 ch\nBoîte : Manuelle\nCarrosserie : SUV\nKilométrage : 82 713 km certifiés\nPrix : 2 800 €\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
+  },
+  {
+    "id": 80,
+    "brand": "Audi",
+    "model": "A3 Sportback 2.0 TFSI Quattro S-Line",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 59000,
+    "price": 13000,
+    "monthly": 251,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 190,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-0-56571.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-0-56571.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-1-56572.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-2-56573.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-3-56574.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-4-56575.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-5-56576.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-6-56577.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-7-56578.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-8-56579.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-9-56580.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-10-56581.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-11-56582.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-12-56583.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-13-56584.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997851-14-56585.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-15-56586.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-16-56587.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-17-56588.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-18-56589.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-19-56590.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A3 Sportback 2.0 TFSI Quattro S-Line\nAnnée : 2018\nMotorisation : Essence 2.0 TFSI\nPuissance : 190 ch\nBoîte : Automatique S tronic\nTransmission : Quattro – 4×4\nCarrosserie : Sportback\nFinition : S-Line\nKilométrage : 59 000 km certifiés\nPrix : 10 000 €\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
+  },
+  {
+    "id": 81,
+    "brand": "Opel",
+    "model": "grandland X",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 75500,
+    "price": 11500,
+    "monthly": 222,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 131,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686501-0-1000056521.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686501-0-1000056521.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686501-1-1000056522.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686501-2-1000056523.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686501-3-1000056524.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686501-4-1000056525.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-5-1000056526.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-6-1000056527.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-7-1000056528.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-8-1000056529.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-9-1000056530.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-10-1000056531.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-11-1000056532.jpg"
+    ],
+    "description": "\nOpel Grandland X Premium, Attelage de remorque, Caméra de recul, Volant chauffant\n\nAnnée : 2020\nKilométrage : 76 500 km (Certifié)\nBoîte de vitesses :  Automatique\nCarburant : Essence\nPuissance : 131 ch\nVolume du cylindre: 1,2 litres\n\nChaque véhicule est sélectionné et inspecté par nos experts pour une qualité et une fiabilité complètes.\nNous croyons en la norme que nous apportons - pas seulement une voiture, mais une expérience!\n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n"
+  },
+  {
+    "id": 82,
+    "brand": "Mercedes-Benz",
+    "model": "E200",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 197250,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 136,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999468-0-56561.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999468-0-56561.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-1-56562.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-2-56563.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-3-56564.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-4-56565.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-5-56567.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-6-56568.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-7-56569.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-8-56570.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : E 200\nAnnée : 2013\nMotorisation : Diesel 2.1\nPuissance : 136 ch\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Berline\nKilométrage : 197 250 km\nCouleur : Noir\nJantes : 19 pouces\nPlaces : 5\nPrix : 3 000 €\nCT : Valide jusqu’en septembre 2026"
+  },
+  {
+    "id": 83,
+    "brand": "Volkswagen",
+    "model": "Passat Highline 2.0 TSI",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 75000,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 380,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-0-56552.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-0-56552.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-1-56553.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-2-56554.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-3-56555.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-4-56556.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-5-56557.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-6-56558.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-7-56559.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-8-56560.jpg"
+    ],
+    "description": "Marque : Volkswagen\nModèle : Passat Highline 2.0 TSI\nAnnée : 2018\nMotorisation : Essence 2.0 TSI\nPuissance : 380 ch\nBoîte : Automatique DSG 7 rapports\nTransmission : Traction avant\nCarrosserie : Berline\nFinition : Highline\nKilométrage : 75 000 km\nAccélération 0–100 km/h : 6,8 s\nVitesse maximale : 250 km/h\nPrix : 10 000 €"
+  },
+  {
+    "id": 84,
+    "brand": "Mercedes-Benz",
+    "model": "Classe E 220 d AMG",
+    "year": 2016,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 155000,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 194,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480454-0-56520.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480454-0-56520.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480455-1-56521.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-2-56523.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-3-56524.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-4-56525.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-5-56526.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-6-56527.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-7-56528.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-8-56529.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-9-56530.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-10-56531.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-11-56532.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-12-56533.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-13-56534.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 220 d AMG\nAnnée : 2016\nMotorisation : Diesel 2.0\nPuissance : 194 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : AMG\nKilométrage : 155 000 km\nPrix : 6 000 €"
+  },
+  {
+    "id": 85,
+    "brand": "Citroen",
+    "model": "C3 1.6 HDi",
+    "year": 2012,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 170000,
+    "price": 4500,
+    "monthly": 87,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 92,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282768-0-56509.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282768-0-56509.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282769-1-56510.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282769-2-56511.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282769-3-56512.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-4-56513.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-5-56514.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-6-56515.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-7-56516.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-8-56517.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-9-56518.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-10-56519.jpg"
+    ],
+    "description": "Marque : Citroën\nModèle : C3 1.6 HDi\nAnnée : 2012\nMotorisation : Diesel 1.6 HDi\nPuissance : 92 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 170 000 km\nPrix : 1 500 €"
+  },
+  {
+    "id": 86,
+    "brand": "Mercedes-Benz",
+    "model": "GLC 350 e 4MATIC AMG",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 15500,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 326,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-0-56490.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-0-56490.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-1-56491.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-2-56492.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-3-56493.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-4-56494.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-5-56495.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-6-56496.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-7-56497.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-8-56498.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-9-56499.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-10-56500.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-11-56501.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-12-56502.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-13-56503.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-14-56504.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-15-56505.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-16-56506.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-17-56507.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-18-56508.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 350 e 4MATIC AMG\nAnnée : 2018\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 326 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG\nKilométrage : 115 500 km\nPrix : 8 000 €\nChâssis : WDC2533541F409176"
+  },
+  {
+    "id": 87,
+    "brand": "Audi",
+    "model": "A6 Allroad Quattro",
+    "year": 2015,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 178700,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 211,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-0-56479.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-0-56479.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-1-56480.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-2-56481.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-3-56482.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-4-56483.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-5-56484.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-6-56485.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-7-56486.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-8-56487.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-9-56488.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-10-56489.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A6 Allroad Quattro\nAnnée : 2015\nMotorisation : Diesel\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Break tout-chemin / Allroad\nKilométrage : 178 700 km\nPrix : 4 000 €"
+  },
+  {
+    "id": 88,
+    "brand": "Mercedes-Benz",
+    "model": "GLE 300 d 4MATIC AMG",
+    "year": 2023,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 33200,
+    "price": 18500,
+    "monthly": 358,
+    "type": "occasion",
+    "category": "SUV",
+    "power": 272,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-0-56464.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-0-56464.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-1-56465.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-2-56466.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-3-56467.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-4-56468.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-5-56469.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-6-56470.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-7-56471.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-8-56472.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-9-56473.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-10-56474.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-11-56475.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-12-56476.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-13-56477.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-14-56478.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : GLE 300 d 4MATIC AMG\nAnnée : 2023\nMotorisation : Diesel 2.0\nPuissance : 272 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG\nKilométrage : 33 200 km\nPrix : 15 500 €"
+  },
+  {
+    "id": 89,
+    "brand": "Mini",
+    "model": "Cooper S John Cooper Works GP",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 20100,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 306,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-0-56453.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-0-56453.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-1-56455.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-2-56456.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-3-56457.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-4-56458.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-5-56459.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-6-56460.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-7-56461.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-8-56462.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-9-56463.jpg"
+    ],
+    "description": "Marque : MINI\nModèle : Cooper S John Cooper Works GP\nAnnée : 2020\nMotorisation : Essence\nBoîte : Automatique\nCarrosserie : Berline sportive / 3 portes\nKilométrage : 20 100 km\nPrix : 3 000 €"
+  },
+  {
+    "id": 90,
+    "brand": "Renault",
+    "model": "Clio dCi 90 Expression",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 73050,
+    "price": 4000,
+    "monthly": 77,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 90,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-0-56440.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-0-56440.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-1-56441.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-2-56442.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-3-56443.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-4-56444.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-5-56445.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-6-56446.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-7-56447.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-8-56448.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-9-56449.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-10-56450.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-11-56451.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-12-56452.jpg"
+    ],
+    "description": "Marque : Renault\nModèle : Clio dCi 90 Expression\nAnnée : 2013\nMotorisation : Diesel dCi\nPuissance : 90 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nFinition : Expression\nKilométrage : 73 050 km\nPrix : 1 000 €"
+  },
+  {
+    "id": 91,
+    "brand": "BMW",
+    "model": "320i M Sport",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 67900,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 184,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-0-56421.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-0-56421.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-1-56422.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-2-56423.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-3-56424.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-4-56425.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-5-56426.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-6-56427.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-7-56428.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-8-56429.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-9-56430.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-10-56431.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-11-56432.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-12-56433.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-13-56434.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-14-56435.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-15-56436.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-16-56437.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-17-56438.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-18-56439.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : 320i M Sport\nAnnée : 2021\nMotorisation : Essence\nPuissance : 184 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : M Sport\nKilométrage : 67 900 km\nPrix : 6 000 €"
+  },
+  {
+    "id": 92,
+    "brand": "Mercedes-Benz",
+    "model": "CLA 220 CDI 2.1",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 152415,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 170,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338138-0-56406.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338138-0-56406.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338138-1-56407.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338138-2-56408.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338138-3-56409.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-4-56410.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-5-56411.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-6-56412.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-7-56413.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-8-56414.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-9-56415.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-10-56416.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-11-56417.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-12-56418.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-13-56419.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : CLA 220 CDI 2.1\nAnnée : 2013\nMotorisation : Diesel 2.1 CDI\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline coupé\nKilométrage : 152 415 km\nPrix : 2 500 €\nVIN : WDD1173031N019666"
+  },
+  {
+    "id": 93,
+    "brand": "Peugeot",
+    "model": "208 1.2 PureTech GT Line",
+    "year": 2022,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 8250,
+    "price": 11000,
+    "monthly": 213,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 130,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176429-0-56396.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176429-0-56396.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-1-56397.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-2-56398.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-3-56399.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-4-56400.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-5-56401.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-6-56402.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-7-56403.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-8-56404.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-9-56405.jpg"
+    ],
+    "description": "Marque : Peugeot\nModèle : 208 1.2 PureTech GT Line\nAnnée : 2022\nMotorisation : Essence 1.2 PureTech\nPuissance : 130 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : GT Line\nKilométrage : 8 250 km\nNorme : Euro 6d-ISC-FCM\nPrix : 10 000 €"
+  },
+  {
+    "id": 94,
+    "brand": "Mercedes-Benz",
+    "model": "C 250 AMG Line",
+    "year": 2018,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 130459,
+    "price": 7800,
+    "monthly": 151,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 210,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-0-56387.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-0-56387.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-1-56388.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-2-56389.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-3-56391.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-4-56392.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-5-56393.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-6-56394.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-7-56395.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : C 250 AMG Line\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 210 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : AMG Line\nKilométrage : 130 459 km\nPrix : 4 800 €"
+  },
+  {
+    "id": 95,
+    "brand": "BMW",
+    "model": "Série 1 118d M Sport",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 133000,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892966-0-56378.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892966-0-56378.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-1-56379.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-2-56380.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-3-56381.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-4-56382.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-5-56383.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-6-56384.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-7-56385.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-8-56386.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : Série 1 118d M Sport\nAnnée : 2020\nMotorisation : Diesel 2.0\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nFinition : M Sport\nKilométrage : 133 000 km\nPrix : 5000 €"
+  },
+  {
+    "id": 96,
+    "brand": "Peugeot",
+    "model": "208 GT Line 1.2 PureTech",
+    "year": 2016,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 95000,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 110,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618003-0-56364.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618003-0-56364.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-1-56365.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-2-56366.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-3-56367.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-4-56368.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-5-56369.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-6-56370.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-7-56371.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-8-56372.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-9-56373.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-10-56374.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-11-56375.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-12-56376.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-13-56377.jpg"
+    ],
+    "description": "Marque : Peugeot\nModèle : 208 GT Line 1.2 PureTech\nAnnée : 2016\nMotorisation : Essence 1.2 PureTech\nPuissance : 110 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : GT Line\nKilométrage : 95 000 km\nPrix : 5 000 €"
+  },
+  {
+    "id": 97,
+    "brand": "BMW",
+    "model": "320d Touring",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 134000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Break",
+    "power": 163,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-0-56352.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-0-56352.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-1-56353.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-2-56354.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-3-56355.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-4-56356.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-5-56357.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-6-56358.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-7-56359.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-8-56360.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-9-56361.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-10-56363.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : 320d Touring\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 163 ch\nBoîte : Automatique\nCarrosserie : Break / Touring\nKilométrage : 134 000 km\nPrix : 2 500 €"
+  },
+  {
+    "id": 98,
+    "brand": "Mercedes-Benz",
+    "model": "Classe E 200 CDI",
+    "year": 2015,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 195000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 136,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-0-56337.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-0-56337.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-1-56338.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-2-56339.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-3-56341.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-4-56342.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-5-56343.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-6-56344.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-7-56345.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-8-56346.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-9-56347.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-10-56348.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-11-56349.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-12-56350.jpg"
+    ],
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 200 CDI Avantgarde\nAnnée : 2015\nMotorisation : Diesel\nPuissance : 136 ch\nBoîte : Automatique 7G-TRONIC\nCarrosserie : Berline\nFinition : Avantgarde\nKilométrage : 195 000 km\nPrix : 3 000 €"
+  },
+  {
+    "id": 99,
+    "brand": "Volkswagen",
+    "model": "Golf 7 2.0 TDI",
+    "year": 2013,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 164000,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 150,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-0-56326.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-0-56326.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-1-56327.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-2-56328.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-3-56329.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-4-56330.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-5-56331.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-6-56332.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-7-56333.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-8-56334.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-9-56335.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-10-56336.jpg"
+    ],
+    "description": "Marque : Volkswagen\nModèle : Golf 7 2.0 TDI\nAnnée : 2013\nMotorisation : Diesel 2.0 TDI\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nKilométrage : 164 000 km\nPrix : 2 000 € TTC"
+  },
+  {
+    "id": 100,
+    "brand": "Hyundai",
+    "model": "Tucson",
+    "year": 2017,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 127000,
+    "price": 5600,
+    "monthly": 108,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 141,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811621-0-56309.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811621-0-56309.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811621-1-56310.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811621-2-56311.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811621-3-56312.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811621-4-56313.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-5-56314.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-6-56315.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-7-56316.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-8-56317.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-9-56318.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-10-56319.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-11-56320.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-12-56321.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-13-56322.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-14-56323.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-15-56324.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-16-56325.jpg"
+    ],
+    "description": "Marque : Hyundai\nModèle : Tucson\nAnnée : 2017\nMotorisation : Diesel\nPuissance : 141 ch\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 127 000 km\nPrix : 2 600 €"
+  },
+  {
+    "id": 101,
+    "brand": "Audi",
+    "model": "A4 Avant 2.0 TDI S-Line",
+    "year": 2020,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 110284,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 163,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-0-56296.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-0-56296.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-1-56297.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-2-56298.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-3-56299.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-4-56300.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-5-56301.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-6-56302.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-7-56303.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-8-56304.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-9-56305.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-10-56306.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-11-56307.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-12-56308.jpg"
+    ],
+    "description": "Marque : Audi\nModèle : A4 Avant 2.0 TDI S-Line\nAnnée : 2020\nMotorisation : Diesel 2.0 TDI\nPuissance : 163 ch\nBoîte : Automatique S tronic\nCarrosserie : Break / Avant\nFinition : Full S-Line\nKilométrage : 110 284 km\nPrix : 6 000 €"
+  },
+  {
+    "id": 102,
+    "brand": "Volvo",
+    "model": "XC60 II",
+    "year": 2019,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 146000,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 235,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-0-56287.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-0-56287.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-1-56288.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-2-56289.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-3-56290.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-4-56291.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-5-56292.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-6-56293.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-7-56294.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-8-56295.jpg"
+    ],
+    "description": "Marque : Volvo\nModèle : XC60 II\nAnnée : 2019\nMotorisation : Diesel\nPuissance : 235 ch\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 146 000 km\nPrix : 4 000 €"
+  },
+  {
+    "id": 103,
+    "brand": "BMW",
+    "model": "120 Coupé",
+    "year": 2009,
+    "fuel": "Diesel",
+    "transmission": "Manuelle",
+    "mileage": 212000,
+    "price": 5000,
+    "monthly": 97,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 177,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-0-56277.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-0-56277.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-1-56278.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-2-56279.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-3-56280.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-4-56281.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-5-56282.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-6-56283.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-7-56284.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-8-56285.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-9-56286.jpg"
+    ],
+    "description": "Marque : BMW\nModèle : 120 Coupé\nAnnée : 2009\nMotorisation : Gasoil (Diesel)\nBoîte : Manuelle\nCarrosserie : Coupé\nKilométrage : 212 000 km\nCouleur : Bleu\nPrix : 2 000 €"
+  },
+  {
+    "id": 104,
+    "brand": "Volkswagen",
+    "model": "Polo 1.8 GTI DSG",
+    "year": 2016,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 110296,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 192,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-0-56263.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-0-56263.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-1-56264.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-2-56265.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-3-56266.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-4-56267.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-5-56268.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-6-56269.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-7-56270.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-8-56271.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-9-56272.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-10-56273.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-11-56274.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-12-56275.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-13-56276.jpg"
+    ],
+    "description": "Marque : Volkswagen\nModèle : Polo 1.8 GTI DSG\nAnnée : 2016\nMotorisation : Essence 1.8 TSI\nPuissance : 192 ch\nBoîte : Automatique DSG\nCarrosserie : Coupé / 3 portes\nKilométrage : 110 296 km\nPrix : 2 500 €"
+  },
+  {
+    "id": 105,
+    "brand": "Mercedes-Benz",
+    "model": "Classe A 180 1.6 Turbo",
+    "year": 2017,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 97000,
+    "price": 6500,
+    "monthly": 126,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 122,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535545-0-56247.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535545-0-56247.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-1-56248.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-2-56249.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-3-56250.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-4-56251.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-5-56252.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-6-56253.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-7-56254.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-8-56255.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-9-56256.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-10-56257.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-11-56258.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-12-56259.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-13-56260.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-14-56261.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-15-56262.jpg"
+    ],
+    "description": "💎PRIX : 3.500 €\n\n💜Mercedes-Benz A 180 1.6 Turbo\nRégulateur et limiteur de vitesse |\nPack AMG |\nCaméra de recul |\nSièges sport avec excellent maintien latéral\n🚗 Année : 2017\n📌 Première immatriculation : 28.12.2017\n📏 Kilométrage : 97 000 km (certifié)\n⚙️ Puissance : 122 ch\n⛽ Carburant : Essence\n🕹️ Boîte de vitesse : Automatique"
+  },
+  {
+    "id": 106,
+    "brand": "Audi",
+    "model": "RS6 Avant 4.0 TFSI Quattro",
+    "year": 2024,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 3826,
+    "price": 11000,
+    "monthly": 213,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 630,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-0-56234.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-0-56234.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-1-56235.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-2-56236.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-3-56237.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-4-56238.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-5-56239.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-6-56240.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-7-56241.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-8-56242.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-9-56243.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-10-56244.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-11-56245.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-12-56246.jpg"
+    ],
+    "description": "💎Prix : 8.000 €\n\n💜RS6 Avant 4.0 TFSI Quattro Bi-Turbo V8\n\n2024/2024. 3 826 km\n630 CV\nTransmission AT9\nApple CarPlayTM\nPhares LED Matrix\nÉcran tactile de 8,6\" pour la troisième personne\nAudi Virtual Cockpit 12,3\"\nSystème audio 3D Bang & Olufsen®\nRoues de 22\" + Affichage frontal\nBoîte électrique\nVitres isolées thermiques\nÉclairage de la cabine téléphonique Audi"
+  },
+  {
+    "id": 107,
+    "brand": "Kia",
+    "model": "ProCeed 1.5 T-GDI GT-Line",
+    "year": 2025,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 9200,
+    "price": 11000,
+    "monthly": 213,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 140,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-0-56214.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-0-56214.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-1-56215.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-2-56216.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-3-56217.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-4-56218.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-5-56219.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-6-56220.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-7-56221.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-8-56222.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-9-56223.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-10-56224.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-11-56225.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-12-56226.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-13-56227.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-14-56228.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-15-56229.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-16-56230.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-17-56231.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-18-56232.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-19-56233.jpg"
+    ],
+    "description": "PRIX : 8.000 €\n\n🔥 KIA PROCEED 1.5 T-GDI GT-LINE – 140 CH – DCT7 🔥\n\n✨ GT-LINE • 9 200 KM • DCT7 • TECHNOLOGIE • JBL • CAMÉRA ✨\n\n✅Découvrez cette superbe Kia ProCeed 1.5 T-GDI GT-Line, un élégant shooting brake alliant design sportif, confort premium et technologies de dernière génération.\n\n✅Avec seulement 9 200 km, une mise en circulation en 02/2025 et sa boîte automatique DCT7 à double embrayage, ce véhicule de démonstration représente une opportunité particulièrement intéressante.\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 02/2025\n• Kilométrage : seulement 9 200 km\n• Motorisation : Essence 1.5 T-GDI\n• Puissance : 103 kW – 140 CH DIN\n• Transmission : Automatique DCT7 – 7 rapports\n• Carrosserie : Break / Shooting Brake\n• Finition : GT-Line\n• État : Occasion – non accidentée\n• Statut : Véhicule de démonstration\n• Norme : Euro 6e\n• Référence : 93116\n• Disponibilité : Immédiate"
+  },
+  {
+    "id": 108,
+    "brand": "Bentley",
+    "model": "Flying Spur S",
+    "year": 2018,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 65590,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 635,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-0-56190.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-0-56190.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-1-56191.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-2-56192.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-3-56193.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-4-56194.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-5-56195.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-6-56196.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-7-56197.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-8-56198.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-9-56199.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-10-56200.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-11-56201.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-12-56202.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-13-56203.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-14-56204.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-15-56205.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-16-56209.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-17-56210.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-18-56211.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-19-56213.jpg"
+    ],
+    "description": "PRIX : 4.000 €\n\n BENTLEY FLYING SPUR S – 635 CH – V8 – 4×4 – AUTOMATIQUE 👑\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 07/2018\n• Kilométrage : 65 590 km\n• Motorisation : Essence\n• Puissance : 467 kW – 635 CH DIN\n• Transmission : Automatique\n• Transmission intégrale : 4×4\n• Carrosserie : Berline de luxe\n• Finition : Flying Spur S\n• Référence : 565NDX\n• Disponibilité : Immédiate"
+  },
+  {
+    "id": 109,
+    "brand": "Kia",
+    "model": "Stinger 3.3 T-GDI GT",
+    "year": 2019,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 72935,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 366,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-0-56171.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-0-56171.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-1-56172.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-2-56173.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-3-56174.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-4-56175.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-5-56176.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-6-56177.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-7-56178.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-8-56179.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-9-56180.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-10-56181.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-11-56182.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-12-56183.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-13-56184.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-14-56185.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-15-56186.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-16-56187.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-17-56188.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-18-56189.jpg"
+    ],
+    "description": "PRIX : 6.000 €\n\nKIA STINGER 3.3 T-GDI GT – 366 CH – AUTOMATIQUE \n\n🏁 GT • 3.3 V6 T-GDI • HEAD-UP DISPLAY • 360° • HARMAN KARDON 🏁\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 07/2019\n• Kilométrage : 72 935 km\n• Motorisation : Essence – 3.3 T-GDI\n• Puissance : 269 kW – 366 CH DIN\n• Transmission : Boîte automatique\n• Carrosserie : Berline sportive\n• Finition : GT\n• Origine : Édition allemande\n• État : Occasion – non accidentée\n• Norme : Euro 6\n• Référence : 0273D\n• Disponibilité : Immédiate"
+  },
+  {
+    "id": 110,
+    "brand": "Kia",
+    "model": "Sportage 1.6 T-GDI Vision",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 43000,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 177,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-0-56154.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-0-56154.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-1-56155.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-2-56156.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-3-56157.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-4-56158.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-5-56159.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-6-56160.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-7-56161.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-8-56162.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-9-56163.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-10-56164.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-11-56165.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-12-56166.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-13-56167.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-14-56168.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-15-56169.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-16-56170.jpg"
+    ],
+    "description": "PRIX 4.000 €\n\nKIA SPORTAGE 1.6 T-GDI VISION – 177 CH – DCT7 \n\n✨ VISION • AUTOMATIQUE • NAVIGATION • CAMÉRA DE RECUL • 43 000 KM ✨\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 08/2020\n• Kilométrage : 43 000 km\n• Motorisation : Essence – 1.6 T-GDI\n• Cylindrée : 1 591 cm³\n• Puissance : 130 kW – 177 CH DIN\n• Transmission : Automatique DCT7 – 7 rapports\n• Transmission : Traction avant – 2WD\n• Carrosserie : SUV\n• Finition : Vision\n• Norme : Euro 6d-TEMP\n• Disponibilité : Immédiate"
+  },
+  {
+    "id": 111,
+    "brand": "Mercedes-Benz",
+    "model": "CLA 200 d/AMG",
+    "year": 2019,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 54000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 136,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-0-1000056350.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-0-1000056350.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-1-1000056351.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-2-1000056352.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-3-1000056354.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-4-1000056355.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-5-1000056356.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-6-1000056357.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-7-1000056358.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342129-8-1000056359.jpg"
+    ],
+    "description": "\n📍 Année: 11.2019\n📍 Kilométrage : 54 000  km (Certifié) \n📍 Puissance : 136 CH\n📍 Carburant : Diesel⛽ \n📍 Boîte de vitesse : Automatique \n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n\n"
+  },
+  {
+    "id": 112,
+    "brand": "Toyota",
+    "model": "GR Yaris 1.6 High performance",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 75780,
+    "price": 10000,
+    "monthly": 193,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 261,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-0-56135.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-0-56135.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-1-56136.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-2-56137.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-3-56138.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-4-56139.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-5-56140.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-6-56141.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-7-56142.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-8-56143.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-9-56144.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-10-56145.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-11-56146.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-12-56147.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-13-56148.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119796-14-56149.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119797-15-56150.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119797-16-56151.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119797-17-56152.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119797-18-56153.jpg"
+    ],
+    "description": "PRIX : 7.000 € \n\n🔥 TOYOTA GR YARIS 1.6 – HIGH PERFORMANCE – 261 CH – 4×4 🔥\n\n🏁 UNE PETITE BOMBE JAPONAISE – VÉRITABLE GR PERFORMANCE 🏁\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 10/2021\n• Kilométrage : 75 780 km\n• Motorisation : Essence\n• Cylindrée : 1 618 cm³\n• Puissance : 192 kW – 261 CH DIN\n• Transmission : Boîte manuelle\n• Transmission intégrale : 4×4\n• Finition : GR 1.6 High-Performance\n• État : Occasion – non accidentée\n• Disponibilité : Immédiate\n• Référence : 103210485"
+  },
+  {
+    "id": 113,
+    "brand": "BMW",
+    "model": "320 Touring",
+    "year": 2016,
+    "fuel": "Diesel",
+    "transmission": "Automatique",
+    "mileage": 134000,
+    "price": 5500,
+    "monthly": 106,
+    "type": "occasion",
+    "category": "Break",
+    "power": 163,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860830-0-1000056325.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860830-0-1000056325.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860831-1-1000056326.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-2-1000056327.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-3-1000056328.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-4-1000056329.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-5-1000056330.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-6-1000056331.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-7-1000056332.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-8-1000056333.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-9-1000056334.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-10-1000056335.jpg"
+    ],
+    "description": "\nModèle :BMW 320d\nTouring 163 ch automatique\nAnnée: 2013\nKILOMÉTRAGE : 134000km\nBoîte à vitesse : automatique \nCarburant : diesel\n\nÉQUIPEMENT :\n\nAntidérapant\nAntidérapant\nrégulateur de vitesse\nhayon électrique\nMiroirs électriques\nIsofix\nOrdinateur de bord\nClimatisation\nLumière LED\nLes bras du milieu\nVolant multifonction\nCarrés foncés\ndémarrage sans clé\nVolant chauffant\nVerrouillage centralisé\nVolant en cuir\n\n ✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n"
+  },
+  {
+    "id": 114,
+    "brand": "Kia",
+    "model": "ProCeed 1.6 T-GDI GT",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 69825,
+    "price": 7000,
+    "monthly": 135,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 204,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-0-56097.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-0-56097.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-1-56098.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-2-56099.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-3-56100.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-4-56101.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-5-56102.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817857-6-56103.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-7-56104.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-8-56105.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-9-56106.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-10-56107.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-11-56108.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-12-56109.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-13-56110.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-14-56111.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-15-56112.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-16-56113.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-17-56124.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-18-56126.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-19-56132.jpg"
+    ],
+    "description": "PRIX : 4.000 €\n\nKIA PROCEED 1.6 T-GDI GT – 204 CH – AUTOMATIQUE\n\n✨ GT • LED • TOIT PANORAMIQUE • ALCANTARA • NAVIGATION ✨\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 06/2020\n• Kilométrage : 69 825 km\n• Motorisation : Essence\n• Puissance : 150 kW – 204 CH DIN\n• Transmission : Boîte automatique\n• Carrosserie : Break sportif\n• Finition : GT\n• Origine : Édition allemande\n• État : Occasion – non accidentée\n• Disponibilité : Immédiate\n• Référence : 0338D"
+  },
+  {
+    "id": 115,
+    "brand": "Nissan",
+    "model": "Juke",
+    "year": 2016,
+    "fuel": "Essence",
+    "transmission": "Manuelle",
+    "mileage": 122001,
+    "price": 6500,
+    "monthly": 126,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 116,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701726-0-1000056315.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701726-0-1000056315.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701728-1-1000056316.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701731-2-1000056317.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701731-3-1000056318.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701731-4-1000056319.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701731-5-1000056320.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701731-6-1000056321.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701731-7-1000056322.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701732-8-1000056323.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701732-9-1000056324.jpg"
+    ],
+    "description": "\n\n◾ 🚗 Nissan Juke\n📍 Année : 06.2016\n📍 Kilométrage: 122 001 Certifié) \n📍 Puissance : 116 CH\n📍 Carburant : Essence ⛽ \n📍 Boîte de vitesse : Manuelle \n\nENVOYER UN MESSAGE UNIQUEMENT SI VOTRE ACHAT EST DANS L’IMMÉDIAT.\n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n\n"
+  },
+  {
+    "id": 116,
+    "brand": "Toyota",
+    "model": "RAV4 2.5 Hybrid Black Edition",
+    "year": 2020,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 60000,
+    "price": 9000,
+    "monthly": 174,
+    "type": "occasion",
+    "category": "Berline",
+    "power": 218,
+    "featured": false,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468719-0-56082.jpg",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468719-0-56082.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-1-56083.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-2-56084.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-3-56085.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-4-56086.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-5-56087.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-6-56088.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-7-56089.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-8-56090.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-9-56091.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-10-56092.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-11-56093.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-12-56094.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-13-56095.jpg",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-14-56096.jpg"
+    ],
+    "description": "PRIX 6.000 € \n\nTOYOTA RAV4 2.5 HYBRID BLACK EDITION – 218 CH – AUTOMATIQUE \n\nBLACK EDITION • HYBRIDE • CAMÉRA 360° • KEYLESS • NAVIGATION \n\n🚘 INFORMATIONS PRINCIPALES\n\n• Première immatriculation : 11/2020\n• Kilométrage : 60 000 km\n• Motorisation : Hybride essence / électrique\n• Moteur : 2.5 L – 2 487 cm³\n• Puissance : 160 kW – 218 CH DIN\n• Transmission : Automatique\n• Transmission : Traction avant – 2WD\n• Carrosserie : SUV\n• Finition : Black Edition\n• Couleur : Noir profond\n• Portes : 5\n• État : Occasion – non accidenté\n• Propriétaire : 1er propriétaire\n• Disponibilité : Immédiate"
+  },
+  {
+    "id": 117,
+    "brand": "BMW",
+    "model": "420D décapotable",
+    "year": 2026,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 75588,
+    "price": 23000,
+    "monthly": 445,
+    "type": "neuf",
+    "category": "Cabriolet",
+    "power": 260,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273455-0-9.webp",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273455-0-9.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-1-10.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-2-11.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-3-12.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-4-13.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-5-14.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-6-15.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-7-16.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-8-17.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-9-18.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273457-10-19.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-11-20.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-12-21.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-13-22.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-14-23.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-15-24.webp"
+    ],
+    "description": ""
+  },
+  {
+    "id": 118,
+    "brand": "Mercedes-Benz",
+    "model": "Classe C C 63 AMG",
+    "year": 2026,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 0,
+    "price": 28000,
+    "monthly": 542,
+    "type": "neuf",
+    "category": "Berline",
+    "power": 360,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634410-0-1.webp",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634410-0-1.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-1-2.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-2-3.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-3-4.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-4-5.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-5-6.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-6-7.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-7-8.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-8-9.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-9-10.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-10-10.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-11-11.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-12-12.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-13-13.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-14-14.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-15-15.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-16-16.webp"
+    ],
+    "description": ""
+  },
+  {
+    "id": 119,
+    "brand": "Audi",
+    "model": "i E-tron GT RS 93",
+    "year": 2021,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 58000,
+    "price": 8000,
+    "monthly": 155,
+    "type": "occasion",
+    "category": "Coupé",
+    "power": 150,
+    "featured": true,
+    "promo": true,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960780-0-IMG_1229.webp",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960780-0-IMG_1229.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960781-1-IMG_1230.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960781-2-IMG_1231.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960781-3-IMG_1232.webp"
+    ],
+    "description": "\nAudi E-tron GT RS directement d’Audi Allemagne, voiture de concession. Dernier service à 51 474 km La voiture bénéficie toujours d’une garantie constructeur jusqu’au 25-11-2026 ou 100 000 km Papiers d’enregistrement allemands Numéro de châssis VIN/WAUZZZFW8N7903036 Signes d’usure liés à l’âge et au kilométrage"
+  },
+  {
+    "id": 120,
+    "brand": "BMW",
+    "model": "420D décapotable",
+    "year": 2016,
+    "fuel": "Essence",
+    "transmission": "Automatique",
+    "mileage": 100000,
+    "price": 6000,
+    "monthly": 116,
+    "type": "occasion",
+    "category": "Cabriolet",
+    "power": 260,
+    "featured": true,
+    "promo": false,
+    "image": "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644048-0-IMG_1225.webp",
+    "images": [
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644048-0-IMG_1225.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644049-1-IMG_1226.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644049-2-IMG_1227.webp",
+      "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644049-3-IMG_1228.webp"
+    ],
+    "description": "BMW 420D Cabriolet 163 ch 117 389 kilomètres originaux Euro 6 Boîte automatique Régulateur de vitesse Climatisation Navigation Radio/auxiliaire/CD Vitres électriques Sièges à réglage électrique Sièges chauffants ..."
+  }
+];
+
+// Remise automatique de 2 000 € sur les véhicules d'occasion.
+function applyUsedVehicleDiscount() {
+  vehicles.forEach((vehicle) => {
+    if (vehicle.type === "occasion" && !vehicle.discountApplied) {
+      vehicle.price = Math.max(0, Number(vehicle.price) - 2000);
+      vehicle.discountApplied = true;
+    }
+  });
+}
+
+const brandLogos = {
+  "BMW": "https://logo.clearbit.com/bmw.com",
+  "Mercedes-Benz": "https://logo.clearbit.com/mercedes-benz.com",
+  "Audi": "https://logo.clearbit.com/audi.com",
+  "Porsche": "https://logo.clearbit.com/porsche.com",
+  "Volkswagen": "https://logo.clearbit.com/vw.com",
+  "Tesla": "https://logo.clearbit.com/tesla.com",
+  "Peugeot": "https://logo.clearbit.com/peugeot.com",
+  "SEAT": "https://logo.clearbit.com/seat.com",
+  "Honda": "https://logo.clearbit.com/honda.com",
+  "Volvo": "https://logo.clearbit.com/volvo.com",
+  "Citroen": "https://logo.clearbit.com/citroen.com",
+  "Toyota": "https://logo.clearbit.com/toyota.com",
+  "Renault": "https://logo.clearbit.com/renault.com",
+  "Ford": "https://logo.clearbit.com/ford.com",
+  "Bentley": "https://logo.clearbit.com/bentleymotors.com",
+  "Hyundai": "https://logo.clearbit.com/hyundai.com",
+  "Jaguar": "https://logo.clearbit.com/jaguar.com",
+  "Kia": "https://logo.clearbit.com/kia.com",
+  "Land Rover": "https://logo.clearbit.com/landrover.com",
+  "Mini": "https://logo.clearbit.com/mini.com",
+  "Nissan": "https://logo.clearbit.com/nissan.com",
+  "Opel": "https://logo.clearbit.com/opel.com",
+  "Skoda": "https://logo.clearbit.com/skoda-auto.com"
+};
+
+// ===== DOM ELEMENTS =====
+const vehiclesGrid = document.getElementById("vehicles-grid");
+const filterBtns = document.querySelectorAll(".filter-btn");
+const mobileToggle = document.querySelector(".mobile-toggle");
+const nav = document.querySelector(".nav");
+const header = document.querySelector(".header");
+const contactForm = document.getElementById("contact-form");
+
+// Advanced filter elements
+const searchInput = document.getElementById("search-input");
+const filterBrand = document.getElementById("filter-brand");
+const filterFuel = document.getElementById("filter-fuel");
+const filterType = document.getElementById("filter-type");
+const filterPromo = document.getElementById("filter-promo");
+const sortBy = document.getElementById("sort-by");
+const resultsCount = document.getElementById("results-count");
+const resetFiltersBtn = document.getElementById("reset-filters");
+
+// ===== POPULATE BRAND FILTER =====
+function populateBrands() {
+  if (!filterBrand) return;
+  const brands = [...new Set(vehicles.map(v => v.brand))].sort();
+  brands.forEach(brand => {
+    const opt = document.createElement("option");
+    opt.value = brand;
+    opt.textContent = brand;
+    filterBrand.appendChild(opt);
+  });
+}
+
+// ===== RENDER VEHICLES =====
+function renderVehicles(list = null) {
+  if (!vehiclesGrid) return;
+
+  const filtered = list !== null ? list : applyFilters();
+
+  if (resultsCount) {
+    const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
+    const word = filtered.length > 1 ? t("vehicles.results_plural", "véhicules") : t("vehicles.results", "véhicule");
+    resultsCount.textContent = `${filtered.length} ${word}`;
+  }
+
+  if (filtered.length === 0) {
+    const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
+    vehiclesGrid.innerHTML = `
+      <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-secondary);">
+        <p style="font-size:1.2rem;margin-bottom:8px;">${t("vehicles.no_results", "Aucun véhicule trouvé")}</p>
+        <p>${t("vehicles.no_results_hint", "Essayez de modifier vos filtres.")}</p>
+      </div>`;
+    return;
+  }
+
+  vehiclesGrid.innerHTML = filtered.map(v => `
+    <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
+      <div class="vehicle-image">
+        <img src="${v.image}" alt="${v.brand} ${v.model}" loading="lazy">
+        <div class="vehicle-badges">
+          ${v.featured ? `<span class="badge badge-featured">${(window.I18N && I18N.t("vehicles.badge_featured") !== "vehicles.badge_featured") ? I18N.t("vehicles.badge_featured") : "★ À la une"}</span>` : ''}
+          ${v.promo ? `<span class="badge badge-promo">${(window.I18N && I18N.t("vehicles.badge_promo") !== "vehicles.badge_promo") ? I18N.t("vehicles.badge_promo") : "Promo"}</span>` : ''}
+          <span class="badge badge-category">${v.category}</span>
+        </div>
+      </div>
+      <div class="vehicle-body">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          ${brandLogos[v.brand] ? `<img src="${brandLogos[v.brand]}" alt="${v.brand}" style="height:22px;width:auto;object-fit:contain;filter:var(--logo-filter);opacity:0.9;" onerror="this.style.display='none'">` : ''}
+          <h3 class="vehicle-title" style="margin:0;">${v.brand} ${v.model}</h3>
+        </div>
+        <div class="vehicle-specs">
+          ${v.year} · ${v.fuel} · ${v.transmission}
+          ${v.mileage === 0 ? ' · 0 km' : ' · ' + v.mileage.toLocaleString('fr-FR') + ' km'}
+        </div>
+        <div class="vehicle-price">
+          <div>
+            <div class="price-main">${v.price.toLocaleString('fr-FR')} €</div>
+            <div class="price-month">ou ${v.monthly} €/mois</div>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <a href="vehicule.html?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">Voir →</a>
+            <button type="button" class="btn btn-primary-sm" onclick="event.stopPropagation(); addVehicleFromCatalog(${v.id}, this);">Panier</button>
+          </div>
+        </div>
+      </div>
+    </article>
+  `).join("");
+}
+
+async function addVehicleFromCatalog(vehicleId, button) {
+  if (!window.API || !API.isLoggedIn()) {
+    if (confirm("Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?")) {
+      window.location.href = "connexion.html";
+    }
+    return;
+  }
+
+  const vehicle = vehicles.find((item) => item.id === vehicleId);
+  if (!vehicle) return;
+
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = "Ajout…";
+  try {
+    await API.addToCart(vehicle);
+    button.textContent = "✓ Ajouté";
+    window.location.href = "compte.html";
+  } catch (error) {
+    button.disabled = false;
+    button.textContent = originalText;
+    alert(error.message);
+  }
+}
+
+// ===== APPLY ALL FILTERS =====
+function applyFilters() {
+  let filtered = [...vehicles];
+
+  // Search
+  if (searchInput && searchInput.value.trim()) {
+    const q = searchInput.value.trim().toLowerCase();
+    filtered = filtered.filter(v =>
+      v.brand.toLowerCase().includes(q) ||
+      v.model.toLowerCase().includes(q) ||
+      `${v.brand} ${v.model}`.toLowerCase().includes(q)
+    );
+  }
+
+  // Brand
+  if (filterBrand && filterBrand.value !== "all") {
+    filtered = filtered.filter(v => v.brand === filterBrand.value);
+  }
+
+  // Fuel
+  if (filterFuel && filterFuel.value !== "all") {
+    filtered = filtered.filter(v => v.fuel === filterFuel.value);
+  }
+
+  // Type (neuf / occasion)
+  if (filterType && filterType.value !== "all") {
+    filtered = filtered.filter(v => v.type === filterType.value);
+  }
+
+  // Promo only
+  if (filterPromo && filterPromo.checked) {
+    filtered = filtered.filter(v => v.promo);
+  }
+
+  // Sorting
+  if (sortBy && sortBy.value !== "default") {
+    switch (sortBy.value) {
+      case "brand-asc":
+        filtered.sort((a, b) => a.brand.localeCompare(b.brand, "fr"));
+        break;
+      case "brand-desc":
+        filtered.sort((a, b) => b.brand.localeCompare(a.brand, "fr"));
+        break;
+      case "price-asc":
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case "year-desc":
+        filtered.sort((a, b) => b.year - a.year);
+        break;
+      case "year-asc":
+        filtered.sort((a, b) => a.year - b.year);
+        break;
+    }
+  }
+
+  return filtered;
+}
+
+// ===== BIND FILTER EVENTS =====
+function bindFilterEvents() {
+  if (searchInput) searchInput.addEventListener("input", () => renderVehicles());
+  if (filterBrand) filterBrand.addEventListener("change", () => renderVehicles());
+  if (filterFuel) filterFuel.addEventListener("change", () => renderVehicles());
+  if (filterType) filterType.addEventListener("change", () => renderVehicles());
+  if (filterPromo) filterPromo.addEventListener("change", () => renderVehicles());
+  if (sortBy) sortBy.addEventListener("change", () => renderVehicles());
+
+  if (resetFiltersBtn) {
+    resetFiltersBtn.addEventListener("click", () => {
+      if (searchInput) searchInput.value = "";
+      if (filterBrand) filterBrand.value = "all";
+      if (filterFuel) filterFuel.value = "all";
+      if (filterType) filterType.value = "all";
+      if (sortBy) sortBy.value = "default";
+      if (filterPromo) filterPromo.checked = false;
+      renderVehicles();
+    });
+  }
+
+  // Legacy simple filter buttons (homepage)
+  if (filterBtns.length) {
+    filterBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        filterBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const f = btn.dataset.filter;
+        let list = vehicles;
+        if (f === "neuf") list = vehicles.filter(v => v.type === "neuf");
+        else if (f === "occasion") list = vehicles.filter(v => v.type === "occasion");
+        else if (f === "promo") list = vehicles.filter(v => v.promo);
+        renderVehicles(list);
+      });
+    });
+  }
+}
+
+// ===== MOBILE MENU =====
+if (mobileToggle && nav) {
+  mobileToggle.addEventListener("click", () => {
+    nav.classList.toggle("open");
+    mobileToggle.textContent = nav.classList.contains("open") ? "✕" : "☰";
+  });
+}
+
+// Close menu on link click
+document.querySelectorAll(".nav > a, .dropdown a").forEach(link => {
+  link.addEventListener("click", () => {
+    if (nav) nav.classList.remove("open");
+    if (mobileToggle) mobileToggle.textContent = "☰";
+  });
+});
+
+// Mobile: toggle Plus dropdown
+document.querySelectorAll(".nav-item > a").forEach(trigger => {
+  trigger.addEventListener("click", (e) => {
+    if (window.innerWidth <= 768) {
+      e.preventDefault();
+      trigger.parentElement.classList.toggle("open");
+    }
+  });
+});
+
+// ===== STICKY HEADER =====
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 50) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+});
+
+// ===== CONTACT FORM =====
+if (contactForm) {
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const btn = contactForm.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.textContent = "Envoi en cours...";
+    btn.disabled = true;
+
+    setTimeout(() => {
+      alert("Merci ! Votre message a bien été envoyé. Notre équipe vous recontactera sous 24h.");
+      contactForm.reset();
+      btn.textContent = originalText;
+      btn.disabled = false;
+    }, 1200);
+  });
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCounters() {
+  const counters = document.querySelectorAll(".stat-item strong");
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const suffix = el.dataset.suffix || "";
+        let current = 0;
+        const increment = target / 60;
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            el.textContent = target.toLocaleString("fr-FR") + suffix;
+            clearInterval(timer);
+          } else {
+            el.textContent = Math.floor(current).toLocaleString("fr-FR") + suffix;
+          }
+        }, 25);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(c => observer.observe(c));
+}
+
+// ===== INIT =====
+async function loadPublicVehicles() {
+  try {
+    if (window.API && typeof API.getVehicles === "function") {
+      const managedVehicles = await API.getVehicles();
+      if (Array.isArray(managedVehicles) && managedVehicles.length) {
+        vehicles.splice(0, vehicles.length, ...managedVehicles);
+      }
+    }
+  } catch (error) {
+    console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
+  }
+  applyUsedVehicleDiscount();
+  populateBrands();
+  bindFilterEvents();
+  renderVehicles();
+  animateCounters();
+}
+
+document.addEventListener("DOMContentLoaded", loadPublicVehicles);
+
+// ===== FAQ CHAT WIDGET =====
+const faqAnswers = {
+  "garantie": "Tous nos véhicules d'occasion sont vendus avec une garantie minimum de 12 mois. Des extensions jusqu'à 36 mois sont disponibles.",
+  "livraison": "Oui, nous livrons dans toute la France et dans la plupart des pays européens. Le transport est sécurisé et assuré.",
+  "financement": "Oui. Nous proposons crédit classique, LOA et LLD avec plusieurs partenaires bancaires. Utilisez notre simulateur sur la page Financement.",
+  "reprise": "Oui, estimation gratuite de votre véhicule actuel. Offre sous 24h, sans engagement.",
+  "horaires": "Lundi – Vendredi : 09:00 – 19:00. Samedi : 10:00 – 17:00. Dimanche : fermé.",
+  "contact": "Vous pouvez nous joindre au +33 1 42 86 82 00, par email contact@autoprestige.fr ou via WhatsApp.",
+  "default": "Merci pour votre question ! Un conseiller peut vous répondre plus précisément. Écrivez-nous sur WhatsApp ou utilisez le formulaire de contact."
+};
+
+function matchFaq(text) {
+  const t = text.toLowerCase();
+  if (t.includes("garanti")) return faqAnswers.garantie;
+  if (t.includes("livr") || t.includes("transport")) return faqAnswers.livraison;
+  if (t.includes("financ") || t.includes("crédit") || t.includes("credit") || t.includes("loa")) return faqAnswers.financement;
+  if (t.includes("reprise") || t.includes("reprendre") || t.includes("vendre")) return faqAnswers.reprise;
+  if (t.includes("horaire") || t.includes("ouvert")) return faqAnswers.horaires;
+  if (t.includes("contact") || t.includes("téléphone") || t.includes("telephone") || t.includes("email") || t.includes("whatsapp")) return faqAnswers.contact;
+  if (t.includes("bonjour") || t.includes("salut") || t.includes("hello")) return "Bonjour ! 👋 Je suis l'assistant Auto-prestige. Posez-moi une question sur la garantie, la livraison, le financement ou la reprise.";
+  return faqAnswers.default;
+}
+
+function initChatWidget() {
+  if (document.querySelector(".chat-widget")) return;
+
+  const widget = document.createElement("div");
+  widget.className = "chat-widget";
+  widget.innerHTML = `
+    <div class="chat-panel">
+      <div class="chat-header">
+        <span>Assistant Auto-prestige</span>
+        <button type="button" aria-label="Fermer" class="chat-close">✕</button>
+      </div>
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg bot">Bonjour ! 👋 Posez une question ou choisissez une suggestion ci-dessous.</div>
+      </div>
+      <div class="chat-quick">
+        <button type="button" data-q="Quelle garantie proposez-vous ?">Garantie</button>
+        <button type="button" data-q="Livrez-vous partout en France ?">Livraison</button>
+        <button type="button" data-q="Proposez-vous un financement ?">Financement</button>
+        <button type="button" data-q="Puis-je faire reprendre mon véhicule ?">Reprise</button>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" id="chat-input" placeholder="Écrivez votre question...">
+        <button type="button" id="chat-send">Envoyer</button>
+      </div>
+    </div>
+    <button type="button" class="chat-toggle" aria-label="Ouvrir le chat">💬</button>
+  `;
+  document.body.appendChild(widget);
+
+  const toggle = widget.querySelector(".chat-toggle");
+  const closeBtn = widget.querySelector(".chat-close");
+  const messages = widget.querySelector("#chat-messages");
+  const input = widget.querySelector("#chat-input");
+  const sendBtn = widget.querySelector("#chat-send");
+
+  function addMsg(text, who) {
+    const div = document.createElement("div");
+    div.className = "chat-msg " + who;
+    div.textContent = text;
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function handleSend(text) {
+    text = (text || "").trim();
+    if (!text) return;
+    addMsg(text, "user");
+    input.value = "";
+    setTimeout(() => addMsg(matchFaq(text), "bot"), 400);
+  }
+
+  toggle.addEventListener("click", () => widget.classList.toggle("open"));
+  closeBtn.addEventListener("click", () => widget.classList.remove("open"));
+  sendBtn.addEventListener("click", () => handleSend(input.value));
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleSend(input.value);
+  });
+  widget.querySelectorAll(".chat-quick button").forEach(btn => {
+    btn.addEventListener("click", () => handleSend(btn.dataset.q));
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  initChatWidget();
+});
+
+// ===== THEME TOGGLE (light / dark uniquement) =====
+// La préférence est gérée surtout dans header.js.
+// Ici on garde des helpers pour le reste du site.
+
+function resolveThemePref(pref) {
+  return (pref === "light") ? "light" : "dark";
+}
+
+function initTheme() {
+  let pref = localStorage.getItem("theme");
+  if (pref !== "light" && pref !== "dark") pref = "dark";
+  const resolved = resolveThemePref(pref);
+  document.documentElement.setAttribute("data-theme", resolved);
+  document.documentElement.setAttribute("data-theme-pref", pref);
+  localStorage.setItem("theme", pref);
+  updateThemeButtons(pref, resolved);
+}
+
+function updateThemeButtons(pref, resolved) {
+  pref = pref || localStorage.getItem("theme") || "dark";
+  resolved = resolved || resolveThemePref(pref);
+  document.querySelectorAll(".theme-toggle").forEach(btn => {
+    if (resolved === "dark") {
+      btn.textContent = "☀️";
+      btn.title = "Mode sombre → cliquer pour clair";
+    } else {
+      btn.textContent = "🌙";
+      btn.title = "Mode clair → cliquer pour sombre";
+    }
+  });
+}
+
+function toggleTheme() {
+  // Alternance clair ↔ sombre uniquement
+  const current = localStorage.getItem("theme") === "light" ? "light" : "dark";
+  const next = current === "dark" ? "light" : "dark";
+  localStorage.setItem("theme", next);
+  const resolved = resolveThemePref(next);
+  document.documentElement.setAttribute("data-theme", resolved);
+  document.documentElement.setAttribute("data-theme-pref", next);
+  updateThemeButtons(next, resolved);
+}
+
+function injectThemeToggle() {
+  // Bouton fourni par header.js — ne pas doubler
+  if (document.querySelector(".theme-toggle")) return;
+  const actions = document.querySelector(".header-actions");
+  if (!actions) return;
+  const btn = document.createElement("button");
+  btn.className = "theme-toggle";
+  btn.type = "button";
+  btn.addEventListener("click", toggleTheme);
+  actions.insertBefore(btn, actions.firstChild);
+  initTheme();
+}
+
+// Anti-flash : clair ou sombre uniquement (défaut sombre)
+(function() {
+  var pref = localStorage.getItem("theme");
+  if (pref !== "light" && pref !== "dark") pref = "dark";
+  document.documentElement.setAttribute("data-theme", pref);
+})();
+
+document.addEventListener("DOMContentLoaded", () => {
+  initTheme();
+  injectThemeToggle();
+});
+
+document.addEventListener("headerReady", () => {
+  initTheme();
+});
+
+// ===== SCROLL REVEAL =====
+function initScrollReveal() {
+  const els = document.querySelectorAll(".section-header, .service-card, .testimonial-card, .stat-item, .process-step, .contact-item");
+  if (!els.length || !("IntersectionObserver" in window)) return;
+  els.forEach(el => el.classList.add("reveal"));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+}
+
+document.addEventListener("DOMContentLoaded", initScrollReveal);
+
+// ===== COOKIE BANNER =====
+function initCookieBanner() {
+  if (localStorage.getItem("cookiesAccepted")) return;
+  const bar = document.createElement("div");
+  bar.className = "cookie-banner show";
+  const t = (key, fallback) => (window.I18N && I18N.t(key) !== key) ? I18N.t(key) : fallback;
+  bar.innerHTML = `
+    <div class="cookie-inner">
+      <p>${t('cookies.text', 'Nous utilisons des cookies pour le fonctionnement du site (thème, préférences) et améliorer votre expérience.')}
+        <a href="mentions-legales.html#cookies" style="color:var(--accent-light);">${t('cookies.learn_more', 'En savoir plus')}</a></p>
+      <div class="cookie-actions">
+        <button type="button" class="btn btn-outline" id="cookie-refuse">${t('cookies.refuse', 'Refuser')}</button>
+        <button type="button" class="btn btn-primary" id="cookie-accept">${t('cookies.accept', 'Accepter')}</button>
+      </div>
+    </div>`;
+  document.body.appendChild(bar);
+  document.getElementById("cookie-accept").onclick = () => {
+    localStorage.setItem("cookiesAccepted", "yes");
+    bar.remove();
+  };
+  document.getElementById("cookie-refuse").onclick = () => {
+    localStorage.setItem("cookiesAccepted", "no");
+    bar.remove();
+  };
+}
+
+document.addEventListener("DOMContentLoaded", initCookieBanner);
+
+// ===== REVIEW FORM =====
+function initReviewForm() {
+  const form = document.getElementById("review-form");
+  if (!form) return;
+  let rating = 5;
+  const stars = form.querySelectorAll(".star-rating span");
+  stars.forEach((star, i) => {
+    star.addEventListener("click", () => {
+      rating = i + 1;
+      stars.forEach((s, j) => s.classList.toggle("active", j < rating));
+    });
+  });
+  stars.forEach((s, j) => s.classList.toggle("active", j < rating));
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Merci pour votre avis ! Il sera publié après modération.");
+    form.reset();
+    rating = 5;
+    stars.forEach((s, j) => s.classList.toggle("active", j < rating));
+  });
+}
+
+document.addEventListener("DOMContentLoaded", initReviewForm);
+
+// Re-render vehicles when language changes
+document.addEventListener("languageChanged", () => {
+  if (typeof renderVehicles === "function") renderVehicles();
+});
+

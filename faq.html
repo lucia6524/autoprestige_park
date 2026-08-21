@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FAQ — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Questions fréquentes sur l'achat, la vente, la livraison et la garantie chez AutoPrestige."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .faq-item {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        margin-bottom: 12px;
+        overflow: hidden;
+      }
+      .faq-question {
+        padding: 20px 24px;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .faq-question:hover {
+        color: var(--accent-light);
+      }
+      .faq-answer {
+        padding: 0 24px 20px;
+        color: var(--text-secondary);
+        display: none;
+      }
+      .faq-item.open .faq-answer {
+        display: block;
+      }
+    </style>
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_faq">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&q=80"
+          alt="FAQ"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">FAQ</span>
+        <h1>Questions fréquentes</h1>
+        <p>
+          Tout ce que vous devez savoir sur l’achat, la vente, la livraison et
+          la garantie.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0 100px">
+      <div class="container" style="max-width: 800px">
+        <div class="faq-item">
+          <div
+            class="faq-question"
+            onclick="this.parentElement.classList.toggle('open')"
+          >
+            Quels types de véhicules proposez-vous ? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Nous proposons des véhicules neufs, des occasions récentes et des
+            véhicules de démonstration de toutes les grandes marques européennes
+            et asiatiques.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div
+            class="faq-question"
+            onclick="this.parentElement.classList.toggle('open')"
+          >
+            Les véhicules sont-ils garantis ? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Oui. Tous nos véhicules d’occasion sont vendus avec une garantie
+            minimum de 12 mois. Des extensions jusqu’à 36 mois sont disponibles.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div
+            class="faq-question"
+            onclick="this.parentElement.classList.toggle('open')"
+          >
+            Proposez-vous le financement ? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Oui. Nous travaillons avec plusieurs partenaires bancaires pour vous
+            proposer des solutions de financement adaptées (crédit classique,
+            LOA, LLD).
+          </div>
+        </div>
+        <div class="faq-item">
+          <div
+            class="faq-question"
+            onclick="this.parentElement.classList.toggle('open')"
+          >
+            Livrez-vous partout en France ? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Oui, nous livrons dans toute la France et dans la plupart des pays
+            européens. Le transport est sécurisé et assuré.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div
+            class="faq-question"
+            onclick="this.parentElement.classList.toggle('open')"
+          >
+            Puis-je faire reprendre mon ancien véhicule ? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Absolument. Nous proposons une estimation gratuite et une reprise de
+            votre véhicule actuel dans le cadre de l’achat d’un nouveau.
+          </div>
+        </div>
+        <div class="faq-item">
+          <div
+            class="faq-question"
+            onclick="this.parentElement.classList.toggle('open')"
+          >
+            Comment se passe le paiement ? <span>+</span>
+          </div>
+          <div class="faq-answer">
+            Virement bancaire sécurisé ou paiement échelonné selon l’accord.
+            Aucun frais caché. Tout est clairement indiqué dans le contrat.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo"
+              ><img src="Logo.svg" alt="Auto-prestige" />Auto-<span
+                >prestige</span
+              ></a
+            >
+            <p>Votre partenaire de confiance.</p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a
+              ><a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a
+              ><a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a
+              ><a href="livraison.html" data-i18n="nav.delivery">Livraison</a
+              ><a href="entretien.html" data-i18n="nav.maintenance"
+                >Entretien</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a
+              ><a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 AutoPrestige</span><span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

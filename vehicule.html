@@ -1,0 +1,632 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Détail véhicule — AutoPrestige</title>
+    <meta name="description" content="Détails du véhicule — AutoPrestige" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+
+    <style>
+      /* Force light look on detail page like Autopark */
+      body {
+        background: #f5f5f7 !important;
+        color: #111;
+      }
+      .header {
+        background: #fff !important;
+        border-bottom: 1px solid #e8e8ed;
+      }
+      .footer {
+        background: #fff !important;
+        border-top: 1px solid #e8e8ed;
+        margin-top: 60px;
+      }
+
+      /* Breadcrumb bar */
+      .detail-breadcrumb-bar {
+        background: #fff;
+        border-bottom: 1px solid #e8e8ed;
+        padding: 14px 0;
+      }
+      .detail-breadcrumb {
+        font-size: 0.875rem;
+        color: #86868b;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .detail-breadcrumb a {
+        color: #86868b;
+        text-decoration: none;
+        transition: color 0.15s;
+      }
+      .detail-breadcrumb a:hover {
+        color: #0071e3;
+      }
+      .detail-breadcrumb .sep {
+        opacity: 0.45;
+        margin: 0 2px;
+      }
+      .detail-breadcrumb .current {
+        color: #1d1d1f;
+        font-weight: 500;
+      }
+
+      /* Main layout */
+      .detail-main {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 40px 24px 80px;
+      }
+      .detail-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: start;
+      }
+      @media (max-width: 960px) {
+        .detail-layout {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
+
+      /* ===== GALLERY (left) ===== */
+      .detail-gallery {
+        width: 100%;
+      }
+
+      .detail-main-img {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        aspect-ratio: 4 / 3;
+      }
+      .detail-main-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .detail-badge-reco {
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        background: #1d1d1f;
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        padding: 7px 12px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        z-index: 2;
+      }
+
+      .detail-img-counter {
+        position: absolute;
+        bottom: 14px;
+        right: 14px;
+        background: rgba(0, 0, 0, 0.55);
+        color: #fff;
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 5px 11px;
+        border-radius: 20px;
+        z-index: 2;
+      }
+
+      .detail-thumbs {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        margin-top: 14px;
+      }
+      @media (max-width: 600px) {
+        .detail-thumbs {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      .detail-thumbs button {
+        border: 2.5px solid transparent;
+        border-radius: 10px;
+        overflow: hidden;
+        padding: 0;
+        cursor: pointer;
+        background: #fff;
+        aspect-ratio: 1;
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      }
+      .detail-thumbs button.active {
+        border-color: #0071e3;
+        box-shadow: 0 0 0 1px #0071e3;
+      }
+      .detail-thumbs button:hover {
+        border-color: #0071e3;
+      }
+      .detail-thumbs img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      /* ===== INFO (right) ===== */
+      .detail-category {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #0071e3;
+        margin-bottom: 10px;
+      }
+
+      .detail-title {
+        font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.12;
+        margin: 0 0 18px;
+        color: #1d1d1f;
+        letter-spacing: -0.02em;
+      }
+
+      .detail-price-row {
+        display: flex;
+        align-items: baseline;
+        gap: 12px;
+        margin-bottom: 28px;
+        flex-wrap: wrap;
+      }
+      .detail-price {
+        font-size: 2.1rem;
+        font-weight: 800;
+        color: #1d1d1f;
+        letter-spacing: -0.02em;
+      }
+      .detail-monthly {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #b45309;
+      }
+
+      /* Spec cards - exact Autopark style */
+      .detail-specs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 36px;
+      }
+      .detail-spec {
+        background: #f0f0f2;
+        border-radius: 12px;
+        padding: 16px 18px;
+      }
+      .detail-spec-label {
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #86868b;
+        margin-bottom: 6px;
+      }
+      .detail-spec-value {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #1d1d1f;
+      }
+
+      /* Description */
+      .detail-section-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #1d1d1f;
+        margin: 0 0 14px;
+      }
+      .detail-description {
+        border-left: 3px solid #0071e3;
+        padding-left: 18px;
+        font-size: 0.925rem;
+        line-height: 1.75;
+        color: #515154;
+        white-space: pre-line;
+        margin-bottom: 32px;
+      }
+
+      /* Actions */
+      .detail-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .detail-actions .btn {
+        padding: 14px 28px;
+        font-weight: 600;
+        border-radius: 12px;
+        font-size: 0.95rem;
+      }
+      .detail-actions .btn-primary {
+        background: #0071e3;
+        color: #fff;
+        border: none;
+      }
+      .detail-actions .btn-primary:hover {
+        background: #0077ed;
+      }
+      .detail-actions .btn-outline {
+        background: transparent;
+        border: 1.5px solid #d2d2d7;
+        color: #1d1d1f;
+      }
+      .detail-actions .btn-outline:hover {
+        border-color: #0071e3;
+        color: #0071e3;
+      }
+
+      /* Not found */
+      .detail-not-found {
+        text-align: center;
+        padding: 100px 20px;
+      }
+      .detail-not-found h1 {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+        color: #1d1d1f;
+      }
+      .detail-not-found p {
+        color: #86868b;
+        margin-bottom: 28px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <div class="detail-breadcrumb-bar">
+      <div class="container">
+        <nav class="detail-breadcrumb" id="breadcrumb">
+          <a href="index.html" data-i18n="nav.home">Accueil</a>
+          <span class="sep">›</span>
+          <a href="vehicules.html">Catalogue</a>
+          <span class="sep">›</span>
+          <span class="current" id="breadcrumb-current">…</span>
+        </nav>
+      </div>
+    </div>
+
+    <main class="detail-main">
+      <div id="detail-content">
+        <div class="detail-not-found">
+          <p>Chargement du véhicule…</p>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p data-i18n="footer.tagline">
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion. Qualité, transparence et service premium.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="financement.html" data-i18n="nav.financing"
+                >Financement</a
+              >
+              <a href="vendre.html" data-i18n="nav.sell">Vendre</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+              <a href="assurance.html" data-i18n="nav.insurance">Assurance</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+              <a href="#">12 Av. des Champs-Élysées</a>
+              <a href="#" data-site-address
+                >12 Avenue des Champs-Élysées, 75008 Paris, France</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span
+            ><a href="mentions-legales.html" data-i18n="footer.legal"
+              >Mentions légales</a
+            >
+            ·
+            <a href="mentions-legales.html#cookies" data-i18n="footer.cookies"
+              >Cookies</a
+            >
+            ·
+            <a href="mentions-legales.html#cgv" data-i18n="footer.cgv"
+              >CGV</a
+            ></span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      (function () {
+        function getParam(name) {
+          return new URLSearchParams(window.location.search).get(name);
+        }
+
+        function formatKm(n) {
+          return (n || 0).toLocaleString("fr-FR") + " km";
+        }
+
+        function formatPrice(n) {
+          return "€" + (n || 0).toLocaleString("fr-FR");
+        }
+
+        function renderDetail(v) {
+          let parsedImages = v.images;
+          if (typeof parsedImages === "string") {
+            try {
+              parsedImages = JSON.parse(parsedImages);
+            } catch (_) {
+              parsedImages = [];
+            }
+          }
+          const images =
+            Array.isArray(parsedImages) && parsedImages.length
+              ? parsedImages
+              : v.image
+                ? [v.image]
+                : [];
+          const mainImg = images[0] || "";
+          const power = v.power ? v.power + " ch" : "—";
+          const desc = (v.description || "")
+            .replace(/\\n/g, "\n")
+            .replace(
+              /^\s*(?:prix|prix annonce|prix annoncé)\s*:?[^\n]*\n?/gim,
+              "",
+            )
+            .trim();
+          const price = formatPrice(v.price);
+
+          document.title = v.brand + " " + v.model + " — AutoPrestige";
+          const bc = document.getElementById("breadcrumb-current");
+          if (bc) bc.textContent = v.brand + " " + v.model;
+
+          const showBadge = v.featured || v.promo;
+
+          const html = `
+          <div class="detail-layout">
+            <!-- LEFT: Gallery -->
+            <div class="detail-gallery">
+              <div class="detail-main-img">
+                <img id="detail-main-photo" src="${mainImg}" alt="${v.brand} ${v.model}">
+                ${showBadge ? '<span class="detail-badge-reco">★ Recommandé</span>' : ""}
+                ${images.length > 1 ? '<span class="detail-img-counter"><span id="img-current">1</span>/' + images.length + "</span>" : ""}
+              </div>
+              ${
+                images.length > 1
+                  ? `
+                <div class="detail-thumbs" id="detail-thumbs">
+                  ${images
+                    .map(
+                      (src, i) => `
+                    <button type="button" class="${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Photo ${i + 1}">
+                      <img src="${src}" alt="Photo ${i + 1}" loading="lazy">
+                    </button>
+                  `,
+                    )
+                    .join("")}
+                </div>
+              `
+                  : ""
+              }
+            </div>
+
+            <!-- RIGHT: Info -->
+            <div class="detail-info">
+              <div class="detail-category">${(v.category || "Véhicule").toUpperCase()}</div>
+              <h1 class="detail-title">${v.brand}<br>${v.model}</h1>
+
+              <div class="detail-price-row">
+                <span class="detail-price">${price}</span>
+                <span class="detail-monthly">ou €${v.monthly}/mois</span>
+              </div>
+
+              <div class="detail-specs">
+                <div class="detail-spec">
+                  <div class="detail-spec-label">Prix</div>
+                  <div class="detail-spec-value">${price}</div>
+                </div>
+                <div class="detail-spec">
+                  <div class="detail-spec-label">Année</div>
+                  <div class="detail-spec-value">${v.year}</div>
+                </div>
+                <div class="detail-spec">
+                  <div class="detail-spec-label">Puissance</div>
+                  <div class="detail-spec-value">${power}</div>
+                </div>
+                <div class="detail-spec">
+                  <div class="detail-spec-label">Carburant</div>
+                  <div class="detail-spec-value">${v.fuel}</div>
+                </div>
+                <div class="detail-spec">
+                  <div class="detail-spec-label">Boîte</div>
+                  <div class="detail-spec-value">${v.transmission}</div>
+                </div>
+                <div class="detail-spec">
+                  <div class="detail-spec-label">Kilométrage</div>
+                  <div class="detail-spec-value">${formatKm(v.mileage)}</div>
+                </div>
+              </div>
+
+              ${
+                desc
+                  ? `
+                <h2 class="detail-section-title">Informations complémentaires sur le véhicule</h2>
+                <div class="detail-description">${desc}</div>
+              `
+                  : ""
+              }
+
+              <div class="detail-actions">
+                <button type="button" class="btn btn-primary" id="btn-add-cart" data-id="${v.id}">Ajouter au panier</button>
+                <a href="contact.html?vehicule=${encodeURIComponent(v.brand + " " + v.model)}" class="btn btn-outline">Demander un devis</a>
+                <a href="vehicules.html" class="btn btn-outline">← Catalogue</a>
+              </div>
+            </div>
+          </div>
+        `;
+
+          document.getElementById("detail-content").innerHTML = html;
+
+          // Thumbnail switching
+          const thumbs = document.getElementById("detail-thumbs");
+          if (thumbs) {
+            thumbs.addEventListener("click", function (e) {
+              const btn = e.target.closest("button[data-index]");
+              if (!btn) return;
+              const idx = parseInt(btn.dataset.index, 10);
+              const main = document.getElementById("detail-main-photo");
+              const counter = document.getElementById("img-current");
+              if (main && images[idx]) {
+                main.src = images[idx];
+                if (counter) counter.textContent = idx + 1;
+                thumbs.querySelectorAll("button").forEach(function (b) {
+                  b.classList.remove("active");
+                });
+                btn.classList.add("active");
+              }
+            });
+          }
+
+          // Add to cart (requires auth)
+          const addBtn = document.getElementById("btn-add-cart");
+          if (addBtn) {
+            addBtn.addEventListener("click", async function () {
+              if (!window.API || !API.isLoggedIn()) {
+                if (
+                  confirm(
+                    "Vous devez être connecté pour ajouter au panier.\n\nAller à la page de connexion ?",
+                  )
+                ) {
+                  window.location.href = "connexion.html";
+                }
+                return;
+              }
+              addBtn.disabled = true;
+              addBtn.textContent = "Ajout…";
+              try {
+                await API.addToCart(v);
+                addBtn.textContent = "✓ Ajouté au panier";
+                setTimeout(function () {
+                  if (confirm("Véhicule ajouté ! Voir votre panier ?")) {
+                    window.location.href = "compte.html";
+                  } else {
+                    addBtn.textContent = "Ajouter au panier";
+                    addBtn.disabled = false;
+                  }
+                }, 400);
+              } catch (err) {
+                alert(err.message);
+                addBtn.textContent = "Ajouter au panier";
+                addBtn.disabled = false;
+              }
+            });
+          }
+        }
+
+        function showNotFound() {
+          document.getElementById("detail-content").innerHTML = `
+          <div class="detail-not-found">
+            <h1>Véhicule introuvable</h1>
+            <p>Ce véhicule n'existe pas ou n'est plus disponible.</p>
+            <a href="vehicules.html" class="btn btn-primary">Retour au catalogue</a>
+          </div>
+        `;
+        }
+
+        async function init() {
+          const id = parseInt(getParam("id"), 10);
+          if (!id || typeof vehicles === "undefined") {
+            showNotFound();
+            return;
+          }
+          let v = vehicles.find(function (car) {
+            return car.id === id;
+          });
+          try {
+            if (window.API && typeof API.getVehicle === "function") {
+              v = await API.getVehicle(id);
+            }
+          } catch (_) {
+            // Use the local catalogue if the API is unavailable.
+          }
+          if (!v) {
+            showNotFound();
+            return;
+          }
+          if (v.type === "occasion" && !v.discountApplied) {
+            v.price = Math.max(0, Number(v.price) - 2000);
+          }
+          renderDetail(v);
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </body>
+</html>

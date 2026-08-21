@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>À propos — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Depuis plus de 10 ans, AutoPrestige accompagne ses clients avec des véhicules de qualité, une expertise et un service après-vente de haut niveau."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_about">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1449965401037-c41d9d6a0e8e?w=1920&q=80"
+          alt="À propos AutoPrestige"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">À propos</span>
+        <h1>AutoPrestige</h1>
+        <p>
+          Depuis plus de 10 ans, nous accompagnons nos clients avec des
+          véhicules de qualité, une expertise reconnue et un service après-vente
+          à la hauteur.
+        </p>
+        <div
+          style="
+            margin-top: 28px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+          "
+        >
+          <a href="vehicules.html" class="btn btn-primary btn-lg"
+            >Voir notre catalogue</a
+          >
+          <a href="contact.html" class="btn btn-outline btn-lg"
+            >Nous contacter</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0; background: var(--bg-secondary)">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <strong>2012</strong>
+            <span>Année de création</span>
+          </div>
+          <div class="stat-item">
+            <strong>2500+</strong>
+            <span>Véhicules vendus</span>
+          </div>
+          <div class="stat-item">
+            <strong>4.9★</strong>
+            <span>Note moyenne</span>
+          </div>
+          <div class="stat-item">
+            <strong>98%</strong>
+            <span>Clients satisfaits</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding: 80px 0">
+      <div class="container" style="max-width: 900px">
+        <div class="section-header">
+          <span class="label">Notre histoire</span>
+          <h2>Une passion pour l'automobile</h2>
+        </div>
+        <p
+          style="
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            margin-bottom: 24px;
+          "
+        >
+          Fondée en 2012, AutoPrestige s'est construite sur une conviction
+          simple : chaque client mérite un véhicule de qualité, un
+          accompagnement transparent et un service irréprochable.
+        </p>
+        <p
+          style="
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            text-align: center;
+          "
+        >
+          Aujourd'hui, nous proposons une large sélection de véhicules neufs et
+          d'occasion soigneusement contrôlés, des solutions de financement sur
+          mesure, et une livraison partout en France et en Europe. Notre équipe
+          met un point d'honneur à rester disponible avant, pendant et après la
+          vente.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 0 0 100px">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Nos valeurs</span>
+          <h2>Ce qui nous guide au quotidien</h2>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🔍</div>
+            <h3>Transparence</h3>
+            <p>
+              Historique complet, prix clairs, aucun frais caché. Vous savez
+              exactement ce que vous achetez.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🛡️</div>
+            <h3>Qualité</h3>
+            <p>
+              Chaque véhicule passe une inspection approfondie. Nous ne
+              proposons que ce que nous revendrions à nos proches.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🤝</div>
+            <h3>Accompagnement</h3>
+            <p>
+              De la recherche au financement jusqu'à la livraison, une équipe
+              dédiée à votre projet.
+            </p>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px">
+          <a href="vehicules.html" class="btn btn-primary btn-lg"
+            >Découvrir nos véhicules</a
+          >
+          <a
+            href="https://wa.me/33142868200"
+            target="_blank"
+            class="btn btn-outline btn-lg"
+            style="margin-left: 12px"
+            >WhatsApp</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo"
+              ><img src="Logo.svg" alt="Auto-prestige" />Auto-<span
+                >prestige</span
+              ></a
+            >
+            <p>
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+              <a href="https://wa.me/33142868200" target="_blank">WhatsApp</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

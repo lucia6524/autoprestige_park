@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Contactez l'équipe AutoPrestige. Une question, un projet d'achat ou de vente ? Nous sommes à votre écoute."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_contact">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=1920&q=80"
+          alt="Contact"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Nous contacter</span>
+        <h1>Contactez notre équipe</h1>
+        <p>
+          Une question, un projet d'achat ou de vente ? Notre équipe est à votre
+          écoute.
+        </p>
+      </div>
+    </section>
+
+    <section class="contact" style="padding-top: 40px">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h2>Nos coordonnées</h2>
+            <div class="contact-item">
+              <div class="contact-item-icon">📍</div>
+              <div>
+                <strong>Adresse</strong>
+                <span data-site-address
+                  >12 Avenue des Champs-Élysées, 75008 Paris, France</span
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">📞</div>
+              <div>
+                <strong>Téléphone</strong>
+                <span><a href="tel:+33142868200">+33 1 42 86 82 00</a></span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <span
+                  ><a href="mailto:contact@autoprestige.fr"
+                    >contact@autoprestige.fr</a
+                  ></span
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">🕒</div>
+              <div>
+                <strong>Horaires</strong>
+                <span
+                  >Lundi – Vendredi : 09:00 – 19:00<br />Samedi : 10:00 –
+                  17:00<br />Dimanche : Fermé</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                display: flex;
+                gap: 12px;
+                margin-top: 28px;
+                flex-wrap: wrap;
+              "
+            >
+              <a
+                href="https://wa.me/33142868200"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary"
+                >WhatsApp</a
+              >
+              <a href="mailto:contact@autoprestige.fr" class="btn btn-outline"
+                >Envoyer un email</a
+              >
+            </div>
+          </div>
+
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nom complet</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Jean Dupont"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="jean@email.com"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Téléphone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+33 6 12 34 56 78"
+                />
+              </div>
+              <div class="form-group">
+                <label for="subject">Sujet</label>
+                <select id="subject" name="subject">
+                  <option value="info">Demande d'information</option>
+                  <option value="essai">Demande d'essai</option>
+                  <option value="financement">Financement</option>
+                  <option value="reprise">Reprise de véhicule</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Décrivez votre projet..."
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              style="width: 100%"
+            >
+              Envoyer le message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p>
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="financement.html" data-i18n="nav.financing"
+                >Financement</a
+              >
+              <a href="vendre.html" data-i18n="nav.sell">Vendre</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+              <a href="assurance.html" data-i18n="nav.insurance">Assurance</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

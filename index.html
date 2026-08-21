@@ -1,0 +1,909 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AutoPrestige — Véhicules neufs et d'occasion</title>
+    <meta
+      name="description"
+      content="AutoPrestige : votre spécialiste en véhicules neufs et d'occasion. Financement sur mesure, livraison rapide, garantie jusqu'à 24 mois."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_home">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="accueil">
+      <div class="hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80"
+          alt="Voiture de luxe"
+        />
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">
+            ★ Votre spécialiste automobile depuis 2012
+          </div>
+          <h1>Auto-<span class="highlight">prestige</span></h1>
+          <p>
+            Véhicules neufs et d'occasion sélectionnés avec soin — financement
+            sur mesure, livraison rapide partout en Europe et garantie jusqu'à
+            24 mois.
+          </p>
+          <div class="hero-buttons">
+            <a href="vehicules.html" class="btn btn-primary btn-lg"
+              >Découvrir nos véhicules →</a
+            >
+            <a href="#services" class="btn btn-outline btn-lg">Nos services</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <strong>2 500+</strong>
+              <span>Véhicules vendus</span>
+            </div>
+            <div class="hero-stat">
+              <strong>4.9★</strong>
+              <span>Note moyenne</span>
+            </div>
+            <div class="hero-stat">
+              <strong>15+</strong>
+              <span>Années d'expérience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== HOW IT WORKS ===== -->
+    <section class="how-it-works" id="comment">
+      <div class="container">
+        <div class="section-with-image" style="margin-bottom: 50px">
+          <div class="section-header" style="text-align: left">
+            <span class="label">Simple & transparent</span>
+            <h2>Comment ça marche</h2>
+            <p>
+              Un processus clair en 3 étapes pour trouver et recevoir votre
+              véhicule idéal.
+            </p>
+          </div>
+          <img
+            src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=900&q=80"
+            alt="Processus Auto-prestige"
+          />
+        </div>
+        <div class="steps">
+          <div class="step-card">
+            <div class="step-number">01</div>
+            <h3>Choisir</h3>
+            <p>
+              Parcourez notre catalogue, filtrez par marque, budget, carburant
+              ou kilométrage. Chaque fiche inclut photos HD et historique
+              complet.
+            </p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">02</div>
+            <h3>Commander</h3>
+            <p>
+              Contactez-nous, recevez un devis détaillé sous 24h, choisissez
+              votre financement et validez en toute sécurité.
+            </p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">03</div>
+            <h3>Recevoir</h3>
+            <p>
+              Votre véhicule est préparé avec soin et livré à domicile partout
+              en Europe. Suivi en temps réel inclus.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VEHICLES ===== -->
+    <section id="vehicules">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Catalogue</span>
+          <h2>Nos véhicules à la une</h2>
+          <p>
+            Sélection premium de véhicules neufs et d'occasion, tous inspectés
+            et garantis.
+          </p>
+        </div>
+
+        <div class="filters">
+          <button
+            class="filter-btn active"
+            data-filter="all"
+            data-i18n="filters.all"
+          >
+            Tous
+          </button>
+          <button class="filter-btn" data-filter="neuf" data-i18n="filters.new">
+            Neufs
+          </button>
+          <button
+            class="filter-btn"
+            data-filter="occasion"
+            data-i18n="filters.used"
+          >
+            Occasions
+          </button>
+          <button
+            class="filter-btn"
+            data-filter="promo"
+            data-i18n="filters.promo"
+          >
+            Promotions
+          </button>
+        </div>
+
+        <div class="vehicles-grid" id="vehicles-grid">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BRANDS ===== -->
+    <section class="brands">
+      <div class="container">
+        <div class="section-header" style="margin-bottom: 30px">
+          <span class="label">Marques</span>
+          <h2>Nos marques partenaires</h2>
+        </div>
+        <div class="brands-grid">
+          <a href="vehicules.html" class="brand-item" title="BMW"
+            ><img
+              src="https://cdn.simpleicons.org/bmw"
+              alt="BMW"
+              loading="lazy"
+            /><span>BMW</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Mercedes"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/mercedes.svg"
+              alt="Mercedes"
+              loading="lazy"
+            /><span>Mercedes-Benz</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Audi"
+            ><img
+              src="https://cdn.simpleicons.org/audi"
+              alt="Audi"
+              loading="lazy"
+            /><span>Audi</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Porsche"
+            ><img
+              src="https://cdn.simpleicons.org/porsche"
+              alt="Porsche"
+              loading="lazy"
+            /><span>Porsche</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Volkswagen"
+            ><img
+              src="https://cdn.simpleicons.org/volkswagen"
+              alt="Volkswagen"
+              loading="lazy"
+            /><span>Volkswagen</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Tesla"
+            ><img
+              src="https://cdn.simpleicons.org/tesla"
+              alt="Tesla"
+              loading="lazy"
+            /><span>Tesla</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Peugeot"
+            ><img
+              src="https://cdn.simpleicons.org/peugeot"
+              alt="Peugeot"
+              loading="lazy"
+            /><span>Peugeot</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Renault"
+            ><img
+              src="https://cdn.simpleicons.org/renault"
+              alt="Renault"
+              loading="lazy"
+            /><span>Renault</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="SEAT"
+            ><img
+              src="https://cdn.simpleicons.org/seat"
+              alt="SEAT"
+              loading="lazy"
+            /><span>SEAT</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Honda"
+            ><img
+              src="https://cdn.simpleicons.org/honda"
+              alt="Honda"
+              loading="lazy"
+            /><span>Honda</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Volvo"
+            ><img
+              src="https://cdn.simpleicons.org/volvo"
+              alt="Volvo"
+              loading="lazy"
+            /><span>Volvo</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Toyota"
+            ><img
+              src="https://cdn.simpleicons.org/toyota"
+              alt="Toyota"
+              loading="lazy"
+            /><span>Toyota</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Bentley"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/bentley.svg"
+              alt="Bentley"
+              loading="lazy"
+            /><span>Bentley</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Citroën"
+            ><img
+              src="https://cdn.simpleicons.org/citroen"
+              alt="Citroën"
+              loading="lazy"
+            /><span>Citroën</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Ford"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/ford.svg"
+              alt="Ford"
+              loading="lazy"
+            /><span>Ford</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Hyundai"
+            ><img
+              src="https://cdn.simpleicons.org/hyundai"
+              alt="Hyundai"
+              loading="lazy"
+            /><span>Hyundai</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Jaguar"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/jaguar.svg"
+              alt="Jaguar"
+              loading="lazy"
+            /><span>Jaguar</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Kia"
+            ><img
+              src="https://cdn.simpleicons.org/kia"
+              alt="Kia"
+              loading="lazy"
+            /><span>Kia</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Land Rover"
+            ><img
+              src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/landrover.svg"
+              alt="Land Rover"
+              loading="lazy"
+            /><span>Land Rover</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="MINI"
+            ><img
+              src="https://cdn.simpleicons.org/mini"
+              alt="MINI"
+              loading="lazy"
+            /><span>MINI</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Nissan"
+            ><img
+              src="https://cdn.simpleicons.org/nissan"
+              alt="Nissan"
+              loading="lazy"
+            /><span>Nissan</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Opel"
+            ><img
+              src="https://cdn.simpleicons.org/opel"
+              alt="Opel"
+              loading="lazy"
+            /><span>Opel</span></a
+          >
+          <a href="vehicules.html" class="brand-item" title="Škoda"
+            ><img
+              src="https://cdn.simpleicons.org/skoda"
+              alt="Škoda"
+              loading="lazy"
+            /><span>Škoda</span></a
+          >
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PROCESS ===== -->
+    <section id="processus">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">De A à Z</span>
+          <h2>De la sélection à la livraison</h2>
+          <p>
+            Un accompagnement complet et transparent à chaque étape de votre
+            achat.
+          </p>
+        </div>
+        <div class="process-steps">
+          <div class="process-step">
+            <div class="process-num">01</div>
+            <div>
+              <h4>Sélection du véhicule</h4>
+              <p>
+                Parcourez le catalogue ou contactez-nous. Filtrez par marque,
+                modèle, prix et kilométrage. Photos HD + rapport d'inspection
+                inclus.
+              </p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">02</div>
+            <div>
+              <h4>Contact & Devis</h4>
+              <p>
+                WhatsApp, email ou téléphone. Devis détaillé sous 24h avec
+                toutes les options, frais inclus et conditions de financement.
+              </p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">03</div>
+            <div>
+              <h4>Contrat & Financement</h4>
+              <p>
+                Signature sécurisée. Montage de dossier avec nos partenaires
+                bancaires. Réponse de principe sous 24h, taux compétitifs.
+              </p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">04</div>
+            <div>
+              <h4>Paiement sécurisé</h4>
+              <p>
+                Virement bancaire ou paiement par étapes. Transparence totale :
+                aucun frais caché, tout est indiqué dans le contrat.
+              </p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">05</div>
+            <div>
+              <h4>Préparation du véhicule</h4>
+              <p>
+                Nettoyage professionnel, vérification technique finale, plein de
+                carburant et documentation complète prête.
+              </p>
+            </div>
+          </div>
+          <div class="process-step">
+            <div class="process-num">06</div>
+            <div>
+              <h4>Livraison à domicile</h4>
+              <p>
+                Transport sécurisé jusqu'à votre porte partout en Europe. Suivi
+                en temps réel. Documents remis en main propre.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SERVICES ===== -->
+    <section class="services" id="services">
+      <div class="container">
+        <div class="section-with-image" style="margin-bottom: 50px">
+          <img
+            src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=80"
+            alt="Services Auto-prestige"
+          />
+          <div class="section-header" style="text-align: left">
+            <span class="label">Nos expertises</span>
+            <h2>Ce que nous faisons pour vous</h2>
+            <p>
+              De la voiture neuve à l'occasion, votre partenaire complet pour
+              une mobilité sereine.
+            </p>
+          </div>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🚗</div>
+            <h3>Voitures Neuves</h3>
+            <p>
+              Derniers modèles, garantie constructeur, configuration sur mesure
+              et financement personnalisé.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🔧</div>
+            <h3>Voitures d'Occasion</h3>
+            <p>
+              Véhicules vérifiés (inspection 150 points), historique complet,
+              garantie jusqu'à 24 mois.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">💳</div>
+            <h3>Financement Auto</h3>
+            <p>
+              Crédit sur mesure, taux avantageux, réponse en 24h. Solutions pour
+              particuliers et professionnels.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🔄</div>
+            <h3>Reprise & Échange</h3>
+            <p>
+              Estimation gratuite de votre véhicule actuel. Reprise au meilleur
+              prix pour faciliter votre achat.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🛡️</div>
+            <h3>Garantie & SAV</h3>
+            <p>
+              Garantie étendue, service après-vente réactif et assistance 24/7
+              pour rouler l'esprit tranquille.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🚚</div>
+            <h3>Livraison & Transport</h3>
+            <p>
+              Livraison à domicile sécurisée partout en France et en Europe.
+              Suivi en temps réel inclus.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="stats">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <strong data-target="15" data-suffix="+">0</strong>
+            <span>Années d'expérience</span>
+          </div>
+          <div class="stat-item">
+            <strong data-target="2500" data-suffix="+">0</strong>
+            <span>Clients satisfaits</span>
+          </div>
+          <div class="stat-item">
+            <strong data-target="4" data-suffix=".9★">0</strong>
+            <span>Note moyenne</span>
+          </div>
+          <div class="stat-item">
+            <strong data-target="24" data-suffix="/7">0</strong>
+            <span>Support disponible</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WHY US ===== -->
+    <section>
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Notre force</span>
+          <h2>Ce qui nous distingue</h2>
+          <p>
+            Découvrez pourquoi des milliers de clients nous font confiance
+            chaque année.
+          </p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card">
+            <div class="why-icon">✅</div>
+            <div>
+              <h4>Véhicules certifiés</h4>
+              <p>
+                Inspection de 150 points. Historique complet vérifié. Garantie
+                jusqu'à 24 mois.
+              </p>
+            </div>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">💰</div>
+            <div>
+              <h4>Financement sur mesure</h4>
+              <p>
+                Taux compétitifs, réponse en 24h, options flexibles avec les
+                meilleurs partenaires.
+              </p>
+            </div>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🌍</div>
+            <div>
+              <h4>Livraison Europe</h4>
+              <p>
+                Transport sécurisé, livraison à domicile, suivi en temps réel.
+                Véhicule propre et plein.
+              </p>
+            </div>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">💬</div>
+            <div>
+              <h4>Support client 24/7</h4>
+              <p>
+                Équipe disponible par WhatsApp, email et téléphone, même après
+                la vente.
+              </p>
+            </div>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🔄</div>
+            <div>
+              <h4>Reprise de véhicule</h4>
+              <p>
+                Estimation gratuite en ligne. Reprise au meilleur prix pour
+                simplifier votre projet.
+              </p>
+            </div>
+          </div>
+          <div class="why-card">
+            <div class="why-icon">🛡️</div>
+            <div>
+              <h4>Garantie étendue</h4>
+              <p>
+                Protection moteur et transmission, assistance 24/7, extensions
+                jusqu'à 36 mois.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TESTIMONIALS ===== -->
+    <section class="testimonials" id="avis">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Témoignages</span>
+          <h2>Ce que disent nos clients</h2>
+          <p>
+            Des milliers de clients satisfaits. Voici quelques avis vérifiés.
+          </p>
+        </div>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              « Excellent service ! J'ai trouvé ma BMW idéale avec un
+              financement au meilleur taux. Équipe très professionnelle et
+              réactive. Je recommande les yeux fermés. »
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">MH</div>
+              <div class="author-info">
+                <strong>Marcus Hoffmann</strong>
+                <span>BMW Série 3 — Client vérifié</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              « Super concessionnaire. Large choix, prix justes et équipe très
+              disponible. Livraison à domicile impeccable. Ma Mercedes est
+              arrivée en parfait état. »
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">SB</div>
+              <div class="author-info">
+                <strong>Sophie Becker</strong>
+                <span>Mercedes Classe C — Client vérifié</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              « Vendeur honnête et fiable. Voiture de qualité, prix juste,
+              démarches administratives prises en charge. Une expérience
+              vraiment rassurante. »
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">TR</div>
+              <div class="author-info">
+                <strong>Thomas Reinhardt</strong>
+                <span>Audi A4 — Client vérifié</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              « Équipe formidable et prix compétitifs. Ma Renault Clio est
+              arrivée en parfait état. Le suivi après-vente est également
+              excellent. Merci ! »
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">CD</div>
+              <div class="author-info">
+                <strong>Camille Dupont</strong>
+                <span>Renault Clio — Client vérifié</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              « Incroyable expérience. J'ai acheté une Audi A4 et tout s'est
+              passé parfaitement. Financement rapide et livraison soignée. Je
+              reviendrai. »
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">LR</div>
+              <div class="author-info">
+                <strong>Luca Rossi</strong>
+                <span>Audi A4 Avant — Client vérifié</span>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial-card">
+            <div class="stars">★★★★★</div>
+            <p>
+              « Très compétents. Ils ont trouvé la Volkswagen parfaite pour moi
+              en moins d'une semaine. Processus clair et transparent du début à
+              la fin. »
+            </p>
+            <div class="testimonial-author">
+              <div class="author-avatar">AM</div>
+              <div class="author-info">
+                <strong>Anna Müller</strong>
+                <span>VW Golf GTI — Client vérifié</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Contact</span>
+          <h2>Contactez-nous</h2>
+          <p>
+            Notre équipe est à votre disposition pour vous accompagner dans
+            votre projet automobile.
+          </p>
+        </div>
+        <div class="contact-wrapper">
+          <div class="contact-info">
+            <h3>Parlons de votre prochain véhicule</h3>
+            <p>
+              Que vous cherchiez un véhicule neuf, une occasion récente ou un
+              financement sur mesure, nous sommes là pour vous.
+            </p>
+
+            <div class="contact-details">
+              <div class="contact-item">
+                <div class="contact-item-icon">📍</div>
+                <div>
+                  <strong>Adresse</strong>
+                  <span data-site-address
+                    >12 Avenue des Champs-Élysées, 75008 Paris, France</span
+                  >
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">📞</div>
+                <div>
+                  <strong>Téléphone</strong>
+                  <span><a href="tel:+33142868200">+33 1 42 86 82 00</a></span>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">✉️</div>
+                <div>
+                  <strong>Email</strong>
+                  <span
+                    ><a href="mailto:contact@autoprestige.fr"
+                      >contact@autoprestige.fr</a
+                    ></span
+                  >
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-item-icon">🕒</div>
+                <div>
+                  <strong>Horaires</strong>
+                  <span
+                    >Lun – Ven : 09:00 – 19:00<br />Samedi : 10:00 – 17:00</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div
+              class="contact-actions"
+              style="
+                display: flex;
+                gap: 12px;
+                margin-top: 24px;
+                flex-wrap: wrap;
+              "
+            >
+              <a
+                href="https://wa.me/33142868200"
+                target="_blank"
+                rel="noopener"
+                class="btn btn-primary"
+                >WhatsApp</a
+              >
+              <a href="mailto:contact@autoprestige.fr" class="btn btn-outline"
+                >Envoyer un email</a
+              >
+            </div>
+          </div>
+
+          <form class="contact-form" id="contact-form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Nom complet</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Jean Dupont"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="jean@email.com"
+                  required
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phone">Téléphone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+33 6 12 34 56 78"
+                />
+              </div>
+              <div class="form-group">
+                <label for="subject">Sujet</label>
+                <select id="subject" name="subject">
+                  <option value="info">Demande d'information</option>
+                  <option value="essai">Demande d'essai</option>
+                  <option value="financement">Financement</option>
+                  <option value="reprise">Reprise de véhicule</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                placeholder="Décrivez votre projet ou posez votre question..."
+                required
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary btn-lg"
+              style="width: 100%"
+            >
+              Envoyer le message
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p data-i18n="footer.tagline">
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion. Qualité, transparence et service premium.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="#services">Services</a>
+              <a href="avis.html" data-i18n="nav.reviews">Avis clients</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="#services" data-i18n="footer.new_vehicles"
+                >Véhicules neufs</a
+              >
+              <a href="#services" data-i18n="footer.used">Occasions</a>
+              <a href="#services" data-i18n="footer.financing">Financement</a>
+              <a href="#services" data-i18n="footer.trade_in">Reprise</a>
+              <a href="#services" data-i18n="footer.warranty">Garantie</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+              <a href="#">12 Av. des Champs-Élysées</a>
+              <a href="#" data-site-address
+                >12 Avenue des Champs-Élysées, 75008 Paris, France</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span
+            ><a href="mentions-legales.html" data-i18n="footer.legal"
+              >Mentions légales</a
+            >
+            ·
+            <a href="mentions-legales.html#cookies" data-i18n="footer.cookies"
+              >Cookies</a
+            >
+            ·
+            <a href="mentions-legales.html#cgv" data-i18n="footer.cgv"
+              >CGV</a
+            ></span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

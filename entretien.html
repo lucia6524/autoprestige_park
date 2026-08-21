@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Entretien & Maintenance — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Service d'entretien et maintenance pour toutes marques. Atelier multi-marques, pièces d'origine et identiques."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_maintenance">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1920&q=80"
+          alt="Entretien"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Atelier</span>
+        <h1>Entretien & Maintenance</h1>
+        <p>
+          Un service après-vente complet pour toutes les marques. Pièces
+          d’origine ou équivalentes, techniciens expérimentés.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0 100px">
+      <div class="container">
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🔧</div>
+            <h3>Révisions & Entretien</h3>
+            <p>
+              Vidange, filtres, freins, distribution… Selon le carnet
+              d’entretien constructeur.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🛠️</div>
+            <h3>Diagnostic électronique</h3>
+            <p>
+              Lecture des codes défaut, mise à jour logiciels, calibration des
+              systèmes d’aide à la conduite.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">✨</div>
+            <h3>Préparation esthétique</h3>
+            <p>
+              Nettoyage intérieur/extérieur professionnel, polissage, traitement
+              anti-bactérien.
+            </p>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px">
+          <a href="contact.html" class="btn btn-primary btn-lg"
+            >Prendre rendez-vous</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo"
+              ><img src="Logo.svg" alt="Auto-prestige" />Auto-<span
+                >prestige</span
+              ></a
+            >
+            <p>Votre partenaire de confiance.</p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a
+              ><a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a
+              ><a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a
+              ><a href="livraison.html" data-i18n="nav.delivery">Livraison</a
+              ><a href="entretien.html" data-i18n="nav.maintenance"
+                >Entretien</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a
+              ><a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 AutoPrestige</span><span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

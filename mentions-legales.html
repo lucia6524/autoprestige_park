@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mentions légales — Auto-prestige</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_legal">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=80"
+          alt="Mentions légales"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Légal</span>
+        <h1>Mentions légales</h1>
+        <p>Informations légales, cookies et conditions générales.</p>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0 100px">
+      <div class="container" style="max-width: 820px">
+        <h2 style="margin-bottom: 16px">Éditeur du site</h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+          "
+        >
+          Auto-prestige — Société de vente de véhicules neufs et d'occasion.<br />
+          Adresse :
+          <span data-site-address
+            >12 Avenue des Champs-Élysées, 75008 Paris, France</span
+          ><br />
+          Téléphone : +33 1 42 86 82 00<br />
+          Email : contact@autoprestige.fr
+        </p>
+
+        <h2 style="margin: 32px 0 16px">Hébergement</h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+          "
+        >
+          Le site est hébergé par le prestataire choisi par Auto-prestige. Pour
+          toute question relative à l’hébergement, contactez-nous.
+        </p>
+
+        <h2 id="cookies" style="margin: 32px 0 16px">Politique de cookies</h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.7;
+          "
+        >
+          Ce site utilise des cookies nécessaires au fonctionnement (préférence
+          de thème, mémorisation du consentement) et, le cas échéant, des
+          cookies de mesure d’audience. En cliquant sur « Accepter », vous
+          autorisez le dépôt de ces cookies. Vous pouvez refuser les cookies non
+          essentiels.
+        </p>
+        <ul
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            padding-left: 20px;
+            line-height: 1.8;
+          "
+        >
+          <li>
+            <strong>Cookies essentiels</strong> : thème clair/sombre,
+            consentement cookies
+          </li>
+          <li>
+            <strong>Cookies optionnels</strong> : statistiques de fréquentation
+            anonymisées
+          </li>
+        </ul>
+
+        <h2 id="cgv" style="margin: 32px 0 16px">
+          Conditions générales de vente (extrait)
+        </h2>
+        <p
+          style="
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.7;
+          "
+        >
+          Les véhicules sont proposés dans la limite des stocks disponibles. Les
+          prix affichés s’entendent en euros TTC sauf mention contraire. Toute
+          commande implique l’acceptation des présentes conditions. Les
+          garanties légales et commerciales s’appliquent selon le véhicule
+          concerné. Pour le détail complet des CGV, contactez notre service
+          commercial.
+        </p>
+
+        <h2 style="margin: 32px 0 16px">Protection des données</h2>
+        <p style="color: var(--text-secondary); line-height: 1.7">
+          Les données collectées via les formulaires (contact, avis, estimation)
+          sont utilisées uniquement pour traiter votre demande. Conformément au
+          RGPD, vous disposez d’un droit d’accès, de rectification et de
+          suppression. Contact : contact@autoprestige.fr
+        </p>
+
+        <div style="margin-top: 40px">
+          <a href="index.html" class="btn btn-primary">Retour à l'accueil</a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-bottom" style="border: none">
+          <span>© 2026 Auto-prestige</span>
+          <span
+            ><a href="mentions-legales.html" data-i18n="footer.legal"
+              >Mentions légales</a
+            ></span
+          >
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

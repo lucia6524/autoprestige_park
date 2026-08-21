@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garantie — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Garantie AutoPrestige : protection complète pour votre véhicule jusqu'à 24 mois, assistance 24/7."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_warranty">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80"
+          alt="Garantie"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Protection</span>
+        <h1>Garantie AutoPrestige</h1>
+        <p>
+          Une protection complète pour votre véhicule avec des garanties
+          étendues et une assistance 24/7. Roulez l’esprit tranquille.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0">
+      <div class="container">
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🛡️</div>
+            <h3>Garantie incluse</h3>
+            <p>
+              12 mois ou 10 000 km. Protection moteur, boîte de vitesses et
+              éléments essentiels. Incluse sur tous nos véhicules.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">📅</div>
+            <h3>Extension possible</h3>
+            <p>
+              Prolongez jusqu’à 24 ou 36 mois. Options d’assistance 24/7 et
+              véhicule de remplacement disponibles.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🔧</div>
+            <h3>Inspection 150 points</h3>
+            <p>
+              Chaque véhicule passe un contrôle technique approfondi avant
+              livraison. Historique complet vérifié.
+            </p>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px">
+          <a href="vehicules.html" class="btn btn-primary btn-lg"
+            >Voir les véhicules</a
+          >
+          <a
+            href="assurance.html"
+            class="btn btn-outline btn-lg"
+            style="margin-left: 12px"
+            >Assurances</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo"
+              ><img src="Logo.svg" alt="Auto-prestige" />Auto-<span
+                >prestige</span
+              ></a
+            >
+            <p>Votre partenaire de confiance.</p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a
+              ><a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a
+              ><a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a
+              ><a href="livraison.html" data-i18n="nav.delivery">Livraison</a
+              ><a href="entretien.html" data-i18n="nav.maintenance"
+                >Entretien</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a
+              ><a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 AutoPrestige</span><span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

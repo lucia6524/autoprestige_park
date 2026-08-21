@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assurance — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Solutions d'assurance auto sur mesure : responsabilité civile, tous risques, protection vol et incendie."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_insurance">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1617814076367-b759c7d7e226?w=1920&q=80"
+          alt="Assurance"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Protection</span>
+        <h1>Assurance véhicule</h1>
+        <p>
+          Des solutions d’assurance complètes adaptées à votre véhicule et à
+          votre budget.
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0 100px">
+      <div class="container">
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-icon">🛡️</div>
+            <h3>Responsabilité Civile</h3>
+            <p>
+              Couverture obligatoire. Protection des tiers en cas d’accident.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">💎</div>
+            <h3>Tous Risques</h3>
+            <p>
+              Protection maximale : collision, vol, incendie, bris de glace,
+              catastrophes naturelles.
+            </p>
+          </div>
+          <div class="service-card">
+            <div class="service-icon">🔒</div>
+            <h3>Vol & Incendie</h3>
+            <p>Options spécifiques pour sécuriser votre investissement.</p>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px">
+          <a href="contact.html" class="btn btn-primary btn-lg"
+            >Demander un devis assurance</a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo"
+              ><img src="Logo.svg" alt="Auto-prestige" />Auto-<span
+                >prestige</span
+              ></a
+            >
+            <p>Votre partenaire de confiance.</p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a
+              ><a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a
+              ><a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a
+              ><a href="livraison.html" data-i18n="nav.delivery">Livraison</a
+              ><a href="entretien.html" data-i18n="nav.maintenance"
+                >Entretien</a
+              >
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a
+              ><a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>© 2026 AutoPrestige</span><span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

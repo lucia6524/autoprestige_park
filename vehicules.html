@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalogue Véhicules — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Parcourez notre sélection de véhicules neufs et d'occasion. BMW, Mercedes, Audi, Porsche et plus encore."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_vehicles">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80"
+          alt="Catalogue véhicules"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Catalogue</span>
+        <h1>Nos Véhicules</h1>
+        <p>
+          Parcourez notre sélection de véhicules neufs et d'occasion
+          soigneusement contrôlés.
+        </p>
+      </div>
+    </section>
+
+    <section
+      class="vehicles"
+      style="padding-top: 40px; background: #f5f5f7; color: #111"
+    >
+      <div class="container">
+        <div
+          class="filters-panel"
+          style="background: #fff; border-color: #e5e5e5"
+        >
+          <div class="filters-row">
+            <div class="filter-search">
+              <input
+                type="text"
+                id="search-input"
+                placeholder="Rechercher une marque ou un modèle..."
+                data-i18n-placeholder="vehicles.search_placeholder"
+              />
+            </div>
+            <select id="filter-brand" class="filter-select">
+              <option value="all" data-i18n="vehicles.all_brands">
+                Toutes les marques
+              </option>
+            </select>
+            <select id="filter-fuel" class="filter-select">
+              <option value="all" data-i18n="vehicles.all_fuels">
+                Tous carburants
+              </option>
+              <option value="Essence" data-i18n="vehicles.fuel_petrol">
+                Essence
+              </option>
+              <option value="Diesel" data-i18n="vehicles.fuel_diesel">
+                Diesel
+              </option>
+              <option value="Hybride" data-i18n="vehicles.fuel_hybrid">
+                Hybride
+              </option>
+              <option value="Électrique" data-i18n="vehicles.fuel_electric">
+                Électrique
+              </option>
+            </select>
+            <select id="filter-type" class="filter-select">
+              <option value="all">Tous types</option>
+              <option value="neuf">Neufs</option>
+              <option value="occasion">Occasions</option>
+            </select>
+            <label class="filter-checkbox">
+              <input type="checkbox" id="filter-promo" /> Promos uniquement
+            </label>
+            <select id="sort-by" class="filter-select">
+              <option value="default">Trier par</option>
+              <option value="brand-asc">Marque (A → Z)</option>
+              <option value="brand-desc">Marque (Z → A)</option>
+              <option value="price-asc">Prix croissant</option>
+              <option value="price-desc">Prix décroissant</option>
+              <option value="year-desc">Année (récent)</option>
+              <option value="year-asc">Année (ancien)</option>
+            </select>
+          </div>
+          <div class="filters-result">
+            <span id="results-count">0 véhicule(s)</span>
+            <button id="reset-filters" class="btn-reset">Réinitialiser</button>
+          </div>
+        </div>
+
+        <div class="vehicles-grid" id="vehicles-grid"></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p>
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="financement.html" data-i18n="nav.financing"
+                >Financement</a
+              >
+              <a href="vendre.html" data-i18n="nav.sell">Vendre</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+              <a href="assurance.html" data-i18n="nav.insurance">Assurance</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+              <a href="#" data-site-address
+                >12 Avenue des Champs-Élysées, 75008 Paris, France</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span>Mentions légales · Politique de confidentialité · CGV</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

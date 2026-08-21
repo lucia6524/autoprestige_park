@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simuler mon financement — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Simulez votre financement automobile. Découvrez les véhicules accessibles selon votre budget mensuel."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .simu-box {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        padding: 40px;
+        max-width: 560px;
+        margin: 0 auto;
+      }
+      .simu-box label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 500;
+        color: var(--text-secondary);
+      }
+      .simu-box input {
+        width: 100%;
+        padding: 14px 18px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.1rem;
+        margin-bottom: 24px;
+      }
+      .simu-result {
+        background: rgba(37, 99, 235, 0.1);
+        border: 1px solid rgba(37, 99, 235, 0.3);
+        border-radius: 12px;
+        padding: 24px;
+        text-align: center;
+        margin-top: 20px;
+        display: none;
+      }
+      .simu-result strong {
+        font-size: 2rem;
+        color: var(--accent-light);
+        display: block;
+        margin: 8px 0;
+      }
+    </style>
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_financing">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="page-hero">
+      <div class="page-hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1920&q=80"
+          alt="Financement"
+        />
+      </div>
+      <div class="page-hero-overlay"></div>
+      <div class="container">
+        <span class="label">Outil de simulation</span>
+        <h1>
+          Simuler mon<br /><span style="color: var(--accent-light)"
+            >financement</span
+          >
+        </h1>
+        <p>
+          Indiquez votre salaire mensuel et découvrez instantanément les
+          véhicules accessibles (environ 33 % de votre salaire).
+        </p>
+      </div>
+    </section>
+
+    <section style="padding: 60px 0 100px">
+      <div class="container">
+        <div class="simu-box">
+          <label for="salary">Votre salaire net mensuel (€)</label>
+          <input
+            type="number"
+            id="salary"
+            placeholder="Ex : 2500"
+            min="0"
+            step="1"
+            inputmode="numeric"
+            autocomplete="off"
+          />
+
+          <button
+            class="btn btn-primary btn-lg"
+            style="width: 100%"
+            onclick="simulateFinance()"
+          >
+            Calculer mon budget
+          </button>
+
+          <div class="simu-result" id="simu-result">
+            <span>Budget mensuel recommandé</span>
+            <strong id="budget-value">0 €</strong>
+            <span
+              >Vous pouvez financer un véhicule jusqu'à ce montant
+              mensuel.</span
+            >
+            <a
+              href="vehicules.html"
+              class="btn btn-primary"
+              style="margin-top: 20px"
+              >Voir les véhicules adaptés</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p>
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="financement.html" data-i18n="nav.financing"
+                >Financement</a
+              >
+              <a href="vendre.html" data-i18n="nav.sell">Vendre</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+              <a href="assurance.html" data-i18n="nav.insurance">Assurance</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      function simulateFinance() {
+        const salary = parseFloat(document.getElementById("salary").value) || 0;
+        const budget = Math.round(salary * 0.33);
+        document.getElementById("budget-value").textContent =
+          budget.toLocaleString("fr-FR") + " €";
+        document.getElementById("simu-result").style.display = "block";
+      }
+    </script>
+  </body>
+</html>

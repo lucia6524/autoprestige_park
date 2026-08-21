@@ -1,0 +1,1500 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mon espace — AutoPrestige</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+
+    <style>
+      /* ===== CLIENT DASHBOARD ===== */
+      .dash-wrap {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 28px 20px 100px;
+      }
+      .dash-grid {
+        display: grid;
+        grid-template-columns: 280px 1fr;
+        gap: 28px;
+        align-items: start;
+      }
+      @media (max-width: 900px) {
+        .dash-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Sidebar */
+      .dash-sidebar {
+        background: var(--bg-card, #fff);
+        border: 1px solid var(--border, #e8e8ed);
+        border-radius: 16px;
+        overflow: hidden;
+        position: sticky;
+        top: 88px;
+      }
+      .dash-user {
+        padding: 24px 20px;
+        border-bottom: 1px solid var(--border, #e8e8ed);
+        text-align: center;
+      }
+      .dash-avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #0071e3, #5856d6);
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.15rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 12px;
+      }
+      .dash-user h3 {
+        margin: 0 0 4px;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--text, #1d1d1f);
+      }
+      .dash-user p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: var(--text-secondary, #86868b);
+        word-break: break-all;
+      }
+      .dash-stats-mini {
+        display: flex;
+        gap: 8px;
+        margin-top: 14px;
+        justify-content: center;
+      }
+      .dash-stat-mini {
+        background: var(--bg, #f5f5f7);
+        border-radius: 10px;
+        padding: 8px 12px;
+        text-align: center;
+        min-width: 72px;
+      }
+      .dash-stat-mini strong {
+        display: block;
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: var(--text, #1d1d1f);
+      }
+      .dash-stat-mini span {
+        font-size: 0.7rem;
+        color: var(--text-secondary, #86868b);
+      }
+      .dash-finance-box {
+        margin: 16px 20px;
+        background: linear-gradient(135deg, #0071e3 0%, #5856d6 100%);
+        color: #fff;
+        border-radius: 12px;
+        padding: 14px 16px;
+      }
+      .dash-finance-box .label {
+        font-size: 0.7rem;
+        opacity: 0.85;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+      }
+      .dash-finance-box .value {
+        font-size: 1.25rem;
+        font-weight: 800;
+        margin: 2px 0 10px;
+      }
+      .dash-finance-box .sub {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .dash-nav {
+        padding: 8px 12px 16px;
+      }
+      .dash-nav button {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        text-align: left;
+        padding: 12px 14px;
+        border: none;
+        background: transparent;
+        border-radius: 10px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text, #1d1d1f);
+        cursor: pointer;
+        font-family: inherit;
+        margin-bottom: 2px;
+        transition: background 0.15s;
+      }
+      .dash-nav button:hover {
+        background: var(--bg, #f5f5f7);
+      }
+      .dash-nav button.active {
+        background: #0071e3;
+        color: #fff;
+      }
+      .dash-nav .icon {
+        font-size: 1.1rem;
+        width: 24px;
+        text-align: center;
+      }
+      .dash-nav .logout {
+        color: #dc2626;
+        margin-top: 8px;
+        border-top: 1px solid var(--border, #e8e8ed);
+        padding-top: 16px;
+        border-radius: 0 0 10px 10px;
+      }
+      .dash-nav .logout:hover {
+        background: #fef2f2;
+      }
+
+      /* Main panels */
+      .dash-panel {
+        display: none;
+        animation: fadeIn 0.25s ease;
+      }
+      .dash-panel.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .dash-panel h2 {
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0 0 6px;
+        color: var(--text, #1d1d1f);
+      }
+      .dash-panel .welcome {
+        color: var(--text-secondary, #86868b);
+        margin: 0 0 24px;
+        font-size: 1rem;
+      }
+
+      .dash-cards {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-bottom: 28px;
+      }
+      @media (max-width: 700px) {
+        .dash-cards {
+          grid-template-columns: 1fr;
+        }
+      }
+      .dash-card {
+        background: var(--bg-card, #fff);
+        border: 1px solid var(--border, #e8e8ed);
+        border-radius: 14px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .dash-card .card-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--bg, #f5f5f7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.4rem;
+      }
+      .dash-card strong {
+        display: block;
+        font-size: 1.35rem;
+        font-weight: 800;
+        color: var(--text, #1d1d1f);
+      }
+      .dash-card span {
+        font-size: 0.85rem;
+        color: var(--text-secondary, #86868b);
+      }
+
+      .dash-section {
+        background: var(--bg-card, #fff);
+        border: 1px solid var(--border, #e8e8ed);
+        border-radius: 14px;
+        padding: 22px;
+        margin-bottom: 20px;
+      }
+      .dash-section-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+      }
+      .dash-section-head h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+      }
+      .dash-section-head a {
+        font-size: 0.9rem;
+        color: #0071e3;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .empty-box {
+        text-align: center;
+        padding: 36px 16px;
+        color: var(--text-secondary, #86868b);
+      }
+      .empty-box .big-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+      .empty-box a {
+        display: inline-block;
+        margin-top: 12px;
+        color: #0071e3;
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      /* Bank details */
+      .bank-grid {
+        display: grid;
+        gap: 12px;
+      }
+      .bank-row {
+        display: grid;
+        grid-template-columns: 140px 1fr;
+        gap: 8px;
+        padding: 12px 14px;
+        background: var(--bg, #f5f5f7);
+        border-radius: 10px;
+        align-items: center;
+      }
+      @media (max-width: 500px) {
+        .bank-row {
+          grid-template-columns: 1fr;
+        }
+      }
+      .bank-row .bk-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: var(--text-secondary, #86868b);
+      }
+      .bank-row .bk-value {
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--text, #1d1d1f);
+        word-break: break-all;
+      }
+      .bank-note {
+        margin-top: 14px;
+        font-size: 0.875rem;
+        color: var(--text-secondary, #86868b);
+        line-height: 1.5;
+      }
+
+      /* Trust */
+      .trust-list {
+        margin: 0;
+        padding-left: 18px;
+        color: var(--text-secondary, #86868b);
+        font-size: 0.9rem;
+        line-height: 1.7;
+      }
+      .wa-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 16px;
+        background: #25d366;
+        color: #fff !important;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-decoration: none !important;
+        font-size: 0.95rem;
+      }
+      .wa-btn:hover {
+        filter: brightness(1.05);
+      }
+
+      /* Cart / orders items */
+      .item-row {
+        display: flex;
+        gap: 14px;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--border, #e8e8ed);
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .item-row:last-child {
+        border-bottom: none;
+      }
+      .item-row img {
+        width: 96px;
+        height: 68px;
+        object-fit: cover;
+        border-radius: 10px;
+        background: var(--bg, #f5f5f7);
+      }
+      .item-info {
+        flex: 1;
+        min-width: 140px;
+      }
+      .item-info h4 {
+        margin: 0 0 4px;
+        font-size: 0.95rem;
+      }
+      .item-info p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: var(--text-secondary, #86868b);
+      }
+      .item-price {
+        font-weight: 800;
+        font-size: 1.05rem;
+        white-space: nowrap;
+      }
+      .btn-sm {
+        padding: 8px 14px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .btn-danger {
+        background: #fef2f2;
+        color: #dc2626;
+      }
+      .btn-primary-sm {
+        background: #0071e3;
+        color: #fff;
+      }
+      .btn-outline-sm {
+        background: transparent;
+        border: 1.5px solid var(--border, #d2d2d7);
+        color: var(--text, #1d1d1f);
+      }
+      .cart-total {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.15rem;
+        font-weight: 800;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 2px solid var(--border, #e8e8ed);
+      }
+      .checkout-opts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 16px;
+      }
+      .profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 560px) {
+        .profile-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .profile-field {
+        background: var(--bg, #f5f5f7);
+        border-radius: 12px;
+        padding: 14px 16px;
+      }
+      .profile-field label {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary, #86868b);
+        display: block;
+        margin-bottom: 4px;
+      }
+      .profile-field span {
+        font-weight: 700;
+        font-size: 1.05rem;
+        color: var(--text, #1d1d1f);
+      }
+      .profile-edit-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .profile-edit-form label {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .profile-edit-form input {
+        width: 100%;
+        padding: 11px 12px;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 8px;
+        color: var(--input-color);
+        font: inherit;
+      }
+      .profile-edit-form input:focus {
+        outline: 2px solid var(--accent-ring);
+        border-color: var(--input-border-focus);
+      }
+      .profile-edit-form .profile-email,
+      .profile-edit-form .profile-actions {
+        grid-column: 1 / -1;
+      }
+      @media (max-width: 560px) {
+        .profile-edit-form {
+          grid-template-columns: 1fr;
+        }
+      }
+      .badge-status {
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+      }
+      .badge-paid {
+        background: #dcfce7;
+        color: #16a34a;
+      }
+      .badge-active {
+        background: #dbeafe;
+        color: #2563eb;
+      }
+      .badge-delivering {
+        background: #e0e7ff;
+        color: #4f46e5;
+      }
+      .installment-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid var(--border, #f0f0f2);
+        font-size: 0.9rem;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      [data-theme="dark"] .dash-nav button {
+        color: var(--text-primary);
+      }
+      [data-theme="dark"] .dash-nav button:hover {
+        background: var(--bg-card-hover);
+      }
+      [data-theme="dark"] .dash-nav .logout {
+        color: #f87171;
+      }
+      [data-theme="dark"] .dash-nav .logout:hover {
+        background: rgba(239, 68, 68, 0.12);
+      }
+      [data-theme="dark"] .dash-section-head a,
+      [data-theme="dark"] .empty-box a {
+        color: var(--accent-light);
+      }
+      [data-theme="dark"] .bank-row,
+      [data-theme="dark"] .profile-field,
+      [data-theme="dark"] .dash-card .card-icon,
+      [data-theme="dark"] .delivery-details-form,
+      [data-theme="dark"] .item-row {
+        background: var(--bg-tertiary);
+        border-color: var(--border);
+      }
+      [data-theme="dark"] .bank-row .bk-label,
+      [data-theme="dark"] .bank-note,
+      [data-theme="dark"] .item-info p,
+      [data-theme="dark"] .profile-field label,
+      [data-theme="dark"] .trust-list {
+        color: var(--text-secondary);
+      }
+      [data-theme="dark"] .bank-row .bk-value,
+      [data-theme="dark"] .item-info h4,
+      [data-theme="dark"] .item-price,
+      [data-theme="dark"] .cart-total,
+      [data-theme="dark"] .profile-field span,
+      [data-theme="dark"] .installment-row,
+      [data-theme="dark"] .delivery-details-form h3 {
+        color: var(--text-primary);
+      }
+      [data-theme="dark"] .btn-outline-sm {
+        color: var(--text-primary);
+        border-color: var(--border-hover);
+      }
+      [data-theme="dark"] .btn-danger {
+        background: rgba(239, 68, 68, 0.16);
+        color: #fca5a5;
+      }
+      [data-theme="dark"] .btn-primary-sm {
+        background: var(--accent);
+        color: #fff;
+      }
+      [data-theme="dark"] .timeline-item time {
+        color: var(--text-secondary);
+      }
+      [data-theme="dark"] #panel-orders,
+      [data-theme="dark"] #panel-cart {
+        color: var(--text-primary);
+      }
+      [data-theme="dark"] #panel-orders .dash-section,
+      [data-theme="dark"] #panel-cart .dash-section {
+        background: var(--bg-card);
+        border-color: var(--border);
+      }
+      [data-theme="dark"] #panel-orders .dash-section h3,
+      [data-theme="dark"] #panel-cart .dash-section h3,
+      [data-theme="dark"] #panel-orders .item-info h4,
+      [data-theme="dark"] #panel-cart .item-info h4,
+      [data-theme="dark"] #panel-orders .item-price,
+      [data-theme="dark"] #panel-cart .item-price,
+      [data-theme="dark"] #panel-orders .cart-total,
+      [data-theme="dark"] #panel-cart .cart-total,
+      [data-theme="dark"] #panel-orders .installment-row,
+      [data-theme="dark"] #panel-cart .installment-row {
+        color: var(--text-primary) !important;
+      }
+      [data-theme="dark"] #panel-orders .item-info p,
+      [data-theme="dark"] #panel-cart .item-info p,
+      [data-theme="dark"] #panel-orders .bank-note,
+      [data-theme="dark"] #panel-cart .bank-note,
+      [data-theme="dark"] #panel-orders .empty-box,
+      [data-theme="dark"] #panel-cart .empty-box {
+        color: var(--text-secondary) !important;
+      }
+      [data-theme="dark"] #panel-orders .item-row,
+      [data-theme="dark"] #panel-cart .item-row {
+        background: var(--bg-tertiary) !important;
+        border-color: var(--border) !important;
+      }
+      [data-theme="dark"] #panel-cart .cart-total {
+        border-color: var(--border-strong);
+      }
+      [data-theme="dark"] #panel-orders a:not(.btn),
+      [data-theme="dark"] #panel-cart a:not(.btn) {
+        color: var(--accent-light);
+      }
+      [data-theme="dark"] #panel-orders button,
+      [data-theme="dark"] #panel-cart button {
+        color: #fff;
+      }
+      [data-theme="dark"] #orders-content,
+      [data-theme="dark"] #cart-content {
+        color: var(--text-primary) !important;
+      }
+      [data-theme="dark"] #orders-content .item-row,
+      [data-theme="dark"] #cart-content .item-row,
+      [data-theme="dark"] #orders-content .item-row span,
+      [data-theme="dark"] #cart-content .item-row span,
+      [data-theme="dark"] #orders-content .cart-total span,
+      [data-theme="dark"] #cart-content .cart-total span {
+        color: var(--text-primary) !important;
+      }
+      [data-theme="dark"] #orders-content .item-info p,
+      [data-theme="dark"] #cart-content .item-info p,
+      [data-theme="dark"] #orders-content .empty-box,
+      [data-theme="dark"] #cart-content .empty-box {
+        color: var(--text-secondary) !important;
+      }
+      [data-theme="dark"] #orders-content .badge-status,
+      [data-theme="dark"] #cart-content .badge-status,
+      [data-theme="dark"] #orders-content button,
+      [data-theme="dark"] #cart-content button {
+        color: #fff !important;
+      }
+      [data-theme="dark"] #orders-content .item-row *,
+      [data-theme="dark"] #cart-content .item-row * {
+        text-shadow: none;
+      }
+      [data-theme="dark"] #orders-content .item-info,
+      [data-theme="dark"] #cart-content .item-info,
+      [data-theme="dark"] #orders-content .item-info h4,
+      [data-theme="dark"] #cart-content .item-info h4,
+      [data-theme="dark"] #orders-content .item-price,
+      [data-theme="dark"] #cart-content .item-price {
+        color: #f8fafc !important;
+      }
+      [data-theme="dark"] #orders-content .item-info p,
+      [data-theme="dark"] #cart-content .item-info p {
+        color: #cbd5e1 !important;
+      }
+      [data-theme="dark"] #orders-content .cart-total,
+      [data-theme="dark"] #cart-content .cart-total {
+        color: #f8fafc !important;
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding-bottom: 82px;
+        }
+        .dash-wrap {
+          padding: 20px 14px 32px;
+        }
+        .dash-grid {
+          display: block;
+        }
+        .dash-sidebar {
+          position: static;
+          border: 0;
+          border-radius: 0;
+          overflow: visible;
+          background: transparent;
+        }
+        .dash-sidebar > .dash-user,
+        .dash-sidebar > .dash-finance-box {
+          display: none;
+        }
+        .dash-nav {
+          position: fixed;
+          z-index: 1000;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          display: flex;
+          gap: 4px;
+          width: 100%;
+          padding: 8px max(8px, env(safe-area-inset-left))
+            calc(8px + env(safe-area-inset-bottom));
+          overflow-x: auto;
+          background: var(--bg-card);
+          border-top: 1px solid var(--border);
+          box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.22);
+          scrollbar-width: none;
+        }
+        .dash-nav::-webkit-scrollbar {
+          display: none;
+        }
+        .dash-nav button {
+          flex: 0 0 74px;
+          min-height: 58px;
+          justify-content: center;
+          flex-direction: column;
+          gap: 3px;
+          padding: 6px 4px;
+          margin: 0;
+          border-radius: 8px;
+          text-align: center;
+          font-size: 0.68rem;
+          line-height: 1.1;
+          white-space: nowrap;
+        }
+        .dash-nav .icon {
+          width: auto;
+          font-size: 1.15rem;
+          line-height: 1;
+        }
+        .dash-nav .logout {
+          margin-top: 0;
+          padding-top: 6px;
+          border-top: 0;
+        }
+        [data-theme="dark"] .dash-nav {
+          background: #111118;
+          border-top-color: rgba(255, 255, 255, 0.14);
+        }
+        [data-theme="dark"] .dash-nav button {
+          color: #e5e7eb;
+        }
+        [data-theme="dark"] .dash-nav button.active {
+          background: #0d7a3f;
+          color: #fff;
+        }
+        [data-theme="dark"] #panel-orders .dash-section,
+        [data-theme="dark"] #panel-cart .dash-section {
+          background: #16161f;
+        }
+        [data-theme="dark"] #orders-content .item-row,
+        [data-theme="dark"] #cart-content .item-row {
+          background: #1a1a24 !important;
+        }
+      }
+      [data-theme="dark"] .badge-paid {
+        background: rgba(34, 197, 94, 0.18);
+        color: #86efac;
+      }
+      [data-theme="dark"] .badge-active {
+        background: rgba(59, 130, 246, 0.18);
+        color: #93c5fd;
+      }
+      [data-theme="dark"] .badge-delivering {
+        background: rgba(129, 140, 248, 0.18);
+        color: #c7d2fe;
+      }
+      [data-theme="dark"] .delivery-details-form label {
+        color: var(--text-primary);
+      }
+      [data-theme="dark"] .delivery-details-form input,
+      [data-theme="dark"] .delivery-details-form textarea {
+        width: 100%;
+        margin-top: 6px;
+        padding: 10px 12px;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 8px;
+        color: var(--input-color);
+        font: inherit;
+      }
+      [data-theme="dark"] .delivery-details-form input::placeholder,
+      [data-theme="dark"] .delivery-details-form textarea::placeholder {
+        color: var(--input-placeholder);
+      }
+      .timeline {
+        margin-top: 16px;
+        border-left: 2px solid var(--border, #e8e8ed);
+        padding-left: 18px;
+      }
+      .timeline-item {
+        position: relative;
+        margin-bottom: 16px;
+      }
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: -24px;
+        top: 4px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #0071e3;
+      }
+      .timeline-item time {
+        font-size: 0.8rem;
+        color: var(--text-secondary, #86868b);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===== SAME HEADER AS MAIN SITE ===== -->
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <div class="dash-wrap">
+      <div class="dash-grid">
+        <!-- SIDEBAR -->
+        <aside class="dash-sidebar">
+          <div class="dash-user">
+            <div class="dash-avatar" id="dash-avatar">—</div>
+            <h3 id="dash-name">…</h3>
+            <p id="dash-email">…</p>
+            <div class="dash-stats-mini">
+              <div class="dash-stat-mini">
+                <strong id="stat-orders">0</strong>
+                <span>Commandes</span>
+              </div>
+              <div class="dash-stat-mini">
+                <strong id="stat-cart">0</strong>
+                <span>Panier</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-finance-box">
+            <div class="label">Salaire mensuel</div>
+            <div class="value" id="dash-salary">— €</div>
+            <div class="sub">
+              <span>Max mensualité</span>
+              <strong id="dash-max-monthly">— €</strong>
+            </div>
+          </div>
+
+          <nav class="dash-nav">
+            <button class="active" data-panel="home">
+              <span class="icon">⊞</span> Mon Espace
+            </button>
+            <button data-panel="orders">
+              <span class="icon">📦</span> Mes Commandes
+            </button>
+            <button data-panel="cart">
+              <span class="icon">🛒</span> Panier
+            </button>
+            <button data-panel="profile">
+              <span class="icon">👤</span> Mon Profil
+            </button>
+            <button data-panel="finance">
+              <span class="icon">🧮</span> Financement
+            </button>
+            <button data-panel="delivery">
+              <span class="icon">🚚</span> Livraison
+            </button>
+            <button class="logout" id="btn-logout">
+              <span class="icon">⎋</span> Déconnexion
+            </button>
+          </nav>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="dash-main">
+          <!-- HOME -->
+          <section class="dash-panel active" id="panel-home">
+            <h2>Mon Espace</h2>
+            <p class="welcome" id="welcome-text">Bienvenue 👋</p>
+
+            <div class="dash-cards">
+              <div class="dash-card">
+                <div class="card-icon">📦</div>
+                <div>
+                  <strong id="card-orders">0</strong>
+                  <span>Mes Commandes</span>
+                </div>
+              </div>
+              <div class="dash-card">
+                <div class="card-icon">🛒</div>
+                <div>
+                  <strong id="card-cart">0</strong>
+                  <span>Panier</span>
+                </div>
+              </div>
+              <div class="dash-card">
+                <div class="card-icon">💶</div>
+                <div>
+                  <strong id="card-max">— €</strong>
+                  <span>Max mensualité</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-section">
+              <div class="dash-section-head">
+                <h3>Dernières commandes</h3>
+                <a href="#" id="link-all-orders">Voir tout →</a>
+              </div>
+              <div id="home-orders">
+                <div class="empty-box">
+                  <div class="big-icon">📦</div>
+                  <div>Pas encore de commande.</div>
+                  <a href="vehicules.html">Découvrir nos véhicules</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="dash-section">
+              <div class="dash-section-head">
+                <h3>💳 Coordonnées bancaires</h3>
+              </div>
+              <div class="bank-grid" id="bank-details">
+                <div class="empty-box">
+                  Chargement des coordonnées bancaires…
+                </div>
+              </div>
+              <p class="bank-note">
+                Merci d'indiquer le <strong>motif</strong> (n° de commande ou
+                votre nom) lors de votre virement afin que nous puissions
+                associer votre paiement à la commande.
+              </p>
+            </div>
+
+            <div class="dash-section">
+              <h3 style="margin: 0 0 12px; font-size: 1.1rem">
+                Pourquoi nous faire confiance ?
+              </h3>
+              <ul class="trust-list">
+                <li>
+                  AutoPrestige — véhicules sélectionnés, prix en euros, suivi en
+                  ligne.
+                </li>
+                <li>Commande sécurisée et accompagnement financement.</li>
+                <li>
+                  Documents :
+                  <a href="mentions-legales.html">Mentions légales</a> ·
+                  Confidentialité · CGV
+                </li>
+              </ul>
+              <a
+                class="wa-btn"
+                href="https://wa.me/33142868200"
+                target="_blank"
+                rel="noopener"
+                >💬 WhatsApp</a
+              >
+            </div>
+          </section>
+
+          <!-- ORDERS -->
+          <section class="dash-panel" id="panel-orders">
+            <h2>Mes Commandes</h2>
+            <p class="welcome">Suivi de vos achats et échéanciers</p>
+            <div class="dash-section" id="orders-content">
+              <div class="empty-box">Chargement…</div>
+            </div>
+          </section>
+
+          <!-- CART -->
+          <section class="dash-panel" id="panel-cart">
+            <h2>Panier</h2>
+            <p class="welcome">Véhicules en attente de commande</p>
+            <div class="dash-section" id="cart-content">
+              <div class="empty-box">Chargement…</div>
+            </div>
+          </section>
+
+          <!-- PROFILE -->
+          <section class="dash-panel" id="panel-profile">
+            <h2>Mon Profil</h2>
+            <p class="welcome">Vos informations personnelles</p>
+            <div class="dash-section">
+              <form class="profile-edit-form" id="profile-form">
+                <label
+                  >Prénom<input
+                    id="profile-first-name"
+                    required
+                    maxlength="100"
+                /></label>
+                <label
+                  >Nom<input id="profile-last-name" required maxlength="100"
+                /></label>
+                <label class="profile-email"
+                  >Email<input id="profile-email" type="email" readonly
+                /></label>
+                <label
+                  >Téléphone<input
+                    id="profile-phone"
+                    type="tel"
+                    required
+                    minlength="8"
+                    maxlength="30"
+                /></label>
+                <label
+                  >Salaire mensuel net (€)<input
+                    id="profile-salary"
+                    type="number"
+                    min="1"
+                    step="0.01"
+                    required
+                /></label>
+                <div class="profile-actions">
+                  <button type="submit" class="btn btn-primary">
+                    Enregistrer mes informations
+                  </button>
+                </div>
+              </form>
+            </div>
+          </section>
+
+          <!-- FINANCE -->
+          <section class="dash-panel" id="panel-finance">
+            <h2>Financement</h2>
+            <p class="welcome">Capacité de remboursement estimée</p>
+            <div class="dash-section">
+              <div class="profile-grid">
+                <div class="profile-field">
+                  <label>Salaire mensuel net</label>
+                  <span id="fin-salary">—</span>
+                </div>
+                <div class="profile-field">
+                  <label>Mensualité max. conseillée (33 %)</label>
+                  <span id="fin-max">—</span>
+                </div>
+              </div>
+              <p class="bank-note" style="margin-top: 16px">
+                Cette estimation vous aide à choisir un véhicule compatible avec
+                votre budget. Le financement définitif dépend de l'étude de
+                dossier avec nos partenaires.
+              </p>
+              <a
+                href="vehicules.html"
+                class="btn btn-primary"
+                style="margin-top: 12px; display: inline-block"
+                >Voir les véhicules</a
+              >
+            </div>
+          </section>
+
+          <!-- DELIVERY -->
+          <section class="dash-panel" id="panel-delivery">
+            <h2>Suivi livraison</h2>
+            <p class="welcome">Expédition après solde de la commande</p>
+            <div class="dash-section" id="delivery-content">
+              <div class="empty-box">Chargement…</div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      if (!API.isLoggedIn()) {
+        window.location.href = "connexion.html";
+      }
+
+      // ===== Bank details from the admin-managed site settings =====
+      function escapeHtml(value) {
+        return String(value || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+      function renderBank(b) {
+        document.getElementById("bank-details").innerHTML = `
+        <div class="bank-row"><div class="bk-label">Titulaire</div><div class="bk-value">${escapeHtml(b.bank_holder)}</div></div>
+        <div class="bank-row"><div class="bk-label">IBAN</div><div class="bk-value">${escapeHtml(b.bank_iban)}</div></div>
+        <div class="bank-row"><div class="bk-label">BIC</div><div class="bk-value">${escapeHtml(b.bank_bic)}</div></div>
+        <div class="bank-row"><div class="bk-label">Type de virement</div><div class="bk-value">${escapeHtml(b.bank_transfer_type)}</div></div>
+      `;
+      }
+      API.getSiteSettings()
+        .then(renderBank)
+        .catch(() => {
+          document.getElementById("bank-details").innerHTML =
+            '<div class="empty-box">Coordonnées bancaires indisponibles.</div>';
+        });
+
+      const user = API.getUser() || {};
+      const initials = (
+        (user.first_name || "?")[0] + (user.last_name || "?")[0]
+      ).toUpperCase();
+      const fullName =
+        [user.first_name, user.last_name].filter(Boolean).join(" ") || "Client";
+      let salary = Number(user.monthly_salary) || 0;
+      let maxMonthly = Math.round(salary * 0.33);
+
+      document.getElementById("dash-avatar").textContent = initials;
+      document.getElementById("dash-name").textContent = fullName;
+      document.getElementById("dash-email").textContent = user.email || "";
+      document.getElementById("dash-salary").textContent =
+        salary.toLocaleString("fr-FR") + " €";
+      document.getElementById("dash-max-monthly").textContent =
+        maxMonthly.toLocaleString("fr-FR") + " €";
+      document.getElementById("card-max").textContent =
+        maxMonthly.toLocaleString("fr-FR") + " €";
+      document.getElementById("welcome-text").textContent =
+        "Bienvenue, " + (user.first_name || fullName) + " 👋";
+      document.getElementById("fin-salary").textContent =
+        salary.toLocaleString("fr-FR") + " €";
+      document.getElementById("fin-max").textContent =
+        maxMonthly.toLocaleString("fr-FR") + " €";
+
+      // Nav
+      document
+        .querySelectorAll(".dash-nav button[data-panel]")
+        .forEach((btn) => {
+          btn.addEventListener("click", () => {
+            document
+              .querySelectorAll(".dash-nav button[data-panel]")
+              .forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            document
+              .querySelectorAll(".dash-panel")
+              .forEach((p) => p.classList.remove("active"));
+            document
+              .getElementById("panel-" + btn.dataset.panel)
+              .classList.add("active");
+            if (btn.dataset.panel === "cart") loadCart();
+            if (btn.dataset.panel === "orders") loadOrders();
+            if (btn.dataset.panel === "delivery") loadDelivery();
+            if (btn.dataset.panel === "profile") loadProfile();
+          });
+        });
+      document
+        .getElementById("link-all-orders")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          document.querySelector('[data-panel="orders"]').click();
+        });
+      document.getElementById("btn-logout").onclick = () => {
+        API.clearAuth();
+        location.href = "index.html";
+      };
+
+      function loadProfile() {
+        document.getElementById("profile-first-name").value =
+          user.first_name || "";
+        document.getElementById("profile-last-name").value =
+          user.last_name || "";
+        document.getElementById("profile-email").value = user.email || "";
+        document.getElementById("profile-phone").value = user.phone || "";
+        document.getElementById("profile-salary").value = salary || "";
+      }
+      loadProfile();
+
+      document
+        .getElementById("profile-form")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const button = event.target.querySelector("button[type=submit]");
+          button.disabled = true;
+          try {
+            const updated = await API.updateProfile({
+              first_name: document
+                .getElementById("profile-first-name")
+                .value.trim(),
+              last_name: document
+                .getElementById("profile-last-name")
+                .value.trim(),
+              phone: document.getElementById("profile-phone").value.trim(),
+              monthly_salary: Number(
+                document.getElementById("profile-salary").value,
+              ),
+            });
+            user.first_name = updated.first_name;
+            user.last_name = updated.last_name;
+            user.phone = updated.phone;
+            user.monthly_salary = updated.monthly_salary;
+            salary = Number(updated.monthly_salary) || 0;
+            maxMonthly = Math.round(salary * 0.33);
+            localStorage.setItem("ap_user", JSON.stringify(user));
+            document.getElementById("dash-name").textContent =
+              `${user.first_name} ${user.last_name}`;
+            document.getElementById("dash-salary").textContent =
+              salary.toLocaleString("fr-FR") + " €";
+            document.getElementById("dash-max-monthly").textContent =
+              maxMonthly.toLocaleString("fr-FR") + " €";
+            document.getElementById("card-max").textContent =
+              maxMonthly.toLocaleString("fr-FR") + " €";
+            document.getElementById("fin-salary").textContent =
+              salary.toLocaleString("fr-FR") + " €";
+            document.getElementById("fin-max").textContent =
+              maxMonthly.toLocaleString("fr-FR") + " €";
+            alert("Vos informations ont été mises à jour.");
+          } catch (error) {
+            alert(error.message);
+          } finally {
+            button.disabled = false;
+          }
+        });
+
+      async function refreshCounts() {
+        try {
+          const [cart, orders] = await Promise.all([
+            API.getCart(),
+            API.getOrders(),
+          ]);
+          const oc = orders.length;
+          const cc = cart.count || cart.items?.length || 0;
+          document.getElementById("stat-orders").textContent = oc;
+          document.getElementById("stat-cart").textContent = cc;
+          document.getElementById("card-orders").textContent = oc;
+          document.getElementById("card-cart").textContent = cc;
+          // Home recent orders
+          const box = document.getElementById("home-orders");
+          if (!orders.length) {
+            box.innerHTML = `<div class="empty-box"><div class="big-icon">📦</div><div>Pas encore de commande.</div><a href="vehicules.html">Découvrir nos véhicules</a></div>`;
+          } else {
+            box.innerHTML = orders
+              .slice(0, 3)
+              .map(
+                (o) => `
+            <div class="item-row">
+              <img src="${o.image || ""}" alt="" onerror="this.style.opacity=0.3">
+              <div class="item-info">
+                <h4>${o.brand} ${o.model}</h4>
+                <p>${o.year} · ${o.status}</p>
+              </div>
+              <div class="item-price">${Number(o.total_price).toLocaleString("fr-FR")} €</div>
+            </div>
+          `,
+              )
+              .join("");
+          }
+        } catch (e) {
+          console.warn(e);
+        }
+      }
+      refreshCounts();
+
+      async function loadCart() {
+        const el = document.getElementById("cart-content");
+        try {
+          const cart = await API.getCart();
+          document.getElementById("stat-cart").textContent = cart.count || 0;
+          document.getElementById("card-cart").textContent = cart.count || 0;
+          if (!cart.items.length) {
+            el.innerHTML = `<div class="empty-box"><div class="big-icon">🛒</div><div>Votre panier est vide.</div><a href="vehicules.html">Voir le catalogue</a></div>`;
+            return;
+          }
+          el.innerHTML =
+            cart.items
+              .map(
+                (item) => `
+          <div class="item-row">
+            <img src="${item.image || ""}" alt="" onerror="this.style.opacity=0.3">
+            <div class="item-info">
+              <h4>${item.brand} ${item.model}</h4>
+              <p>${item.year} · ou ${item.monthly} €/mois</p>
+            </div>
+            <div class="item-price">${Number(item.price).toLocaleString("fr-FR")} €</div>
+            <button class="btn-sm btn-danger" onclick="removeItem(${item.id})">Retirer</button>
+          </div>
+        `,
+              )
+              .join("") +
+            `
+          <div class="cart-total"><span>Total</span><span>${Number(cart.total).toLocaleString("fr-FR")} €</span></div>
+          <div class="checkout-opts">
+            ${cart.items
+              .map(
+                (item) => `
+              <button class="btn-sm btn-primary-sm" onclick="doCheckout(${item.id},'full')">Payer comptant — ${item.brand}</button>
+              <button class="btn-sm btn-outline-sm" onclick="doCheckout(${item.id},'monthly',48)">48× mensualités — ${item.brand}</button>
+            `,
+              )
+              .join("")}
+          </div>
+        `;
+        } catch (err) {
+          el.innerHTML = `<div class="empty-box">${err.message}<br><small>Vérifiez que le backend tourne (port 8000).</small></div>`;
+        }
+      }
+
+      window.removeItem = async (id) => {
+        await API.removeFromCart(id);
+        loadCart();
+        refreshCounts();
+      };
+      window.doCheckout = async (cartItemId, paymentType, months) => {
+        try {
+          const order = await API.checkout(cartItemId, paymentType, months);
+          alert(
+            paymentType === "full"
+              ? "Paiement comptant enregistré. Consultez la livraison après confirmation du virement."
+              : `Échéancier créé : ${order.months_total} × ${order.monthly_amount} €`,
+          );
+          loadCart();
+          refreshCounts();
+          document.querySelector('[data-panel="orders"]').click();
+        } catch (err) {
+          alert(err.message);
+        }
+      };
+
+      async function loadOrders() {
+        const el = document.getElementById("orders-content");
+        try {
+          const orders = await API.getOrders();
+          if (!orders.length) {
+            el.innerHTML = `<div class="empty-box"><div class="big-icon">📦</div><div>Aucune commande.</div><a href="vehicules.html">Parcourir le catalogue</a></div>`;
+            return;
+          }
+          el.innerHTML = orders
+            .map((o) => {
+              const statusLabel =
+                {
+                  paid: "Payé",
+                  active: "En cours de paiement",
+                  pending: "En attente",
+                  delivering: "En livraison",
+                  delivered: "Livré",
+                }[o.status] || o.status;
+              const statusClass =
+                {
+                  paid: "badge-paid",
+                  active: "badge-active",
+                  delivering: "badge-delivering",
+                  delivered: "badge-paid",
+                }[o.status] || "badge-active";
+              let inst = "";
+              if (o.payment_type === "monthly" && o.installments?.length) {
+                const visibleInstallments = o.installments.slice(0, 3);
+                const hiddenInstallments = o.installments.slice(3);
+                const renderInstallment = (i, hidden = false) => `
+                <div class="installment-row"${hidden ? ' style="display:none"' : ""}>
+                  <span>N°${i.number} — ${new Date(i.due_date).toLocaleDateString("fr-FR")} — ${i.amount} €</span>
+                  ${
+                    i.paid || i.payment_status === "paid"
+                      ? `<span class="badge-status paid">Payée</span>`
+                      : i.payment_status === "claimed"
+                        ? `<span class="badge-status" style="background:#fef3c7;color:#b45309;">En validation</span>`
+                        : i.payment_status === "rejected"
+                          ? `<button class="btn-primary-sm" onclick="payInst(${o.id},${i.id})">Re-déclarer</button>`
+                          : `<button class="btn-primary-sm" onclick="payInst(${o.id},${i.id})">Déclarer le paiement</button>`
+                  }
+                </div>`;
+                inst = `<div style="width:100%;margin-top:10px;"><strong>Échéancier (${Number(o.amount_paid).toLocaleString("fr-FR")} / ${Number(o.total_price).toLocaleString("fr-FR")} €)</strong>
+              ${visibleInstallments.map((i) => renderInstallment(i)).join("")}
+              <div id="more-installments-${o.id}">${hiddenInstallments.map((i) => renderInstallment(i, true)).join("")}</div>
+              ${hiddenInstallments.length ? `<button type="button" class="btn-primary-sm" style="margin-top:10px;" onclick="toggleInstallments(${o.id}, this)">Voir tout</button>` : ""}
+              </div>`;
+              }
+              return `<div class="item-row">
+            <img src="${o.image || ""}" alt="" onerror="this.style.opacity=0.3">
+            <div class="item-info"><h4>${o.brand} ${o.model}</h4><p>${o.year}</p>
+              <span class="badge-status ${statusClass}">${statusLabel}</span></div>
+            <div class="item-price">${Number(o.total_price).toLocaleString("fr-FR")} €</div>${inst}</div>`;
+            })
+            .join("");
+        } catch (err) {
+          el.innerHTML = `<div class="empty-box">${err.message}</div>`;
+        }
+      }
+      window.payInst = async (oid, iid) => {
+        if (
+          !confirm(
+            "Confirmez-vous avoir effectué le virement bancaire pour cette échéance ?\n\nL'admin vérifiera la réception puis validera le paiement.",
+          )
+        )
+          return;
+        try {
+          await API.payInstallment(oid, iid);
+          alert(
+            "Demande envoyée. L'administrateur validera après vérification du virement. Le statut passera à « Payée » une fois validé.",
+          );
+          loadOrders();
+          refreshCounts();
+        } catch (e) {
+          alert(e.message);
+        }
+      };
+
+      async function loadDelivery() {
+        const el = document.getElementById("delivery-content");
+        try {
+          const orders = await API.getOrders();
+          const list = orders.filter(
+            (o) =>
+              o.delivery ||
+              Number(o.amount_paid) + 0.01 >= Number(o.total_price),
+          );
+          if (!list.length) {
+            el.innerHTML = `<div class="empty-box"><div class="big-icon">🚚</div><div>Aucune livraison en cours.<br>Disponible après solde de la commande.</div></div>`;
+            return;
+          }
+          el.innerHTML = list
+            .map((o) => {
+              const d = o.delivery || {};
+              const isPaid =
+                Number(o.amount_paid) + 0.01 >= Number(o.total_price);
+              const hasAddress = Boolean(
+                d.delivery_address && d.delivery_address.trim(),
+              );
+              const deliveryForm =
+                isPaid && !hasAddress
+                  ? `
+                <form class="delivery-details-form" onsubmit="submitDeliveryDetails(event, ${o.id})" style="margin-top:18px;padding:18px;background:var(--bg);border:1px solid var(--border);border-radius:10px;">
+                  <h3 style="margin:0 0 14px;font-size:1rem;">Informations de livraison</h3>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                    <label>Prénom<input id="delivery-first-${o.id}" required></label>
+                    <label>Nom<input id="delivery-last-${o.id}" required></label>
+                    <label>Téléphone<input id="delivery-phone-${o.id}" type="tel" required></label>
+                    <label style="grid-column:1/-1;">Adresse de livraison<textarea id="delivery-address-${o.id}" rows="3" required placeholder="Numéro, rue, code postal, ville, pays"></textarea></label>
+                  </div>
+                  <button type="submit" class="btn btn-primary" style="margin-top:14px;">Enregistrer l’adresse</button>
+                </form>`
+                  : hasAddress
+                    ? `<div style="margin-top:14px;padding:12px;background:var(--bg);border-radius:8px;"><strong>Adresse de livraison</strong><br>${escapeHtml(d.delivery_address)}<br><small>${escapeHtml(d.recipient_first_name)} ${escapeHtml(d.recipient_last_name)} · ${escapeHtml(d.recipient_phone)}</small></div>`
+                    : "";
+              return `<div class="item-row" style="flex-direction:column;align-items:stretch;">
+            <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
+              <img src="${o.image || ""}" alt="" style="width:96px;height:68px;object-fit:cover;border-radius:10px;" onerror="this.style.opacity=0.3">
+              <div class="item-info">
+                <h4>${o.brand} ${o.model}</h4>
+                <p>N° suivi : <strong>${d.tracking_number}</strong></p>
+                <p>${d.carrier} · ${d.current_location || ""}</p>
+              </div>
+            </div>
+            ${deliveryForm}
+            <div class="timeline">
+              ${
+                (d.events || [])
+                  .map(
+                    (ev) => `
+                <div class="timeline-item">
+                  <time>${new Date(ev.created_at).toLocaleString("fr-FR")}</time>
+                  <div><strong>${ev.status}</strong> — ${ev.message}</div>
+                </div>
+              `,
+                  )
+                  .join("") ||
+                '<p style="color:var(--text-secondary)">Aucun événement.</p>'
+              }
+            </div>
+          </div>`;
+            })
+            .join("");
+          const user = API.getUser() || {};
+          list.forEach((o) => {
+            if (!o.delivery || o.delivery.delivery_address) return;
+            const first = document.getElementById(`delivery-first-${o.id}`);
+            const last = document.getElementById(`delivery-last-${o.id}`);
+            const phone = document.getElementById(`delivery-phone-${o.id}`);
+            if (first)
+              first.value =
+                o.delivery.recipient_first_name || user.first_name || "";
+            if (last)
+              last.value =
+                o.delivery.recipient_last_name || user.last_name || "";
+            if (phone)
+              phone.value = o.delivery.recipient_phone || user.phone || "";
+          });
+        } catch (err) {
+          el.innerHTML = `<div class="empty-box">${err.message}</div>`;
+        }
+      }
+      window.toggleInstallments = (orderId, button) => {
+        const container = document.getElementById(
+          `more-installments-${orderId}`,
+        );
+        if (!container) return;
+        const hiddenRows = container.querySelectorAll(".installment-row");
+        const isExpanded = button.dataset.expanded === "true";
+        hiddenRows.forEach((row) => {
+          row.style.display = isExpanded ? "none" : "flex";
+        });
+        button.dataset.expanded = isExpanded ? "false" : "true";
+        button.textContent = isExpanded ? "Voir tout" : "Réduire";
+      };
+      window.submitDeliveryDetails = async (event, orderId) => {
+        event.preventDefault();
+        const button = event.target.querySelector("button[type=submit]");
+        button.disabled = true;
+        try {
+          await API.saveDeliveryDetails(orderId, {
+            recipient_first_name: document
+              .getElementById(`delivery-first-${orderId}`)
+              .value.trim(),
+            recipient_last_name: document
+              .getElementById(`delivery-last-${orderId}`)
+              .value.trim(),
+            recipient_phone: document
+              .getElementById(`delivery-phone-${orderId}`)
+              .value.trim(),
+            delivery_address: document
+              .getElementById(`delivery-address-${orderId}`)
+              .value.trim(),
+          });
+          alert("Votre demande de livraison a été enregistrée.");
+          loadDelivery();
+        } catch (e) {
+          alert(e.message);
+          button.disabled = false;
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendre mon véhicule — AutoPrestige</title>
+    <meta
+      name="description"
+      content="Vendez votre voiture au meilleur prix. Estimation gratuite et sans engagement. Offre sous 24h."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+  </head>
+  <body data-i18n-title="meta.title_sell">
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
+
+    <section class="hero" style="min-height: 70vh">
+      <div class="hero-bg">
+        <img
+          src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80"
+          alt="Vendre voiture"
+        />
+      </div>
+      <div class="hero-overlay"></div>
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-badge">Vendre mon véhicule</div>
+          <h1>
+            Vendez votre voiture<br />au
+            <span class="highlight">meilleur prix</span>
+          </h1>
+          <p>
+            Estimation gratuite et sans engagement. Notre équipe évalue votre
+            véhicule et vous propose la meilleure offre en 24h.
+          </p>
+          <div class="hero-buttons">
+            <a href="#estimation" class="btn btn-primary btn-lg"
+              >Estimer mon véhicule →</a
+            >
+            <a
+              href="https://wa.me/33142868200"
+              class="btn btn-outline btn-lg"
+              target="_blank"
+              >WhatsApp</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="estimation" style="padding: 80px 0">
+      <div class="container">
+        <div class="section-header">
+          <span class="label">Estimation gratuite</span>
+          <h2>Obtenez une offre en 24h</h2>
+          <p>
+            Remplissez le formulaire ci-dessous, nous vous recontactons
+            rapidement avec une proposition sérieuse.
+          </p>
+        </div>
+
+        <form
+          class="contact-form"
+          style="max-width: 700px; margin: 0 auto"
+          id="sell-form"
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label>Marque</label>
+              <input type="text" placeholder="Ex : BMW" required />
+            </div>
+            <div class="form-group">
+              <label>Modèle</label>
+              <input type="text" placeholder="Ex : Série 3 320d" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Année</label>
+              <input type="number" placeholder="2019" required />
+            </div>
+            <div class="form-group">
+              <label>Kilométrage</label>
+              <input type="number" placeholder="85000" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Votre nom</label>
+              <input type="text" placeholder="Jean Dupont" required />
+            </div>
+            <div class="form-group">
+              <label>Téléphone</label>
+              <input type="tel" placeholder="+33 6 12 34 56 78" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" placeholder="jean@email.com" required />
+          </div>
+          <div class="form-group">
+            <label>Informations complémentaires</label>
+            <textarea
+              placeholder="État du véhicule, options, historique..."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            style="width: 100%"
+          >
+            Demander mon estimation
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p>
+              Votre partenaire de confiance pour l'achat et la vente de
+              véhicules.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="financement.html" data-i18n="nav.financing"
+                >Financement</a
+              >
+              <a href="vendre.html" data-i18n="nav.sell">Vendre</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr"
+                >contact@autoprestige.fr</a
+              >
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights"
+            >© 2026 AutoPrestige. Tous droits réservés.</span
+          >
+          <span>Mentions légales · CGV</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+      document
+        .getElementById("sell-form")
+        ?.addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert(
+            "Merci ! Votre demande d'estimation a bien été envoyée. Nous vous recontactons sous 24h.",
+          );
+          this.reset();
+        });
+    </script>
+  </body>
+</html>
