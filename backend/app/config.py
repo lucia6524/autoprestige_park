@@ -4,6 +4,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+
+def normalize_database_url(url: str) -> str:
+    """Use the async PostgreSQL driver when Render provides a Postgres URL."""
+    if url.startswith("postgres://"):
+        return "postgresql+asyncpg://" + url[len("postgres://"):]
+    if url.startswith("postgresql://"):
+        return "postgresql+asyncpg://" + url[len("postgresql://"):]
+    return url
+
 class Settings(BaseSettings):
     APP_NAME: str = "AutoPrestige API"
     SECRET_KEY: str = "autoprestige-change-me-in-production-2026-secret-key"
@@ -33,3 +42,4 @@ class Settings(BaseSettings):
         extra = "ignore"
 
 settings = Settings()
+settings.DATABASE_URL = normalize_database_url(settings.DATABASE_URL)
