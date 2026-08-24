@@ -11,7 +11,6 @@ from app.schemas import (
 from app.services.auth import (
     get_user_by_email, create_otp, verify_otp, create_access_token, hash_password
 )
-from app.services.email import send_otp_email
 from app.schemas import ProfileUpdate
 from app.deps import get_current_user
 
@@ -99,15 +98,14 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
     await db.commit()
     await db.refresh(user)
 
-    # Generate OTP (affiché à l'écran, pas d'email)
+    # This site uses an internal OTP displayed to the client.
     code = await create_otp(db, email)
-    send_otp_email(email, code, pending["first_name"])
 
     return {
         "ok": True,
         "step": 3,
         "email": email,
-        "code": code,  # affiché côté client
+        "code": code,
         "message": "Entrez le code affiché à l'écran pour continuer.",
     }
 
@@ -182,12 +180,11 @@ async def register_set_password(
 
 @router.post("/login/request-code")
 async def login_request_code(email: str, db: AsyncSession = Depends(get_db)):
-    """Demander un code OTP (affiché à l'écran, pas d'email)"""
+    """Request an internal OTP displayed to the client."""
     user = await get_user_by_email(db, email)
     if not user or not user.is_verified:
         raise HTTPException(404, "Aucun compte vérifié avec cet email.")
     code = await create_otp(db, email)
-    send_otp_email(email, code, user.first_name)
     return {
         "ok": True,
         "email": email,

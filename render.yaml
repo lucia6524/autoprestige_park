@@ -8,6 +8,8 @@ services:
     envVars:
       - key: DATABASE_URL
         sync: false
+      - key: ENVIRONMENT
+        value: production
       - key: SECRET_KEY
         sync: false
       - key: CORS_ORIGINS
@@ -26,3 +28,7 @@ services:
         sync: false
       - key: SMTP_FROM
         sync: false
+      - key: DEEPL_API_KEY
+        sync: false
+      - key: DEEPL_API_URL
+        value: https://api-free.deepl.com/v2/translate

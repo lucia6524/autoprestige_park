@@ -1,7 +1,7 @@
 """
 Admin API — réservé aux utilisateurs is_admin=True
 """
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
 from typing import Optional, List
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -13,8 +13,12 @@ from pydantic import BaseModel, EmailStr, Field
 from app.database import get_db
 from app.deps import get_current_admin
 from app.models.user import User
-from app.models.commerce import Order, CartItem, Installment, Delivery, DeliveryEvent
+from app.models.commerce import (
+    Order, CartItem, Installment, Delivery, DeliveryEvent,
+    DeliveryStatus, OrderStatus,
+)
 from app.services.auth import hash_password
+from app.time_utils import as_utc_naive, utc_now_naive
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
@@ -321,9 +325,27 @@ async def update_order_status(
         raise HTTPException(404, "Commande introuvable")
 
     order.status = data.status
-    if data.status == "paid" and not order.paid_at:
-        order.paid_at = datetime.now(timezone.utc)
+    if data.status == OrderStatus.PAID.value and not order.paid_at:
+        order.paid_at = utc_now_naive()
         order.amount_paid = order.total_price
+        if order.payment_type == "full" and not order.delivery:
+            delivery = Delivery(
+                order_id=order.id,
+                status=DeliveryStatus.PREPARING.value,
+                tracking_number=f"AP-{order.id:06d}-{order.vehicle_id}",
+                carrier="AutoPrestige Logistics",
+                estimated_delivery=utc_now_naive() + timedelta(days=14),
+                current_location="Centre de préparation — Paris",
+                notes="Véhicule en cours de préparation.",
+            )
+            db.add(delivery)
+            await db.flush()
+            db.add(DeliveryEvent(
+                delivery_id=delivery.id,
+                status=DeliveryStatus.PREPARING.value,
+                location="Paris, France",
+                message="Paiement validé. Préparation du véhicule en cours.",
+            ))
 
     await db.commit()
     return {"ok": True, "order_id": order.id, "status": order.status}
@@ -365,9 +387,9 @@ async def update_delivery(
     if data.notes is not None:
         delivery.notes = data.notes
     if data.estimated_delivery is not None:
-        delivery.estimated_delivery = data.estimated_delivery
+        delivery.estimated_delivery = as_utc_naive(data.estimated_delivery)
 
-    delivery.updated_at = datetime.now(timezone.utc)
+    delivery.updated_at = utc_now_naive()
 
     if data.event_message or data.status:
         event = DeliveryEvent(
@@ -642,19 +664,19 @@ async def resolve_payment_claim(
     # APPROVE
     inst.payment_status = InstallmentPaymentStatus.PAID.value
     inst.paid = True
-    inst.paid_at = datetime.now(timezone.utc)
+    inst.paid_at = utc_now_naive()
     order.amount_paid = round((order.amount_paid or 0) + inst.amount, 2)
 
     if all(i.paid for i in order.installments):
         order.status = OrderStatus.PAID.value
-        order.paid_at = datetime.now(timezone.utc)
+        order.paid_at = utc_now_naive()
         if not order.delivery:
             delivery = Delivery(
                 order_id=order.id,
                 status=DeliveryStatus.PREPARING.value,
                 tracking_number=f"AP-{order.id:06d}-{order.vehicle_id}",
                 carrier="AutoPrestige Logistics",
-                estimated_delivery=datetime.now(timezone.utc) + timedelta(days=14),
+                estimated_delivery=utc_now_naive() + timedelta(days=14),
                 current_location="Centre de préparation — Paris",
             )
             db.add(delivery)

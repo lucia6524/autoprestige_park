@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta, timezone
+from datetime import timedelta
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
@@ -12,6 +12,7 @@ from app.models.commerce import (
 )
 from app.schemas import CheckoutIn, OrderOut, PayInstallmentIn, DeliveryDetailsIn
 from app.deps import get_current_user
+from app.time_utils import utc_now_naive
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
 
@@ -63,8 +64,8 @@ async def checkout(
     status = OrderStatus.PENDING.value
 
     if data.payment_type == PaymentType.FULL.value:
-        amount_paid = total
-        status = OrderStatus.PAID.value
+        # Payment is confirmed by an admin after the transfer is verified.
+        status = OrderStatus.PENDING.value
     else:
         months = data.months or 48
         months_total = months
@@ -84,14 +85,14 @@ async def checkout(
         months_total=months_total,
         amount_paid=amount_paid,
         status=status,
-        paid_at=datetime.now(timezone.utc) if data.payment_type == "full" else None,
+        paid_at=utc_now_naive() if data.payment_type == "full" else None,
     )
     db.add(order)
     await db.flush()
 
     # Create installment schedule for monthly
     if data.payment_type == PaymentType.MONTHLY.value:
-        start = datetime.now(timezone.utc)
+        start = utc_now_naive()
         for i in range(1, months_total + 1):
             due = start + timedelta(days=30 * i)
             inst = Installment(
@@ -102,27 +103,6 @@ async def checkout(
                 paid=False,
             )
             db.add(inst)
-
-    # If fully paid → create delivery
-    if status == OrderStatus.PAID.value:
-        order.status = OrderStatus.DELIVERING.value
-        delivery = Delivery(
-            order_id=order.id,
-            status=DeliveryStatus.PREPARING.value,
-            tracking_number=f"AP-{order.id:06d}-{item.vehicle_id}",
-            carrier="AutoPrestige Logistics",
-            estimated_delivery=datetime.now(timezone.utc) + timedelta(days=14),
-            current_location="Centre de préparation — Paris",
-            notes="Véhicule en cours de préparation.",
-        )
-        db.add(delivery)
-        await db.flush()
-        db.add(DeliveryEvent(
-            delivery_id=delivery.id,
-            status=DeliveryStatus.PREPARING.value,
-            location="Paris, France",
-            message="Commande confirmée. Préparation du véhicule en cours.",
-        ))
 
     # Remove from cart
     await db.delete(item)
@@ -157,7 +137,7 @@ async def save_delivery_details(
         await db.flush()
     for field, value in data.model_dump().items():
         setattr(delivery, field, value.strip())
-    delivery.updated_at = datetime.now(timezone.utc)
+    delivery.updated_at = utc_now_naive()
     await db.commit()
 
     result = await db.execute(_order_query().where(Order.id == order.id))
@@ -203,7 +183,7 @@ async def pay_installment(
         raise HTTPException(400, f"Veuillez d'abord régler l'échéance n°{unpaid[0].number}.")
 
     inst.payment_status = InstallmentPaymentStatus.CLAIMED.value
-    inst.claimed_at = datetime.now(timezone.utc)
+    inst.claimed_at = utc_now_naive()
 
     # Notification pour l'admin
     notif = Notification(

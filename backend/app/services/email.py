@@ -1,18 +1,30 @@
-"""
-Email service — envoi désactivé (option C).
-Le code OTP est renvoyé dans la réponse API et affiché à l'écran.
-"""
+"""SMTP email service used to deliver one-time passwords."""
+import smtplib
+from email.message import EmailMessage
+
 from app.config import settings
 
 
 def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool:
-    """
-    N'envoie plus d'email. Log console uniquement.
-    Le code est aussi retourné par l'API pour affichage frontend.
-    """
-    print("\n" + "=" * 50)
-    print("  [OTP ÉCRAN] Pas d'envoi email (mode sans SMTP)")
-    print(f"  Destinataire → {to_email}")
-    print(f"  CODE OTP     → {code}")
-    print("=" * 50 + "\n")
+    if not settings.SMTP_HOST or not settings.SMTP_USER or not settings.SMTP_PASSWORD:
+        return False
+
+    message = EmailMessage()
+    message["Subject"] = "Votre code de vérification AutoPrestige"
+    message["From"] = settings.SMTP_FROM
+    message["To"] = to_email
+    greeting = f"Bonjour {first_name}," if first_name else "Bonjour,"
+    message.set_content(
+        f"{greeting}\n\nVotre code de vérification est : {code}\n"
+        f"Il expire dans {settings.OTP_EXPIRE_MINUTES} minutes.\n\n"
+        "Si vous n'êtes pas à l'origine de cette demande, ignorez cet email."
+    )
+
+    try:
+        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as smtp:
+            smtp.starttls()
+            smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+            smtp.send_message(message)
+    except (OSError, smtplib.SMTPException):
+        return False
     return True

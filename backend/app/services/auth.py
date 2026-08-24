@@ -11,6 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
 from app.models.user import User, OTPCode
+from app.time_utils import utc_now_naive
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -61,7 +62,7 @@ def verify_otp_hash(plain_code: str, stored_hash: str) -> bool:
 
 async def create_otp(db: AsyncSession, email: str) -> str:
     email = email.lower().strip()
-    now = datetime.now(timezone.utc)
+    now = utc_now_naive()
     max_per_hour = getattr(settings, "OTP_MAX_PER_HOUR", 5)
 
     # Rate limit : max N codes / heure / email
@@ -98,7 +99,7 @@ async def create_otp(db: AsyncSession, email: str) -> str:
     )
     db.add(otp)
     await db.commit()
-    return code  # renvoyé une seule fois à l'appelant (affichage écran)
+    return code
 
 
 async def verify_otp(db: AsyncSession, email: str, code: str) -> bool:
@@ -108,7 +109,7 @@ async def verify_otp(db: AsyncSession, email: str, code: str) -> bool:
         return False
 
     max_attempts = getattr(settings, "OTP_MAX_ATTEMPTS", 5)
-    now = datetime.now(timezone.utc)
+    now = utc_now_naive()
 
     # Dernier code non utilisé pour cet email
     result = await db.execute(
@@ -121,8 +122,6 @@ async def verify_otp(db: AsyncSession, email: str, code: str) -> bool:
         return False
 
     exp = otp.expires_at
-    if exp.tzinfo is None:
-        exp = exp.replace(tzinfo=timezone.utc)
     if exp < now:
         otp.used = True
         await db.commit()

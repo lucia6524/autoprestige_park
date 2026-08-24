@@ -1,571 +1,785 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inscription — AutoPrestige</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <style>
-    body { background: var(--bg-primary) !important; min-height: 100vh; color: var(--text-primary); }
-    .reg-wrap {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 48px 20px 80px;
-    }
-    .reg-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px 36px;
-      box-shadow: var(--shadow-sm);
-    }
-    .reg-logo {
-      text-align: center;
-      margin-bottom: 28px;
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--text-primary);
-    }
-    .reg-logo span { color: var(--accent-light); }
-    .reg-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      text-align: center;
-      margin: 0 0 8px;
-      color: var(--text-primary);
-    }
-    .reg-sub {
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 32px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inscription — AutoPrestige</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      body {
+        background: var(--bg-primary) !important;
+        min-height: 100vh;
+        color: var(--text-primary);
+      }
+      .reg-wrap {
+        max-width: 480px;
+        margin: 0 auto;
+        padding: 48px 20px 80px;
+      }
+      .reg-card {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 40px 36px;
+        box-shadow: var(--shadow-sm);
+      }
+      .reg-logo {
+        text-align: center;
+        margin-bottom: 28px;
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--text-primary);
+      }
+      .reg-logo span {
+        color: var(--accent-light);
+      }
+      .reg-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        text-align: center;
+        margin: 0 0 8px;
+        color: var(--text-primary);
+      }
+      .reg-sub {
+        text-align: center;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        margin-bottom: 32px;
+      }
 
-    /* Steps indicator */
-    .reg-steps {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 32px;
-    }
-    .reg-step-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--border);
-      transition: background 0.2s, transform 0.2s;
-    }
-    .reg-step-dot.active {
-      background: var(--accent);
-      transform: scale(1.25);
-    }
-    .reg-step-dot.done { background: #34c759; }
+      /* Steps indicator */
+      .reg-steps {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 32px;
+      }
+      .reg-step-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--border);
+        transition:
+          background 0.2s,
+          transform 0.2s;
+      }
+      .reg-step-dot.active {
+        background: var(--accent);
+        transform: scale(1.25);
+      }
+      .reg-step-dot.done {
+        background: #34c759;
+      }
 
-    .reg-form label {
-      display: block;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-    .reg-form input {
-      width: 100%;
-      padding: 14px 16px;
-      border: 1.5px solid var(--input-border);
-      border-radius: 12px;
-      font-size: 1rem;
-      font-family: inherit;
-      margin-bottom: 18px;
-      transition: border-color 0.15s;
-      box-sizing: border-box;
-    }
-    .reg-form input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-    .reg-form .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    @media (max-width: 480px) {
-      .reg-form .row { grid-template-columns: 1fr; }
-    }
+      .reg-form label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 6px;
+      }
+      .reg-form input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1.5px solid var(--input-border);
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: inherit;
+        margin-bottom: 18px;
+        transition: border-color 0.15s;
+        box-sizing: border-box;
+      }
+      .reg-form input:focus {
+        outline: none;
+        border-color: var(--accent);
+      }
+      .reg-form .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      @media (max-width: 480px) {
+        .reg-form .row {
+          grid-template-columns: 1fr;
+        }
+      }
 
-    .reg-btn {
-      width: 100%;
-      padding: 16px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s;
-      margin-top: 8px;
-    }
-    .reg-btn:hover { background: #0077ed; }
-    .reg-btn:disabled {
-      opacity: 0.55;
-      cursor: not-allowed;
-    }
-    .reg-btn-outline {
-      background: transparent;
-      color: var(--accent-light);
-      border: 1.5px solid var(--accent);
-      margin-top: 12px;
-    }
-    .reg-btn-outline:hover { background: #f0f7ff; }
+      .reg-btn {
+        width: 100%;
+        padding: 16px;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: inherit;
+        transition: background 0.15s;
+        margin-top: 8px;
+      }
+      .reg-btn:hover {
+        background: #0077ed;
+      }
+      .reg-btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+      }
+      .reg-btn-outline {
+        background: transparent;
+        color: var(--accent-light);
+        border: 1.5px solid var(--accent);
+        margin-top: 12px;
+      }
+      .reg-btn-outline:hover {
+        background: #f0f7ff;
+      }
 
-    .reg-error {
-      background: #fef2f2;
-      color: #dc2626;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      margin-bottom: 16px;
-      display: none;
-    }
-    .reg-error.show { display: block; }
+      .reg-error {
+        background: #fef2f2;
+        color: #dc2626;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+        display: none;
+      }
+      .reg-error.show {
+        display: block;
+      }
 
-    .reg-success {
-      background: #f0fdf4;
-      color: #16a34a;
-      padding: 12px 16px;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      margin-bottom: 16px;
-      display: none;
-    }
-    .reg-success.show { display: block; }
+      .reg-success {
+        background: #f0fdf4;
+        color: #16a34a;
+        padding: 12px 16px;
+        border-radius: 10px;
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+        display: none;
+      }
+      .reg-success.show {
+        display: block;
+      }
 
-    .reg-footer {
-      text-align: center;
-      margin-top: 24px;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-    .reg-footer a {
-      color: var(--accent-light);
-      text-decoration: none;
-      font-weight: 600;
-    }
+      .reg-footer {
+        text-align: center;
+        margin-top: 24px;
+        font-size: 0.9rem;
+        color: var(--text-muted);
+      }
+      .reg-footer a {
+        color: var(--accent-light);
+        text-decoration: none;
+        font-weight: 600;
+      }
 
-    .otp-inputs {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      margin: 24px 0;
-    }
-    .otp-inputs input {
-      width: 48px;
-      height: 56px;
-      text-align: center;
-      font-size: 1.4rem;
-      font-weight: 700;
-      border: 1.5px solid var(--input-border);
-      border-radius: 12px;
-      margin-bottom: 0;
-    }
-    .otp-inputs input:focus { border-color: var(--accent); outline: none; }
+      .otp-inputs {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 24px 0;
+      }
+      .otp-inputs input {
+        width: 48px;
+        height: 56px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 700;
+        border: 1.5px solid var(--input-border);
+        border-radius: 12px;
+        margin-bottom: 0;
+      }
+      .otp-inputs input:focus {
+        border-color: var(--accent);
+        outline: none;
+      }
 
-    .step-panel { display: none; }
-    .step-panel.active { display: block; }
-  </style>  <script>
-    (function(){
-      var p=localStorage.getItem('theme');
-      if(p!=='light'&&p!=='dark') p='dark';
-      document.documentElement.setAttribute('data-theme',p);
-    })();
-  </script>
+      .step-panel {
+        display: none;
+      }
+      .step-panel.active {
+        display: block;
+      }
+    </style>
+    <script>
+      (function () {
+        var p = localStorage.getItem("theme");
+        if (p !== "light" && p !== "dark") p = "dark";
+        document.documentElement.setAttribute("data-theme", p);
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- Site header (injecté par js/header.js) -->
+    <div id="site-header"></div>
 
-</head>
-<body>
-  <!-- Site header (injecté par js/header.js) -->
-  <div id="site-header"></div>
+    <div class="reg-wrap">
+      <div class="reg-card">
+        <div class="reg-logo">Auto-<span>prestige</span></div>
+        <h1 class="reg-title" id="reg-title">Créer un compte</h1>
+        <p class="reg-sub" id="reg-sub">Étape 1 sur 4 — Vos informations</p>
 
-  <div class="reg-wrap">
-    <div class="reg-card">
-      <div class="reg-logo">Auto-<span>prestige</span></div>
-      <h1 class="reg-title" id="reg-title">Créer un compte</h1>
-      <p class="reg-sub" id="reg-sub">Étape 1 sur 4 — Vos informations</p>
+        <div class="reg-steps" id="reg-steps">
+          <div class="reg-step-dot active" data-step="1"></div>
+          <div class="reg-step-dot" data-step="2"></div>
+          <div class="reg-step-dot" data-step="3"></div>
+          <div class="reg-step-dot" data-step="4"></div>
+          <div class="reg-step-dot" data-step="5"></div>
+        </div>
 
-      <div class="reg-steps" id="reg-steps">
-        <div class="reg-step-dot active" data-step="1"></div>
-        <div class="reg-step-dot" data-step="2"></div>
-        <div class="reg-step-dot" data-step="3"></div>
-        <div class="reg-step-dot" data-step="4"></div>
-        <div class="reg-step-dot" data-step="5"></div>
-      </div>
+        <div class="reg-error" id="reg-error"></div>
+        <div class="reg-success" id="reg-success"></div>
 
-      <div class="reg-error" id="reg-error"></div>
-      <div class="reg-success" id="reg-success"></div>
-
-      <!-- STEP 1: Nom + Prénom -->
-      <div class="step-panel active" id="step-1">
-        <form class="reg-form" id="form-1">
-          <div class="row">
-            <div>
-              <label for="first_name">Prénom</label>
-              <input type="text" id="first_name" required placeholder="Jean" autocomplete="given-name">
+        <!-- STEP 1: Nom + Prénom -->
+        <div class="step-panel active" id="step-1">
+          <form class="reg-form" id="form-1">
+            <div class="row">
+              <div>
+                <label for="first_name">Prénom</label>
+                <input
+                  type="text"
+                  id="first_name"
+                  required
+                  placeholder="Jean"
+                  autocomplete="given-name"
+                />
+              </div>
+              <div>
+                <label for="last_name">Nom</label>
+                <input
+                  type="text"
+                  id="last_name"
+                  required
+                  placeholder="Dupont"
+                  autocomplete="family-name"
+                />
+              </div>
             </div>
-            <div>
-              <label for="last_name">Nom</label>
-              <input type="text" id="last_name" required placeholder="Dupont" autocomplete="family-name">
+            <button type="submit" class="reg-btn">Continuer →</button>
+          </form>
+        </div>
+
+        <!-- STEP 2: Email + Téléphone -->
+        <div class="step-panel" id="step-2">
+          <form class="reg-form" id="form-2">
+            <label for="email">Adresse email</label>
+            <input
+              type="email"
+              id="email"
+              required
+              placeholder="jean.dupont@gmail.com"
+              autocomplete="email"
+            />
+            <label for="phone">Numéro de téléphone</label>
+            <input
+              type="tel"
+              id="phone"
+              required
+              placeholder="+33 6 12 34 56 78"
+              autocomplete="tel"
+            />
+            <button type="submit" class="reg-btn">Continuer →</button>
+            <button type="button" class="reg-btn reg-btn-outline" id="back-2">
+              ← Retour
+            </button>
+          </form>
+        </div>
+
+        <!-- STEP 3: Salaire -->
+        <div class="step-panel" id="step-3">
+          <form class="reg-form" id="form-3">
+            <label for="salary">Salaire mensuel net (€)</label>
+            <input
+              type="number"
+              id="salary"
+              required
+              min="1"
+              step="100"
+              placeholder="2500"
+              inputmode="numeric"
+            />
+            <p
+              style="
+                font-size: 0.85rem;
+                color: var(--text-muted);
+                margin: -8px 0 16px;
+              "
+            >
+              Utilisé pour évaluer les options de financement.
+            </p>
+            <button type="submit" class="reg-btn">
+              Générer le code de vérification →
+            </button>
+            <button type="button" class="reg-btn reg-btn-outline" id="back-3">
+              ← Retour
+            </button>
+          </form>
+        </div>
+
+        <!-- STEP 4: OTP -->
+        <div class="step-panel" id="step-4">
+          <form class="reg-form" id="form-4">
+            <div
+              id="otp-code-box"
+              style="
+                text-align: center;
+                margin: 0 0 20px;
+                padding: 16px;
+                background: var(--accent-soft);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+              "
+            >
+              <div
+                style="
+                  font-size: 0.85rem;
+                  color: var(--text-secondary);
+                  margin-bottom: 6px;
+                "
+              >
+                Votre code de vérification
+              </div>
+              <div
+                id="otp-display-code"
+                style="
+                  font-size: 1.75rem;
+                  font-weight: 800;
+                  letter-spacing: 0.35em;
+                  color: var(--accent-light);
+                "
+              ></div>
             </div>
-          </div>
-          <button type="submit" class="reg-btn">Continuer →</button>
-        </form>
-      </div>
+            <p
+              style="
+                text-align: center;
+                color: var(--text-secondary);
+                margin-bottom: 8px;
+              "
+            >
+              Entrez le code à 6 chiffres envoyé à<br />
+              <strong id="otp-email-display"></strong>
+            </p>
+            <div class="otp-inputs" id="otp-inputs">
+              <input
+                type="text"
+                maxlength="1"
+                inputmode="numeric"
+                pattern="[0-9]"
+                aria-label="Chiffre 1"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                inputmode="numeric"
+                pattern="[0-9]"
+                aria-label="Chiffre 2"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                inputmode="numeric"
+                pattern="[0-9]"
+                aria-label="Chiffre 3"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                inputmode="numeric"
+                pattern="[0-9]"
+                aria-label="Chiffre 4"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                inputmode="numeric"
+                pattern="[0-9]"
+                aria-label="Chiffre 5"
+              />
+              <input
+                type="text"
+                maxlength="1"
+                inputmode="numeric"
+                pattern="[0-9]"
+                aria-label="Chiffre 6"
+              />
+            </div>
+            <button type="submit" class="reg-btn">Confirmer mon compte</button>
+            <button
+              type="button"
+              class="reg-btn reg-btn-outline"
+              id="resend-otp"
+            >
+              Renvoyer le code
+            </button>
+          </form>
+        </div>
 
-      <!-- STEP 2: Email + Téléphone -->
-      <div class="step-panel" id="step-2">
-        <form class="reg-form" id="form-2">
-          <label for="email">Adresse email</label>
-          <input type="email" id="email" required placeholder="jean.dupont@gmail.com" autocomplete="email">
-          <label for="phone">Numéro de téléphone</label>
-          <input type="tel" id="phone" required placeholder="+33 6 12 34 56 78" autocomplete="tel">
-          <button type="submit" class="reg-btn">Continuer →</button>
-          <button type="button" class="reg-btn reg-btn-outline" id="back-2">← Retour</button>
-        </form>
-      </div>
+        <!-- STEP 5: Mot de passe -->
+        <div class="step-panel" id="step-5">
+          <form class="reg-form" id="form-5">
+            <p
+              style="
+                text-align: center;
+                color: var(--text-secondary);
+                margin-bottom: 16px;
+              "
+            >
+              Créez un mot de passe pour sécuriser votre compte.
+            </p>
+            <label for="password">Mot de passe</label>
+            <input
+              type="password"
+              id="password"
+              required
+              minlength="6"
+              placeholder="Minimum 6 caractères"
+              autocomplete="new-password"
+            />
+            <label for="password2">Confirmer le mot de passe</label>
+            <input
+              type="password"
+              id="password2"
+              required
+              minlength="6"
+              placeholder="Retapez le mot de passe"
+              autocomplete="new-password"
+            />
+            <button type="submit" class="reg-btn">
+              Finaliser l'inscription →
+            </button>
+          </form>
+        </div>
 
-      <!-- STEP 3: Salaire -->
-      <div class="step-panel" id="step-3">
-        <form class="reg-form" id="form-3">
-          <label for="salary">Salaire mensuel net (€)</label>
-          <input type="number" id="salary" required min="1" step="100" placeholder="2500" inputmode="numeric">
-          <p style="font-size:0.85rem;color:var(--text-muted);margin:-8px 0 16px;">Utilisé pour évaluer les options de financement.</p>
-          <button type="submit" class="reg-btn">Générer le code de vérification →</button>
-          <button type="button" class="reg-btn reg-btn-outline" id="back-3">← Retour</button>
-        </form>
-      </div>
-
-      <!-- STEP 4: OTP -->
-      <!-- code box injected by JS into #otp-code-box -->
-      <div class="step-panel" id="step-4">
-        <form class="reg-form" id="form-4">
-          <div id="otp-code-box" style="display:none;text-align:center;margin:0 0 20px;padding:16px;background:var(--accent-soft);border:1px solid var(--border);border-radius:12px;">
-            <div style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:6px;">Votre code de vérification</div>
-            <div id="otp-display-code" style="font-size:1.75rem;font-weight:800;letter-spacing:0.35em;color:var(--accent-light);"></div>
-          </div>
-          <p style="text-align:center;color:var(--text-secondary);margin-bottom:8px;">
-            Entrez le code à 6 chiffres envoyé à<br>
-            <strong id="otp-email-display"></strong>
-          </p>
-          <div class="otp-inputs" id="otp-inputs">
-            <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Chiffre 1">
-            <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Chiffre 2">
-            <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Chiffre 3">
-            <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Chiffre 4">
-            <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Chiffre 5">
-            <input type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" aria-label="Chiffre 6">
-          </div>
-          <button type="submit" class="reg-btn">Confirmer mon compte</button>
-          <button type="button" class="reg-btn reg-btn-outline" id="resend-otp">Renvoyer le code</button>
-        </form>
-      </div>
-
-      
-      <!-- STEP 5: Mot de passe -->
-      <div class="step-panel" id="step-5">
-        <form class="reg-form" id="form-5">
-          <p style="text-align:center;color:var(--text-secondary);margin-bottom:16px;">Créez un mot de passe pour sécuriser votre compte.</p>
-          <label for="password">Mot de passe</label>
-          <input type="password" id="password" required minlength="6" placeholder="Minimum 6 caractères" autocomplete="new-password">
-          <label for="password2">Confirmer le mot de passe</label>
-          <input type="password" id="password2" required minlength="6" placeholder="Retapez le mot de passe" autocomplete="new-password">
-          <button type="submit" class="reg-btn">Finaliser l'inscription →</button>
-        </form>
-      </div>
-
-      <div class="reg-footer">
-        Déjà un compte ? <a href="connexion.html">Se connecter</a>
+        <div class="reg-footer">
+          Déjà un compte ? <a href="connexion.html">Se connecter</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="js/header.js"></script>
-  <script src="js/i18n.js"></script>
-  <script src="js/api.js"></script>
-  <script>
-    
-    // Déjà connecté → dashboard personnel
-    if (window.API && API.isLoggedIn()) {
-      window.location.replace('compte.html');
-    }
-
-    const REG_STORAGE_KEY = 'ap_reg_progress';
-
-    let currentStep = 1;
-    let sessionKey = null;
-    let userEmail = null;
-    let lastOtpCode = null;
-
-    const titles = {
-      1: ['Créer un compte', 'Étape 1 sur 5 — Nom et prénom'],
-      2: ['Vos coordonnées', 'Étape 2 sur 5 — Email et téléphone'],
-      3: ['Votre situation', 'Étape 3 sur 5 — Salaire mensuel'],
-      4: ['Vérification', 'Étape 4 sur 5 — Code de confirmation'],
-      5: ['Mot de passe', 'Étape 5 sur 5 — Sécurisez votre compte'],
-    };
-
-    function saveProgress() {
-      try {
-        const data = {
-          step: currentStep,
-          sessionKey,
-          userEmail,
-          lastOtpCode,
-          first_name: document.getElementById('first_name')?.value || '',
-          last_name: document.getElementById('last_name')?.value || '',
-          email: document.getElementById('email')?.value || userEmail || '',
-          phone: document.getElementById('phone')?.value || '',
-          salary: document.getElementById('salary')?.value || '',
-        };
-        sessionStorage.setItem(REG_STORAGE_KEY, JSON.stringify(data));
-      } catch (_) {}
-    }
-
-    function clearProgress() {
-      try { sessionStorage.removeItem(REG_STORAGE_KEY); } catch (_) {}
-    }
-
-    function loadProgress() {
-      try {
-        const raw = sessionStorage.getItem(REG_STORAGE_KEY);
-        if (!raw) return null;
-        return JSON.parse(raw);
-      } catch (_) {
-        return null;
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      // Déjà connecté → dashboard personnel
+      if (window.API && API.isLoggedIn()) {
+        window.location.replace("compte.html");
       }
-    }
 
-    function showError(msg) {
-      const el = document.getElementById('reg-error');
-      el.textContent = msg;
-      el.classList.add('show');
-      document.getElementById('reg-success').classList.remove('show');
-    }
-    function showSuccess(msg) {
-      const el = document.getElementById('reg-success');
-      el.textContent = msg;
-      el.classList.add('show');
-      document.getElementById('reg-error').classList.remove('show');
-    }
-    function clearMessages() {
-      document.getElementById('reg-error').classList.remove('show');
-      document.getElementById('reg-success').classList.remove('show');
-    }
+      const REG_STORAGE_KEY = "ap_reg_progress";
 
-    function goToStep(step) {
-      currentStep = step;
-      document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('step-' + step).classList.add('active');
-      document.getElementById('reg-title').textContent = titles[step][0];
-      document.getElementById('reg-sub').textContent = titles[step][1];
-      document.querySelectorAll('.reg-step-dot').forEach(dot => {
-        const s = parseInt(dot.dataset.step);
-        dot.classList.remove('active', 'done');
-        if (s === step) dot.classList.add('active');
-        else if (s < step) dot.classList.add('done');
-      });
-      clearMessages();
-      saveProgress();
-    }
+      let currentStep = 1;
+      let sessionKey = null;
+      let userEmail = null;
+      let lastOtpCode = null;
 
-    // Step 1
-    document.getElementById('form-1').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearMessages();
-      const first = document.getElementById('first_name').value.trim();
-      const last = document.getElementById('last_name').value.trim();
-      if (!first || !last) return showError('Veuillez remplir nom et prénom.');
-      try {
-        const res = await API.registerStep1(first, last);
-        sessionKey = res.session_key;
-        goToStep(2);
-      } catch (err) {
-        showError(err.message || 'Erreur réseau. Vérifiez que le backend est démarré (port 8000).');
+      const titles = {
+        1: ["Créer un compte", "Étape 1 sur 5 — Nom et prénom"],
+        2: ["Vos coordonnées", "Étape 2 sur 5 — Email et téléphone"],
+        3: ["Votre situation", "Étape 3 sur 5 — Salaire mensuel"],
+        4: ["Vérification", "Étape 4 sur 5 — Code de confirmation"],
+        5: ["Mot de passe", "Étape 5 sur 5 — Sécurisez votre compte"],
+      };
+
+      function saveProgress() {
+        try {
+          const data = {
+            step: currentStep,
+            sessionKey,
+            userEmail,
+            first_name: document.getElementById("first_name")?.value || "",
+            last_name: document.getElementById("last_name")?.value || "",
+            email: document.getElementById("email")?.value || userEmail || "",
+            phone: document.getElementById("phone")?.value || "",
+            salary: document.getElementById("salary")?.value || "",
+          };
+          sessionStorage.setItem(
+            REG_STORAGE_KEY,
+            JSON.stringify({ ...data, lastOtpCode }),
+          );
+        } catch (_) {}
       }
-    });
 
-    // Step 2
-    document.getElementById('form-2').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearMessages();
-      const email = document.getElementById('email').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      if (!email || !phone) return showError('Email et téléphone requis.');
-      if (!sessionKey) return showError('Session expirée. Recommencez à l\'étape 1.');
-      try {
-        await API.registerStep2(sessionKey, email, phone);
-        userEmail = email;
-        goToStep(3);
-      } catch (err) {
-        showError(err.message || 'Erreur réseau.');
+      function clearProgress() {
+        try {
+          sessionStorage.removeItem(REG_STORAGE_KEY);
+        } catch (_) {}
       }
-    });
-    document.getElementById('back-2').onclick = () => goToStep(1);
 
-    // Step 3
-    document.getElementById('form-3').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearMessages();
-      const salary = parseFloat(document.getElementById('salary').value);
-      if (!salary || salary <= 0) return showError('Indiquez un salaire valide.');
-      if (!sessionKey) return showError('Session expirée. Recommencez à l\'étape 1.');
-      const btn = e.target.querySelector('button[type=submit]');
-      btn.disabled = true;
-      btn.textContent = 'Envoi en cours…';
-      try {
-        const res = await API.registerStep3(sessionKey, salary);
-        userEmail = res.email || userEmail;
-        document.getElementById('otp-email-display').textContent = userEmail;
-        if (res.code) {
-          lastOtpCode = res.code;
-          const box = document.getElementById('otp-code-box');
-          const disp = document.getElementById('otp-display-code');
-          if (disp) disp.textContent = res.code;
-          if (box) box.style.display = 'block';
+      function loadProgress() {
+        try {
+          const raw = sessionStorage.getItem(REG_STORAGE_KEY);
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (_) {
+          return null;
         }
-        goToStep(4);
-        showSuccess('Code généré — il s\'affiche ci-dessous. Saisissez-le pour continuer.');
-      } catch (err) {
-        showError(err.message || 'Erreur réseau.');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Générer le code de vérification →';
       }
-    });
-    document.getElementById('back-3').onclick = () => goToStep(2);
 
-    // OTP inputs UX
-    const otpInputs = document.querySelectorAll('#otp-inputs input');
-    otpInputs.forEach((input, i) => {
-      input.addEventListener('input', () => {
-        if (input.value && i < otpInputs.length - 1) otpInputs[i + 1].focus();
-      });
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Backspace' && !input.value && i > 0) otpInputs[i - 1].focus();
-      });
-      input.addEventListener('paste', (e) => {
-        e.preventDefault();
-        const text = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
-        text.split('').forEach((ch, j) => { if (otpInputs[j]) otpInputs[j].value = ch; });
-        if (text.length) otpInputs[Math.min(text.length, 5)].focus();
-      });
-    });
-
-    // Step 4 — vérification du code
-    document.getElementById('form-4').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearMessages();
-      const code = Array.from(otpInputs).map(i => i.value).join('');
-      if (code.length !== 6) return showError('Entrez le code à 6 chiffres.');
-      if (!userEmail) return showError('Email manquant. Recommencez l\'inscription.');
-      const btn = e.target.querySelector('button[type=submit]');
-      btn.disabled = true;
-      try {
-        const res = await API.registerVerify(userEmail, code);
-        if (res.need_password || !res.access_token) {
-          goToStep(5);
-          showSuccess('Code validé. Créez votre mot de passe.');
-          btn.disabled = false;
-        } else {
-          clearProgress();
-          API.setAuth(res.access_token, res.user);
-          showSuccess('Compte créé ! Redirection vers votre espace personnel…');
-          setTimeout(() => { window.location.replace('compte.html'); }, 800);
-        }
-      } catch (err) {
-        showError(err.message || 'Code invalide ou erreur réseau.');
-        btn.disabled = false;
+      function showError(msg) {
+        const el = document.getElementById("reg-error");
+        el.textContent = msg;
+        el.classList.add("show");
+        document.getElementById("reg-success").classList.remove("show");
       }
-    });
-
-    // Step 5 — mot de passe
-    document.getElementById('form-5').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      clearMessages();
-      const p1 = document.getElementById('password').value;
-      const p2 = document.getElementById('password2').value;
-      if (p1.length < 6) return showError('Minimum 6 caractères.');
-      if (p1 !== p2) return showError('Les mots de passe ne correspondent pas.');
-      if (!userEmail) return showError('Email manquant. Recommencez l\'inscription.');
-      const btn = e.target.querySelector('button[type=submit]');
-      btn.disabled = true;
-      try {
-        const res = await API.registerSetPassword(userEmail, p1);
-        clearProgress();
-        API.setAuth(res.access_token, res.user);
-        showSuccess('Inscription terminée ! Redirection vers votre espace personnel…');
-        setTimeout(() => { window.location.replace('compte.html'); }, 800);
-      } catch (err) {
-        showError(err.message || 'Erreur lors de la création du mot de passe.');
-        btn.disabled = false;
+      function showSuccess(msg) {
+        const el = document.getElementById("reg-success");
+        el.textContent = msg;
+        el.classList.add("show");
+        document.getElementById("reg-error").classList.remove("show");
       }
-    });
-
-    document.getElementById('resend-otp').onclick = async () => {
-      if (!sessionKey) {
-        showError('Session expirée. Recommencez à l\'étape 1.');
-        return;
+      function clearMessages() {
+        document.getElementById("reg-error").classList.remove("show");
+        document.getElementById("reg-success").classList.remove("show");
       }
-      try {
-        const salary = Number(document.getElementById('salary').value) || 0;
-        const res = await API.registerStep3(sessionKey, salary);
-        if (res.code) {
-          lastOtpCode = res.code;
-          document.getElementById('otp-display-code').textContent = res.code;
-          document.getElementById('otp-code-box').style.display = 'block';
-        }
-        if (res.email) {
-          userEmail = res.email;
-          document.getElementById('otp-email-display').textContent = userEmail;
-        }
+
+      function goToStep(step) {
+        currentStep = step;
+        document
+          .querySelectorAll(".step-panel")
+          .forEach((p) => p.classList.remove("active"));
+        document.getElementById("step-" + step).classList.add("active");
+        document.getElementById("reg-title").textContent = titles[step][0];
+        document.getElementById("reg-sub").textContent = titles[step][1];
+        document.querySelectorAll(".reg-step-dot").forEach((dot) => {
+          const s = parseInt(dot.dataset.step);
+          dot.classList.remove("active", "done");
+          if (s === step) dot.classList.add("active");
+          else if (s < step) dot.classList.add("done");
+        });
+        clearMessages();
         saveProgress();
-        showSuccess('Nouveau code généré.');
-      } catch (err) {
-        showError(err.message || 'Impossible de renvoyer le code.');
       }
-    };
 
-    // Restaurer la progression après un rechargement de page
-    (function restoreProgress() {
-      const saved = loadProgress();
-      if (!saved || !saved.step || saved.step < 2) return;
+      // Step 1
+      document
+        .getElementById("form-1")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearMessages();
+          const first = document.getElementById("first_name").value.trim();
+          const last = document.getElementById("last_name").value.trim();
+          if (!first || !last)
+            return showError("Veuillez remplir nom et prénom.");
+          try {
+            const res = await API.registerStep1(first, last);
+            sessionKey = res.session_key;
+            goToStep(2);
+          } catch (err) {
+            showError(
+              err.message ||
+                "Erreur réseau. Vérifiez que le backend est démarré (port 8000).",
+            );
+          }
+        });
 
-      sessionKey = saved.sessionKey || null;
-      userEmail = saved.userEmail || saved.email || null;
-      lastOtpCode = saved.lastOtpCode || null;
+      // Step 2
+      document
+        .getElementById("form-2")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearMessages();
+          const email = document.getElementById("email").value.trim();
+          const phone = document.getElementById("phone").value.trim();
+          if (!email || !phone) return showError("Email et téléphone requis.");
+          if (!sessionKey)
+            return showError("Session expirée. Recommencez à l'étape 1.");
+          try {
+            await API.registerStep2(sessionKey, email, phone);
+            userEmail = email;
+            goToStep(3);
+          } catch (err) {
+            showError(err.message || "Erreur réseau.");
+          }
+        });
+      document.getElementById("back-2").onclick = () => goToStep(1);
 
-      if (saved.first_name) document.getElementById('first_name').value = saved.first_name;
-      if (saved.last_name) document.getElementById('last_name').value = saved.last_name;
-      if (saved.email) document.getElementById('email').value = saved.email;
-      if (saved.phone) document.getElementById('phone').value = saved.phone;
-      if (saved.salary) document.getElementById('salary').value = saved.salary;
+      // Step 3
+      document
+        .getElementById("form-3")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearMessages();
+          const salary = parseFloat(document.getElementById("salary").value);
+          if (!salary || salary <= 0)
+            return showError("Indiquez un salaire valide.");
+          if (!sessionKey)
+            return showError("Session expirée. Recommencez à l'étape 1.");
+          const btn = e.target.querySelector("button[type=submit]");
+          btn.disabled = true;
+          btn.textContent = "Envoi en cours…";
+          try {
+            const res = await API.registerStep3(sessionKey, salary);
+            userEmail = res.email || userEmail;
+            lastOtpCode = res.code || null;
+            document.getElementById("otp-display-code").textContent =
+              lastOtpCode || "";
+            document.getElementById("otp-email-display").textContent =
+              userEmail;
+            goToStep(4);
+            showSuccess("Code généré — saisissez-le pour continuer.");
+          } catch (err) {
+            showError(err.message || "Erreur réseau.");
+          } finally {
+            btn.disabled = false;
+            btn.textContent = "Générer le code de vérification →";
+          }
+        });
+      document.getElementById("back-3").onclick = () => goToStep(2);
 
-      if (saved.step >= 4 && userEmail) {
-        document.getElementById('otp-email-display').textContent = userEmail;
-        if (lastOtpCode) {
-          document.getElementById('otp-display-code').textContent = lastOtpCode;
-          document.getElementById('otp-code-box').style.display = 'block';
+      // OTP inputs UX
+      const otpInputs = document.querySelectorAll("#otp-inputs input");
+      otpInputs.forEach((input, i) => {
+        input.addEventListener("input", () => {
+          if (input.value && i < otpInputs.length - 1) otpInputs[i + 1].focus();
+        });
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && !input.value && i > 0)
+            otpInputs[i - 1].focus();
+        });
+        input.addEventListener("paste", (e) => {
+          e.preventDefault();
+          const text = (e.clipboardData.getData("text") || "")
+            .replace(/\D/g, "")
+            .slice(0, 6);
+          text.split("").forEach((ch, j) => {
+            if (otpInputs[j]) otpInputs[j].value = ch;
+          });
+          if (text.length) otpInputs[Math.min(text.length, 5)].focus();
+        });
+      });
+
+      // Step 4 — vérification du code
+      document
+        .getElementById("form-4")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearMessages();
+          const code = Array.from(otpInputs)
+            .map((i) => i.value)
+            .join("");
+          if (code.length !== 6)
+            return showError("Entrez le code à 6 chiffres.");
+          if (!userEmail)
+            return showError("Email manquant. Recommencez l'inscription.");
+          const btn = e.target.querySelector("button[type=submit]");
+          btn.disabled = true;
+          try {
+            const res = await API.registerVerify(userEmail, code);
+            if (res.need_password || !res.access_token) {
+              goToStep(5);
+              showSuccess("Code validé. Créez votre mot de passe.");
+              btn.disabled = false;
+            } else {
+              clearProgress();
+              API.setAuth(res.access_token, res.user);
+              showSuccess(
+                "Compte créé ! Redirection vers votre espace personnel…",
+              );
+              setTimeout(() => {
+                window.location.replace("compte.html");
+              }, 800);
+            }
+          } catch (err) {
+            showError(err.message || "Code invalide ou erreur réseau.");
+            btn.disabled = false;
+          }
+        });
+
+      // Step 5 — mot de passe
+      document
+        .getElementById("form-5")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          clearMessages();
+          const p1 = document.getElementById("password").value;
+          const p2 = document.getElementById("password2").value;
+          if (p1.length < 6) return showError("Minimum 6 caractères.");
+          if (p1 !== p2)
+            return showError("Les mots de passe ne correspondent pas.");
+          if (!userEmail)
+            return showError("Email manquant. Recommencez l'inscription.");
+          const btn = e.target.querySelector("button[type=submit]");
+          btn.disabled = true;
+          try {
+            const res = await API.registerSetPassword(userEmail, p1);
+            clearProgress();
+            API.setAuth(res.access_token, res.user);
+            showSuccess(
+              "Inscription terminée ! Redirection vers votre espace personnel…",
+            );
+            setTimeout(() => {
+              window.location.replace("compte.html");
+            }, 800);
+          } catch (err) {
+            showError(
+              err.message || "Erreur lors de la création du mot de passe.",
+            );
+            btn.disabled = false;
+          }
+        });
+
+      document.getElementById("resend-otp").onclick = async () => {
+        if (!sessionKey) {
+          showError("Session expirée. Recommencez à l'étape 1.");
+          return;
         }
-      }
+        try {
+          const salary = Number(document.getElementById("salary").value) || 0;
+          const res = await API.registerStep3(sessionKey, salary);
+          lastOtpCode = res.code || null;
+          document.getElementById("otp-display-code").textContent =
+            lastOtpCode || "";
+          if (res.email) {
+            userEmail = res.email;
+            document.getElementById("otp-email-display").textContent =
+              userEmail;
+          }
+          saveProgress();
+          showSuccess("Nouveau code généré.");
+        } catch (err) {
+          showError(err.message || "Impossible de renvoyer le code.");
+        }
+      };
 
-      goToStep(Math.min(saved.step, 5));
-      if (saved.step === 4) {
-        showSuccess('Reprise de l\'inscription — saisissez le code affiché (ou renvoyez-en un nouveau).');
-      } else if (saved.step === 5) {
-        showSuccess('Code déjà validé. Créez votre mot de passe pour finaliser.');
-      }
-    })();
-  </script>
-</body>
+      // Restaurer la progression après un rechargement de page
+      (function restoreProgress() {
+        const saved = loadProgress();
+        if (!saved || !saved.step || saved.step < 2) return;
+
+        sessionKey = saved.sessionKey || null;
+        userEmail = saved.userEmail || saved.email || null;
+        lastOtpCode = saved.lastOtpCode || null;
+
+        if (saved.first_name)
+          document.getElementById("first_name").value = saved.first_name;
+        if (saved.last_name)
+          document.getElementById("last_name").value = saved.last_name;
+        if (saved.email) document.getElementById("email").value = saved.email;
+        if (saved.phone) document.getElementById("phone").value = saved.phone;
+        if (saved.salary)
+          document.getElementById("salary").value = saved.salary;
+
+        if (saved.step >= 4 && userEmail) {
+          document.getElementById("otp-email-display").textContent = userEmail;
+          document.getElementById("otp-display-code").textContent =
+            lastOtpCode || "";
+        }
+
+        goToStep(Math.min(saved.step, 5));
+        if (saved.step === 4) {
+          showSuccess("Reprise de l'inscription — saisissez le code affiché.");
+        } else if (saved.step === 5) {
+          showSuccess(
+            "Code déjà validé. Créez votre mot de passe pour finaliser.",
+          );
+        }
+      })();
+    </script>
+  </body>
 </html>

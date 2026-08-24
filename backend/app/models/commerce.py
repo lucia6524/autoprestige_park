@@ -1,7 +1,8 @@
-from datetime import datetime, timezone
+from datetime import datetime
 from sqlalchemy import String, Integer, Float, Boolean, DateTime, Text, ForeignKey, Enum as SAEnum
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.database import Base
+from app.time_utils import utc_now_naive
 import enum
 
 class PaymentType(str, enum.Enum):
@@ -59,8 +60,8 @@ class Vehicle(Base):
     image: Mapped[str] = mapped_column(String(500), default="")
     images: Mapped[str] = mapped_column(Text, default="")  # JSON array as string
     description: Mapped[str] = mapped_column(Text, default="")
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive, onupdate=utc_now_naive)
 
 
 class CartItem(Base):
@@ -75,7 +76,7 @@ class CartItem(Base):
     price: Mapped[float] = mapped_column(Float)
     monthly: Mapped[float] = mapped_column(Float, default=0)
     image: Mapped[str] = mapped_column(String(500), default="")
-    added_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    added_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
 
     user = relationship("User", back_populates="carts")
 
@@ -98,7 +99,7 @@ class Order(Base):
     amount_paid: Mapped[float] = mapped_column(Float, default=0)
     status: Mapped[str] = mapped_column(String(30), default=OrderStatus.PENDING.value)
 
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
     paid_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
 
     user = relationship("User", back_populates="orders")
@@ -139,7 +140,7 @@ class Delivery(Base):
     recipient_last_name: Mapped[str] = mapped_column(String(100), default="")
     recipient_phone: Mapped[str] = mapped_column(String(30), default="")
     delivery_address: Mapped[str] = mapped_column(Text, default="")
-    updated_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
 
     order = relationship("Order", back_populates="delivery")
     events = relationship("DeliveryEvent", back_populates="delivery", cascade="all, delete-orphan", order_by="DeliveryEvent.created_at")
@@ -153,7 +154,7 @@ class DeliveryEvent(Base):
     status: Mapped[str] = mapped_column(String(30))
     location: Mapped[str] = mapped_column(String(255), default="")
     message: Mapped[str] = mapped_column(Text, default="")
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
 
     delivery = relationship("Delivery", back_populates="events")
 
@@ -170,4 +171,4 @@ class Notification(Base):
     order_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     installment_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     is_read: Mapped[bool] = mapped_column(Boolean, default=False)
-    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)

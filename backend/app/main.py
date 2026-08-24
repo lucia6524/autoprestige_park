@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_db
-from app.routers import auth, cart, orders, admin, vehicles, site_settings
+from app.routers import auth, cart, orders, admin, vehicles, site_settings, translation
 # Import models so Base.metadata knows them
 from app.models import user, commerce  # noqa: F401
 from app.models import site_settings as site_settings_model  # noqa: F401
@@ -37,6 +37,7 @@ app.include_router(orders.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
 app.include_router(vehicles.router, prefix="/api")
 app.include_router(site_settings.router, prefix="/api")
+app.include_router(translation.router, prefix="/api")
 
 
 @app.get("/api/health")

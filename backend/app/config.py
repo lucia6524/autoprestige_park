@@ -15,6 +15,7 @@ def normalize_database_url(url: str) -> str:
 
 class Settings(BaseSettings):
     APP_NAME: str = "AutoPrestige API"
+    ENVIRONMENT: str = "development"
     SECRET_KEY: str = "autoprestige-change-me-in-production-2026-secret-key"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 days
@@ -26,6 +27,8 @@ class Settings(BaseSettings):
     SMTP_USER: str = ""
     SMTP_PASSWORD: str = ""
     SMTP_FROM: str = "noreply@autoprestige.fr"
+    DEEPL_API_KEY: str = ""
+    DEEPL_API_URL: str = "https://api-free.deepl.com/v2/translate"
 
     OTP_EXPIRE_MINUTES: int = 10
     OTP_MAX_ATTEMPTS: int = 5          # tentatives max par code
@@ -43,3 +46,13 @@ class Settings(BaseSettings):
 
 settings = Settings()
 settings.DATABASE_URL = normalize_database_url(settings.DATABASE_URL)
+
+if settings.ENVIRONMENT.lower() == "production":
+    default_secret = "autoprestige-change-me-in-production-2026-secret-key"
+    default_password = "Admin@Prestige2026"
+    if settings.SECRET_KEY == default_secret or len(settings.SECRET_KEY) < 32:
+        raise RuntimeError("SECRET_KEY must be a unique value of at least 32 characters in production.")
+    if settings.ADMIN_PASSWORD == default_password or len(settings.ADMIN_PASSWORD) < 12:
+        raise RuntimeError("ADMIN_PASSWORD must be changed and at least 12 characters in production.")
+    if settings.CORS_ORIGINS == ["*"] or not settings.CORS_ORIGINS:
+        raise RuntimeError("CORS_ORIGINS must explicitly list the frontend origins in production.")
