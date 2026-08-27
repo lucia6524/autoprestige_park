@@ -64,7 +64,11 @@ const I18N = {
   },
 
   apiBase() {
-    return (localStorage.getItem('api_base') || 'http://127.0.0.1:8000') + '/api';
+    const configuredBase = localStorage.getItem('api_base');
+    if (configuredBase) return configuredBase.replace(/\/$/, '') + '/api';
+
+    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
   },
 
   captureOriginalContent(root = document.body) {

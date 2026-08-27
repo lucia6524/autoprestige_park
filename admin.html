@@ -951,8 +951,15 @@
     <div class="toast" id="toast"></div>
 
     <script>
-      const API =
-        (localStorage.getItem("api_base") || "http://localhost:8000") + "/api";
+      const configuredBase = localStorage.getItem("api_base");
+      const isLocal = ["localhost", "127.0.0.1", "::1"].includes(
+        window.location.hostname,
+      );
+      const API = configuredBase
+        ? configuredBase.replace(/\/$/, "") + "/api"
+        : isLocal
+          ? "http://127.0.0.1:8000/api"
+          : "https://autoprestige-api.onrender.com/api";
       let token = localStorage.getItem("admin_token") || "";
       let currentUser = null;
 

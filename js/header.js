@@ -137,7 +137,11 @@
   }
 
   async function updateSiteContactInfo() {
-    const apiBase = (localStorage.getItem('api_base') || 'http://127.0.0.1:8000') + '/api';
+    const configuredBase = localStorage.getItem('api_base');
+    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    const apiBase = configuredBase
+      ? configuredBase.replace(/\/$/, '') + '/api'
+      : (isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api');
     try {
       const response = await fetch(apiBase + '/site-settings');
       if (!response.ok) return;

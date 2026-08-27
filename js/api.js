@@ -1,7 +1,13 @@
 /**
  * AutoPrestige API Client
  */
-const API_BASE = 'http://127.0.0.1:8000/api';
+const API_BASE = (() => {
+  const configuredBase = localStorage.getItem('api_base');
+  if (configuredBase) return configuredBase.replace(/\/$/, '') + '/api';
+
+  const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+  return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
+})();
 
 const API = {
   getToken() {
