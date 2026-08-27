@@ -27,23 +27,24 @@ async def init_db():
                 sync_conn, tables=list(Base.metadata.sorted_tables)
             )
         )
-        # Migrations légères SQLite (ignorer si colonne déjà présente)
-        migrations = [
-            "ALTER TABLE users ADD COLUMN is_admin BOOLEAN DEFAULT 0",
-            "ALTER TABLE installments ADD COLUMN payment_status VARCHAR(20) DEFAULT 'unpaid'",
-            "ALTER TABLE installments ADD COLUMN claimed_at DATETIME",
-            "ALTER TABLE installments ADD COLUMN admin_note TEXT DEFAULT ''",
-            "ALTER TABLE otp_codes ADD COLUMN attempts INTEGER DEFAULT 0",
-            "ALTER TABLE deliveries ADD COLUMN recipient_first_name VARCHAR(100) DEFAULT ''",
-            "ALTER TABLE deliveries ADD COLUMN recipient_last_name VARCHAR(100) DEFAULT ''",
-            "ALTER TABLE deliveries ADD COLUMN recipient_phone VARCHAR(30) DEFAULT ''",
-            "ALTER TABLE deliveries ADD COLUMN delivery_address TEXT DEFAULT ''",
-        ]
-        for sql in migrations:
-            try:
-                await conn.execute(text(sql))
-            except Exception:
-                pass
+
+        if conn.dialect.name == "sqlite":
+            migrations = [
+                "ALTER TABLE users ADD COLUMN is_admin BOOLEAN DEFAULT 0",
+                "ALTER TABLE installments ADD COLUMN payment_status VARCHAR(20) DEFAULT 'unpaid'",
+                "ALTER TABLE installments ADD COLUMN claimed_at DATETIME",
+                "ALTER TABLE installments ADD COLUMN admin_note TEXT DEFAULT ''",
+                "ALTER TABLE otp_codes ADD COLUMN attempts INTEGER DEFAULT 0",
+                "ALTER TABLE deliveries ADD COLUMN recipient_first_name VARCHAR(100) DEFAULT ''",
+                "ALTER TABLE deliveries ADD COLUMN recipient_last_name VARCHAR(100) DEFAULT ''",
+                "ALTER TABLE deliveries ADD COLUMN recipient_phone VARCHAR(30) DEFAULT ''",
+                "ALTER TABLE deliveries ADD COLUMN delivery_address TEXT DEFAULT ''",
+            ]
+            for sql in migrations:
+                try:
+                    await conn.execute(text(sql))
+                except Exception:
+                    pass
 
         if conn.dialect.name == "postgresql":
             users_exists = await conn.scalar(
