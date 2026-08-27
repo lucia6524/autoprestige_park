@@ -7,7 +7,9 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: progrest
+          property: connectionString
       - key: ENVIRONMENT
         value: production
       - key: SECRET_KEY
@@ -28,7 +30,9 @@ services:
         sync: false
       - key: SMTP_FROM
         sync: false
-      - key: DEEPL_API_KEY
-        sync: false
-      - key: DEEPL_API_URL
-        value: https://api-free.deepl.com/v2/translate
+
+databases:
+  - name: progrest
+    databaseName: progrest
+    user: progrest
+    plan: free

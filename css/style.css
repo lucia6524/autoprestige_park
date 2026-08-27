@@ -1982,6 +1982,21 @@ html[data-theme] .footer {
 }
 
 /* ===== LANGUAGE SWITCHER ===== */
+html.translated-ltr,
+html.translated-rtl {
+  margin-top: 0 !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-te-banner-frame,
+.skiptranslate,
+#google_translate_element {
+  display: none !important;
+}
+
 .lang-switcher {
   position: relative;
   display: inline-flex;

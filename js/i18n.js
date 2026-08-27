@@ -1,7 +1,6 @@
 /**
  * AutoPrestige i18n
- * - data-i18n pour les textes connus (JSON locaux)
- * - DeepL via le backend pour tout le contenu visible
+ * - Widget Google Translate pour tout le contenu visible
  */
 const I18N = {
   currentLang: 'fr',
@@ -21,6 +20,33 @@ const I18N = {
   _observer: null,
   _translating: false,
 
+  setGoogleCookie(lang) {
+    const value = lang === 'fr' ? '' : `/fr/${lang}`;
+    document.cookie = `googtrans=${value}; path=/`;
+    document.cookie = `googtrans=${value}; path=/; domain=${window.location.hostname}`;
+  },
+
+  loadGoogleWidget() {
+    if (window.google?.translate?.TranslateElement) {
+      window.googleTranslateElementInit();
+      return;
+    }
+    if (document.querySelector('script[data-google-translate]')) return;
+    window.googleTranslateElementInit = () => {
+      if (!window.google?.translate?.TranslateElement) return;
+      new google.translate.TranslateElement({
+        pageLanguage: 'fr',
+        includedLanguages: this.supported.join(','),
+        autoDisplay: false
+      }, 'google_translate_element');
+    };
+    const script = document.createElement('script');
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+    script.async = true;
+    script.dataset.googleTranslate = 'true';
+    document.head.appendChild(script);
+  },
+
   t(key) {
     if (!key) return '';
     const keys = key.split('.');
@@ -33,26 +59,6 @@ const I18N = {
   },
 
   apply() {
-    document.querySelectorAll('[data-i18n]').forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const translated = this.t(key);
-      if (translated && translated !== key) el.textContent = translated;
-    });
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-      const key = el.getAttribute('data-i18n-placeholder');
-      const translated = this.t(key);
-      if (translated && translated !== key) el.placeholder = translated;
-    });
-    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
-      const key = el.getAttribute('data-i18n-aria');
-      const translated = this.t(key);
-      if (translated && translated !== key) el.setAttribute('aria-label', translated);
-    });
-    const titleKey = document.body.getAttribute('data-i18n-title');
-    if (titleKey) {
-      const translated = this.t(titleKey);
-      if (translated && translated !== titleKey) document.title = translated;
-    }
     document.documentElement.lang = this.currentLang;
     this.updateSwitcherUI();
   },
@@ -100,9 +106,10 @@ const I18N = {
       const parent = node.parentElement;
       const value = node.nodeValue?.trim();
       if (!parent || !value || parent.closest('script, style, noscript, textarea, .lang-switcher, [data-no-translate]')) continue;
-      if (this.currentLang !== 'fr' && this._originalText.has(node)) nodes.push({ node, text: this._originalText.get(node) });
+      const original = this._originalText.get(node);
+      if (this.currentLang !== 'fr' && original?.trim()) nodes.push({ node, text: original });
     }
-    document.querySelectorAll('[placeholder], [title], [aria-label]').forEach(el => {
+    root.querySelectorAll?.('[placeholder], [title], [aria-label]').forEach(el => {
       if (el.closest('.lang-switcher, [data-no-translate]')) return;
       const attrs = this._originalAttributes.get(el) || {};
       ['placeholder', 'title', 'aria-label'].forEach(name => {
@@ -113,24 +120,7 @@ const I18N = {
   },
 
   async translatePage() {
-    if (this.currentLang === 'fr') return;
-    this.captureOriginalContent();
-    const items = this.translatableNodes();
-    for (let offset = 0; offset < items.length; offset += 50) {
-      const batch = items.slice(offset, offset + 50);
-      const response = await fetch(`${this.apiBase()}/translate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ texts: batch.map(item => item.text), target_lang: this.currentLang.toUpperCase() })
-      });
-      if (!response.ok) throw new Error('DeepL translation unavailable');
-      const data = await response.json();
-      batch.forEach((item, index) => {
-        const translated = data.translations[index];
-        if (item.node) item.node.nodeValue = item.node.nodeValue.replace(item.text.trim(), translated);
-        if (item.element) item.element.setAttribute(item.attribute, translated);
-      });
-    }
+    this.loadGoogleWidget();
   },
 
   observeDynamicContent() {
@@ -140,26 +130,18 @@ const I18N = {
       clearTimeout(this._translateTimer);
       this._translateTimer = setTimeout(() => {
         this._translating = true;
-        this.translatePage().catch(() => {}).finally(() => { this._translating = false; });
+        this.translatePage().catch(err => console.warn('Google Translate:', err)).finally(() => { this._translating = false; });
       }, 150);
     });
     this._observer.observe(document.body, { childList: true, subtree: true });
   },
 
   async loadJson(lang) {
-    if (!this.supported.includes(lang)) lang = 'fr';
-    try {
-      const res = await fetch(`locales/${lang}.json`);
-      if (!res.ok) throw new Error('locale missing');
-      this.translations = await res.json();
-      this.currentLang = lang;
-      this.apply();
-      return true;
-    } catch (err) {
-      console.warn('i18n JSON:', err);
-      if (lang !== 'fr') return this.loadJson('fr');
-      return false;
-    }
+    this.currentLang = this.supported.includes(lang) ? lang : 'fr';
+    this.translations = {};
+    this.setGoogleCookie(this.currentLang);
+    this.apply();
+    return true;
   },
 
   /**
@@ -170,14 +152,8 @@ const I18N = {
     localStorage.setItem('lang', lang);
     this.currentLang = lang;
 
-    this.restoreOriginalContent();
-    await this.loadJson(lang);
-    this._translating = true;
-    try { await this.translatePage(); } catch (err) { console.warn('DeepL:', err); }
-    this._translating = false;
-
-    this.updateSwitcherUI();
-    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+    this.setGoogleCookie(lang);
+    window.location.reload();
   },
 
   async load(lang) {
@@ -204,6 +180,10 @@ const I18N = {
         `).join('')}
       </div>
     `;
+    const googleWidget = document.createElement('div');
+    googleWidget.id = 'google_translate_element';
+    googleWidget.hidden = true;
+    wrapper.appendChild(googleWidget);
 
     const toggle = wrapper.querySelector('.lang-toggle');
     const dropdown = wrapper.querySelector('.lang-dropdown');
@@ -277,15 +257,10 @@ const I18N = {
 
     this.currentLang = initial;
     localStorage.setItem('lang', initial);
-    this.captureOriginalContent();
+    this.setGoogleCookie(initial);
     await this.loadJson(initial);
     this.injectSwitcher();
-    this.observeDynamicContent();
-    if (initial !== 'fr') {
-      this._translating = true;
-      try { await this.translatePage(); } catch (err) { console.warn('DeepL:', err); }
-      this._translating = false;
-    }
+    this.loadGoogleWidget();
   }
 };
 
