@@ -78,7 +78,7 @@
         <div class="header-auth" id="header-auth">
           <a href="${PAGES.login}" class="header-auth-link" data-i18n="nav.login">Connexion</a>
         </div>
-        <button type="button" class="mobile-toggle" aria-label="Menu" data-i18n-aria="header.menu" id="mobile-toggle">☰</button>
+        <button type="button" class="mobile-toggle" aria-label="Menu" data-i18n-aria="header.menu" id="mobile-toggle"><span aria-hidden="true">☰</span></button>
       </div>
     </div>
   </header>`;

@@ -171,9 +171,7 @@ const I18N = {
     wrapper.className = 'lang-switcher';
     wrapper.innerHTML = `
       <button type="button" class="lang-toggle" aria-label="Changer de langue" aria-expanded="false">
-        <span class="lang-flag">${this.flags[this.currentLang] || '🇫🇷'}</span>
-        <span class="lang-code">${this.currentLang.toUpperCase()}</span>
-        <span class="lang-arrow">▾</span>
+        <span class="lang-icon" aria-hidden="true">🌐</span>
       </button>
       <div class="lang-dropdown" hidden>
         ${this.supported.map(code => `
