@@ -1,4 +1,5 @@
 import os
+import json
 from pydantic_settings import BaseSettings
 from pathlib import Path
 
@@ -12,6 +13,19 @@ def normalize_database_url(url: str) -> str:
     if url.startswith("postgresql://"):
         return "postgresql+asyncpg://" + url[len("postgresql://"):]
     return url
+
+
+def parse_cors_origins(value: str) -> list[str]:
+    value = value.strip()
+    if not value:
+        return []
+    try:
+        parsed = json.loads(value)
+        if isinstance(parsed, list):
+            return [origin.strip() for origin in parsed if isinstance(origin, str) and origin.strip()]
+    except json.JSONDecodeError:
+        pass
+    return [origin.strip() for origin in value.split(",") if origin.strip()]
 
 class Settings(BaseSettings):
     APP_NAME: str = "AutoPrestige API"
@@ -34,7 +48,7 @@ class Settings(BaseSettings):
     OTP_MAX_ATTEMPTS: int = 5          # tentatives max par code
     OTP_MAX_PER_HOUR: int = 5          # codes générés max / email / heure
     OTP_LENGTH: int = 6
-    CORS_ORIGINS: list[str] = ["*"]
+    CORS_ORIGINS: str = "*"
 
     # Admin par défaut (créé au démarrage si absent)
     ADMIN_EMAIL: str = "admin@autoprestige.fr"
@@ -46,6 +60,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 settings.DATABASE_URL = normalize_database_url(settings.DATABASE_URL)
+settings.CORS_ORIGINS = parse_cors_origins(settings.CORS_ORIGINS)
 
 if settings.ENVIRONMENT.lower() == "production":
     default_secret = "autoprestige-change-me-in-production-2026-secret-key"
