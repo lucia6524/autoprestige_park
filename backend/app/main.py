@@ -4,10 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_db
-from app.routers import auth, cart, orders, admin, vehicles, site_settings, translation
 # Import models so Base.metadata knows them
 from app.models import user, commerce  # noqa: F401
 from app.models import site_settings as site_settings_model  # noqa: F401
+from app.routers import auth, cart, orders, admin, vehicles, site_settings, translation
 
 
 @asynccontextmanager
