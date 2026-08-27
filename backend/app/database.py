@@ -9,6 +9,10 @@ AsyncSessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_co
 class Base(DeclarativeBase):
     pass
 
+
+# Import models after Base exists so every table is registered before startup.
+from app.models import commerce, site_settings, user  # noqa: F401
+
 async def get_db():
     async with AsyncSessionLocal() as session:
         try:
@@ -17,9 +21,6 @@ async def get_db():
             await session.close()
 
 async def init_db():
-    # Register every model before SQLAlchemy creates the schema.
-    from app.models import commerce, site_settings, user  # noqa: F401
-
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
         # Migrations légères SQLite (ignorer si colonne déjà présente)
