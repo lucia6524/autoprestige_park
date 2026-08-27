@@ -298,11 +298,13 @@
             <input
               type="number"
               id="salary"
+              name="monthly_salary"
               required
-              min="1"
-              step="100"
-              placeholder="2500"
-              inputmode="numeric"
+              min="0.01"
+              step="0.01"
+              placeholder="Entrez votre salaire"
+              inputmode="decimal"
+              autocomplete="off"
             />
             <p
               style="
@@ -730,7 +732,11 @@
           return;
         }
         try {
-          const salary = Number(document.getElementById("salary").value) || 0;
+          const salary = Number(document.getElementById("salary").value);
+          if (!Number.isFinite(salary) || salary <= 0) {
+            showError("Indiquez votre salaire mensuel.");
+            return;
+          }
           const res = await API.registerStep3(sessionKey, salary);
           lastOtpCode = res.code || null;
           document.getElementById("otp-display-code").textContent =
