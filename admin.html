@@ -976,11 +976,19 @@
           "Content-Type": "application/json",
           ...(options.headers || {}),
         };
-        if (token) headers["Authorization"] = "Bearer " + token;
+        const isLoginRequest = path === "/auth/login";
+        if (token && !isLoginRequest)
+          headers["Authorization"] = "Bearer " + token;
         const res = await fetch(API + path, { ...options, headers });
         if (res.status === 401) {
-          logout();
-          throw new Error("Session expirée");
+          if (!isLoginRequest) {
+            logout();
+            throw new Error("Session expirée");
+          }
+          const loginError = await res.json().catch(() => ({}));
+          throw new Error(
+            loginError.detail || "Email ou mot de passe incorrect.",
+          );
         }
         const data = await res.json().catch(() => ({}));
         if (!res.ok)
@@ -1019,6 +1027,7 @@
 
       // ── Auth ─────────────────────────────────────────────
       async function login(email, password) {
+        token = "";
         const data = await api("/auth/login", {
           method: "POST",
           body: JSON.stringify({ email, password }),
