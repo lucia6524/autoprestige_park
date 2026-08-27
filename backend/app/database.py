@@ -22,7 +22,11 @@ async def get_db():
 
 async def init_db():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.create_all)
+        await conn.run_sync(
+            lambda sync_conn: Base.metadata.create_all(
+                sync_conn, tables=list(Base.metadata.sorted_tables)
+            )
+        )
         # Migrations légères SQLite (ignorer si colonne déjà présente)
         migrations = [
             "ALTER TABLE users ADD COLUMN is_admin BOOLEAN DEFAULT 0",
@@ -40,6 +44,17 @@ async def init_db():
                 await conn.execute(text(sql))
             except Exception:
                 pass
+
+        if conn.dialect.name == "postgresql":
+            users_exists = await conn.scalar(
+                text("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'users')")
+            )
+        else:
+            users_exists = await conn.scalar(
+                text("SELECT EXISTS (SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'users')")
+            )
+        if not users_exists:
+            raise RuntimeError("Database schema initialization failed: users table was not created.")
 
     # Créer le compte admin par défaut s'il n'existe pas
     from app.models.user import User
