@@ -4476,21 +4476,26 @@ function animateCounters() {
 
 // ===== INIT =====
 async function loadPublicVehicles() {
-  try {
-    if (window.API && typeof API.getVehicles === "function") {
-      const managedVehicles = await API.getVehicles();
-      if (Array.isArray(managedVehicles) && managedVehicles.length) {
-        vehicles.splice(0, vehicles.length, ...managedVehicles);
-      }
-    }
-  } catch (error) {
-    console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
-  }
+  // Render the local catalogue immediately while the API wakes up or responds.
   applyUsedVehicleDiscount();
   populateBrands();
   bindFilterEvents();
   renderVehicles();
   animateCounters();
+
+  try {
+    if (window.API && typeof API.getVehicles === "function") {
+      const managedVehicles = await API.getVehicles();
+      if (Array.isArray(managedVehicles) && managedVehicles.length) {
+        vehicles.splice(0, vehicles.length, ...managedVehicles);
+        applyUsedVehicleDiscount();
+        populateBrands();
+        renderVehicles();
+      }
+    }
+  } catch (error) {
+    console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", loadPublicVehicles);
