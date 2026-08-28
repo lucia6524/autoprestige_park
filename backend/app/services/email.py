@@ -1,11 +1,42 @@
 """SMTP email service used for verification codes and contact messages."""
 import smtplib
 import logging
+import json
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
 from email.message import EmailMessage
 
 from app.config import settings
 
 logger = logging.getLogger(__name__)
+
+
+def send_resend_email(to_email: str, subject: str, body: str) -> bool:
+    """Send through Resend HTTPS, which works when SMTP is blocked by hosting."""
+    if not settings.SMTP_PASSWORD:
+        return False
+
+    payload = json.dumps({
+        "from": settings.SMTP_FROM,
+        "to": [to_email],
+        "subject": subject,
+        "text": body,
+    }).encode("utf-8")
+    request = Request(
+        "https://api.resend.com/emails",
+        data=payload,
+        headers={
+            "Authorization": f"Bearer {settings.SMTP_PASSWORD}",
+            "Content-Type": "application/json",
+        },
+        method="POST",
+    )
+    try:
+        with urlopen(request, timeout=10) as response:
+            return 200 <= response.status < 300
+    except (HTTPError, URLError, OSError) as error:
+        logger.error("Resend email failed: %s", error)
+        return False
 
 
 def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool:
@@ -38,18 +69,26 @@ def send_contact_email(name: str, email: str, phone: str, subject: str, body: st
     if not settings.SMTP_HOST or not settings.SMTP_USER or not settings.SMTP_PASSWORD:
         return False
 
-    message = EmailMessage()
-    message["Subject"] = f"Nouveau message du site : {subject}"
-    message["From"] = settings.SMTP_FROM
-    message["To"] = settings.CONTACT_RECIPIENT_EMAIL
-    message["Reply-To"] = email
-    message.set_content(
+    content = (
         f"Nom : {name}\n"
         f"Email : {email}\n"
         f"Téléphone : {phone or 'Non renseigné'}\n"
         f"Sujet : {subject}\n\n"
         f"Message :\n{body}"
     )
+    if settings.SMTP_HOST == "smtp.resend.com":
+        return send_resend_email(
+            settings.CONTACT_RECIPIENT_EMAIL,
+            f"Nouveau message du site : {subject}",
+            content,
+        )
+
+    message = EmailMessage()
+    message["Subject"] = f"Nouveau message du site : {subject}"
+    message["From"] = settings.SMTP_FROM
+    message["To"] = settings.CONTACT_RECIPIENT_EMAIL
+    message["Reply-To"] = email
+    message.set_content(content)
 
     try:
         with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as smtp:
