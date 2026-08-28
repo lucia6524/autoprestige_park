@@ -31,7 +31,7 @@ services:
       - key: SMTP_PASSWORD
         sync: false
       - key: SMTP_FROM
-        sync: false
+        value: onboarding@resend.dev
       - key: CONTACT_RECIPIENT_EMAIL
         sync: false
 

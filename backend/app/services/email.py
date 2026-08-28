@@ -1,8 +1,11 @@
 """SMTP email service used for verification codes and contact messages."""
 import smtplib
+import logging
 from email.message import EmailMessage
 
 from app.config import settings
+
+logger = logging.getLogger(__name__)
 
 
 def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool:
@@ -25,7 +28,8 @@ def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool:
             smtp.starttls()
             smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
             smtp.send_message(message)
-    except (OSError, smtplib.SMTPException):
+    except (OSError, smtplib.SMTPException) as error:
+        logger.error("SMTP OTP email failed: %s", error)
         return False
     return True
 
@@ -52,6 +56,7 @@ def send_contact_email(name: str, email: str, phone: str, subject: str, body: st
             smtp.starttls()
             smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
             smtp.send_message(message)
-    except (OSError, smtplib.SMTPException):
+    except (OSError, smtplib.SMTPException) as error:
+        logger.error("SMTP contact email failed: %s", error)
         return False
     return True
