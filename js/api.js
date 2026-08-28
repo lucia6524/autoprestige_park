@@ -116,6 +116,13 @@ const API = {
     return this.request('/site-settings');
   },
 
+  sendContactMessage(contactMessage) {
+    return this.request('/contact/message', {
+      method: 'POST',
+      body: JSON.stringify(contactMessage),
+    });
+  },
+
   getVehicles() {
     return this.request('/vehicles?limit=200');
   },

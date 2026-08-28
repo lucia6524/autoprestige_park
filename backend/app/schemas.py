@@ -18,6 +18,14 @@ class RegisterStep3(BaseModel):
     monthly_salary: float = Field(..., gt=0)
 
 
+class ContactMessage(BaseModel):
+    name: str = Field(..., min_length=1, max_length=120)
+    email: EmailStr
+    phone: str = Field(default="", max_length=30)
+    subject: str = Field(default="info", max_length=80)
+    message: str = Field(..., min_length=1, max_length=5000)
+
+
 class RegisterVerify(BaseModel):
     email: EmailStr
     code: str = Field(..., min_length=4, max_length=10)

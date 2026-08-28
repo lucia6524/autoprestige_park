@@ -32,6 +32,8 @@ services:
         sync: false
       - key: SMTP_FROM
         sync: false
+      - key: CONTACT_RECIPIENT_EMAIL
+        sync: false
 
 databases:
   - name: progrest

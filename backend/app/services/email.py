@@ -1,4 +1,4 @@
-"""SMTP email service used to deliver one-time passwords."""
+"""SMTP email service used for verification codes and contact messages."""
 import smtplib
 from email.message import EmailMessage
 
@@ -18,6 +18,33 @@ def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool:
         f"{greeting}\n\nVotre code de vérification est : {code}\n"
         f"Il expire dans {settings.OTP_EXPIRE_MINUTES} minutes.\n\n"
         "Si vous n'êtes pas à l'origine de cette demande, ignorez cet email."
+    )
+
+    try:
+        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as smtp:
+            smtp.starttls()
+            smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
+            smtp.send_message(message)
+    except (OSError, smtplib.SMTPException):
+        return False
+    return True
+
+
+def send_contact_email(name: str, email: str, phone: str, subject: str, body: str) -> bool:
+    if not settings.SMTP_HOST or not settings.SMTP_USER or not settings.SMTP_PASSWORD:
+        return False
+
+    message = EmailMessage()
+    message["Subject"] = f"Nouveau message du site : {subject}"
+    message["From"] = settings.SMTP_FROM
+    message["To"] = settings.CONTACT_RECIPIENT_EMAIL
+    message["Reply-To"] = email
+    message.set_content(
+        f"Nom : {name}\n"
+        f"Email : {email}\n"
+        f"Téléphone : {phone or 'Non renseigné'}\n"
+        f"Sujet : {subject}\n\n"
+        f"Message :\n{body}"
     )
 
     try:
