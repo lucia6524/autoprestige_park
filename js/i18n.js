@@ -20,26 +20,6 @@ const I18N = {
   _observer: null,
   _translating: false,
 
-  showTranslationLoading() {
-    document.documentElement.classList.add('translation-loading');
-    let loader = document.getElementById('translation-loading');
-    if (!loader) {
-      loader = document.createElement('div');
-      loader.id = 'translation-loading';
-      loader.setAttribute('role', 'status');
-      loader.setAttribute('aria-live', 'polite');
-      loader.innerHTML = '<span class="translation-loader-ring" aria-hidden="true"></span><span>Chargement de la traduction...</span>';
-      document.body.appendChild(loader);
-    }
-    loader.hidden = false;
-  },
-
-  hideTranslationLoading() {
-    document.documentElement.classList.remove('translation-loading');
-    const loader = document.getElementById('translation-loading');
-    if (loader) loader.hidden = true;
-  },
-
   setGoogleCookie(lang) {
     const value = lang === 'fr' ? '' : `/fr/${lang}`;
     document.cookie = `googtrans=${value}; path=/`;
@@ -177,8 +157,6 @@ const I18N = {
     this.currentLang = lang;
 
     this.setGoogleCookie(lang);
-    sessionStorage.setItem('translation_loading', '1');
-    this.showTranslationLoading();
     window.location.reload();
   },
 
@@ -196,10 +174,6 @@ const I18N = {
         <span class="lang-icon" aria-hidden="true"></span>
       </button>
       <div class="lang-dropdown" hidden>
-        <div class="lang-dropdown-title">
-          <span class="lang-icon" aria-hidden="true"></span>
-          <span>Langues</span>
-        </div>
         ${this.supported.map(code => `
           <button type="button" class="lang-option${code === this.currentLang ? ' active' : ''}" data-lang="${code}">
             <span class="lang-flag">${this.flags[code]}</span>
@@ -289,11 +263,6 @@ const I18N = {
     await this.loadJson(initial);
     this.injectSwitcher();
     this.loadGoogleWidget();
-    if (sessionStorage.getItem('translation_loading') === '1') {
-      this.showTranslationLoading();
-      sessionStorage.removeItem('translation_loading');
-      window.setTimeout(() => this.hideTranslationLoading(), 1800);
-    }
   }
 };
 
