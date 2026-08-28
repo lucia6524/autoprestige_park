@@ -34,7 +34,11 @@ def send_resend_email(to_email: str, subject: str, body: str) -> bool:
     try:
         with urlopen(request, timeout=10) as response:
             return 200 <= response.status < 300
-    except (HTTPError, URLError, OSError) as error:
+    except HTTPError as error:
+        details = error.read().decode("utf-8", errors="replace")
+        logger.error("Resend email failed (%s): %s", error.code, details)
+        return False
+    except (URLError, OSError) as error:
         logger.error("Resend email failed: %s", error)
         return False
 
