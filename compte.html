@@ -1184,7 +1184,7 @@
               maxMonthly.toLocaleString("fr-FR") + " €";
             alert("Vos informations ont été mises à jour.");
           } catch (error) {
-            alert(error.message);
+            alert(API.friendlyError(error));
           } finally {
             button.disabled = false;
           }
@@ -1290,7 +1290,7 @@
           refreshCounts();
           document.querySelector('[data-panel="orders"]').click();
         } catch (err) {
-          alert(err.message);
+          alert(API.friendlyError(err));
         }
       };
 
@@ -1368,7 +1368,7 @@
           loadOrders();
           refreshCounts();
         } catch (e) {
-          alert(e.message);
+          alert(API.friendlyError(e));
         }
       };
 
@@ -1491,7 +1491,7 @@
           alert("Votre demande de livraison a été enregistrée.");
           loadDelivery();
         } catch (e) {
-          alert(e.message);
+          alert(API.friendlyError(e));
           button.disabled = false;
         }
       };

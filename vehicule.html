@@ -577,7 +577,7 @@
                   }
                 }, 400);
               } catch (err) {
-                alert(err.message);
+                alert(API.friendlyError(err));
                 addBtn.textContent = "Ajouter au panier";
                 addBtn.disabled = false;
               }

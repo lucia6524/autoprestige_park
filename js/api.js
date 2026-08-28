@@ -10,6 +10,23 @@ const API_BASE = (() => {
 })();
 
 const API = {
+  friendlyError(error, fallback = 'Une erreur est survenue. Veuillez réessayer.') {
+    const message = error?.message || '';
+    if (!message || /Failed to fetch|NetworkError|Impossible de contacter/i.test(message)) {
+      return 'Le service est momentanément indisponible. Veuillez réessayer dans quelques instants.';
+    }
+    if (/503|service email|SMTP|Resend/i.test(message)) {
+      return 'L’envoi est momentanément indisponible. Veuillez réessayer dans quelques instants.';
+    }
+    if (/401|Authentification|Token invalide|expiré/i.test(message)) {
+      return 'Votre session a expiré. Veuillez vous reconnecter.';
+    }
+    if (/403|Accès réservé/i.test(message)) {
+      return 'Vous n’êtes pas autorisé à effectuer cette action.';
+    }
+    return message || fallback;
+  },
+
   getToken() {
     return localStorage.getItem('ap_token');
   },
@@ -42,12 +59,12 @@ const API = {
       res = await fetch(`${API_BASE}${path}`, { ...options, headers });
     } catch (netErr) {
       throw new Error(
-        'Impossible de contacter le serveur (API). Démarrez le backend : cd backend && python run.py (port 8000).'
+        'Le service est momentanément indisponible. Veuillez réessayer dans quelques instants.'
       );
     }
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {
-      const msg = data.detail || data.message || `Erreur ${res.status}`;
+      const msg = data.detail || data.message || '';
       throw new Error(typeof msg === 'string' ? msg : JSON.stringify(msg));
     }
     return data;

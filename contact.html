@@ -166,6 +166,12 @@
             >
               Envoyer le message
             </button>
+            <p
+              class="contact-form-feedback"
+              id="contact-feedback"
+              role="status"
+              aria-live="polite"
+            ></p>
           </form>
         </div>
       </div>
@@ -235,17 +241,26 @@
           event.preventDefault();
           const form = event.currentTarget;
           const button = form.querySelector("button[type=submit]");
+          const feedback = document.getElementById("contact-feedback");
           const originalText = button.textContent;
           button.disabled = true;
           button.textContent = "Envoi en cours...";
+          feedback.className = "contact-form-feedback";
+          feedback.textContent = "";
           try {
             await API.sendContactMessage(
               Object.fromEntries(new FormData(form)),
             );
             form.reset();
-            alert("Votre message a bien été envoyé.");
+            feedback.className = "contact-form-feedback success";
+            feedback.textContent =
+              "Votre message a bien été envoyé. Notre équipe vous répondra rapidement.";
           } catch (error) {
-            alert(error.message || "Impossible d'envoyer votre message.");
+            feedback.className = "contact-form-feedback error";
+            feedback.textContent = API.friendlyError(
+              error,
+              "Impossible d’envoyer votre message.",
+            );
           } finally {
             button.disabled = false;
             button.textContent = originalText;

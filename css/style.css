@@ -990,6 +990,22 @@ section {
   font-size: 0.95rem;
 }
 
+.contact-form-feedback {
+  min-height: 22px;
+  margin-top: 12px;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.contact-form-feedback.success {
+  color: var(--success);
+}
+
+.contact-form-feedback.error {
+  color: var(--danger);
+}
+
 [data-theme="light"] .services {
   background: var(--bg-primary);
 }

@@ -4290,7 +4290,7 @@ async function addVehicleFromCatalog(vehicleId, button) {
   } catch (error) {
     button.disabled = false;
     button.textContent = originalText;
-    alert(error.message);
+    alert(API.friendlyError(error));
   }
 }
 
@@ -4428,24 +4428,6 @@ window.addEventListener("scroll", () => {
   }
 });
 
-// ===== CONTACT FORM =====
-if (contactForm) {
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const btn = contactForm.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    btn.textContent = "Envoi en cours...";
-    btn.disabled = true;
-
-    setTimeout(() => {
-      alert("Merci ! Votre message a bien été envoyé. Notre équipe vous recontactera sous 24h.");
-      contactForm.reset();
-      btn.textContent = originalText;
-      btn.disabled = false;
-    }, 1200);
-  });
-}
-
 // ===== COUNTER ANIMATION =====
 function animateCounters() {
   const counters = document.querySelectorAll(".stat-item strong");
@@ -4476,26 +4458,21 @@ function animateCounters() {
 
 // ===== INIT =====
 async function loadPublicVehicles() {
-  // Render the local catalogue immediately while the API wakes up or responds.
-  applyUsedVehicleDiscount();
-  populateBrands();
-  bindFilterEvents();
-  renderVehicles();
-  animateCounters();
-
   try {
     if (window.API && typeof API.getVehicles === "function") {
       const managedVehicles = await API.getVehicles();
       if (Array.isArray(managedVehicles) && managedVehicles.length) {
         vehicles.splice(0, vehicles.length, ...managedVehicles);
-        applyUsedVehicleDiscount();
-        populateBrands();
-        renderVehicles();
       }
     }
   } catch (error) {
     console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
   }
+  applyUsedVehicleDiscount();
+  populateBrands();
+  bindFilterEvents();
+  renderVehicles();
+  animateCounters();
 }
 
 document.addEventListener("DOMContentLoaded", loadPublicVehicles);
