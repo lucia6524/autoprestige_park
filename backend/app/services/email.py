@@ -76,7 +76,8 @@ def send_contact_email(name: str, email: str, phone: str, subject: str, body: st
         f"Sujet : {subject}\n\n"
         f"Message :\n{body}"
     )
-    if settings.SMTP_HOST == "smtp.resend.com":
+    smtp_host = settings.SMTP_HOST.strip().lower()
+    if smtp_host == "smtp.resend.com":
         return send_resend_email(
             settings.CONTACT_RECIPIENT_EMAIL,
             f"Nouveau message du site : {subject}",
