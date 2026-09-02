@@ -64,26 +64,29 @@ async def init_db():
     async with AsyncSessionLocal() as db:
         admin = await get_user_by_email(db, settings.ADMIN_EMAIL)
         if not admin:
-            admin = User(
-                first_name="Admin",
-                last_name="AutoPrestige",
-                email=settings.ADMIN_EMAIL.lower(),
-                phone="",
-                monthly_salary=0,
-                hashed_password=hash_password(settings.ADMIN_PASSWORD),
-                is_verified=True,
-                is_active=True,
-                is_admin=True,
-                registration_step=4,
-            )
-            db.add(admin)
-            await db.commit()
-            print(f"✅ Admin créé : {settings.ADMIN_EMAIL}")
+            if not settings.ADMIN_PASSWORD:
+                print("⚠️  ADMIN_PASSWORD non défini — compte admin non créé. Configurez ADMIN_PASSWORD dans vos variables d'environnement.")
+            else:
+                admin = User(
+                    first_name="Admin",
+                    last_name="AutoPrestige",
+                    email=settings.ADMIN_EMAIL.lower(),
+                    phone="",
+                    monthly_salary=0,
+                    hashed_password=hash_password(settings.ADMIN_PASSWORD),
+                    is_verified=True,
+                    is_active=True,
+                    is_admin=True,
+                    registration_step=4,
+                )
+                db.add(admin)
+                await db.commit()
+                print(f"✅ Admin créé : {settings.ADMIN_EMAIL}")
         elif not admin.is_admin:
             admin.is_admin = True
             admin.is_verified = True
             admin.is_active = True
-            if not admin.hashed_password:
+            if not admin.hashed_password and settings.ADMIN_PASSWORD:
                 admin.hashed_password = hash_password(settings.ADMIN_PASSWORD)
             await db.commit()
             print(f"✅ Droits admin accordés à : {settings.ADMIN_EMAIL}")

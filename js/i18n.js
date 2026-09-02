@@ -1,6 +1,6 @@
 /**
- * AutoPrestige i18n
- * - Widget Google Translate pour tout le contenu visible
+ * AutoPrestige i18n — DeepL-powered dynamic translation
+ * Translates page content via the backend /api/translate endpoint.
  */
 const I18N = {
   currentLang: 'fr',
@@ -19,32 +19,14 @@ const I18N = {
   _originalAttributes: new WeakMap(),
   _observer: null,
   _translating: false,
+  _translateTimer: null,
+  _cache: {},  // { lang: { originalText: translatedText } }
 
-  setGoogleCookie(lang) {
-    const value = lang === 'fr' ? '' : `/fr/${lang}`;
-    document.cookie = `googtrans=${value}; path=/`;
-    document.cookie = `googtrans=${value}; path=/; domain=${window.location.hostname}`;
-  },
-
-  loadGoogleWidget() {
-    if (window.google?.translate?.TranslateElement) {
-      window.googleTranslateElementInit();
-      return;
-    }
-    if (document.querySelector('script[data-google-translate]')) return;
-    window.googleTranslateElementInit = () => {
-      if (!window.google?.translate?.TranslateElement) return;
-      new google.translate.TranslateElement({
-        pageLanguage: 'fr',
-        includedLanguages: this.supported.join(','),
-        autoDisplay: false
-      }, 'google_translate_element');
-    };
-    const script = document.createElement('script');
-    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    script.dataset.googleTranslate = 'true';
-    document.head.appendChild(script);
+  apiBase() {
+    const configuredBase = localStorage.getItem('api_base');
+    if (configuredBase) return configuredBase.replace(/\/$/, '') + '/api';
+    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
+    return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
   },
 
   t(key) {
@@ -63,24 +45,20 @@ const I18N = {
     this.updateSwitcherUI();
   },
 
-  apiBase() {
-    const configuredBase = localStorage.getItem('api_base');
-    if (configuredBase) return configuredBase.replace(/\/$/, '') + '/api';
-
-    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-    return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
-  },
+  /* ===== Original content capture / restore ===== */
 
   captureOriginalContent(root = document.body) {
     if (!root) return;
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
-      if (node.parentElement && !node.parentElement.closest('script, style, noscript, textarea')) {
+      const parent = node.parentElement;
+      if (parent && !parent.closest('script, style, noscript, textarea, .lang-switcher, [data-no-translate]')) {
         if (!this._originalText.has(node)) this._originalText.set(node, node.nodeValue);
       }
     }
     root.querySelectorAll?.('[placeholder], [title], [aria-label]').forEach(el => {
+      if (el.closest('.lang-switcher, [data-no-translate]')) return;
       const attrs = {};
       ['placeholder', 'title', 'aria-label'].forEach(name => {
         if (el.hasAttribute(name)) attrs[name] = el.getAttribute(name);
@@ -102,8 +80,10 @@ const I18N = {
     });
   },
 
-  translatableNodes(root = document.body) {
-    const nodes = [];
+  /* ===== Collect translatable texts ===== */
+
+  collectTexts(root = document.body) {
+    const items = [];
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
@@ -111,20 +91,83 @@ const I18N = {
       const value = node.nodeValue?.trim();
       if (!parent || !value || parent.closest('script, style, noscript, textarea, .lang-switcher, [data-no-translate]')) continue;
       const original = this._originalText.get(node);
-      if (this.currentLang !== 'fr' && original?.trim()) nodes.push({ node, text: original });
+      if (original?.trim()) items.push({ node, text: original.trim() });
     }
     root.querySelectorAll?.('[placeholder], [title], [aria-label]').forEach(el => {
       if (el.closest('.lang-switcher, [data-no-translate]')) return;
       const attrs = this._originalAttributes.get(el) || {};
       ['placeholder', 'title', 'aria-label'].forEach(name => {
-        if (attrs[name]?.trim()) nodes.push({ element: el, attribute: name, text: attrs[name] });
+        if (attrs[name]?.trim()) items.push({ element: el, attribute: name, text: attrs[name] });
       });
     });
-    return nodes;
+    return items;
+  },
+
+  /* ===== DeepL translation via backend ===== */
+
+  async translateTexts(texts, targetLang) {
+    if (!texts.length) return [];
+    // Batch in chunks of 50 (API limit)
+    const chunkSize = 50;
+    const results = [];
+    for (let i = 0; i < texts.length; i += chunkSize) {
+      const chunk = texts.slice(i, i + chunkSize);
+      try {
+        const res = await fetch(`${this.apiBase()}/translate`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            texts: chunk,
+            target_lang: targetLang.toUpperCase(),
+          }),
+        });
+        if (!res.ok) {
+          console.warn('DeepL translation failed:', res.status);
+          return texts; // fallback: return originals
+        }
+        const data = await res.json();
+        results.push(...(data.translations || []));
+      } catch (err) {
+        console.warn('DeepL translation error:', err);
+        return texts; // fallback
+      }
+    }
+    return results;
   },
 
   async translatePage() {
-    this.loadGoogleWidget();
+    if (this.currentLang === 'fr') {
+      this.restoreOriginalContent();
+      return;
+    }
+
+    this.captureOriginalContent();
+    const items = this.collectTexts();
+    if (!items.length) return;
+
+    // Check cache
+    const langCache = this._cache[this.currentLang] || {};
+    const uncached = items.filter(item => !langCache[item.text]);
+
+    if (uncached.length) {
+      const uniqueTexts = [...new Set(uncached.map(i => i.text))];
+      const translated = await this.translateTexts(uniqueTexts, this.currentLang);
+      uniqueTexts.forEach((orig, idx) => {
+        langCache[orig] = translated[idx] || orig;
+      });
+      this._cache[this.currentLang] = langCache;
+    }
+
+    // Apply translations
+    const fullCache = this._cache[this.currentLang];
+    items.forEach(item => {
+      const translated = fullCache[item.text] || item.text;
+      if (item.node) {
+        item.node.nodeValue = item.node.nodeValue.replace(item.text, translated);
+      } else if (item.element) {
+        item.element.setAttribute(item.attribute, translated);
+      }
+    });
   },
 
   observeDynamicContent() {
@@ -134,37 +177,36 @@ const I18N = {
       clearTimeout(this._translateTimer);
       this._translateTimer = setTimeout(() => {
         this._translating = true;
-        this.translatePage().catch(err => console.warn('Google Translate:', err)).finally(() => { this._translating = false; });
-      }, 150);
+        this.translatePage().catch(err => console.warn('DeepL:', err)).finally(() => { this._translating = false; });
+      }, 300);
     });
     this._observer.observe(document.body, { childList: true, subtree: true });
   },
 
-  async loadJson(lang) {
-    this.currentLang = this.supported.includes(lang) ? lang : 'fr';
-    this.translations = {};
-    this.setGoogleCookie(this.currentLang);
-    this.apply();
-    return true;
-  },
+  /* ===== Language change ===== */
 
-  /**
-   * Change la langue du site entier
-   */
   async setLanguage(lang) {
     if (!this.supported.includes(lang)) lang = 'fr';
     localStorage.setItem('lang', lang);
     this.currentLang = lang;
+    this.apply();
 
-    this.setGoogleCookie(lang);
-    window.location.reload();
+    if (lang === 'fr') {
+      this.restoreOriginalContent();
+    } else {
+      this._translating = true;
+      await this.translatePage().catch(err => console.warn('DeepL:', err));
+      this._translating = false;
+    }
+
+    this.observeDynamicContent();
   },
 
   async load(lang) {
     return this.setLanguage(lang);
   },
 
-  /* ========== UI sélecteur ========== */
+  /* ===== UI Switcher ===== */
 
   createSwitcherElement() {
     const wrapper = document.createElement('div');
@@ -182,10 +224,6 @@ const I18N = {
         `).join('')}
       </div>
     `;
-    const googleWidget = document.createElement('div');
-    googleWidget.id = 'google_translate_element';
-    googleWidget.hidden = true;
-    wrapper.appendChild(googleWidget);
 
     const toggle = wrapper.querySelector('.lang-toggle');
     const dropdown = wrapper.querySelector('.lang-dropdown');
@@ -236,7 +274,6 @@ const I18N = {
       else if (mobileToggle) actions.insertBefore(wrapper, mobileToggle);
       else actions.appendChild(wrapper);
     }
-
   },
 
   updateSwitcherUI() {
@@ -252,22 +289,28 @@ const I18N = {
   },
 
   async init() {
-    // Langue : localStorage > navigateur > français
     const saved = localStorage.getItem('lang');
     const browser = (navigator.language || 'fr').slice(0, 2).toLowerCase();
     const initial = saved || (this.supported.includes(browser) ? browser : 'fr');
 
     this.currentLang = initial;
     localStorage.setItem('lang', initial);
-    this.setGoogleCookie(initial);
-    await this.loadJson(initial);
+    this.apply();
     this.injectSwitcher();
-    this.loadGoogleWidget();
+
+    if (initial !== 'fr') {
+      // Wait for DOM to be ready, then translate
+      await new Promise(resolve => setTimeout(resolve, 100));
+      this._translating = true;
+      await this.translatePage().catch(err => console.warn('DeepL:', err));
+      this._translating = false;
+      this.observeDynamicContent();
+    }
   }
 };
 
 document.addEventListener('DOMContentLoaded', () => I18N.init());
 document.addEventListener('headerReady', () => {
-  if (I18N.translations && Object.keys(I18N.translations).length) I18N.apply();
+  I18N.apply();
   I18N.injectSwitcher();
 });

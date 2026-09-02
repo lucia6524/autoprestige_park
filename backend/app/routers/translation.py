@@ -1,15 +1,38 @@
 import asyncio
 import json
+import time
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request as StarletteRequest
 from pydantic import BaseModel, Field
 
 from app.config import settings
 
 router = APIRouter(prefix="/translate", tags=["Translation"])
+
+# Rate limit: max 30 translation requests per IP per 5 minutes
+_translate_rate_limits: dict[str, list[float]] = {}
+_TRANSLATE_RATE_WINDOW = 300
+_TRANSLATE_RATE_MAX = 30
+
+
+def _check_translate_rate(ip: str) -> None:
+    now = time.time()
+    if ip not in _translate_rate_limits:
+        _translate_rate_limits[ip] = []
+    _translate_rate_limits[ip] = [t for t in _translate_rate_limits[ip] if now - t < _TRANSLATE_RATE_WINDOW]
+    if len(_translate_rate_limits[ip]) >= _TRANSLATE_RATE_MAX:
+        raise HTTPException(429, "Trop de demandes de traduction. Réessayez plus tard.")
+    _translate_rate_limits[ip].append(now)
+
+
+def _get_ip(req: StarletteRequest) -> str:
+    forwarded = req.headers.get("x-forwarded-for")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return req.client.host if req.client else "unknown"
 
 
 class TranslationRequest(BaseModel):
@@ -40,7 +63,8 @@ def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]:
 
 
 @router.post("")
-async def translate(data: TranslationRequest):
+async def translate(data: TranslationRequest, request: StarletteRequest):
+    _check_translate_rate(_get_ip(request))
     if not settings.DEEPL_API_KEY:
         raise HTTPException(503, "DeepL n'est pas configuré.")
     if sum(len(text) for text in data.texts) > 10000:

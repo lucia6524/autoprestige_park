@@ -9,6 +9,13 @@ const API_BASE = (() => {
   return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
 })();
 
+// Escape HTML to prevent XSS attacks
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
 const API = {
   friendlyError(error, fallback = 'Une erreur est survenue. Veuillez réessayer.') {
     const message = error?.message || '';
@@ -212,9 +219,10 @@ API.updateHeaderAuth = function() {
   if (this.isLoggedIn()) {
     const u = this.getUser() || {};
     const name = [u.first_name, u.last_name].filter(Boolean).join(' ') || 'Mon compte';
+    const safeName = escapeHtml(name);
     el.innerHTML = `
       <div class="header-auth-user">
-        <a href="compte.html">${name}</a>
+        <a href="compte.html">${safeName}</a>
         <a href="#" id="header-logout" style="color:#dc2626;font-weight:500;">Déconnexion</a>
       </div>`;
     const btn = document.getElementById('header-logout');

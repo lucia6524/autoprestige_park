@@ -6,6 +6,13 @@
 (function () {
   'use strict';
 
+  // Escape HTML to prevent XSS attacks
+  function escapeHtml(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
   const PAGES = {
     home: 'index.html',
     vehicles: 'vehicules.html',
@@ -126,9 +133,10 @@
       if (token && userRaw) {
         const user = JSON.parse(userRaw);
         const name = (user.first_name || user.email || 'Compte').toString();
+        const safeName = escapeHtml(name);
         el.innerHTML = `
           <div class="header-auth-user">
-            <a href="${PAGES.account}">${name}</a>
+            <a href="${PAGES.account}">${safeName}</a>
           </div>`;
       }
     } catch (_) {

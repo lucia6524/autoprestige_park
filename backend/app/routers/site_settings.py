@@ -13,7 +13,19 @@ from app.models.user import User
 router = APIRouter(prefix="/site-settings", tags=["Site settings"])
 
 
+class SiteSettingsPublic(BaseModel):
+    """Public view — no bank details exposed."""
+    contact_phone: str
+    contact_email: str
+    contact_whatsapp: str
+    contact_address: str
+
+    class Config:
+        from_attributes = True
+
+
 class SiteSettingsOut(BaseModel):
+    """Admin view — includes bank details."""
     bank_holder: str
     bank_iban: str
     bank_bic: str
@@ -62,8 +74,24 @@ async def get_or_create_settings(db: AsyncSession) -> SiteSettings:
     return settings
 
 
-@router.get("", response_model=SiteSettingsOut)
+@router.get("", response_model=SiteSettingsPublic)
 async def read_site_settings(db: AsyncSession = Depends(get_db)):
+    """Public endpoint — bank details are hidden."""
+    settings = await get_or_create_settings(db)
+    return SiteSettingsPublic(
+        contact_phone=settings.contact_phone,
+        contact_email=settings.contact_email,
+        contact_whatsapp=settings.contact_whatsapp,
+        contact_address=settings.contact_address,
+    )
+
+
+@router.get("/admin", response_model=SiteSettingsOut)
+async def read_site_settings_admin(
+    admin: User = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """Admin endpoint — full settings including bank details."""
     return await get_or_create_settings(db)
 
 
