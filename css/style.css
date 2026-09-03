@@ -1382,21 +1382,39 @@ section {
     display: flex;
   }
 
+  .nav-item:hover .dropdown {
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+  }
+
   .nav-item .dropdown {
     position: static;
     transform: none;
-    opacity: 1;
-    visibility: visible;
+    opacity: 0;
+    visibility: hidden;
     box-shadow: none;
     border: none;
     background: transparent;
-    padding: 2px 0 4px 12px;
+    padding: 0 0 0 12px;
     min-width: auto;
-    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease, visibility 0.25s ease;
   }
 
   .nav-item.open .dropdown {
-    display: block;
+    max-height: 800px;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav-more-toggle svg {
+    transition: transform 0.3s ease;
+  }
+
+  .nav-item.open .nav-more-toggle svg {
+    transform: rotate(180deg);
   }
 
   .dropdown a {
