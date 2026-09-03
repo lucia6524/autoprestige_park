@@ -34,17 +34,17 @@ services:
       - key: ADMIN_PASSWORD
         sync: false
       - key: SMTP_HOST
-        sync: false
+        value: smtp-relay.brevo.com
       - key: SMTP_PORT
         value: "587"
       - key: SMTP_USER
-        sync: false
+        value: b7c0a1001@smtp-brevo.com
       - key: SMTP_PASSWORD
         sync: false
       - key: SMTP_FROM
-        value: onboarding@resend.dev
+        value: autoprestigepark@outlook.com
       - key: CONTACT_RECIPIENT_EMAIL
-        sync: false
+        value: autoprestigepark@outlook.com
 
 databases:
   - name: progrest
