@@ -1,5 +1,16 @@
 services:
   - type: web
+    name: autoprestige-site
+    runtime: static
+    plan: free
+    staticPublishPath: .
+    buildCommand: echo "no build needed"
+    routes:
+      - type: rewrite
+        source: /\*404.html
+        destination: /404.html
+
+  - type: web
     name: autoprestige-api
     runtime: python
     rootDir: backend
