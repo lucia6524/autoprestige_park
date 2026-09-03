@@ -45,6 +45,8 @@ services:
         value: autoprestigepark@outlook.com
       - key: CONTACT_RECIPIENT_EMAIL
         value: autoprestigepark@outlook.com
+      - key: BREVO_API_KEY
+        sync: false
 
 databases:
   - name: progrest

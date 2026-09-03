@@ -1,78 +1,90 @@
-"""SMTP email service used for verification codes and contact messages."""
-import smtplib
+"""Email service using Brevo API (HTTPS) — works on Render free tier where SMTP is blocked."""
 import logging
 import json
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-from email.message import EmailMessage
 
 from app.config import settings
 
 logger = logging.getLogger(__name__)
 
+BREVO_API_URL = "https://api.brevo.com/v3/smtp/email"
 
-def send_resend_email(to_email: str, subject: str, body: str) -> bool:
-    """Send through Resend HTTPS, which works when SMTP is blocked by hosting."""
-    if not settings.SMTP_PASSWORD:
+
+def _get_brevo_api_key() -> str:
+    """Return the Brevo API key from settings."""
+    return getattr(settings, "BREVO_API_KEY", "") or ""
+
+
+def _send_brevo_email(to_email: str, subject: str, body: str, reply_to: str = "") -> bool:
+    """Send an email via Brevo HTTPS API."""
+    api_key = _get_brevo_api_key()
+    if not api_key:
+        logger.error("BREVO_API_KEY is not configured.")
         return False
 
-    payload = json.dumps({
-        "from": settings.SMTP_FROM,
-        "to": [to_email],
+    sender_email = settings.SMTP_FROM or "noreply@autoprestige.fr"
+
+    payload_data = {
+        "sender": {
+            "email": sender_email,
+            "name": "AutoPrestige",
+        },
+        "to": [{"email": to_email}],
         "subject": subject,
-        "text": body,
-    }).encode("utf-8")
+        "textContent": body,
+    }
+
+    if reply_to:
+        payload_data["replyTo"] = {"email": reply_to}
+
+    payload = json.dumps(payload_data).encode("utf-8")
+
     request = Request(
-        "https://api.resend.com/emails",
+        BREVO_API_URL,
         data=payload,
         headers={
-            "Authorization": f"Bearer {settings.SMTP_PASSWORD}",
+            "api-key": api_key,
             "Content-Type": "application/json",
         },
         method="POST",
     )
+
     try:
-        with urlopen(request, timeout=10) as response:
-            return 200 <= response.status < 300
+        with urlopen(request, timeout=15) as response:
+            if 200 <= response.status < 300:
+                logger.info("Brevo email sent to %s — subject: %s", to_email, subject)
+                return True
+            details = response.read().decode("utf-8", errors="replace")
+            logger.error("Brevo API returned %s: %s", response.status, details)
+            return False
     except HTTPError as error:
         details = error.read().decode("utf-8", errors="replace")
-        logger.error("Resend email failed (%s): %s", error.code, details)
+        logger.error("Brevo email failed (%s): %s", error.code, details)
         return False
     except (URLError, OSError) as error:
-        logger.error("Resend email failed: %s", error)
+        logger.error("Brevo email failed: %s", error)
         return False
 
 
 def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool:
-    if not settings.SMTP_HOST or not settings.SMTP_USER or not settings.SMTP_PASSWORD:
-        return False
-
-    message = EmailMessage()
-    message["Subject"] = "Votre code de vérification AutoPrestige"
-    message["From"] = settings.SMTP_FROM
-    message["To"] = to_email
+    """Send OTP verification code via Brevo API."""
     greeting = f"Bonjour {first_name}," if first_name else "Bonjour,"
-    message.set_content(
-        f"{greeting}\n\nVotre code de vérification est : {code}\n"
+    body = (
+        f"{greeting}\n\n"
+        f"Votre code de vérification est : {code}\n"
         f"Il expire dans {settings.OTP_EXPIRE_MINUTES} minutes.\n\n"
         "Si vous n'êtes pas à l'origine de cette demande, ignorez cet email."
     )
-
-    try:
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as smtp:
-            smtp.starttls()
-            smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            smtp.send_message(message)
-    except (OSError, smtplib.SMTPException) as error:
-        logger.error("SMTP OTP email failed: %s", error)
-        return False
-    return True
+    return _send_brevo_email(
+        to_email,
+        "Votre code de vérification AutoPrestige",
+        body,
+    )
 
 
 def send_contact_email(name: str, email: str, phone: str, subject: str, body: str) -> bool:
-    if not settings.SMTP_HOST or not settings.SMTP_USER or not settings.SMTP_PASSWORD:
-        return False
-
+    """Send contact form message to the site admin via Brevo API."""
     content = (
         f"Nom : {name}\n"
         f"Email : {email}\n"
@@ -80,27 +92,16 @@ def send_contact_email(name: str, email: str, phone: str, subject: str, body: st
         f"Sujet : {subject}\n\n"
         f"Message :\n{body}"
     )
-    smtp_host = settings.SMTP_HOST.strip().lower()
-    if smtp_host == "smtp.resend.com":
-        return send_resend_email(
-            settings.CONTACT_RECIPIENT_EMAIL,
-            f"Nouveau message du site : {subject}",
-            content,
-        )
+    recipient = settings.CONTACT_RECIPIENT_EMAIL or "contact@autoprestige.fr"
+    return _send_brevo_email(
+        recipient,
+        f"Nouveau message du site : {subject}",
+        content,
+        reply_to=email,
+    )
 
-    message = EmailMessage()
-    message["Subject"] = f"Nouveau message du site : {subject}"
-    message["From"] = settings.SMTP_FROM
-    message["To"] = settings.CONTACT_RECIPIENT_EMAIL
-    message["Reply-To"] = email
-    message.set_content(content)
 
-    try:
-        with smtplib.SMTP(settings.SMTP_HOST, settings.SMTP_PORT, timeout=10) as smtp:
-            smtp.starttls()
-            smtp.login(settings.SMTP_USER, settings.SMTP_PASSWORD)
-            smtp.send_message(message)
-    except (OSError, smtplib.SMTPException) as error:
-        logger.error("SMTP contact email failed: %s", error)
-        return False
-    return True
+# Keep backward compatibility
+def send_resend_email(to_email: str, subject: str, body: str) -> bool:
+    """Legacy Resend function — now delegates to Brevo."""
+    return _send_brevo_email(to_email, subject, body)

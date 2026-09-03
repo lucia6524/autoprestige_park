@@ -43,6 +43,7 @@ class Settings(BaseSettings):
     SMTP_PASSWORD: str = ""
     SMTP_FROM: str = "noreply@autoprestige.fr"
     CONTACT_RECIPIENT_EMAIL: str = "contact@autoprestige.fr"
+    BREVO_API_KEY: str = ""
     DEEPL_API_KEY: str = ""
     DEEPL_API_URL: str = "https://api-free.deepl.com/v2/translate"
 
