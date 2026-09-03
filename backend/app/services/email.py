@@ -20,8 +20,9 @@ def _send_brevo_email(to_email: str, subject: str, body: str, reply_to: str = ""
     """Send an email via Brevo HTTPS API."""
     api_key = _get_brevo_api_key()
     if not api_key:
-        logger.error("BREVO_API_KEY is not configured.")
+        logger.error("BREVO_API_KEY is not configured. Check your Render environment variables.")
         return False
+    logger.info("Attempting Brevo email to %s with key ending in ...%s", to_email, api_key[-8:] if len(api_key) > 8 else "short")
 
     sender_email = settings.SMTP_FROM or "noreply@autoprestige.fr"
 
