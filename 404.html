@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page introuvable — AutoPrestige</title>
+    <meta name="description" content="La page que vous recherchez n'existe pas ou a été déplacée." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+      var p = localStorage.getItem("theme");
+      if (p !== "light" && p !== "dark") p = "dark";
+      document.documentElement.setAttribute("data-theme", p);
+    </script>
+    <style>
+      /* ===== 404 PAGE ===== */
+      .error-page {
+        min-height: calc(100vh - 80px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 24px 100px;
+        text-align: center;
+      }
+
+      .error-content {
+        max-width: 600px;
+      }
+
+      .error-code {
+        font-size: clamp(6rem, 15vw, 10rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.04em;
+        margin: 0 0 16px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        opacity: 0.9;
+      }
+
+      .error-icon {
+        font-size: 3rem;
+        margin-bottom: 24px;
+        display: block;
+        animation: errorBounce 2s ease-in-out infinite;
+      }
+
+      @keyframes errorBounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+
+      .error-title {
+        font-size: clamp(1.5rem, 3vw, 2rem);
+        font-weight: 800;
+        color: var(--text-primary);
+        margin: 0 0 12px;
+        letter-spacing: -0.02em;
+      }
+
+      .error-message {
+        font-size: 1.05rem;
+        color: var(--text-secondary);
+        margin: 0 0 40px;
+        line-height: 1.6;
+        max-width: 440px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .error-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+      }
+
+      .error-actions .btn {
+        padding: 14px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 12px;
+      }
+
+      .error-links {
+        margin-top: 48px;
+        padding-top: 32px;
+        border-top: 1px solid var(--border);
+      }
+
+      .error-links p {
+        font-size: 0.9rem;
+        color: var(--text-muted);
+        margin-bottom: 16px;
+      }
+
+      .error-links-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+      }
+
+      .error-links-grid a {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--text-secondary);
+        padding: 8px 16px;
+        border-radius: 8px;
+        background: var(--bg-secondary);
+        border: 1px solid var(--border);
+        transition: all 0.2s ease;
+      }
+
+      .error-links-grid a:hover {
+        color: var(--accent-light);
+        border-color: var(--accent);
+        background: var(--accent-soft);
+      }
+
+      /* Subtle car silhouette decoration */
+      .error-decoration {
+        position: absolute;
+        bottom: -40px;
+        right: -20px;
+        font-size: 12rem;
+        opacity: 0.03;
+        pointer-events: none;
+        user-select: none;
+      }
+
+      [data-theme="light"] .error-decoration {
+        opacity: 0.05;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Site header -->
+    <div id="site-header"></div>
+
+    <main class="error-page">
+      <div class="error-content">
+        <span class="error-icon" aria-hidden="true">🚗</span>
+        <div class="error-code">404</div>
+        <h1 class="error-title">Page introuvable</h1>
+        <p class="error-message">
+          Oups ! La page que vous cherchez n'existe pas, a été déplacée ou n'est plus disponible.
+          Pas de panique, on vous remet sur la bonne route.
+        </p>
+
+        <div class="error-actions">
+          <a href="index.html" class="btn btn-primary btn-lg">
+            ← Retour à l'accueil
+          </a>
+          <a href="vehicules.html" class="btn btn-outline btn-lg">
+            Voir le catalogue
+          </a>
+        </div>
+
+        <div class="error-links">
+          <p>Vous cherchiez peut-être :</p>
+          <div class="error-links-grid">
+            <a href="vehicules.html">Catalogue véhicules</a>
+            <a href="financement.html">Financement</a>
+            <a href="contact.html">Contact</a>
+            <a href="vendre.html">Vendre mon véhicule</a>
+            <a href="garantie.html">Garantie</a>
+            <a href="livraison.html">Livraison</a>
+            <a href="faq.html">FAQ</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <img src="Logo.svg" alt="Auto-prestige" />
+              Auto-<span>prestige</span>
+            </a>
+            <p>
+              Votre partenaire de confiance pour l'achat de véhicules neufs et
+              d'occasion. Qualité, transparence et service premium.
+            </p>
+          </div>
+          <div>
+            <h4 data-i18n="footer.navigation">Navigation</h4>
+            <div class="footer-links">
+              <a href="index.html" data-i18n="nav.home">Accueil</a>
+              <a href="vehicules.html" data-i18n="nav.vehicles">Véhicules</a>
+              <a href="financement.html" data-i18n="nav.financing">Financement</a>
+              <a href="vendre.html" data-i18n="nav.sell">Vendre</a>
+              <a href="contact.html" data-i18n="nav.contact">Contact</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.services">Services</h4>
+            <div class="footer-links">
+              <a href="garantie.html" data-i18n="nav.warranty">Garantie</a>
+              <a href="livraison.html" data-i18n="nav.delivery">Livraison</a>
+              <a href="entretien.html" data-i18n="nav.maintenance">Entretien</a>
+              <a href="assurance.html" data-i18n="nav.assurance">Assurance</a>
+            </div>
+          </div>
+          <div>
+            <h4 data-i18n="footer.contact">Contact</h4>
+            <div class="footer-links">
+              <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+              <a href="mailto:contact@autoprestige.fr">contact@autoprestige.fr</a>
+              <a href="#" data-site-address>12 Avenue des Champs-Élysées, 75008 Paris</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-i18n="footer.rights">© 2026 AutoPrestige. Tous droits réservés.</span>
+          <span>
+            <a href="mentions-legales.html" data-i18n="footer.legal">Mentions légales</a>
+            ·
+            <a href="mentions-legales.html#cookies" data-i18n="footer.cookies">Cookies</a>
+            ·
+            <a href="mentions-legales.html#cgv" data-i18n="footer.cgv">CGV</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="js/header.js"></script>
+    <script src="js/i18n.js"></script>
+    <script>
+      // Redirect to homepage if someone lands on 404.html directly
+      // (Only needed for actual 404 from server — not needed for testing)
+    </script>
+  </body>
+</html>

@@ -83,7 +83,7 @@
         font-family: inherit;
       }
       .reg-btn:hover {
-        background: #0077ed;
+        background: var(--accent-hover);
       }
       .reg-btn:disabled {
         opacity: 0.55;
@@ -104,12 +104,12 @@
         display: none;
       }
       .reg-error {
-        background: #fef2f2;
-        color: #dc2626;
+        background: rgba(220, 38, 38, 0.12);
+        color: var(--danger);
       }
       .reg-success {
-        background: #f0fdf4;
-        color: #16a34a;
+        background: rgba(22, 163, 74, 0.12);
+        color: var(--success);
       }
       .reg-error.show,
       .reg-success.show {

@@ -19,49 +19,49 @@
     </script>
 
     <style>
-      /* Force light look on detail page like Autopark */
+      /* Detail page — adapts to dark/light mode */
       body {
-        background: #f5f5f7 !important;
-        color: #111;
+        background: var(--bg-primary);
+        color: var(--text-primary);
       }
       .header {
-        background: #fff !important;
-        border-bottom: 1px solid #e8e8ed;
+        background: var(--header-bg);
+        border-bottom: 1px solid var(--border);
       }
       .footer {
-        background: #fff !important;
-        border-top: 1px solid #e8e8ed;
+        background: var(--bg-secondary);
+        border-top: 1px solid var(--border);
         margin-top: 60px;
       }
 
       /* Breadcrumb bar */
       .detail-breadcrumb-bar {
-        background: #fff;
-        border-bottom: 1px solid #e8e8ed;
+        background: var(--bg-secondary);
+        border-bottom: 1px solid var(--border);
         padding: 14px 0;
       }
       .detail-breadcrumb {
         font-size: 0.875rem;
-        color: #86868b;
+        color: var(--text-muted);
         display: flex;
         align-items: center;
         flex-wrap: wrap;
         gap: 6px;
       }
       .detail-breadcrumb a {
-        color: #86868b;
+        color: var(--text-muted);
         text-decoration: none;
         transition: color 0.15s;
       }
       .detail-breadcrumb a:hover {
-        color: #0071e3;
+        color: var(--accent-light);
       }
       .detail-breadcrumb .sep {
         opacity: 0.45;
         margin: 0 2px;
       }
       .detail-breadcrumb .current {
-        color: #1d1d1f;
+        color: var(--text-primary);
         font-weight: 500;
       }
 
@@ -93,8 +93,8 @@
         position: relative;
         border-radius: 16px;
         overflow: hidden;
-        background: #fff;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        background: var(--bg-card);
+        box-shadow: var(--shadow-sm);
         aspect-ratio: 4 / 3;
       }
       .detail-main-img img {
@@ -108,8 +108,8 @@
         position: absolute;
         top: 16px;
         left: 16px;
-        background: #1d1d1f;
-        color: #fff;
+        background: var(--bg-muted);
+        color: var(--text-primary);
         font-size: 0.7rem;
         font-weight: 700;
         letter-spacing: 0.04em;
@@ -152,19 +152,17 @@
         overflow: hidden;
         padding: 0;
         cursor: pointer;
-        background: #fff;
+        background: var(--bg-card);
         aspect-ratio: 1;
-        transition:
-          border-color 0.15s,
-          box-shadow 0.15s;
-        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        transition: border-color 0.15s, box-shadow 0.15s;
+        box-shadow: var(--shadow-sm);
       }
       .detail-thumbs button.active {
-        border-color: #0071e3;
-        box-shadow: 0 0 0 1px #0071e3;
+        border-color: var(--accent-light);
+        box-shadow: 0 0 0 1px var(--accent-light);
       }
       .detail-thumbs button:hover {
-        border-color: #0071e3;
+        border-color: var(--accent-light);
       }
       .detail-thumbs img {
         width: 100%;
@@ -179,7 +177,7 @@
         font-weight: 700;
         letter-spacing: 0.12em;
         text-transform: uppercase;
-        color: #0071e3;
+        color: var(--accent-light);
         margin-bottom: 10px;
       }
 
@@ -188,7 +186,7 @@
         font-weight: 800;
         line-height: 1.12;
         margin: 0 0 18px;
-        color: #1d1d1f;
+        color: var(--text-primary);
         letter-spacing: -0.02em;
       }
 
@@ -202,16 +200,16 @@
       .detail-price {
         font-size: 2.1rem;
         font-weight: 800;
-        color: #1d1d1f;
+        color: var(--text-primary);
         letter-spacing: -0.02em;
       }
       .detail-monthly {
         font-size: 1rem;
         font-weight: 500;
-        color: #b45309;
+        color: var(--gold);
       }
 
-      /* Spec cards - exact Autopark style */
+      /* Spec cards */
       .detail-specs {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -219,7 +217,7 @@
         margin-bottom: 36px;
       }
       .detail-spec {
-        background: #f0f0f2;
+        background: var(--bg-secondary);
         border-radius: 12px;
         padding: 16px 18px;
       }
@@ -228,28 +226,28 @@
         font-weight: 600;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-        color: #86868b;
+        color: var(--text-muted);
         margin-bottom: 6px;
       }
       .detail-spec-value {
         font-size: 1.05rem;
         font-weight: 700;
-        color: #1d1d1f;
+        color: var(--text-primary);
       }
 
       /* Description */
       .detail-section-title {
         font-size: 1.15rem;
         font-weight: 700;
-        color: #1d1d1f;
+        color: var(--text-primary);
         margin: 0 0 14px;
       }
       .detail-description {
-        border-left: 3px solid #0071e3;
+        border-left: 3px solid var(--accent-light);
         padding-left: 18px;
         font-size: 0.925rem;
         line-height: 1.75;
-        color: #515154;
+        color: var(--text-secondary);
         white-space: pre-line;
         margin-bottom: 32px;
       }
@@ -268,21 +266,21 @@
         font-size: 0.95rem;
       }
       .detail-actions .btn-primary {
-        background: #0071e3;
+        background: var(--accent);
         color: #fff;
         border: none;
       }
       .detail-actions .btn-primary:hover {
-        background: #0077ed;
+        background: var(--accent-hover);
       }
       .detail-actions .btn-outline {
         background: transparent;
-        border: 1.5px solid #d2d2d7;
-        color: #1d1d1f;
+        border: 1.5px solid var(--border-strong);
+        color: var(--text-primary);
       }
       .detail-actions .btn-outline:hover {
-        border-color: #0071e3;
-        color: #0071e3;
+        border-color: var(--accent-light);
+        color: var(--accent-light);
       }
 
       /* Not found */
@@ -293,10 +291,10 @@
       .detail-not-found h1 {
         font-size: 1.8rem;
         margin-bottom: 12px;
-        color: #1d1d1f;
+        color: var(--text-primary);
       }
       .detail-not-found p {
-        color: #86868b;
+        color: var(--text-muted);
         margin-bottom: 28px;
       }
     </style>

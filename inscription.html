@@ -74,7 +74,7 @@
         transform: scale(1.25);
       }
       .reg-step-dot.done {
-        background: #34c759;
+        background: var(--success);
       }
 
       .reg-form label {
@@ -125,7 +125,7 @@
         margin-top: 8px;
       }
       .reg-btn:hover {
-        background: #0077ed;
+        background: var(--accent-hover);
       }
       .reg-btn:disabled {
         opacity: 0.55;
@@ -138,12 +138,12 @@
         margin-top: 12px;
       }
       .reg-btn-outline:hover {
-        background: #f0f7ff;
+        background: var(--accent-soft);
       }
 
       .reg-error {
-        background: #fef2f2;
-        color: #dc2626;
+        background: rgba(220, 38, 38, 0.12);
+        color: var(--danger);
         padding: 12px 16px;
         border-radius: 10px;
         font-size: 0.9rem;
@@ -155,8 +155,8 @@
       }
 
       .reg-success {
-        background: #f0fdf4;
-        color: #16a34a;
+        background: rgba(22, 163, 74, 0.12);
+        color: var(--success);
         padding: 12px 16px;
         border-radius: 10px;
         font-size: 0.9rem;

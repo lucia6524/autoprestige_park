@@ -4238,7 +4238,10 @@ function renderVehicles(list = null) {
   vehiclesGrid.innerHTML = filtered.map(v => `
     <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
       <div class="vehicle-image">
-        <img src="${v.image}" alt="${v.brand} ${v.model}" loading="lazy">
+        <div class="skeleton-overlay"></div>
+        <img src="${v.image}" alt="${v.brand} ${v.model}" loading="lazy"
+          onload="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');"
+          onerror="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');">
         <div class="vehicle-badges">
           ${v.featured ? `<span class="badge badge-featured">${(window.I18N && I18N.t("vehicles.badge_featured") !== "vehicles.badge_featured") ? I18N.t("vehicles.badge_featured") : "★ À la une"}</span>` : ''}
           ${v.promo ? `<span class="badge badge-promo">${(window.I18N && I18N.t("vehicles.badge_promo") !== "vehicles.badge_promo") ? I18N.t("vehicles.badge_promo") : "Promo"}</span>` : ''}
@@ -4458,21 +4461,25 @@ function animateCounters() {
 
 // ===== INIT =====
 async function loadPublicVehicles() {
-  try {
-    if (window.API && typeof API.getVehicles === "function") {
-      const managedVehicles = await API.getVehicles();
-      if (Array.isArray(managedVehicles) && managedVehicles.length) {
-        vehicles.splice(0, vehicles.length, ...managedVehicles);
-      }
-    }
-  } catch (error) {
-    console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
-  }
+  // 1) Render local hardcoded data IMMEDIATELY (no wait)
   applyUsedVehicleDiscount();
   populateBrands();
   bindFilterEvents();
   renderVehicles();
   animateCounters();
+
+  // 2) Silently fetch from API in the background and update if available
+  try {
+    if (window.API && typeof API.getVehicles === "function") {
+      const managedVehicles = await API.getVehicles();
+      if (Array.isArray(managedVehicles) && managedVehicles.length) {
+        vehicles.splice(0, vehicles.length, ...managedVehicles);
+        renderVehicles();
+      }
+    }
+  } catch (error) {
+    console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
+  }
 }
 
 document.addEventListener("DOMContentLoaded", loadPublicVehicles);

@@ -13,6 +13,15 @@
     return div.innerHTML;
   }
 
+  /* SVG Icons for header */
+  const ICONS = {
+    moon: '<svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+    sun: '<svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
+    globe: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+    menu: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>',
+    chevronDown: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
+  };
+
   const PAGES = {
     home: 'index.html',
     vehicles: 'vehicules.html',
@@ -61,7 +70,7 @@
         <a href="${PAGES.contact}" class="${isActive(PAGES.contact).trim()}" data-i18n="nav.contact">Contact</a>
 
         <div class="nav-item" id="nav-more">
-          <a href="#" class="nav-more-toggle" data-i18n="nav.more" aria-haspopup="true" aria-expanded="false">Plus ▾</a>
+          <a href="#" class="nav-more-toggle" data-i18n="nav.more" aria-haspopup="true" aria-expanded="false">Plus ${ICONS.chevronDown}</a>
           <div class="dropdown" role="menu">
             <a href="${PAGES.brands}" class="${isActive(PAGES.brands).trim()}" data-i18n="nav.brands">Marques</a>
             <a href="${PAGES.warranty}" class="${isActive(PAGES.warranty).trim()}" data-i18n="nav.warranty">Garantie</a>
@@ -81,11 +90,11 @@
       </nav>
 
       <div class="header-actions">
-        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Changer le thème">🌙</button>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Changer le thème">${ICONS.moon}${ICONS.sun}</button>
         <div class="header-auth" id="header-auth">
           <a href="${PAGES.login}" class="header-auth-link" data-i18n="nav.login">Connexion</a>
         </div>
-        <button type="button" class="mobile-toggle" aria-label="Menu" data-i18n-aria="header.menu" id="mobile-toggle"><span aria-hidden="true">☰</span></button>
+        <button type="button" class="mobile-toggle" aria-label="Menu" data-i18n-aria="header.menu" id="mobile-toggle"><span aria-hidden="true">${ICONS.menu}</span></button>
       </div>
     </div>
   </header>`;
@@ -203,27 +212,29 @@
   function applyThemeFromPref(pref) {
     pref = (pref === 'light') ? 'light' : 'dark';
     const resolved = resolveTheme(pref);
-    document.documentElement.setAttribute('data-theme', resolved);
-    document.documentElement.setAttribute('data-theme-pref', pref);
-    localStorage.setItem('theme', pref);
+    // Smooth transition flash
+    document.documentElement.classList.add('theme-switching');
+    requestAnimationFrame(() => {
+      document.documentElement.setAttribute('data-theme', resolved);
+      document.documentElement.setAttribute('data-theme-pref', pref);
+      localStorage.setItem('theme', pref);
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          document.documentElement.classList.remove('theme-switching');
+        }, 50);
+      });
+    });
 
     const btn = document.getElementById('theme-toggle');
     if (btn) {
       if (pref === 'dark') {
-        btn.textContent = '☀️';
         btn.setAttribute('aria-label', 'Thème sombre — cliquer pour le mode clair');
         btn.title = 'Mode sombre → cliquer pour clair';
       } else {
-        btn.textContent = '🌙';
         btn.setAttribute('aria-label', 'Thème clair — cliquer pour le mode sombre');
         btn.title = 'Mode clair → cliquer pour sombre';
       }
     }
-
-    document.querySelectorAll('.theme-toggle').forEach((b) => {
-      if (b.id === 'theme-toggle') return;
-      b.textContent = resolved === 'dark' ? '☀️' : '🌙';
-    });
 
     document.dispatchEvent(new CustomEvent('themeChanged', { detail: { pref, resolved } }));
   }
@@ -231,6 +242,14 @@
   function cycleTheme() {
     const current = getThemePref();
     const next = current === 'dark' ? 'light' : 'dark';
+    // Trigger animation on toggle button
+    const btn = document.getElementById('theme-toggle');
+    if (btn) {
+      btn.classList.add('animating');
+      btn.addEventListener('animationend', () => {
+        btn.classList.remove('animating');
+      }, { once: true });
+    }
     applyThemeFromPref(next);
   }
 

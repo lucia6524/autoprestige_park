@@ -638,7 +638,7 @@ section {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 10px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 0.95rem;
 }
 
@@ -651,7 +651,7 @@ section {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
   border-radius: 10px;
-  color: #fff;
+  color: var(--text-primary);
   font-size: 0.9rem;
   min-width: 160px;
   cursor: pointer;
@@ -659,7 +659,7 @@ section {
 
 .filter-select option {
   background: var(--bg-card);
-  color: #fff;
+  color: var(--text-primary);
 }
 
 .filter-checkbox {
@@ -741,7 +741,7 @@ section {
   position: relative;
   height: 200px;
   overflow: hidden;
-  background: #0d0d12;
+  background: var(--bg-muted);
 }
 
 .vehicle-image img {
@@ -1028,7 +1028,7 @@ section {
 /* ===== STATS ===== */
 .stats {
   padding: 80px 0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: var(--bg-secondary);
 }
 
 .stats-grid {
@@ -1265,7 +1265,7 @@ section {
 
 /* ===== FOOTER ===== */
 .footer {
-  background: #07070c;
+  background: var(--bg-secondary);
   border-top: 1px solid var(--border);
   padding: 80px 0 30px;
 }
@@ -1681,7 +1681,7 @@ section {
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--bg-secondary);
-  color: #fff;
+  color: var(--text-primary);
   font-size: 0.9rem;
 }
 
@@ -1709,6 +1709,28 @@ section {
   justify-content: center;
   font-size: 1.1rem;
   transition: var(--transition);
+  position: relative;
+}
+
+.theme-toggle svg {
+  transition: opacity 0.25s ease, transform 0.35s ease;
+}
+
+/* Dark mode: show moon, hide sun */
+[data-theme="dark"] .theme-toggle .icon-sun,
+:root:not([data-theme="light"]) .theme-toggle .icon-sun {
+  display: none;
+}
+[data-theme="dark"] .theme-toggle .icon-moon,
+:root:not([data-theme="light"]) .theme-toggle .icon-moon {
+  display: block;
+}
+/* Light mode: show sun, hide moon */
+[data-theme="light"] .theme-toggle .icon-moon {
+  display: none;
+}
+[data-theme="light"] .theme-toggle .icon-sun {
+  display: block;
 }
 
 .theme-toggle:hover {
@@ -1806,8 +1828,84 @@ section {
   filter: none;
 }
 
+[data-theme="light"] .dropdown {
+  background: var(--bg-elevated);
+  border-color: var(--border-strong);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .dropdown a {
+  color: var(--text-secondary);
+}
+
+[data-theme="light"] .dropdown a:hover {
+  background: var(--accent-soft);
+  color: var(--text-primary);
+}
+
+[data-theme="light"] .process-num {
+  background: var(--accent-soft);
+  color: var(--accent-light);
+}
+
+[data-theme="light"] .why-icon {
+  background: var(--accent-soft);
+}
+
+[data-theme="light"] .contact-item-icon {
+  background: var(--accent-soft);
+}
+
+[data-theme="light"] .nav-mobile,
+[data-theme="light"] .mobile-menu,
+[data-theme="light"] .header-nav-mobile {
+  background: var(--bg-secondary) !important;
+}
+
+[data-theme="light"] .nav-mobile a,
+[data-theme="light"] .mobile-menu a {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .nav-mobile a:hover,
+[data-theme="light"] .mobile-menu a:hover {
+  color: var(--accent-light) !important;
+  background: var(--accent-soft);
+}
+
+[data-theme="light"] .badge-category {
+  background: rgba(0, 0, 0, 0.15);
+  color: #fff;
+}
+
+[data-theme="light"] .step-number {
+  color: #fff;
+}
+
+[data-theme="light"] .btn-primary {
+  box-shadow: 0 4px 14px rgba(13, 122, 63, 0.25);
+}
+
+[data-theme="light"] .btn-primary:hover {
+  box-shadow: 0 8px 22px rgba(13, 122, 63, 0.35);
+}
+
+[data-theme="light"] .contact-form {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
+[data-theme="light"] .review-form {
+  background: var(--bg-card);
+  box-shadow: var(--shadow-sm);
+}
+
 
 /* ===== THEME TRANSITION ===== */
+html {
+  transition: color-scheme 0.35s ease;
+}
+
 html[data-theme] body,
 html[data-theme] .header,
 html[data-theme] .vehicle-card,
@@ -1816,12 +1914,26 @@ html[data-theme] .testimonial-card,
 html[data-theme] .filters-panel,
 html[data-theme] .bg-card,
 html[data-theme] .chat-panel,
+html[data-theme] .chat-widget,
 html[data-theme] .brand-item,
+html[data-theme] .step-card,
+html[data-theme] .why-card,
+html[data-theme] .process-step,
 html[data-theme] input,
 html[data-theme] select,
 html[data-theme] textarea,
 html[data-theme] .btn,
-html[data-theme] .footer {
+html[data-theme] .footer,
+html[data-theme] .detail-breadcrumb-bar,
+html[data-theme] .detail-main-img,
+html[data-theme] .detail-thumbs button,
+html[data-theme] .detail-spec,
+html[data-theme] .reg-card,
+html[data-theme] .dash-sidebar,
+html[data-theme] .dash-panel,
+html[data-theme] .dash-section,
+html[data-theme] .simu-box,
+html[data-theme] .cookie-banner {
   transition: background-color 0.4s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
@@ -1960,7 +2072,7 @@ html[data-theme] .footer {
 
 /* Smooth image hover on cards */
 .vehicle-image img {
-  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+  transition: transform 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s ease;
 }
 
 /* Label accent bar */
@@ -2123,26 +2235,10 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1.7px solid currentColor;
-  border-radius: 50%;
 }
 
-.lang-icon::before {
-  content: '';
-  width: 7px;
-  height: 16px;
-  border-left: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  border-radius: 50%;
-}
-
-.lang-icon::after {
-  content: '';
-  position: absolute;
-  left: 2px;
-  right: 2px;
-  top: 8px;
-  border-top: 1px solid currentColor;
+.lang-icon svg {
+  color: currentColor;
 }
 
 [data-theme="light"] .lang-toggle {
@@ -2521,7 +2617,7 @@ textarea::placeholder {
   background: var(--accent-soft);
 }
 
-/* --- Theme toggle button --- */
+/* --- Theme toggle button (harmonized) --- */
 .theme-toggle {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -2535,6 +2631,10 @@ textarea::placeholder {
   cursor: pointer;
   font-size: 1.1rem;
   transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  position: relative;
+}
+.theme-toggle svg {
+  transition: opacity 0.25s ease, transform 0.35s ease;
 }
 .theme-toggle:hover {
   background: var(--bg-card-hover);
@@ -2711,4 +2811,218 @@ html {
 }
 html[data-theme="light"] {
   color-scheme: light;
+}
+
+/* ===== THEME TOGGLE ANIMATION ===== */
+@keyframes themeToggleSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(0.85); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+@keyframes iconFadeIn {
+  from { opacity: 0; transform: scale(0.5) rotate(-90deg); }
+  to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.theme-toggle:active {
+  transform: scale(0.88);
+  transition: transform 0.1s ease;
+}
+
+.theme-toggle.animating svg {
+  animation: iconFadeIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Smooth icon crossfade */
+.theme-toggle svg {
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== GLOBAL SMOOTH THEME TRANSITIONS ===== */
+/* Ensure ALL elements that use CSS variables transition smoothly */
+.header,
+.footer,
+.nav,
+.nav-item,
+.dropdown,
+.hero-overlay,
+.page-hero-overlay,
+.section,
+.section-header,
+.vehicle-card,
+.service-card,
+.testimonial-card,
+.why-card,
+.step-card,
+.brand-item,
+.process-step,
+.stat-item,
+.filters-panel,
+.filter-btn,
+.cookie-banner,
+.chat-panel,
+.chat-messages,
+.reg-card,
+.dash-sidebar,
+.dash-panel,
+.detail-breadcrumb-bar,
+.detail-main-img,
+.detail-thumbs button,
+.detail-spec,
+.simu-box,
+.form-group,
+.form-group input,
+.form-group select,
+.form-group textarea,
+.contact-form,
+.review-form,
+input,
+select,
+textarea,
+.btn,
+.badge,
+.lang-switcher,
+.lang-toggle,
+.lang-dropdown,
+.lang-option {
+  transition-property: background-color, color, border-color, box-shadow;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hero text stays readable during transition */
+.hero h1,
+.hero p,
+.hero-badge,
+.page-hero h1,
+.page-hero p,
+.page-hero .label {
+  transition: color 0.35s ease, text-shadow 0.35s ease;
+}
+
+/* Logo adapts smoothly */
+.logo img {
+  transition: filter 0.4s ease, mix-blend-mode 0.4s ease;
+}
+
+/* Scrollbar adapts */
+::-webkit-scrollbar-thumb {
+  transition: background 0.35s ease;
+}
+
+/* Dropdown hover stays snappy */
+.dropdown a,
+.lang-option {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* ===== THEME SWITCH FLASH EFFECT ===== */
+.theme-switching {
+  position: relative;
+}
+
+.theme-switching::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.08) 100%);
+  animation: themeFlash 0.5s ease both;
+}
+
+[data-theme="light"].theme-switching::after {
+  background: radial-gradient(circle at center, transparent 0%, rgba(255,255,255,0.12) 100%);
+}
+
+@keyframes themeFlash {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* ===== SKELETON LOADER ===== */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-tertiary) 25%,
+    var(--bg-muted) 37%,
+    var(--bg-tertiary) 63%
+  );
+  background-size: 800px 100%;
+  animation: shimmer 1.6s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+}
+
+[data-theme="light"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    #e8eaee 25%,
+    #f4f5f7 37%,
+    #e8eaee 63%
+  );
+  background-size: 800px 100%;
+}
+
+.skeleton-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.skeleton-image {
+  height: 200px;
+  border-radius: 0;
+}
+
+.skeleton-body {
+  padding: 20px;
+}
+
+.skeleton-title {
+  height: 18px;
+  width: 70%;
+  margin-bottom: 10px;
+}
+
+.skeleton-specs {
+  height: 13px;
+  width: 90%;
+  margin-bottom: 16px;
+}
+
+.skeleton-price {
+  height: 22px;
+  width: 40%;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* Vehicle image loading state */
+.vehicle-image .skeleton-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+}
+
+.vehicle-image .skeleton-overlay.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vehicle-image img {
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.vehicle-image img.visible {
+  opacity: 1;
 }
