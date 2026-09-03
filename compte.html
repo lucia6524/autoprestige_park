@@ -56,7 +56,7 @@
         height: 56px;
         border-radius: 50%;
         background: linear-gradient(135deg, #0071e3, #5856d6);
-        color: #fff;
+        color: var(--text-inverse, #fff);
         font-weight: 800;
         font-size: 1.15rem;
         display: flex;
@@ -101,8 +101,8 @@
       }
       .dash-finance-box {
         margin: 16px 20px;
-        background: linear-gradient(135deg, #0071e3 0%, #5856d6 100%);
-        color: #fff;
+        background: linear-gradient(135deg, var(--accent) 0%, #5856d6 100%);
+        color: var(--text-inverse, #fff);
         border-radius: 12px;
         padding: 14px 16px;
       }
@@ -150,7 +150,7 @@
       }
       .dash-nav button.active {
         background: var(--accent);
-        color: #fff;
+        color: var(--text-inverse, #fff);
       }
       .dash-nav .icon {
         font-size: 1.1rem;
@@ -259,7 +259,7 @@
       }
       .dash-section-head a {
         font-size: 0.9rem;
-        color: #0071e3;
+        color: var(--accent-light);
         text-decoration: none;
         font-weight: 600;
       }
@@ -276,7 +276,7 @@
       .empty-box a {
         display: inline-block;
         margin-top: 12px;
-        color: #0071e3;
+        color: var(--accent-light);
         font-weight: 600;
         text-decoration: none;
       }
@@ -334,7 +334,7 @@
         gap: 8px;
         margin-top: 16px;
         background: #25d366;
-        color: #fff !important;
+        color: var(--text-inverse, #fff) !important;
         padding: 12px 20px;
         border-radius: 12px;
         font-weight: 700;
@@ -397,7 +397,7 @@
       }
       .btn-primary-sm {
         background: var(--accent);
-        color: #fff;
+        color: var(--text-inverse, #fff);
       }
       .btn-outline-sm {
         background: transparent;
@@ -518,7 +518,7 @@
         background: var(--bg-card-hover);
       }
       [data-theme="dark"] .dash-nav .logout {
-        color: #f87171;
+        color: var(--danger);
       }
       [data-theme="dark"] .dash-nav .logout:hover {
         background: rgba(239, 68, 68, 0.12);
@@ -557,11 +557,11 @@
       }
       [data-theme="dark"] .btn-danger {
         background: rgba(239, 68, 68, 0.16);
-        color: #fca5a5;
+        color: var(--danger);
       }
       [data-theme="dark"] .btn-primary-sm {
         background: var(--accent);
-        color: #fff;
+        color: var(--text-inverse, #fff);
       }
       [data-theme="dark"] .timeline-item time {
         color: var(--text-secondary);
@@ -609,7 +609,7 @@
       }
       [data-theme="dark"] #panel-orders button,
       [data-theme="dark"] #panel-cart button {
-        color: #fff;
+        color: var(--text-inverse, #fff);
       }
       [data-theme="dark"] #orders-content,
       [data-theme="dark"] #cart-content {
@@ -633,7 +633,7 @@
       [data-theme="dark"] #cart-content .badge-status,
       [data-theme="dark"] #orders-content button,
       [data-theme="dark"] #cart-content button {
-        color: #fff !important;
+        color: var(--text-inverse, #fff) !important;
       }
       [data-theme="dark"] #orders-content .item-row *,
       [data-theme="dark"] #cart-content .item-row * {
@@ -645,15 +645,15 @@
       [data-theme="dark"] #cart-content .item-info h4,
       [data-theme="dark"] #orders-content .item-price,
       [data-theme="dark"] #cart-content .item-price {
-        color: #f8fafc !important;
+        color: var(--text-primary) !important;
       }
       [data-theme="dark"] #orders-content .item-info p,
       [data-theme="dark"] #cart-content .item-info p {
-        color: #cbd5e1 !important;
+        color: var(--text-secondary) !important;
       }
       [data-theme="dark"] #orders-content .cart-total,
       [data-theme="dark"] #cart-content .cart-total {
-        color: #f8fafc !important;
+        color: var(--text-primary) !important;
       }
 
       @media (max-width: 768px) {
@@ -728,10 +728,10 @@
         [data-theme="dark"] .dash-nav button {
           color: var(--text-secondary);
         }
-        [data-theme="dark"] .dash-nav button.active {
-          background: var(--accent);
-          color: #fff;
-        }
+      [data-theme="dark"] .dash-nav button.active {
+        background: var(--accent);
+        color: var(--text-inverse, #fff);
+      }
         [data-theme="dark"] #panel-orders .dash-section,
         [data-theme="dark"] #panel-cart .dash-section {
           background: var(--bg-secondary);
