@@ -1,10 +1,6 @@
-import asyncio
-import json
 import time
-from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
-from urllib.request import Request, urlopen
 
+import httpx
 from fastapi import APIRouter, HTTPException, Request as StarletteRequest
 from pydantic import BaseModel, Field
 
@@ -40,25 +36,22 @@ class TranslationRequest(BaseModel):
     target_lang: str = Field(..., pattern="^(EN|DE|IT|ES|PT|RO)$")
 
 
-def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]:
-    payload = urlencode(
-        [("text", text) for text in texts]
-        + [("source_lang", "FR"), ("target_lang", target_lang)]
-    ).encode("utf-8")
-    request = Request(
-        settings.DEEPL_API_URL,
-        data=payload,
-        headers={
-            "Authorization": f"DeepL-Auth-Key {settings.DEEPL_API_KEY}",
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        method="POST",
-    )
-    try:
-        with urlopen(request, timeout=15) as response:
-            data = json.loads(response.read().decode("utf-8"))
-    except (HTTPError, URLError, TimeoutError, OSError) as exc:
-        raise RuntimeError("DeepL translation request failed") from exc
+async def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]:
+    """Async DeepL translation via httpx — no thread blocking."""
+    form_data = [("source_lang", "FR"), ("target_lang", target_lang)]
+    for text in texts:
+        form_data.append(("text", text))
+
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        resp = await client.post(
+            settings.DEEPL_API_URL,
+            data=form_data,
+            headers={
+                "Authorization": f"DeepL-Auth-Key {settings.DEEPL_API_KEY}",
+            },
+        )
+        resp.raise_for_status()
+        data = resp.json()
     return [item["text"] for item in data.get("translations", [])]
 
 
@@ -70,10 +63,8 @@ async def translate(data: TranslationRequest, request: StarletteRequest):
     if sum(len(text) for text in data.texts) > 10000:
         raise HTTPException(413, "Le contenu à traduire est trop volumineux.")
     try:
-        translations = await asyncio.to_thread(
-            _translate_with_deepl, data.texts, data.target_lang
-        )
-    except RuntimeError as exc:
+        translations = await _translate_with_deepl(data.texts, data.target_lang)
+    except (httpx.HTTPError, httpx.TimeoutException) as exc:
         raise HTTPException(502, "DeepL est momentanément indisponible.") from exc
     if len(translations) != len(data.texts):
         raise HTTPException(502, "Réponse DeepL invalide.")

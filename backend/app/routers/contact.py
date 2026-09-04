@@ -8,7 +8,7 @@ router = APIRouter(prefix="/contact", tags=["Contact"])
 
 @router.post("/message")
 async def send_message(data: ContactMessage):
-    sent = send_contact_email(
+    sent = await send_contact_email(
         data.name.strip(),
         str(data.email),
         data.phone.strip(),

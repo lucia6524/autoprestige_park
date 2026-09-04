@@ -183,6 +183,7 @@ button, input, select, textarea {
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+  will-change: background-color;
 }
 
 .header.scrolled {
@@ -536,6 +537,8 @@ section {
 /* ===== HOW IT WORKS ===== */
 .how-it-works {
   background: var(--bg-secondary);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 }
 
 .steps {
@@ -729,6 +732,7 @@ section {
   overflow: hidden;
   transition: var(--transition);
   cursor: pointer;
+  contain: layout style paint;
 }
 
 .vehicle-card:hover {
@@ -944,6 +948,8 @@ section {
 /* ===== SERVICES ===== */
 .services {
   background: var(--bg-secondary);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 }
 
 .services-grid {
@@ -1029,6 +1035,8 @@ section {
 .stats {
   padding: 80px 0;
   background: var(--bg-secondary);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 200px;
 }
 
 .stats-grid {
@@ -1097,6 +1105,8 @@ section {
 /* ===== TESTIMONIALS ===== */
 .testimonials {
   background: var(--bg-secondary);
+  content-visibility: auto;
+  contain-intrinsic-size: 0 600px;
 }
 
 .testimonials-grid {

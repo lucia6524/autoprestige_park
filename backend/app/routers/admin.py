@@ -116,40 +116,40 @@ async def admin_stats(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
 ):
-    users_total = (await db.execute(select(func.count(User.id)))).scalar() or 0
-    users_verified = (await db.execute(
-        select(func.count(User.id)).where(User.is_verified == True)
-    )).scalar() or 0
-
-    orders_total = (await db.execute(select(func.count(Order.id)))).scalar() or 0
-    orders_pending = (await db.execute(
-        select(func.count(Order.id)).where(Order.status == "pending")
-    )).scalar() or 0
-    orders_active = (await db.execute(
-        select(func.count(Order.id)).where(Order.status == "active")
-    )).scalar() or 0
-    orders_paid = (await db.execute(
-        select(func.count(Order.id)).where(Order.status.in_(["paid", "delivered"]))
-    )).scalar() or 0
-
-    revenue_total = (await db.execute(
-        select(func.coalesce(func.sum(Order.amount_paid), 0.0))
-    )).scalar() or 0.0
-    revenue_pending = (await db.execute(
-        select(func.coalesce(func.sum(Order.total_price - Order.amount_paid), 0.0)).where(
-            Order.status.in_(["pending", "active", "delivering"])
+    # 2 queries instead of 8: users stats + orders stats in parallel-ish subqueries
+    users_result = await db.execute(
+        select(
+            func.count(User.id).label("total"),
+            func.count(User.id).filter(User.is_verified == True).label("verified"),
         )
-    )).scalar() or 0.0
+    )
+    u = users_result.one()
+
+    orders_result = await db.execute(
+        select(
+            func.count(Order.id).label("total"),
+            func.count(Order.id).filter(Order.status == "pending").label("pending"),
+            func.count(Order.id).filter(Order.status == "active").label("active"),
+            func.count(Order.id).filter(Order.status.in_(["paid", "delivered"])).label("paid"),
+            func.coalesce(func.sum(Order.amount_paid), 0.0).label("revenue_total"),
+            func.coalesce(
+                func.sum(Order.total_price - Order.amount_paid).filter(
+                    Order.status.in_(["pending", "active", "delivering"])
+                ), 0.0
+            ).label("revenue_pending"),
+        )
+    )
+    o = orders_result.one()
 
     return AdminStats(
-        users_total=users_total,
-        users_verified=users_verified,
-        orders_total=orders_total,
-        orders_pending=orders_pending,
-        orders_active=orders_active,
-        orders_paid=orders_paid,
-        revenue_total=float(revenue_total),
-        revenue_pending=float(revenue_pending),
+        users_total=u.total,
+        users_verified=u.verified,
+        orders_total=o.total,
+        orders_pending=o.pending,
+        orders_active=o.active,
+        orders_paid=o.paid,
+        revenue_total=float(o.revenue_total),
+        revenue_pending=float(o.revenue_pending),
     )
 
 
@@ -175,11 +175,20 @@ async def list_users(
     result = await db.execute(query)
     users = result.scalars().all()
 
+    # Batch-load order counts in a single query instead of N+1
+    user_ids = [u.id for u in users]
+    if user_ids:
+        counts_result = await db.execute(
+            select(Order.user_id, func.count(Order.id).label("cnt"))
+            .where(Order.user_id.in_(user_ids))
+            .group_by(Order.user_id)
+        )
+        counts_map = {row.user_id: row.cnt for row in counts_result.all()}
+    else:
+        counts_map = {}
+
     out = []
     for u in users:
-        count = (await db.execute(
-            select(func.count(Order.id)).where(Order.user_id == u.id)
-        )).scalar() or 0
         out.append(AdminUserOut(
             id=u.id,
             first_name=u.first_name,
@@ -191,7 +200,7 @@ async def list_users(
             is_active=u.is_active,
             is_admin=bool(getattr(u, "is_admin", False)),
             created_at=u.created_at,
-            orders_count=count,
+            orders_count=counts_map.get(u.id, 0),
         ))
     return out
 

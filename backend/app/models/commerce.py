@@ -56,19 +56,24 @@ class Vehicle(Base):
     power: Mapped[int] = mapped_column(Integer, default=0)
     featured: Mapped[bool] = mapped_column(Boolean, default=False)
     promo: Mapped[bool] = mapped_column(Boolean, default=False)
-    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True, index=True)
     image: Mapped[str] = mapped_column(String(500), default="")
     images: Mapped[str] = mapped_column(Text, default="")  # JSON array as string
     description: Mapped[str] = mapped_column(Text, default="")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive, onupdate=utc_now_naive)
 
+    __table_args__ = (
+        # Composite index for public catalogue listing (most common query)
+        # Index("ix_vehicles_active_featured", "is_active", "featured", "created_at"),
+    )
+
 
 class CartItem(Base):
     __tablename__ = "cart_items"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     vehicle_id: Mapped[int] = mapped_column(Integer)  # id from catalog
     brand: Mapped[str] = mapped_column(String(100))
     model: Mapped[str] = mapped_column(String(150))
@@ -85,7 +90,7 @@ class Order(Base):
     __tablename__ = "orders"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), index=True)
     vehicle_id: Mapped[int] = mapped_column(Integer)
     brand: Mapped[str] = mapped_column(String(100))
     model: Mapped[str] = mapped_column(String(150))
@@ -97,7 +102,7 @@ class Order(Base):
     monthly_amount: Mapped[float] = mapped_column(Float, default=0)
     months_total: Mapped[int] = mapped_column(Integer, default=0)
     amount_paid: Mapped[float] = mapped_column(Float, default=0)
-    status: Mapped[str] = mapped_column(String(30), default=OrderStatus.PENDING.value)
+    status: Mapped[str] = mapped_column(String(30), default=OrderStatus.PENDING.value, index=True)
 
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
     paid_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
@@ -111,14 +116,14 @@ class Installment(Base):
     __tablename__ = "installments"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"))
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), index=True)
     number: Mapped[int] = mapped_column(Integer)  # 1, 2, 3...
     amount: Mapped[float] = mapped_column(Float)
     due_date: Mapped[datetime] = mapped_column(DateTime)
     paid: Mapped[bool] = mapped_column(Boolean, default=False)
     paid_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     # unpaid | claimed | paid | rejected
-    payment_status: Mapped[str] = mapped_column(String(20), default=InstallmentPaymentStatus.UNPAID.value)
+    payment_status: Mapped[str] = mapped_column(String(20), default=InstallmentPaymentStatus.UNPAID.value, index=True)
     claimed_at: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     admin_note: Mapped[str] = mapped_column(Text, default="")
 
@@ -129,7 +134,7 @@ class Delivery(Base):
     __tablename__ = "deliveries"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), unique=True)
+    order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), unique=True, index=True)
     status: Mapped[str] = mapped_column(String(30), default=DeliveryStatus.PREPARING.value)
     tracking_number: Mapped[str] = mapped_column(String(100), default="")
     carrier: Mapped[str] = mapped_column(String(100), default="AutoPrestige Logistics")
@@ -170,5 +175,5 @@ class Notification(Base):
     user_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     order_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
     installment_id: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    is_read: Mapped[bool] = mapped_column(Boolean, default=False)
+    is_read: Mapped[bool] = mapped_column(Boolean, default=False, index=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)

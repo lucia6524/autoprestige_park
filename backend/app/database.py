@@ -3,7 +3,22 @@ from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy import select, text
 from app.config import settings
 
-engine = create_async_engine(settings.DATABASE_URL, echo=False)
+# Pool tuning: keep connections alive, recycle stale ones, ping before use
+_engine_kwargs = {
+    "echo": False,
+    "pool_pre_ping": True,       # detect stale connections
+    "pool_recycle": 1800,         # recycle connections every 30 min
+}
+
+# PostgreSQL-specific pool settings
+if settings.DATABASE_URL.startswith("postgresql"):
+    _engine_kwargs["pool_size"] = 10     # persistent connections
+    _engine_kwargs["max_overflow"] = 20   # extra connections under load
+else:
+    # SQLite (aiosqlite) utilise NullPool : pool_size n'est pas accepté.
+    pass
+
+engine = create_async_engine(settings.DATABASE_URL, **_engine_kwargs)
 AsyncSessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 class Base(DeclarativeBase):
@@ -45,6 +60,22 @@ async def init_db():
                     await conn.execute(text(sql))
                 except Exception:
                     pass
+
+        # Index sur les colonnes filtrées/triées du catalogue (idempotents)
+        # create_all ne crée pas les index des tables déjà existantes → CREATE INDEX IF NOT EXISTS.
+        indexes = [
+            # Requête catalogue principale : WHERE is_active ORDER BY featured DESC, created_at DESC
+            "CREATE INDEX IF NOT EXISTS ix_vehicles_active_featured ON vehicles (is_active, featured, created_at DESC)",
+            "CREATE INDEX IF NOT EXISTS ix_vehicles_category ON vehicles (category)",
+            "CREATE INDEX IF NOT EXISTS ix_vehicles_brand ON vehicles (brand)",
+            "CREATE INDEX IF NOT EXISTS ix_orders_status ON orders (status)",
+            "CREATE INDEX IF NOT EXISTS ix_installments_payment_status ON installments (payment_status)",
+        ]
+        for sql in indexes:
+            try:
+                await conn.execute(text(sql))
+            except Exception:
+                pass
 
         if conn.dialect.name == "postgresql":
             users_exists = await conn.scalar(

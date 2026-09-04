@@ -1,3 +1,4 @@
+import time
 from typing import Optional
 
 from fastapi import APIRouter, Depends
@@ -11,6 +12,17 @@ from app.models.site_settings import SiteSettings
 from app.models.user import User
 
 router = APIRouter(prefix="/site-settings", tags=["Site settings"])
+
+# Simple in-memory cache for site settings (single-row, rarely changes)
+_settings_cache: Optional[dict] = None
+_settings_cache_ts: float = 0
+_CACHE_TTL = 300  # 5 minutes
+
+
+def _invalidate_settings_cache():
+    global _settings_cache, _settings_cache_ts
+    _settings_cache = None
+    _settings_cache_ts = 0
 
 
 class SiteSettingsPublic(BaseModel):
@@ -63,20 +75,41 @@ DEFAULT_SETTINGS = {
 
 
 async def get_or_create_settings(db: AsyncSession) -> SiteSettings:
+    global _settings_cache, _settings_cache_ts
+
+    # Return from cache if fresh
+    now = time.time()
+    if _settings_cache and (now - _settings_cache_ts) < _CACHE_TTL:
+        # Reconstruct object from cache for non-mutating reads
+        obj = SiteSettings(id=1, **_settings_cache)
+        return obj
+
     result = await db.execute(select(SiteSettings).where(SiteSettings.id == 1))
     settings = result.scalars().first()
-    if settings:
-        return settings
-    settings = SiteSettings(id=1, **DEFAULT_SETTINGS)
-    db.add(settings)
-    await db.commit()
-    await db.refresh(settings)
+    if not settings:
+        settings = SiteSettings(id=1, **DEFAULT_SETTINGS)
+        db.add(settings)
+        await db.commit()
+        await db.refresh(settings)
+
+    # Populate cache
+    _settings_cache = {
+        "bank_holder": settings.bank_holder,
+        "bank_iban": settings.bank_iban,
+        "bank_bic": settings.bank_bic,
+        "bank_transfer_type": settings.bank_transfer_type,
+        "contact_phone": settings.contact_phone,
+        "contact_email": settings.contact_email,
+        "contact_whatsapp": settings.contact_whatsapp,
+        "contact_address": settings.contact_address,
+    }
+    _settings_cache_ts = now
     return settings
 
 
 @router.get("", response_model=SiteSettingsPublic)
 async def read_site_settings(db: AsyncSession = Depends(get_db)):
-    """Public endpoint — bank details are hidden."""
+    """Public endpoint — bank details are hidden. Uses cache."""
     settings = await get_or_create_settings(db)
     return SiteSettingsPublic(
         contact_phone=settings.contact_phone,
@@ -106,4 +139,5 @@ async def update_site_settings(
         setattr(settings, field, value.strip())
     await db.commit()
     await db.refresh(settings)
+    _invalidate_settings_cache()
     return settings

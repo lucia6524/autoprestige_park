@@ -1,6 +1,6 @@
 """Catalogue public véhicules."""
 from typing import Optional, List
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends, Query, Response
 from sqlalchemy import select, desc, func
 from sqlalchemy.ext.asyncio import AsyncSession
 from pydantic import BaseModel
@@ -10,6 +10,14 @@ from app.database import get_db
 from app.models.commerce import Vehicle
 
 router = APIRouter(prefix="/vehicles", tags=["Vehicles"])
+
+# Le catalogue est public et change rarement : on autorise un cache court
+# (CDN / navigateur / proxy) pour alléger la charge sur l'API.
+CATALOG_CACHE_CONTROL = "public, max-age=300"
+
+
+def set_catalog_cache(response: Response):
+    response.headers["Cache-Control"] = CATALOG_CACHE_CONTROL
 
 
 class VehiclePublic(BaseModel):
@@ -38,12 +46,14 @@ class VehiclePublic(BaseModel):
 
 @router.get("", response_model=List[VehiclePublic])
 async def list_public_vehicles(
+    response: Response,
     db: AsyncSession = Depends(get_db),
     category: Optional[str] = None,
     q: Optional[str] = None,
     skip: int = 0,
     limit: int = 200,
 ):
+    set_catalog_cache(response)
     query = select(Vehicle).where(Vehicle.is_active == True).order_by(desc(Vehicle.featured), desc(Vehicle.created_at))
     if category:
         query = query.where(Vehicle.category == category)
@@ -58,7 +68,8 @@ async def list_public_vehicles(
 
 
 @router.get("/{vehicle_id}", response_model=VehiclePublic)
-async def get_vehicle(vehicle_id: int, db: AsyncSession = Depends(get_db)):
+async def get_vehicle(vehicle_id: int, response: Response, db: AsyncSession = Depends(get_db)):
+    set_catalog_cache(response)
     result = await db.execute(
         select(Vehicle).where(Vehicle.id == vehicle_id, Vehicle.is_active == True)
     )

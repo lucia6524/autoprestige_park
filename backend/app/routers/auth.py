@@ -131,7 +131,7 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
     # Generate OTP and send it by email — never expose the code in the API response.
     code = await create_otp(db, email)
 
-    email_sent = send_otp_email(email, code, pending.get("first_name", ""))
+    email_sent = await send_otp_email(email, code, pending.get("first_name", ""))
     if not email_sent:
         raise HTTPException(503, "Impossible d'envoyer l'email de vérification. Réessayez plus tard.")
 
@@ -230,7 +230,7 @@ async def login_request_code(email: str, request: Request, db: AsyncSession = De
         raise HTTPException(404, "Aucun compte vérifié avec cet email.")
     code = await create_otp(db, email)
 
-    email_sent = send_otp_email(email, code, user.first_name)
+    email_sent = await send_otp_email(email, code, user.first_name)
     if not email_sent:
         raise HTTPException(503, "Impossible d'envoyer l'email de vérification. Réessayez plus tard.")
 
