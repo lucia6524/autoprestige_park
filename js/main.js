@@ -329,31 +329,8 @@ function bindFilterEvents() {
   }
 }
 
-// ===== MOBILE MENU =====
-if (mobileToggle && nav) {
-  mobileToggle.addEventListener("click", () => {
-    nav.classList.toggle("open");
-    mobileToggle.textContent = nav.classList.contains("open") ? "✕" : "☰";
-  });
-}
-
-// Close menu on link click
-document.querySelectorAll(".nav > a, .dropdown a").forEach(link => {
-  link.addEventListener("click", () => {
-    if (nav) nav.classList.remove("open");
-    if (mobileToggle) mobileToggle.textContent = "☰";
-  });
-});
-
-// Mobile: toggle Plus dropdown
-document.querySelectorAll(".nav-item > a").forEach(trigger => {
-  trigger.addEventListener("click", (e) => {
-    if (window.innerWidth <= 768) {
-      e.preventDefault();
-      trigger.parentElement.classList.toggle("open");
-    }
-  });
-});
+// Le menu mobile (burger, fermeture au clic, sous-menu « Plus ») est géré par js/header.js.
+// → ancien code retiré pour éviter le double déclenchement qui empêchait l'ouverture.
 
 // ===== STICKY HEADER =====
 window.addEventListener("scroll", throttle(() => {
