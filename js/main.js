@@ -58,9 +58,11 @@ function normalizeVehicle(v) {
 }
 
 // Remise automatique de 2 000 € sur les véhicules d'occasion.
+// Le prix original est conservé pour afficher un prix barré (transparence).
 function applyUsedVehicleDiscount() {
   vehicles.forEach((vehicle) => {
     if (vehicle.type === "occasion" && !vehicle.discountApplied) {
+      vehicle.originalPrice = Number(vehicle.price);
       vehicle.price = Math.max(0, Number(vehicle.price) - 2000);
       vehicle.discountApplied = true;
     }
@@ -106,6 +108,8 @@ const searchInput = document.getElementById("search-input");
 const filterBrand = document.getElementById("filter-brand");
 const filterFuel = document.getElementById("filter-fuel");
 const filterType = document.getElementById("filter-type");
+const filterPrice = document.getElementById("filter-price");
+const filterMileage = document.getElementById("filter-mileage");
 const filterPromo = document.getElementById("filter-promo");
 const sortBy = document.getElementById("sort-by");
 const resultsCount = document.getElementById("results-count");
@@ -171,8 +175,8 @@ function renderVehicles(list = null) {
           </div>
           <div class="vehicle-price">
             <div>
-              <div class="price-main">${v.price.toLocaleString('fr-FR')} €</div>
-              <div class="price-month">ou ${v.monthly} €/mois</div>
+              <div class="price-main">${v.originalPrice && v.originalPrice !== v.price ? `<s class="price-old">${v.originalPrice.toLocaleString('fr-FR')} €</s> ` : ''}${v.price.toLocaleString('fr-FR')} €</div>
+              <div class="price-month">${v.originalPrice && v.originalPrice !== v.price ? 'Prix remisé · ' : ''}ou ${v.monthly} €/mois</div>
             </div>
             <div style="display:flex;gap:6px;align-items:center;">
               <a href="vehicule.html?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">Voir →</a>
@@ -239,6 +243,18 @@ function applyFilters() {
     filtered = filtered.filter(v => v.type === filterType.value);
   }
 
+  // Budget max
+  if (filterPrice && filterPrice.value !== "all") {
+    const max = Number(filterPrice.value);
+    filtered = filtered.filter(v => Number(v.price) <= max);
+  }
+
+  // Kilométrage max (0 km = véhicule neuf, considéré comme très faible)
+  if (filterMileage && filterMileage.value !== "all") {
+    const max = Number(filterMileage.value);
+    filtered = filtered.filter(v => Number(v.mileage) <= max);
+  }
+
   // Promo only
   if (filterPromo && filterPromo.checked) {
     filtered = filtered.filter(v => v.promo);
@@ -277,6 +293,8 @@ function bindFilterEvents() {
   if (filterBrand) filterBrand.addEventListener("change", () => renderVehicles());
   if (filterFuel) filterFuel.addEventListener("change", () => renderVehicles());
   if (filterType) filterType.addEventListener("change", () => renderVehicles());
+  if (filterPrice) filterPrice.addEventListener("change", () => renderVehicles());
+  if (filterMileage) filterMileage.addEventListener("change", () => renderVehicles());
   if (filterPromo) filterPromo.addEventListener("change", () => renderVehicles());
   if (sortBy) sortBy.addEventListener("change", () => renderVehicles());
 
@@ -286,6 +304,8 @@ function bindFilterEvents() {
       if (filterBrand) filterBrand.value = "all";
       if (filterFuel) filterFuel.value = "all";
       if (filterType) filterType.value = "all";
+      if (filterPrice) filterPrice.value = "all";
+      if (filterMileage) filterMileage.value = "all";
       if (sortBy) sortBy.value = "default";
       if (filterPromo) filterPromo.checked = false;
       renderVehicles();

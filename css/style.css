@@ -827,6 +827,26 @@ section {
   font-weight: 700;
 }
 
+.price-old {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: line-through;
+  margin-right: 6px;
+}
+
+.detail-badge-promo {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 999px;
+  background: var(--accent, #d4af37);
+  color: #111;
+  vertical-align: middle;
+}
+
 .price-month {
   font-size: 0.9rem;
   color: var(--text-muted);

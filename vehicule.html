@@ -438,6 +438,10 @@
             )
             .trim();
           const price = formatPrice(v.price);
+          const oldPrice =
+            v.originalPrice && Number(v.originalPrice) !== Number(v.price)
+              ? formatPrice(v.originalPrice)
+              : null;
 
           document.title = v.brand + " " + v.model + " — AutoPrestige";
           const bc = document.getElementById("breadcrumb-current");
@@ -479,15 +483,12 @@
               <h1 class="detail-title">${v.brand}<br>${v.model}</h1>
 
               <div class="detail-price-row">
-                <span class="detail-price">${price}</span>
+                <span class="detail-price">${oldPrice ? `<s class="price-old">${oldPrice}</s> ` : ''}${price}</span>
+                ${oldPrice ? '<span class="detail-badge-promo">− 2 000 €</span>' : ''}
                 <span class="detail-monthly">ou €${v.monthly}/mois</span>
               </div>
 
               <div class="detail-specs">
-                <div class="detail-spec">
-                  <div class="detail-spec-label">Prix</div>
-                  <div class="detail-spec-value">${price}</div>
-                </div>
                 <div class="detail-spec">
                   <div class="detail-spec-label">Année</div>
                   <div class="detail-spec-value">${v.year}</div>
