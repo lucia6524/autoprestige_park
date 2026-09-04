@@ -1,11 +1,19 @@
 /**
- * AutoPrestige i18n — DeepL-powered dynamic translation
- * Translates page content via the backend /api/translate endpoint.
+ * AutoPrestige i18n — traduction dynamique gratuite (Google Translate)
+ * Traduit la page via l'endpoint public gratuit utilisé par Google lui-même :
+ * aucune clé API, aucun backend requis. Le texte traduit est mis en cache
+ * dans le localStorage pour ne jamais retraduire deux fois la même phrase.
  */
 const I18N = {
   currentLang: 'fr',
   translations: {},
   supported: ['fr', 'en', 'de', 'it', 'es', 'pt', 'ro'],
+  // Endpoint gratuit : une requête = un texte, débit bridé → on reste mesuré
+  MAX_TEXT_LENGTH: 1800,      // texte plus long : laissé en français
+  CONCURRENCY: 4,             // requêtes simultanées max
+  REQUEST_GAP_MS: 40,         // espacement minimal entre deux requêtes
+  RETRY_DELAYS: [400, 1200, 2500], // attente avant réessai (HTTP 429)
+  MAX_CACHE_ENTRIES: 1500,    // entrées max par langue dans le localStorage
   flags: {
     fr: '🇫🇷', en: '🇬🇧', de: '🇩🇪', it: '🇮🇹',
     es: '🇪🇸', pt: '🇵🇹', ro: '🇷🇴'
@@ -21,13 +29,7 @@ const I18N = {
   _translating: false,
   _translateTimer: null,
   _cache: {},  // { lang: { originalText: translatedText } }
-
-  apiBase() {
-    const configuredBase = localStorage.getItem('api_base');
-    if (configuredBase) return configuredBase.replace(/\/$/, '') + '/api';
-    const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-    return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
-  },
+  _failed: {}, // { lang: { originalText: true } } — phrases en échec (session) pour ne pas marteler
 
   t(key) {
     if (!key) return '';
@@ -103,36 +105,100 @@ const I18N = {
     return items;
   },
 
-  /* ===== DeepL translation via backend ===== */
+  /* ===== Traduction via l'endpoint public gratuit de Google ===== */
+
+  translateUrl(text, targetLang) {
+    return 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl='
+      + targetLang.toLowerCase() + '&dt=t&q=' + encodeURIComponent(text);
+  },
+
+  // « Bonjour le monde » → [[["Hello world","Bonjour le monde",...]],null,"fr",...]
+  parseResponse(data) {
+    try {
+      const chunks = data && Array.isArray(data[0]) ? data[0] : [];
+      return chunks.map(chunk => (chunk && chunk[0]) ? chunk[0] : '').join('').trim();
+    } catch (_) {
+      return '';
+    }
+  },
+
+  needsTranslation(text) {
+    return text.length > 1
+      && text.length <= this.MAX_TEXT_LENGTH
+      && /[a-zA-ZàâäéèêëîïôöùûüçœÀÂÄÉÈÊËÎÏÔÖÙÛÜÇŒ]/.test(text);
+  },
+
+  async fetchTranslation(text, targetLang) {
+    for (let attempt = 0; attempt <= this.RETRY_DELAYS.length; attempt++) {
+      try {
+        const res = await fetch(this.translateUrl(text, targetLang));
+        if (res.ok) {
+          const translated = this.parseResponse(await res.json());
+          return translated || text;
+        }
+        // 429 = débit limité : on attend puis on réessaie, sinon repli sur l'original
+        if (res.status !== 429 || attempt === this.RETRY_DELAYS.length) return text;
+        await new Promise(r => setTimeout(r, this.RETRY_DELAYS[attempt]));
+      } catch (err) {
+        console.warn('Google Translate:', err);
+        return text; // réseau coupé / hors-ligne : repli sur l'original
+      }
+    }
+    return text;
+  },
 
   async translateTexts(texts, targetLang) {
     if (!texts.length) return [];
-    // Batch in chunks of 50 (API limit)
-    const chunkSize = 50;
-    const results = [];
-    for (let i = 0; i < texts.length; i += chunkSize) {
-      const chunk = texts.slice(i, i + chunkSize);
-      try {
-        const res = await fetch(`${this.apiBase()}/translate`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            texts: chunk,
-            target_lang: targetLang.toUpperCase(),
-          }),
-        });
-        if (!res.ok) {
-          console.warn('DeepL translation failed:', res.status);
-          return texts; // fallback: return originals
+    const results = new Array(texts.length).fill(null);
+    const failed = this._failed[targetLang] || (this._failed[targetLang] = {});
+    let cursor = 0;
+    let lastLaunch = 0;
+
+    const worker = async () => {
+      while (cursor < texts.length) {
+        const index = cursor++;
+        const text = texts[index];
+        if (!this.needsTranslation(text) || failed[text]) {
+          results[index] = text;
+          continue;
         }
-        const data = await res.json();
-        results.push(...(data.translations || []));
-      } catch (err) {
-        console.warn('DeepL translation error:', err);
-        return texts; // fallback
+        const wait = Math.max(0, this.REQUEST_GAP_MS - (Date.now() - lastLaunch));
+        if (wait > 0) await new Promise(r => setTimeout(r, wait));
+        lastLaunch = Date.now();
+        const translated = await this.fetchTranslation(text, targetLang);
+        results[index] = translated;
+        if (translated === text) failed[text] = true; // ne pas marteler dans la session
       }
-    }
-    return results;
+    };
+
+    const poolSize = Math.min(this.CONCURRENCY, texts.length);
+    await Promise.all(Array.from({ length: poolSize }, worker));
+    return texts.map((text, i) => results[i] === null ? text : results[i]);
+  },
+
+  /* ===== Cache localStorage (une phrase traduite = jamais retraduite) ===== */
+
+  cacheKey(lang) {
+    return 'ap_gt_cache_' + lang;
+  },
+
+  loadPersistentCache(lang) {
+    try {
+      const raw = localStorage.getItem(this.cacheKey(lang));
+      if (raw) this._cache[lang] = Object.assign(this._cache[lang] || {}, JSON.parse(raw));
+    } catch (_) { /* quota ou JSON invalide : on ignore */ }
+  },
+
+  savePersistentCache(lang) {
+    const cache = this._cache[lang];
+    if (!cache) return;
+    try {
+      const entries = Object.entries(cache);
+      if (entries.length > this.MAX_CACHE_ENTRIES) {
+        this._cache[lang] = Object.fromEntries(entries.slice(-this.MAX_CACHE_ENTRIES));
+      }
+      localStorage.setItem(this.cacheKey(lang), JSON.stringify(this._cache[lang]));
+    } catch (_) { /* quota dépassé : on ignore */ }
   },
 
   async translatePage() {
@@ -153,7 +219,9 @@ const I18N = {
       const uniqueTexts = [...new Set(uncached.map(i => i.text))];
       const translated = await this.translateTexts(uniqueTexts, this.currentLang);
       uniqueTexts.forEach((orig, idx) => {
-        langCache[orig] = translated[idx] || orig;
+        const value = translated[idx] || orig;
+        // On ne garde que les vrais succès : un repli FR pourra être retenté plus tard
+        if (value !== orig) langCache[orig] = value;
       });
       this._cache[this.currentLang] = langCache;
     }
@@ -168,6 +236,7 @@ const I18N = {
         item.element.setAttribute(item.attribute, translated);
       }
     });
+    this.savePersistentCache(this.currentLang);
   },
 
   observeDynamicContent() {
@@ -177,7 +246,7 @@ const I18N = {
       clearTimeout(this._translateTimer);
       this._translateTimer = setTimeout(() => {
         this._translating = true;
-        this.translatePage().catch(err => console.warn('DeepL:', err)).finally(() => { this._translating = false; });
+        this.translatePage().catch(err => console.warn('Google Translate:', err)).finally(() => { this._translating = false; });
       }, 300);
     });
     this._observer.observe(document.body, { childList: true, subtree: true });
@@ -194,8 +263,10 @@ const I18N = {
     if (lang === 'fr') {
       this.restoreOriginalContent();
     } else {
+      this._failed[lang] = {}; // nouveau choix de langue → on peut tout retenter
+      this.loadPersistentCache(lang);
       this._translating = true;
-      await this.translatePage().catch(err => console.warn('DeepL:', err));
+      await this.translatePage().catch(err => console.warn('Google Translate:', err));
       this._translating = false;
     }
 
@@ -299,10 +370,11 @@ const I18N = {
     this.injectSwitcher();
 
     if (initial !== 'fr') {
-      // Wait for DOM to be ready, then translate
+      // Attendre que le DOM soit prêt puis traduire (cache d'abord)
+      this.loadPersistentCache(initial);
       await new Promise(resolve => setTimeout(resolve, 100));
       this._translating = true;
-      await this.translatePage().catch(err => console.warn('DeepL:', err));
+      await this.translatePage().catch(err => console.warn('Google Translate:', err));
       this._translating = false;
       this.observeDynamicContent();
     }
