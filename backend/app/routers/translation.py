@@ -36,6 +36,26 @@ class TranslationRequest(BaseModel):
     target_lang: str = Field(..., pattern="^(EN|DE|IT|ES|PT|RO)$")
 
 
+async def _translate_with_google(texts: list[str], target_lang: str) -> list[str]:
+    """Async Google Cloud Translation v2 via httpx — API key auth."""
+    async with httpx.AsyncClient(timeout=15.0) as client:
+        resp = await client.post(
+            settings.GOOGLE_TRANSLATE_API_URL,
+            headers={"x-goog-api-key": settings.GOOGLE_TRANSLATE_API_KEY},
+            json={
+                "q": texts,
+                "source": "fr",
+                "target": target_lang.lower(),
+                # "text" évite que Google échappe les entités HTML (&amp; etc.)
+                "format": "text",
+            },
+        )
+        resp.raise_for_status()
+        data = resp.json()
+    translations = data.get("data", {}).get("translations", [])
+    return [item.get("translatedText", "") for item in translations]
+
+
 async def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]:
     """Async DeepL translation via httpx — no thread blocking."""
     form_data = [("source_lang", "FR"), ("target_lang", target_lang)]
@@ -58,14 +78,32 @@ async def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]
 @router.post("")
 async def translate(data: TranslationRequest, request: StarletteRequest):
     _check_translate_rate(_get_ip(request))
-    if not settings.DEEPL_API_KEY:
-        raise HTTPException(503, "DeepL n'est pas configuré.")
     if sum(len(text) for text in data.texts) > 10000:
         raise HTTPException(413, "Le contenu à traduire est trop volumineux.")
+
+    if settings.TRANSLATION_PROVIDER == "deepl":
+        if not settings.DEEPL_API_KEY:
+            raise HTTPException(503, "DeepL n'est pas configuré.")
+        provider_name = "DeepL"
+        translate_func = _translate_with_deepl
+    else:
+        if not settings.GOOGLE_TRANSLATE_API_KEY:
+            raise HTTPException(503, "Google Translate n'est pas configuré.")
+        provider_name = "Google Translate"
+        translate_func = _translate_with_google
+
     try:
-        translations = await _translate_with_deepl(data.texts, data.target_lang)
+        translations = await translate_func(data.texts, data.target_lang)
+    except httpx.HTTPStatusError as exc:
+        status = exc.response.status_code
+        if status == 429:
+            raise HTTPException(503, "Quota de traduction atteint. Réessayez plus tard.") from exc
+        if status in (401, 403):
+            raise HTTPException(502, "Clé API de traduction invalide ou non activée.") from exc
+        raise HTTPException(502, f"{provider_name} est momentanément indisponible.") from exc
     except (httpx.HTTPError, httpx.TimeoutException) as exc:
-        raise HTTPException(502, "DeepL est momentanément indisponible.") from exc
+        raise HTTPException(502, f"{provider_name} est momentanément indisponible.") from exc
+
     if len(translations) != len(data.texts):
-        raise HTTPException(502, "Réponse DeepL invalide.")
+        raise HTTPException(502, f"Réponse {provider_name} invalide.")
     return {"translations": translations}

@@ -44,6 +44,10 @@ class Settings(BaseSettings):
     SMTP_FROM: str = "noreply@autoprestige.fr"
     CONTACT_RECIPIENT_EMAIL: str = "contact@autoprestige.fr"
     BREVO_API_KEY: str = ""
+    # Translation provider: "google" (recommandé) ou "deepl"
+    TRANSLATION_PROVIDER: str = "google"
+    GOOGLE_TRANSLATE_API_KEY: str = ""
+    GOOGLE_TRANSLATE_API_URL: str = "https://translation.googleapis.com/language/translate/v2"
     DEEPL_API_KEY: str = ""
     DEEPL_API_URL: str = "https://api-free.deepl.com/v2/translate"
 
@@ -71,6 +75,12 @@ elif settings.ENVIRONMENT.lower() != "production":
     settings.CORS_ORIGINS = ["http://localhost:*", "http://127.0.0.1:*"]
 else:
     settings.CORS_ORIGINS = []
+
+# Normalize translation provider (google | deepl)
+provider = settings.TRANSLATION_PROVIDER.strip().lower()
+if provider not in ("google", "deepl"):
+    provider = "google"
+settings.TRANSLATION_PROVIDER = provider
 
 if settings.ENVIRONMENT.lower() == "production":
     if len(settings.SECRET_KEY) < 32:
