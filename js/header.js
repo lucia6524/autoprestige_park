@@ -63,6 +63,7 @@
       </a>
 
       <nav class="nav" id="main-nav" aria-label="Navigation principale">
+        <div class="mobile-user" id="mobile-user"></div>
         <a href="${PAGES.home}" class="${isActive(PAGES.home).trim()}" data-i18n="nav.home">Accueil</a>
         <a href="${PAGES.vehicles}" class="${isActive(PAGES.vehicles).trim()}" data-i18n="nav.vehicles">Véhicules</a>
         <a href="${PAGES.financing}" class="${isActive(PAGES.financing).trim()}" data-i18n="nav.financing">Financement</a>
@@ -137,8 +138,8 @@
     const el = document.getElementById('header-auth');
     if (!el) return;
     try {
-      const token = localStorage.getItem('token') || localStorage.getItem('access_token');
-      const userRaw = localStorage.getItem('user');
+      const token = localStorage.getItem('ap_token') || localStorage.getItem('token') || localStorage.getItem('access_token');
+      const userRaw = localStorage.getItem('ap_user') || localStorage.getItem('user');
       if (token && userRaw) {
         const user = JSON.parse(userRaw);
         const name = (user.first_name || user.email || 'Compte').toString();
@@ -147,6 +148,38 @@
           <div class="header-auth-user">
             <a href="${PAGES.account}">${safeName}</a>
           </div>`;
+      }
+    } catch (_) {
+      /* ignore */
+    }
+  }
+
+  // Bloc utilisateur dans le menu mobile : nom + bouton déconnexion
+  function updateMobileUser() {
+    const el = document.getElementById('mobile-user');
+    if (!el) return;
+    try {
+      const token = localStorage.getItem('ap_token') || localStorage.getItem('token') || localStorage.getItem('access_token');
+      const userRaw = localStorage.getItem('ap_user') || localStorage.getItem('user');
+      if (!token || !userRaw) {
+        el.innerHTML = '';
+        return;
+      }
+      const user = JSON.parse(userRaw);
+      const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || user.email || 'Mon compte';
+      const safeName = escapeHtml(name);
+      el.innerHTML = `
+        <span class="mobile-user-name" data-no-translate>${safeName}</span>
+        <button type="button" class="mobile-user-logout" id="mobile-logout">Déconnexion</button>`;
+      const btn = document.getElementById('mobile-logout');
+      if (btn) {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          if (window.API && typeof API.clearAuth === 'function') API.clearAuth();
+          ['ap_token', 'ap_user', 'token', 'access_token', 'user'].forEach(k => localStorage.removeItem(k));
+          window.location.href = PAGES.home;
+        });
       }
     } catch (_) {
       /* ignore */
@@ -282,6 +315,7 @@
     }
     bindMobileMenu();
     updateAuthArea();
+    updateMobileUser();
     initThemeToggle();
     updateSiteContactInfo();
 
@@ -303,5 +337,5 @@
     injectHeader();
   }
 
-  window.AutohausHeader = { inject: injectHeader, pages: PAGES };
+  window.AutohausHeader = { inject: injectHeader, pages: PAGES, updateMobileUser };
 })();

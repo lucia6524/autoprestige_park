@@ -2506,8 +2506,57 @@ body {
   text-decoration: underline;
 }
 @media (max-width: 768px) {
+  .header-auth { display: none; }
   .header-auth-link { display: none; }
   .header-auth-btn { padding: 6px 12px !important; font-size: 0.8rem !important; }
+}
+
+/* ===== BLOC UTILISATEUR DANS LE MENU MOBILE ===== */
+.mobile-user {
+  display: none;
+}
+
+/* Masqué quand non connecté (aucun contenu) */
+.mobile-user:empty {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+  }
+  .mobile-user-name {
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+  }
+  .mobile-user-logout {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--danger);
+    color: var(--danger);
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  .mobile-user-logout:hover {
+    background: var(--danger);
+    color: #fff;
+  }
 }
 
 
