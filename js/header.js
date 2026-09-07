@@ -1,5 +1,5 @@
 /**
- * AutoPrestige — Header / Menu partagé
+ * Autohaus — Header / Menu partagé
  * Injecte le même menu sur toutes les pages.
  * Inscription est dans le menu « Plus ».
  */
@@ -58,8 +58,8 @@
   <header class="header" id="main-header">
     <div class="container header-inner">
       <a href="${PAGES.home}" class="logo">
-        <img src="Logo.svg" alt="Auto-prestige">
-        Auto-<span>prestige</span>
+        <img src="Logo.svg" alt="Autohaus">
+        Auto<span>haus</span>
       </a>
 
       <nav class="nav" id="main-nav" aria-label="Navigation principale">
@@ -303,5 +303,5 @@
     injectHeader();
   }
 
-  window.AutoPrestigeHeader = { inject: injectHeader, pages: PAGES };
+  window.AutohausHeader = { inject: injectHeader, pages: PAGES };
 })();

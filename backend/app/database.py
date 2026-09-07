@@ -100,7 +100,7 @@ async def init_db():
             else:
                 admin = User(
                     first_name="Admin",
-                    last_name="AutoPrestige",
+                    last_name="Autohaus",
                     email=settings.ADMIN_EMAIL.lower(),
                     phone="",
                     monthly_salary=0,

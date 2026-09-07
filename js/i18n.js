@@ -1,5 +1,5 @@
 /**
- * AutoPrestige i18n — traduction dynamique gratuite (Google Translate)
+ * Autohaus i18n — traduction dynamique gratuite (Google Translate)
  * Traduit la page via l'endpoint public gratuit utilisé par Google lui-même :
  * aucune clé API, aucun backend requis. Le texte traduit est mis en cache
  * dans le localStorage pour ne jamais retraduire deux fois la même phrase.

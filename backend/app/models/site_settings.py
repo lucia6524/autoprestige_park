@@ -8,7 +8,7 @@ class SiteSettings(Base):
     __tablename__ = "site_settings"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, default=1)
-    bank_holder: Mapped[str] = mapped_column(String(255), default="AutoPrestige SAS")
+    bank_holder: Mapped[str] = mapped_column(String(255), default="Autohaus SAS")
     bank_iban: Mapped[str] = mapped_column(String(100), default="FR76 ACCT-000031 2345 678")
     bank_bic: Mapped[str] = mapped_column(String(50), default="BNPAFRPP")
     bank_transfer_type: Mapped[str] = mapped_column(String(100), default="INSTANTANÉ")

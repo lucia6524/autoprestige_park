@@ -137,7 +137,7 @@ class Delivery(Base):
     order_id: Mapped[int] = mapped_column(ForeignKey("orders.id"), unique=True, index=True)
     status: Mapped[str] = mapped_column(String(30), default=DeliveryStatus.PREPARING.value)
     tracking_number: Mapped[str] = mapped_column(String(100), default="")
-    carrier: Mapped[str] = mapped_column(String(100), default="AutoPrestige Logistics")
+    carrier: Mapped[str] = mapped_column(String(100), default="Autohaus Logistics")
     estimated_delivery: Mapped[datetime | None] = mapped_column(DateTime, nullable=True)
     current_location: Mapped[str] = mapped_column(String(255), default="")
     notes: Mapped[str] = mapped_column(Text, default="")

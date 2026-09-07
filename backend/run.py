@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Launch AutoPrestige API: python run.py"""
+"""Launch Autohaus API: python run.py"""
 import os
 
 import uvicorn

@@ -426,7 +426,7 @@ function matchFaq(text) {
   if (t.includes("reprise") || t.includes("reprendre") || t.includes("vendre")) return faqAnswers.reprise;
   if (t.includes("horaire") || t.includes("ouvert")) return faqAnswers.horaires;
   if (t.includes("contact") || t.includes("téléphone") || t.includes("telephone") || t.includes("email") || t.includes("whatsapp")) return faqAnswers.contact;
-  if (t.includes("bonjour") || t.includes("salut") || t.includes("hello")) return "Bonjour ! 👋 Je suis l'assistant Auto-prestige. Posez-moi une question sur la garantie, la livraison, le financement ou la reprise.";
+  if (t.includes("bonjour") || t.includes("salut") || t.includes("hello")) return "Bonjour ! 👋 Je suis l'assistant Autohaus. Posez-moi une question sur la garantie, la livraison, le financement ou la reprise.";
   return faqAnswers.default;
 }
 
@@ -438,7 +438,7 @@ function initChatWidget() {
   widget.innerHTML = `
     <div class="chat-panel">
       <div class="chat-header">
-        <span>Assistant Auto-prestige</span>
+        <span>Assistant Autohaus</span>
         <button type="button" aria-label="Fermer" class="chat-close">✕</button>
       </div>
       <div class="chat-messages" id="chat-messages">

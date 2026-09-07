@@ -27,7 +27,7 @@ async def _send_brevo_email(to_email: str, subject: str, body: str, reply_to: st
     payload_data = {
         "sender": {
             "email": sender_email,
-            "name": "AutoPrestige",
+            "name": "Autohaus",
         },
         "to": [{"email": to_email}],
         "subject": subject,
@@ -65,7 +65,7 @@ async def send_otp_email(to_email: str, code: str, first_name: str = "") -> bool
     )
     return await _send_brevo_email(
         to_email,
-        "Votre code de vérification AutoPrestige",
+        "Votre code de vérification Autohaus",
         body,
     )
 

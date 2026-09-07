@@ -29,7 +29,7 @@ def parse_cors_origins(value: str) -> list[str]:
     return [origin.strip() for origin in value.split(",") if origin.strip()]
 
 class Settings(BaseSettings):
-    APP_NAME: str = "AutoPrestige API"
+    APP_NAME: str = "Autohaus API"
     ENVIRONMENT: str = "development"
     SECRET_KEY: str = secrets.token_urlsafe(48)
     ALGORITHM: str = "HS256"

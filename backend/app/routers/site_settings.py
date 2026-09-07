@@ -63,7 +63,7 @@ class SiteSettingsUpdate(BaseModel):
 
 
 DEFAULT_SETTINGS = {
-    "bank_holder": "AutoPrestige SAS",
+    "bank_holder": "Autohaus SAS",
     "bank_iban": "FR76 ACCT-000031 2345 678",
     "bank_bic": "BNPAFRPP",
     "bank_transfer_type": "INSTANTANÉ",

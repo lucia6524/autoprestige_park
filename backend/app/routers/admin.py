@@ -342,7 +342,7 @@ async def update_order_status(
                 order_id=order.id,
                 status=DeliveryStatus.PREPARING.value,
                 tracking_number=f"AP-{order.id:06d}-{order.vehicle_id}",
-                carrier="AutoPrestige Logistics",
+                carrier="Autohaus Logistics",
                 estimated_delivery=utc_now_naive() + timedelta(days=14),
                 current_location="Centre de préparation — Paris",
                 notes="Véhicule en cours de préparation.",
@@ -684,7 +684,7 @@ async def resolve_payment_claim(
                 order_id=order.id,
                 status=DeliveryStatus.PREPARING.value,
                 tracking_number=f"AP-{order.id:06d}-{order.vehicle_id}",
-                carrier="AutoPrestige Logistics",
+                carrier="Autohaus Logistics",
                 estimated_delivery=utc_now_naive() + timedelta(days=14),
                 current_location="Centre de préparation — Paris",
             )

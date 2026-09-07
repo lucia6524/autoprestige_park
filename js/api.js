@@ -1,5 +1,5 @@
 /**
- * AutoPrestige API Client
+ * Autohaus API Client
  */
 const API_BASE = (() => {
   const configuredBase = localStorage.getItem('api_base');

@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="Logo.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Détail véhicule — AutoPrestige</title>
-    <meta name="description" content="Détails du véhicule — AutoPrestige" />
+    <title>Détail véhicule — Autohaus</title>
+    <meta name="description" content="Détails du véhicule — Autohaus" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://ridnurabtydwlymzdexk.supabase.co" />
@@ -330,8 +330,8 @@
         <div class="footer-grid">
           <div class="footer-brand">
             <a href="index.html" class="logo">
-              <img src="Logo.svg" alt="Auto-prestige" />
-              Auto-<span>prestige</span>
+              <img src="Logo.svg" alt="Autohaus" />
+              Auto<span>haus</span>
             </a>
             <p data-i18n="footer.tagline">
               Votre partenaire de confiance pour l'achat de véhicules neufs et
@@ -375,7 +375,7 @@
         </div>
         <div class="footer-bottom">
           <span data-i18n="footer.rights"
-            >© 2026 AutoPrestige. Tous droits réservés.</span
+            >© 2026 Autohaus. Tous droits réservés.</span
           >
           <span
             ><a href="mentions-legales.html" data-i18n="footer.legal"
@@ -443,7 +443,7 @@
               ? formatPrice(v.originalPrice)
               : null;
 
-          document.title = v.brand + " " + v.model + " — AutoPrestige";
+          document.title = v.brand + " " + v.model + " — Autohaus";
           const bc = document.getElementById("breadcrumb-current");
           if (bc) bc.textContent = v.brand + " " + v.model;
 
