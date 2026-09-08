@@ -47,6 +47,10 @@ services:
         value: autoprestigepark@outlook.com
       - key: BREVO_API_KEY
         sync: false
+      - key: TRANSLATION_PROVIDER
+        value: deepl
+      - key: DEEPL_API_KEY
+        sync: false
 
 databases:
   - name: progrest

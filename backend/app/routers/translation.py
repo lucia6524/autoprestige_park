@@ -58,14 +58,21 @@ async def _translate_with_google(texts: list[str], target_lang: str) -> list[str
 
 async def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]:
     """Async DeepL translation via httpx — no thread blocking."""
-    form_data = [("source_lang", "FR"), ("target_lang", target_lang)]
-    for text in texts:
-        form_data.append(("text", text))
+    # DeepL exige une variante régionale pour le portugais : le site utilise
+    # le portugais européen (locales/pt.json), donc PT-PT.
+    deepl_target = "PT-PT" if target_lang.upper() == "PT" else target_lang
+    # Corps JSON (accepté par DeepL v2) — évite la régression httpx 0.28 sur
+    # les requêtes x-www-form-urlencoded avec AsyncClient.
+    payload = {
+        "text": texts,
+        "source_lang": "FR",
+        "target_lang": deepl_target,
+    }
 
     async with httpx.AsyncClient(timeout=15.0) as client:
         resp = await client.post(
             settings.DEEPL_API_URL,
-            data=form_data,
+            json=payload,
             headers={
                 "Authorization": f"DeepL-Auth-Key {settings.DEEPL_API_KEY}",
             },

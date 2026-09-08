@@ -80,6 +80,10 @@ else:
 provider = settings.TRANSLATION_PROVIDER.strip().lower()
 if provider not in ("google", "deepl"):
     provider = "google"
+# Commodity: provider par défaut "google", mais si seule la clé DeepL est
+# définie, on bascule automatiquement sur deepl.
+if provider == "google" and not settings.GOOGLE_TRANSLATE_API_KEY and settings.DEEPL_API_KEY:
+    provider = "deepl"
 settings.TRANSLATION_PROVIDER = provider
 
 if settings.ENVIRONMENT.lower() == "production":

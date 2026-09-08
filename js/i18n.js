@@ -1,17 +1,19 @@
 /**
- * Autohaus i18n — traduction dynamique gratuite (Google Translate)
- * Traduit la page via l'endpoint public gratuit utilisé par Google lui-même :
- * aucune clé API, aucun backend requis. Le texte traduit est mis en cache
- * dans le localStorage pour ne jamais retraduire deux fois la même phrase.
+ * Autohaus i18n — traduction dynamique via l'API backend (DeepL).
+ * Les textes sont regroupés et envoyés à l'endpoint /translate du backend,
+ * qui appelle DeepL côté serveur (la clé API n'est jamais exposée au client).
+ * En cas d'indisponibilité du backend, repli sur l'endpoint public gratuit
+ * de Google. Les traductions sont mises en cache dans le localStorage pour
+ * ne jamais retraduire deux fois la même phrase.
  */
 const I18N = {
   currentLang: 'fr',
   translations: {},
   supported: ['fr', 'en', 'de', 'it', 'es', 'pt', 'ro'],
-  // Endpoint gratuit : une requête = un texte, débit bridé → on reste mesuré
+  // Constantes du repli Google (une requête = un texte, débit bridé)
   MAX_TEXT_LENGTH: 1800,      // texte plus long : laissé en français
-  CONCURRENCY: 4,             // requêtes simultanées max
-  REQUEST_GAP_MS: 40,         // espacement minimal entre deux requêtes
+  CONCURRENCY: 4,             // requêtes simultanées max (repli)
+  REQUEST_GAP_MS: 40,         // espacement minimal entre deux requêtes (repli)
   RETRY_DELAYS: [400, 1200, 2500], // attente avant réessai (HTTP 429)
   MAX_CACHE_ENTRIES: 1500,    // entrées max par langue dans le localStorage
   flags: {
@@ -105,7 +107,12 @@ const I18N = {
     return items;
   },
 
-  /* ===== Traduction via l'endpoint public gratuit de Google ===== */
+  /* ===== Traduction via le backend (DeepL), repli Google gratuit ===== */
+
+  // Regroupement des textes : une requête backend = jusqu'à 40 phrases
+  // (~9 000 caractères, sous les limites de l'endpoint /translate).
+  CHUNK_MAX_ITEMS: 40,
+  CHUNK_MAX_CHARS: 9000,
 
   translateUrl(text, targetLang) {
     return 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=fr&tl='
@@ -140,39 +147,91 @@ const I18N = {
         if (res.status !== 429 || attempt === this.RETRY_DELAYS.length) return text;
         await new Promise(r => setTimeout(r, this.RETRY_DELAYS[attempt]));
       } catch (err) {
-        console.warn('Google Translate:', err);
+        console.warn('Google Translate (repli):', err);
         return text; // réseau coupé / hors-ligne : repli sur l'original
       }
     }
     return text;
   },
 
+  // Appel de l'endpoint /translate du backend (DeepL côté serveur).
+  // window.API vient de js/api.js, chargé avant DOMContentLoaded.
+  async fetchBackendBatch(texts, targetLang) {
+    const api = window.API;
+    if (!api || typeof api.request !== 'function') throw new Error('API indisponible');
+    const data = await api.request('/translate', {
+      method: 'POST',
+      body: JSON.stringify({ texts, target_lang: targetLang.toUpperCase() }),
+    });
+    const list = data && Array.isArray(data.translations) ? data.translations : null;
+    if (!list || list.length !== texts.length) throw new Error('Réponse de traduction invalide');
+    return list;
+  },
+
+  chunkEntries(entries) {
+    const chunks = [];
+    let current = [];
+    let chars = 0;
+    for (const entry of entries) {
+      const len = entry.text.length;
+      if (current.length >= this.CHUNK_MAX_ITEMS || (chars + len > this.CHUNK_MAX_CHARS && current.length)) {
+        chunks.push(current);
+        current = [];
+        chars = 0;
+      }
+      current.push(entry);
+      chars += len;
+    }
+    if (current.length) chunks.push(current);
+    return chunks;
+  },
+
   async translateTexts(texts, targetLang) {
     if (!texts.length) return [];
     const results = new Array(texts.length).fill(null);
     const failed = this._failed[targetLang] || (this._failed[targetLang] = {});
-    let cursor = 0;
-    let lastLaunch = 0;
 
-    const worker = async () => {
-      while (cursor < texts.length) {
-        const index = cursor++;
-        const text = texts[index];
-        if (!this.needsTranslation(text) || failed[text]) {
-          results[index] = text;
-          continue;
-        }
-        const wait = Math.max(0, this.REQUEST_GAP_MS - (Date.now() - lastLaunch));
-        if (wait > 0) await new Promise(r => setTimeout(r, wait));
-        lastLaunch = Date.now();
-        const translated = await this.fetchTranslation(text, targetLang);
-        results[index] = translated;
-        if (translated === text) failed[text] = true; // ne pas marteler dans la session
+    const eligible = [];
+    texts.forEach((text, index) => {
+      if (!this.needsTranslation(text) || failed[text]) results[index] = text;
+      else eligible.push({ text, index });
+    });
+    if (!eligible.length) return texts.map((text, i) => results[i] === null ? text : results[i]);
+
+    // 1) Backend (DeepL) : requêtes groupées — quelques requêtes par page
+    const pending = [];
+    for (const chunk of this.chunkEntries(eligible)) {
+      try {
+        const translatedList = await this.fetchBackendBatch(chunk.map(e => e.text), targetLang);
+        chunk.forEach((entry, i) => {
+          const value = (translatedList[i] || '').trim();
+          results[entry.index] = value || entry.text;
+        });
+      } catch (err) {
+        console.warn('Traduction backend :', err?.message || err);
+        pending.push(...chunk); // backend indisponible → repli Google
       }
-    };
+    }
 
-    const poolSize = Math.min(this.CONCURRENCY, texts.length);
-    await Promise.all(Array.from({ length: poolSize }, worker));
+    // 2) Repli : endpoint public gratuit de Google, texte par texte
+    if (pending.length) {
+      let lastLaunch = 0;
+      const worker = async () => {
+        while (pending.length) {
+          const entry = pending.shift();
+          const text = entry.text;
+          const wait = Math.max(0, this.REQUEST_GAP_MS - (Date.now() - lastLaunch));
+          if (wait > 0) await new Promise(r => setTimeout(r, wait));
+          lastLaunch = Date.now();
+          const translated = await this.fetchTranslation(text, targetLang);
+          results[entry.index] = translated;
+          if (translated === text) failed[text] = true; // ne pas marteler dans la session
+        }
+      };
+      const poolSize = Math.min(this.CONCURRENCY, pending.length);
+      await Promise.all(Array.from({ length: poolSize }, worker));
+    }
+
     return texts.map((text, i) => results[i] === null ? text : results[i]);
   },
 
@@ -246,7 +305,7 @@ const I18N = {
       clearTimeout(this._translateTimer);
       this._translateTimer = setTimeout(() => {
         this._translating = true;
-        this.translatePage().catch(err => console.warn('Google Translate:', err)).finally(() => { this._translating = false; });
+        this.translatePage().catch(err => console.warn('i18n:', err)).finally(() => { this._translating = false; });
       }, 300);
     });
     this._observer.observe(document.body, { childList: true, subtree: true });
@@ -266,7 +325,7 @@ const I18N = {
       this._failed[lang] = {}; // nouveau choix de langue → on peut tout retenter
       this.loadPersistentCache(lang);
       this._translating = true;
-      await this.translatePage().catch(err => console.warn('Google Translate:', err));
+      await this.translatePage().catch(err => console.warn('i18n:', err));
       this._translating = false;
     }
 
@@ -374,7 +433,7 @@ const I18N = {
       this.loadPersistentCache(initial);
       await new Promise(resolve => setTimeout(resolve, 100));
       this._translating = true;
-      await this.translatePage().catch(err => console.warn('Google Translate:', err));
+      await this.translatePage().catch(err => console.warn('i18n:', err));
       this._translating = false;
       this.observeDynamicContent();
     }
