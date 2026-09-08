@@ -57,8 +57,8 @@
     return `
   <header class="header" id="main-header">
     <div class="container header-inner">
-      <a href="${PAGES.home}" class="logo">
-        <img src="Logo.svg" alt="Autohaus">
+      <a href="${PAGES.home}" class="logo" data-no-translate>
+        <img src="logo.jpg" alt="Autohaus">
         Auto<span>haus</span>
       </a>
 

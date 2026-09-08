@@ -220,15 +220,12 @@ button, input, select, textarea {
   mix-blend-mode: multiply;
 }
 
-/* Logo SVG adapte au theme */
+/* Logo JPEG : le fond blanc disparaît sur fond clair (multiply) ;
+   en mode sombre, on garde le fond blanc arrondi (l'inversion dénaturerait
+   les couleurs du JPEG). */
 [data-theme="dark"] .logo img {
-  filter: invert(1);
-  mix-blend-mode: screen;
-}
-
-[data-theme="light"] .logo img {
+  mix-blend-mode: normal;
   filter: none;
-  mix-blend-mode: multiply;
 }
 
 .logo-icon {

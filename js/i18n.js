@@ -16,6 +16,7 @@ const I18N = {
   REQUEST_GAP_MS: 40,         // espacement minimal entre deux requêtes (repli)
   RETRY_DELAYS: [400, 1200, 2500], // attente avant réessai (HTTP 429)
   MAX_CACHE_ENTRIES: 1500,    // entrées max par langue dans le localStorage
+  BRAND_NAME: 'Autohaus',     // nom de l'entreprise : jamais traduit
   flags: {
     fr: '🇫🇷', en: '🇬🇧', de: '🇩🇪', it: '🇮🇹',
     es: '🇪🇸', pt: '🇵🇹', ro: '🇷🇴'
@@ -285,10 +286,24 @@ const I18N = {
       this._cache[this.currentLang] = langCache;
     }
 
+    // Le nom de l'entreprise doit rester intact : DeepL peut le traiter comme
+    // un nom commun allemand ("Autohaus" = concession). Si une traduction
+    // altère ou supprime la marque, on rejette la traduction (texte FR gardé).
+    const brand = this.BRAND_NAME;
+    const brandRegex = new RegExp(brand, 'gi');
+
     // Apply translations
     const fullCache = this._cache[this.currentLang];
     items.forEach(item => {
-      const translated = fullCache[item.text] || item.text;
+      let translated = fullCache[item.text] || item.text;
+      if (translated !== item.text) {
+        const brandCount = (item.text.match(brandRegex) || []).length;
+        if (brandCount && (translated.match(brandRegex) || []).length !== brandCount) {
+          translated = item.text; // marque altérée → on garde l'original
+        } else if (brandCount) {
+          translated = translated.replace(brandRegex, brand); // casse exacte
+        }
+      }
       if (item.node) {
         item.node.nodeValue = item.node.nodeValue.replace(item.text, translated);
       } else if (item.element) {
