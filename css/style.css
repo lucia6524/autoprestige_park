@@ -212,17 +212,17 @@ button, input, select, textarea {
 }
 
 .logo img {
-  width: 58px;
-  height: 58px;
+  /* Ratio 3:1 de l'image (749x249) : plaque bleu roi lisible sur les deux thèmes */
+  width: 150px;
+  height: 50px;
   object-fit: contain;
-  border-radius: 8px;
-  flex: 0 0 58px;
+  border-radius: 10px;
+  flex: 0 0 auto;
   mix-blend-mode: multiply;
 }
 
-/* Logo JPEG : le fond blanc disparaît sur fond clair (multiply) ;
-   en mode sombre, on garde le fond blanc arrondi (l'inversion dénaturerait
-   les couleurs du JPEG). */
+/* Logo JPEG : en mode sombre, blend normal pour conserver les couleurs
+   d'origine de la plaque bleue (l'inversion les dénaturerait). */
 [data-theme="dark"] .logo img {
   mix-blend-mode: normal;
   filter: none;
