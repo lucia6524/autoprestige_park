@@ -502,6 +502,8 @@
           <a href="#" data-section="claims">💳 Paiements à valider</a>
           <a href="#" data-section="deliveries">🚚 Livraisons</a>
           <a href="#" data-section="vehicles">🚗 Véhicules</a>
+          <a href="#" data-section="reviews">⭐ Avis clients</a>
+          <a href="#" data-section="sell-requests">📸 Demandes de vente</a>
           <a href="#" data-section="settings">⚙️ Informations du site</a>
           <a href="index.html" target="_blank">🌐 Voir le site</a>
         </nav>
@@ -646,6 +648,77 @@
                   </tr>
                 </thead>
                 <tbody id="claims-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- SELL REQUESTS -->
+        <section id="section-sell-requests" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Demandes de vente</h2>
+              <p>Estimations véhicules envoyées depuis la page « Vendre » — avec photos</p>
+            </div>
+            <select id="sellreq-filter" class="status-select" style="width:auto">
+              <option value="">Tous les statuts</option>
+              <option value="new">Nouvelles</option>
+              <option value="contacted">Contactées</option>
+              <option value="closed">Clôturées</option>
+            </select>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h3>Demandes d'estimation</h3></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Véhicule</th>
+                    <th>Km</th>
+                    <th>Photos</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="sellreq-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- REVIEWS -->
+        <section id="section-reviews" class="section">
+          <div class="page-header">
+            <div>
+              <h2>Avis clients</h2>
+              <p>Modérez les témoignages : seuls les avis approuvés s'affichent sur le site</p>
+            </div>
+            <select id="reviews-filter" class="status-select" style="width:auto">
+              <option value="">Tous</option>
+              <option value="pending">En attente</option>
+              <option value="approved">Approuvés</option>
+            </select>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><h3>Témoignages</h3></div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Client</th>
+                    <th>Véhicule</th>
+                    <th>Note</th>
+                    <th>Avis</th>
+                    <th>Statut</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="reviews-tbody"></tbody>
               </table>
             </div>
           </div>
@@ -1084,6 +1157,8 @@
           if (a.dataset.section === "claims") loadClaims();
           if (a.dataset.section === "deliveries") loadDeliveries();
           if (a.dataset.section === "vehicles") loadVehicles();
+          if (a.dataset.section === "reviews") loadReviews();
+          if (a.dataset.section === "sell-requests") loadSellRequests();
           if (a.dataset.section === "settings") loadSiteSettings();
         });
       });
@@ -1646,6 +1721,167 @@
       document
         .getElementById("claims-filter")
         .addEventListener("change", (e) => loadClaims(e.target.value));
+
+      // ── Reviews (modération) ─────────────────────────────
+      async function loadReviews(filter = "") {
+        try {
+          const qs =
+            filter === "pending"
+              ? "?approved=false"
+              : filter === "approved"
+                ? "?approved=true"
+                : "";
+          const list = await api("/admin/reviews" + qs);
+          const tbody = document.getElementById("reviews-tbody");
+          if (!list.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="8" class="empty">Aucun avis</td></tr>';
+            return;
+          }
+          tbody.innerHTML = list
+            .map(
+              (r) => `
+          <tr>
+            <td>#${r.id}</td>
+            <td><strong>${r.name}</strong><br><span style="color:var(--muted);font-size:0.8rem">${r.email}</span></td>
+            <td>${r.vehicle || "—"}</td>
+            <td>${"★".repeat(r.rating)}${"☆".repeat(5 - r.rating)}</td>
+            <td style="max-width:320px">${r.message.length > 120 ? r.message.slice(0, 120) + "…" : r.message}</td>
+            <td>${r.approved ? '<span class="badge badge-green">Publié</span>' : '<span class="badge badge-yellow">En attente</span>'}</td>
+            <td>${formatDate(r.created_at)}</td>
+            <td class="actions">
+              ${!r.approved ? `<button class="btn btn-success btn-sm" onclick="moderateReview(${r.id}, true)">Approuver</button>` : `<button class="btn btn-outline btn-sm" onclick="moderateReview(${r.id}, false)">Dépublier</button>`}
+              <button class="btn btn-danger btn-sm" onclick="deleteReview(${r.id})">Suppr.</button>
+            </td>
+          </tr>
+        `,
+            )
+            .join("");
+        } catch (e) {
+          toast(e.message, "error");
+        }
+      }
+
+      async function moderateReview(id, approved) {
+        try {
+          await api("/admin/reviews/" + id, {
+            method: "PATCH",
+            body: JSON.stringify({ approved }),
+          });
+          toast(approved ? "Avis publié ✓" : "Avis dépublié");
+          loadReviews(document.getElementById("reviews-filter").value);
+        } catch (e) {
+          toast(e.message, "error");
+        }
+      }
+
+      async function deleteReview(id) {
+        if (!confirm("Supprimer définitivement cet avis ?")) return;
+        try {
+          await api("/admin/reviews/" + id, { method: "DELETE" });
+          toast("Avis supprimé");
+          loadReviews(document.getElementById("reviews-filter").value);
+        } catch (e) {
+          toast(e.message, "error");
+        }
+      }
+
+      document
+        .getElementById("reviews-filter")
+        .addEventListener("change", (e) => loadReviews(e.target.value));
+
+      // ── Sell requests (demandes de vente) ────────────────
+      async function loadSellRequests(status = "") {
+        try {
+          const qs = status ? "?status=" + encodeURIComponent(status) : "";
+          const list = await api("/admin/sell-requests" + qs);
+          const tbody = document.getElementById("sellreq-tbody");
+          if (!list.length) {
+            tbody.innerHTML =
+              '<tr><td colspan="8" class="empty">Aucune demande</td></tr>';
+            return;
+          }
+          const statusMap = {
+            new: '<span class="badge badge-yellow">Nouvelle</span>',
+            contacted: '<span class="badge badge-blue">Contactée</span>',
+            closed: '<span class="badge badge-green">Clôturée</span>',
+          };
+          tbody.innerHTML = list
+            .map(
+              (s) => `
+          <tr>
+            <td>#${s.id}</td>
+            <td><strong>${s.name}</strong><br><span style="color:var(--muted);font-size:0.8rem">${s.email}</span><br><span style="color:var(--muted);font-size:0.8rem">${s.phone}</span></td>
+            <td>${s.brand} ${s.model} (${s.year})</td>
+            <td>${s.mileage.toLocaleString("fr-FR")}</td>
+            <td>${s.photo_count ? `<button class="btn btn-outline btn-sm" onclick='viewPhotos(${s.photos})'>📷 ${s.photo_count}</button>` : "—"}</td>
+            <td>${statusMap[s.status] || s.status}</td>
+            <td>${formatDate(s.created_at)}</td>
+            <td class="actions">
+              <select class="status-select" onchange="changeSellStatus(${s.id}, this.value)">
+                <option value="">Changer…</option>
+                <option value="new" ${s.status === "new" ? "selected" : ""}>new</option>
+                <option value="contacted" ${s.status === "contacted" ? "selected" : ""}>contacted</option>
+                <option value="closed" ${s.status === "closed" ? "selected" : ""}>closed</option>
+              </select>
+              <button class="btn btn-danger btn-sm" onclick="deleteSellRequest(${s.id})">Suppr.</button>
+            </td>
+          </tr>
+        `,
+            )
+            .join("");
+        } catch (e) {
+          toast(e.message, "error");
+        }
+      }
+
+      function viewPhotos(photos) {
+        let urls = [];
+        try {
+          urls = typeof photos === "string" ? JSON.parse(photos) : photos;
+        } catch (_) {
+          urls = [];
+        }
+        if (!urls.length) return;
+        const win = window.open("", "_blank");
+        if (!win) {
+          alert("Autorisez les popups pour voir les photos.");
+          return;
+        }
+        win.document.write(
+          `<html><head><title>Photos du véhicule</title><style>body{font-family:sans-serif;background:#111;color:#eee;padding:20px}img{max-width:100%;margin:12px 0;border-radius:8px}h2{margin-top:0}</style></head><body><h2>Photos du véhicule</h2>${urls.map((u) => `<img src="${u}">`).join("")}</body></html>`,
+        );
+        win.document.close();
+      }
+
+      async function changeSellStatus(id, status) {
+        if (!status) return;
+        try {
+          await api("/admin/sell-requests/" + id + "/status", {
+            method: "PATCH",
+            body: JSON.stringify({ status }),
+          });
+          toast("Statut mis à jour → " + status);
+          loadSellRequests(document.getElementById("sellreq-filter").value);
+        } catch (e) {
+          toast(e.message, "error");
+        }
+      }
+
+      async function deleteSellRequest(id) {
+        if (!confirm("Supprimer définitivement cette demande ?")) return;
+        try {
+          await api("/admin/sell-requests/" + id, { method: "DELETE" });
+          toast("Demande supprimée");
+          loadSellRequests(document.getElementById("sellreq-filter").value);
+        } catch (e) {
+          toast(e.message, "error");
+        }
+      }
+
+      document
+        .getElementById("sellreq-filter")
+        .addEventListener("change", (e) => loadSellRequests(e.target.value));
 
       // ── Boot ─────────────────────────────────────────────
       (async function init() {

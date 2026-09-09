@@ -183,9 +183,25 @@
     "adding": "A adicionar…",
     "login_required": "Tem de iniciar sessão para adicionar este veículo ao carrinho.\n\nIr para a página de início de sessão?",
     "review_thanks": "Obrigado pela sua avaliação! Será publicada após moderação.",
+    "review_error": "Ocorreu um erro ao enviar a sua avaliação. Tente novamente.",
+    "sending": "A enviar…",
     "info_updated": "As suas informações foram atualizadas.",
     "address_saved": "Endereço guardado.",
     "delivery_saved": "O seu pedido de entrega foi guardado."
+  },
+  "reviews": {
+    "form_title": "Deixe a sua avaliação",
+    "form_subtitle": "Partilhe a sua experiência com a Autohaus.",
+    "your_name": "O seu nome",
+    "email": "Email",
+    "vehicle": "Veículo comprado (opcional)",
+    "your_review": "A sua avaliação",
+    "submit": "Enviar a minha avaliação"
+  },
+  "sell": {
+    "photos_label": "Fotos do veículo",
+    "photos_hint": "Clique para adicionar fotos (máx. 6)",
+    "photos_formats": "JPG, PNG, WebP — máx. 10 MB por foto"
   },
   "detail": {
     "badge_reco": "★ Recomendado",

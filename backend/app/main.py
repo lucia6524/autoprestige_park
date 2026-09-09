@@ -8,7 +8,8 @@ from app.database import init_db
 # Import models so Base.metadata knows them
 from app.models import user, commerce  # noqa: F401
 from app.models import site_settings as site_settings_model  # noqa: F401
-from app.routers import auth, cart, orders, admin, vehicles, site_settings, translation, contact
+from app.models import reviews as reviews_model  # noqa: F401
+from app.routers import auth, cart, orders, admin, vehicles, site_settings, translation, contact, reviews
 
 
 @asynccontextmanager
@@ -60,6 +61,7 @@ app.include_router(vehicles.router, prefix="/api")
 app.include_router(site_settings.router, prefix="/api")
 app.include_router(translation.router, prefix="/api")
 app.include_router(contact.router, prefix="/api")
+app.include_router(reviews.router, prefix="/api")
 
 
 @app.get("/api/health")

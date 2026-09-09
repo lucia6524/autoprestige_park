@@ -111,6 +111,29 @@
             <input type="email" placeholder="jean@email.com" required />
           </div>
           <div class="form-group">
+            <label data-i18n="sell.photos_label">Photos du véhicule</label>
+            <div class="photo-upload-zone" id="photo-upload-zone">
+              <input
+                type="file"
+                id="sell-photos"
+                name="photos"
+                accept="image/*"
+                multiple
+                hidden
+              />
+              <div class="photo-upload-placeholder" id="photo-upload-placeholder">
+                <span class="photo-upload-icon">📷</span>
+                <span data-i18n="sell.photos_hint"
+                  >Cliquez pour ajouter des photos (max. 6)</span
+                >
+                <small data-i18n="sell.photos_formats"
+                  >JPG, PNG, WebP — 10 Mo max par photo</small
+                >
+              </div>
+              <div class="photo-thumbnails" id="photo-thumbnails"></div>
+            </div>
+          </div>
+          <div class="form-group">
             <label>Informations complémentaires</label>
             <textarea
               placeholder="État du véhicule, options, historique..."
@@ -120,6 +143,7 @@
             type="submit"
             class="btn btn-primary btn-lg"
             style="width: 100%"
+            id="sell-submit"
           >
             Demander mon estimation
           </button>
@@ -184,14 +208,173 @@
     <script src="js/api.js"></script>
     <script src="js/main.js"></script>
     <script>
+      // ===== Upload de photos (max 6, compression + data-URL) =====
+      const MAX_PHOTOS = 6;
+      const MAX_FILE_MB = 10;
+      let photoFiles = [];
+
+      const zone = document.getElementById("photo-upload-zone");
+      const fileInput = document.getElementById("sell-photos");
+      const placeholder = document.getElementById("photo-upload-placeholder");
+      const thumbs = document.getElementById("photo-thumbnails");
+
+      function renderThumbs() {
+        thumbs.innerHTML = "";
+        photoFiles.forEach((item, i) => {
+          const div = document.createElement("div");
+          div.className = "photo-thumb";
+          const img = document.createElement("img");
+          img.src = item.dataUrl;
+          img.alt = "Photo " + (i + 1);
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "photo-thumb-remove";
+          btn.setAttribute("aria-label", "Supprimer la photo");
+          btn.textContent = "×";
+          btn.addEventListener("click", () => {
+            photoFiles.splice(i, 1);
+            renderThumbs();
+          });
+          div.appendChild(img);
+          div.appendChild(btn);
+          thumbs.appendChild(div);
+        });
+        placeholder.style.display = photoFiles.length >= MAX_PHOTOS ? "none" : "";
+      }
+
+      // Compression : redimensionne à 1280px max et réencode en JPEG qualité 0.8
+      function compressImage(file) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const img = new Image();
+            img.onload = () => {
+              const maxDim = 1280;
+              let { width, height } = img;
+              if (width > maxDim || height > maxDim) {
+                const ratio = Math.min(maxDim / width, maxDim / height);
+                width = Math.round(width * ratio);
+                height = Math.round(height * ratio);
+              }
+              const canvas = document.createElement("canvas");
+              canvas.width = width;
+              canvas.height = height;
+              canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+              resolve(canvas.toDataURL("image/jpeg", 0.8));
+            };
+            img.onerror = reject;
+            img.src = reader.result;
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+      }
+
+      async function addFiles(fileList) {
+        for (const file of Array.from(fileList || [])) {
+          if (photoFiles.length >= MAX_PHOTOS) {
+            alert("Maximum " + MAX_PHOTOS + " photos.");
+            break;
+          }
+          if (!file.type.startsWith("image/")) continue;
+          if (file.size > MAX_FILE_MB * 1024 * 1024) {
+            alert("« " + file.name + " » dépasse " + MAX_FILE_MB + " Mo et a été ignorée.");
+            continue;
+          }
+          try {
+            const dataUrl = await compressImage(file);
+            photoFiles.push({ name: file.name, dataUrl });
+          } catch (_) {
+            alert("Impossible de lire la photo « " + file.name + " ».");
+          }
+        }
+        renderThumbs();
+      }
+
+      if (zone && fileInput) {
+        zone.addEventListener("click", (e) => {
+          if (!e.target.closest(".photo-thumb-remove")) fileInput.click();
+        });
+        fileInput.addEventListener("change", () => {
+          addFiles(fileInput.files);
+          fileInput.value = "";
+        });
+        // Drag & drop
+        ["dragover", "dragenter"].forEach((evt) =>
+          zone.addEventListener(evt, (e) => {
+            e.preventDefault();
+            zone.classList.add("dragover");
+          }),
+        );
+        ["dragleave", "drop"].forEach((evt) =>
+          zone.addEventListener(evt, (e) => {
+            e.preventDefault();
+            zone.classList.remove("dragover");
+          }),
+        );
+        zone.addEventListener("drop", (e) => {
+          if (e.dataTransfer && e.dataTransfer.files.length) {
+            addFiles(e.dataTransfer.files);
+          }
+        });
+      }
+
+      // ===== Soumission du formulaire de vente vers l'API =====
       document
         .getElementById("sell-form")
-        ?.addEventListener("submit", function (e) {
+        ?.addEventListener("submit", async function (e) {
           e.preventDefault();
-          alert(
-            "Merci ! Votre demande d'estimation a bien été envoyée. Nous vous recontactons sous 24h.",
-          );
-          this.reset();
+          const submitBtn = document.getElementById("sell-submit");
+          const originalText = submitBtn ? submitBtn.innerHTML : "";
+          const fd = new FormData(this);
+          const inputs = this.querySelectorAll("input, textarea");
+          const values = Array.from(inputs)
+            .filter((el) => el.name !== "photos" || !el.name)
+            .map((el) => el.value);
+          // Ordre des champs : marque, modèle, année, km, nom, téléphone, email, notes
+          const payload = {
+            brand: (values[0] || "").trim(),
+            model: (values[1] || "").trim(),
+            year: parseInt(values[2], 10) || 0,
+            mileage: parseInt(values[3], 10) || 0,
+            name: (values[4] || "").trim(),
+            phone: (values[5] || "").trim(),
+            email: (values[6] || "").trim(),
+            notes: (values[7] || "").trim(),
+            photos: photoFiles.map((p) => p.dataUrl),
+          };
+          if (!payload.brand || !payload.model || !payload.name || !payload.email) {
+            alert("Veuillez remplir tous les champs obligatoires.");
+            return;
+          }
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML =
+              (window.I18N && I18N.t("js.sending") !== "js.sending")
+                ? I18N.t("js.sending")
+                : "Envoi…";
+          }
+          try {
+            if (window.API && typeof API.submitSellRequest === "function") {
+              const res = await API.submitSellRequest(payload);
+              alert(res.message || "Merci ! Votre demande d'estimation a bien été envoyée. Nous vous recontactons sous 24h.");
+            } else {
+              throw new Error("API indisponible");
+            }
+            this.reset();
+            photoFiles = [];
+            renderThumbs();
+          } catch (error) {
+            alert(
+              (window.API ? API.friendlyError(error) : error.message) ||
+              "Une erreur est survenue. Réessayez."
+            );
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
+          }
         });
     </script>
   </body>

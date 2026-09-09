@@ -632,14 +632,88 @@ function initReviewForm() {
     });
   });
   stars.forEach((s, j) => s.classList.toggle("active", j < rating));
-  form.addEventListener("submit", (e) => {
+
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    alert(jr("js.review_thanks", "Merci pour votre avis ! Il sera publié après modération."));
-    form.reset();
-    rating = 5;
-    stars.forEach((s, j) => s.classList.toggle("active", j < rating));
+    const submitBtn = document.getElementById("review-submit");
+    const originalText = submitBtn ? submitBtn.innerHTML : "";
+    const fd = new FormData(form);
+    const payload = {
+      name: (fd.get("name") || "").toString().trim(),
+      email: (fd.get("email") || "").toString().trim(),
+      vehicle: (fd.get("vehicle") || "").toString().trim(),
+      rating,
+      message: (fd.get("message") || "").toString().trim(),
+    };
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = jr("js.sending", "Envoi…");
+    }
+    try {
+      if (window.API && typeof API.submitReview === "function") {
+        await API.submitReview(payload);
+        alert(jr("js.review_thanks", "Merci pour votre avis ! Il sera publié après modération."));
+      } else {
+        throw new Error("API indisponible");
+      }
+      form.reset();
+      rating = 5;
+      stars.forEach((s, j) => s.classList.toggle("active", j < rating));
+    } catch (error) {
+      alert(
+        (window.API ? API.friendlyError(error) : error.message) ||
+        jr("js.review_error", "Une erreur est survenue. Réessayez.")
+      );
+    } finally {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    }
   });
 }
+
+// Affiche les avis approuvés de l'API à la place des témoignages statiques
+async function loadPublicReviews() {
+  const grid = document.querySelector(".testimonials-grid");
+  if (!grid || !window.API || typeof API.getReviews !== "function") return;
+  try {
+    const [reviews, stats] = await Promise.all([
+      API.getReviews(),
+      API.getReviewStats().catch(() => null),
+    ]);
+    if (!Array.isArray(reviews) || !reviews.length) return;
+    const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
+    const initials = (name) =>
+      name.split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+    grid.innerHTML = reviews.map((r) => `
+      <div class="testimonial-card">
+        <div class="testimonial-header">
+          <div class="avatar">${escapeHtml(initials(r.name || "?"))}</div>
+          <div>
+            <strong>${escapeHtml(r.name)}</strong>
+            <div class="stars">${stars(r.rating)}</div>
+          </div>
+        </div>
+        ${r.vehicle ? `<p class="testimonial-vehicle" style="color:var(--accent-light);font-size:0.9rem;margin-bottom:6px;">${escapeHtml(r.vehicle)}</p>` : ""}
+        <p>« ${escapeHtml(r.message)} »</p>
+      </div>
+    `).join("");
+    if (stats && stats.total) {
+      const ratingEl = document.querySelector(".page-hero p");
+      if (ratingEl) {
+        ratingEl.innerHTML = `${stats.average} ★★★★★ <span style="color: var(--text-muted); font-size: 1rem">(${stats.total} avis)</span>`;
+      }
+    }
+  } catch (error) {
+    // Les témoignages statiques restent affichés si l'API est indisponible
+    console.warn("Avis API indisponibles, témoignages statiques conservés.", error);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("review-form")) loadPublicReviews();
+});
 
 document.addEventListener("DOMContentLoaded", initReviewForm);
 

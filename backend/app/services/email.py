@@ -88,6 +88,59 @@ async def send_contact_email(name: str, email: str, phone: str, subject: str, bo
     )
 
 
+async def send_review_email(name: str, email: str, vehicle: str, rating: int, body: str) -> bool:
+    """Notifier l'admin qu'un nouveau témoignage attend une modération."""
+    stars = "★" * rating + "☆" * (5 - rating)
+    content = (
+        f"Nouveau témoignage en attente de modération\n"
+        f"\n"
+        f"Nom : {name}\n"
+        f"Email : {email}\n"
+        f"Véhicule : {vehicle or 'Non précisé'}\n"
+        f"Note : {stars} ({rating}/5)\n\n"
+        f"Avis :\n{body}\n\n"
+        f"→ Validez-le dans le dashboard admin, section « Avis clients »."
+    )
+    recipient = settings.CONTACT_RECIPIENT_EMAIL or "contact@autoprestige.fr"
+    return await _send_brevo_email(
+        recipient,
+        f"Nouvel avis client ({rating}/5) — modération requise",
+        content,
+        reply_to=email,
+    )
+
+
+async def send_sell_request_email(
+    name: str,
+    email: str,
+    phone: str,
+    vehicle: str,
+    mileage: int,
+    notes: str,
+    photo_count: int = 0,
+) -> bool:
+    """Notifier l'admin d'une nouvelle demande d'estimation (vente/reprise)."""
+    content = (
+        f"Nouvelle demande d'estimation (page Vendre)\n"
+        f"\n"
+        f"Nom : {name}\n"
+        f"Email : {email}\n"
+        f"Téléphone : {phone or 'Non renseigné'}\n"
+        f"Véhicule : {vehicle}\n"
+        f"Kilométrage : {mileage} km\n"
+        f"Photos jointes : {photo_count}\n\n"
+        f"Informations complémentaires :\n{notes or 'Aucune'}\n\n"
+        f"→ Consultez les photos dans le dashboard admin, section « Demandes de vente »."
+    )
+    recipient = settings.CONTACT_RECIPIENT_EMAIL or "contact@autoprestige.fr"
+    return await _send_brevo_email(
+        recipient,
+        f"Demande de vente : {vehicle}",
+        content,
+        reply_to=email,
+    )
+
+
 # Keep backward compatibility
 async def send_resend_email(to_email: str, subject: str, body: str) -> bool:
     """Legacy Resend function — now delegates to Brevo."""

@@ -183,9 +183,25 @@
     "adding": "Se adaugă…",
     "login_required": "Trebuie să fii autentificat pentru a adăuga acest vehicul în coș.\n\nMergi la pagina de autentificare?",
     "review_thanks": "Mulțumim pentru recenzie! Va fi publicată după moderare.",
+    "review_error": "A apărut o eroare la trimiterea recenziei. Încercați din nou.",
+    "sending": "Se trimite…",
     "info_updated": "Informațiile tale au fost actualizate.",
     "address_saved": "Adresă salvată.",
     "delivery_saved": "Cererea ta de livrare a fost salvată."
+  },
+  "reviews": {
+    "form_title": "Lăsați recenzia dumneavoastră",
+    "form_subtitle": "Împărtășiți experiența dumneavoastră cu Autohaus.",
+    "your_name": "Numele dumneavoastră",
+    "email": "Email",
+    "vehicle": "Vehiculul cumpărat (opțional)",
+    "your_review": "Recenzia dumneavoastră",
+    "submit": "Trimiteți recenzia"
+  },
+  "sell": {
+    "photos_label": "Fotografiile vehiculului",
+    "photos_hint": "Dați clic pentru a adăuga fotografii (max. 6)",
+    "photos_formats": "JPG, PNG, WebP — max. 10 MB pe fotografie"
   },
   "detail": {
     "badge_reco": "★ Recomandat",

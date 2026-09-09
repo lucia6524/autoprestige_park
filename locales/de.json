@@ -183,9 +183,25 @@
     "adding": "Wird hinzugefügt…",
     "login_required": "Sie müssen angemeldet sein, um dieses Fahrzeug in den Warenkorb zu legen.\n\nZur Anmeldeseite?",
     "review_thanks": "Danke für Ihre Bewertung! Sie wird nach Prüfung veröffentlicht.",
+    "review_error": "Beim Senden Ihrer Bewertung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.",
+    "sending": "Wird gesendet…",
     "info_updated": "Ihre Angaben wurden aktualisiert.",
     "address_saved": "Adresse gespeichert.",
     "delivery_saved": "Ihre Lieferanfrage wurde gespeichert."
+  },
+  "reviews": {
+    "form_title": "Hinterlassen Sie Ihre Bewertung",
+    "form_subtitle": "Teilen Sie Ihre Erfahrung mit Autohaus.",
+    "your_name": "Ihr Name",
+    "email": "E-Mail",
+    "vehicle": "Gekauftes Fahrzeug (optional)",
+    "your_review": "Ihre Bewertung",
+    "submit": "Bewertung senden"
+  },
+  "sell": {
+    "photos_label": "Fahrzeugfotos",
+    "photos_hint": "Klicken Sie, um Fotos hinzuzufügen (max. 6)",
+    "photos_formats": "JPG, PNG, WebP — max. 10 MB pro Foto"
   },
   "detail": {
     "badge_reco": "★ Empfohlen",

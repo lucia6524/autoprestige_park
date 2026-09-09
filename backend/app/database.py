@@ -26,7 +26,7 @@ class Base(DeclarativeBase):
 
 
 # Import models after Base exists so every table is registered before startup.
-from app.models import commerce, site_settings, user  # noqa: F401
+from app.models import commerce, site_settings, user, reviews  # noqa: F401
 
 async def get_db():
     async with AsyncSessionLocal() as session:

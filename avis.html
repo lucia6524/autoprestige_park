@@ -140,29 +140,30 @@
         </div>
       </div>
 
-      <div class="review-form">
-        <h3 style="margin-bottom: 8px">Donnez votre avis</h3>
+      <div class="review-form" id="review-form-section">
+        <h3 style="margin-bottom: 8px" data-i18n="reviews.form_title">Donnez votre avis</h3>
         <p
           style="
             color: var(--text-secondary);
             margin-bottom: 20px;
             font-size: 0.95rem;
           "
+          data-i18n="reviews.form_subtitle"
         >
           Partagez votre expérience avec Autohaus.
         </p>
         <form id="review-form">
           <div class="star-rating" aria-label="Note">
-            <span data-v="1">★</span><span data-v="2">★</span
-            ><span data-v="3">★</span><span data-v="4">★</span
-            ><span data-v="5">★</span>
+            <span data-v="1" title="1">★</span><span data-v="2" title="2">★</span
+            ><span data-v="3" title="3">★</span><span data-v="4" title="4">★</span
+            ><span data-v="5" title="5">★</span>
           </div>
           <div class="form-group">
-            <label>Votre nom</label>
+            <label data-i18n="reviews.your_name">Votre nom</label>
             <input type="text" name="name" placeholder="Jean Dupont" required />
           </div>
           <div class="form-group">
-            <label>Email</label>
+            <label data-i18n="reviews.email">Email</label>
             <input
               type="email"
               name="email"
@@ -171,7 +172,15 @@
             />
           </div>
           <div class="form-group">
-            <label>Votre avis</label>
+            <label data-i18n="reviews.vehicle">Véhicule acheté (optionnel)</label>
+            <input
+              type="text"
+              name="vehicle"
+              placeholder="Ex : BMW Série 3, Audi A4..."
+            />
+          </div>
+          <div class="form-group">
+            <label data-i18n="reviews.your_review">Votre avis</label>
             <textarea
               name="message"
               rows="4"
@@ -183,8 +192,9 @@
             type="submit"
             class="btn btn-primary btn-lg"
             style="width: 100%"
+            id="review-submit"
           >
-            Envoyer mon avis
+            <span data-i18n="reviews.submit">Envoyer mon avis</span>
           </button>
         </form>
       </div>

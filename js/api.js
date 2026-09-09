@@ -207,6 +207,28 @@ const API = {
       body: JSON.stringify({ installment_id: installmentId }),
     });
   },
+
+  // Reviews (témoignages clients)
+  submitReview(review) {
+    return this.request('/reviews', {
+      method: 'POST',
+      body: JSON.stringify(review),
+    });
+  },
+  getReviews() {
+    return this.request('/reviews');
+  },
+  getReviewStats() {
+    return this.request('/reviews/stats');
+  },
+
+  // Sell requests (demande d'estimation avec photos)
+  submitSellRequest(data) {
+    return this.request('/sell-requests', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
 };
 
 window.API = API;
