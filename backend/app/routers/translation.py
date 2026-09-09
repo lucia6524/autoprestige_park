@@ -8,10 +8,13 @@ from app.config import settings
 
 router = APIRouter(prefix="/translate", tags=["Translation"])
 
-# Rate limit: max 30 translation requests per IP per 5 minutes
+# Rate limit: max 120 batched translation requests per IP per 5 minutes.
+# Le frontend regroupe ~40 phrases par requête : une page complète tient en
+# 1 à 3 requêtes, donc 120 laissent largement la place à une vraie navigation
+# tout en plafonnant l'abus du quota DeepL.
 _translate_rate_limits: dict[str, list[float]] = {}
 _TRANSLATE_RATE_WINDOW = 300
-_TRANSLATE_RATE_MAX = 30
+_TRANSLATE_RATE_MAX = 120
 
 
 def _check_translate_rate(ip: str) -> None:
