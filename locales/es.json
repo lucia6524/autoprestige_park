@@ -187,7 +187,8 @@
     "sending": "Enviando…",
     "info_updated": "Tus datos han sido actualizados.",
     "address_saved": "Dirección guardada.",
-    "delivery_saved": "Tu solicitud de entrega ha sido guardada."
+    "delivery_saved": "Tu solicitud de entrega ha sido guardada.",
+    "cart_added_goto": "¡Vehículo añadido! ¿Ver tu carrito?"
   },
   "reviews": {
     "stats_verified": "Opiniones verificadas",
@@ -210,7 +211,16 @@
     "add_cart": "Añadir al carrito",
     "adding": "Añadiendo…",
     "added": "✓ Añadido al carrito",
-    "view": "Ver →"
+    "view": "Ver →",
+    "spec_year": "Año",
+    "spec_power": "Potencia",
+    "spec_transmission": "Cambio",
+    "spec_mileage": "Kilometraje",
+    "about_vehicle": "Más información sobre el vehículo",
+    "request_quote": "Solicitar presupuesto",
+    "not_found_title": "Vehículo no encontrado",
+    "not_found_text": "Este vehículo no existe o ya no está disponible.",
+    "back_to_catalog": "Volver al catálogo"
   },
   "phrasebook": {
     "(n° de commande ou votre nom) lors de votre virement afin que nous puissions associer votre paiement à la commande.": "(n.º de pedido o su nombre) al realizar la transferencia, para que podamos asociar su pago al pedido.",
@@ -237,7 +247,7 @@
     "Adresse": "Dirección",
     "Adresse :": "Dirección:",
     "Adresse email": "Dirección de correo electrónico",
-    "Ajout…": "Añadido…",
+    "Ajout…": "Añadiendo…",
     "Anna Müller": "Anna Müller",
     "Annuler": "Cancelar",
     "Année": "Año",
@@ -270,7 +280,7 @@
     "Bentley": "Bentley",
     "Berline, SUV…": "Berlina, SUV…",
     "Bienvenue 👋": "Bienvenido 👋",
-    "Boîte": "Caja",
+    "Boîte": "Cambio",
     "Budget max": "Presupuesto máximo",
     "Budget mensuel recommandé": "Presupuesto mensual recomendado",
     "CD": "CD",
@@ -286,7 +296,7 @@
     "Capacité de remboursement estimée": "Capacidad de pago estimada",
     "Carburant": "Combustible",
     "Carrosserie": "Carrocería",
-    "Catalogue": "Catálogo",
+    "Catalogue": "Vehículos",
     "Catalogue Véhicules — Autohaus": "Catálogo de vehículos — Autohaus",
     "Catalogue véhicules": "Catálogo de vehículos",
     "Catégorie": "Categoría",
@@ -499,7 +509,7 @@
     "Mercedes Classe C — Client vérifié": "Mercedes Clase C — Cliente verificado",
     "Mercedes-Benz": "Mercedes-Benz",
     "Merci d'indiquer le": "Por favor, indica el",
-    "Merci pour votre avis ! Il sera publié après modération.": "¡Gracias por tu opinión! Se publicará tras ser revisada.",
+    "Merci pour votre avis ! Il sera publié après modération.": "¡Gracias por tu opinión! Se publicará después de moderación.",
     "Mes Commandes": "Mis pedidos",
     "Message": "Mensaje",
     "Minimum 6 caractères": "Mínimo 6 caracteres",
@@ -669,7 +679,7 @@
     "Un accompagnement complet et transparent à chaque étape de votre achat.": "Un acompañamiento completo y transparente en cada etapa de tu compra.",
     "Un processus clair en 3 étapes pour trouver et recevoir votre véhicule idéal.": "Un proceso claro en tres pasos para encontrar y recibir tu vehículo ideal.",
     "Un service après-vente complet pour toutes les marques. Pièces d’origine ou équivalentes, techniciens expérimentés.": "Un servicio posventa completo para todas las marcas. Recambios originales o equivalentes, técnicos con experiencia.",
-    "Une erreur est survenue. Réessayez.": "Se ha producido un error. Inténtalo de nuevo.",
+    "Une erreur est survenue. Réessayez.": "Ocurrió un error al enviar tu opinión. Inténtalo de nuevo.",
     "Une passion pour l'automobile": "La pasión por el mundo del motor",
     "Une protection complète pour votre véhicule avec des garanties étendues et une assistance 24/7. Roulez l’esprit tranquille.": "Una protección completa para tu vehículo con garantías ampliadas y asistencia las 24 horas del día, los 7 días de la semana. Conduce con tranquilidad.",
     "Une question, un projet d'achat ou de vente ? Notre équipe est à votre écoute.": "¿Tienes alguna pregunta o estás pensando en comprar o vender? Nuestro equipo está a tu disposición.",
@@ -804,6 +814,17 @@
     "📦 Commandes": "📦 Pedidos",
     "📸 Demandes de vente": "📸 Solicitudes de venta",
     "🚗 Véhicules": "🚗 Vehículos",
-    "🚚 Livraisons": "🚚 Entregas"
+    "🚚 Livraisons": "🚚 Entregas",
+    "Puissance": "Potencia",
+    "Ajouter au panier": "Añadir al carrito",
+    "✓ Ajouté au panier": "✓ Añadido al carrito",
+    "Demander un devis": "Solicitar presupuesto",
+    "Retour au catalogue": "Volver al catálogo",
+    "Véhicule introuvable": "Vehículo no encontrado",
+    "Ce véhicule n'existe pas ou n'est plus disponible.": "Este vehículo no existe o ya no está disponible.",
+    "Informations complémentaires sur le véhicule": "Más información sobre el vehículo",
+    "★ Recommandé": "★ Recomendado",
+    "ou": "desde",
+    "/mois": "/mes"
   }
 }

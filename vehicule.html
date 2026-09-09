@@ -683,7 +683,35 @@
             <a href="vehicules.html" class="btn btn-primary">${esc(jr("detail.back_to_catalog", "Retour au catalogue"))}</a>
           </div>
         `;
+          if (window.I18N && typeof I18N.translateElement === "function") {
+            I18N.translateElement(document.getElementById("detail-content"));
+          }
         }
+
+        // Rendu dans la langue courante + re-rendu au changement de langue :
+        // les labels de la fiche (specs, boutons) sont traduits instantanément
+        // via les clés i18n + phrasebook local, sans attendre DeepL.
+        let currentVehicle = null;
+        let renderedLang = null;
+
+        function renderLocalized(v) {
+          currentVehicle = v;
+          const lang = (window.I18N && I18N.currentLang) || "fr";
+          if (lang === renderedLang) return; // déjà rendu dans cette langue
+          renderedLang = lang;
+          renderDetail(v);
+          if (window.I18N && typeof I18N.translateElement === "function") {
+            I18N.translateElement(document.getElementById("detail-content"));
+          }
+        }
+
+        // Le contenu dynamique (descriptions, transmission…) est traduit par la
+        // passe DeepL planifiée ; la langue choisie suit l'utilisateur partout.
+        document.addEventListener("languageChanged", function () {
+          if (!currentVehicle) return;
+          renderedLang = null;
+          renderLocalized(currentVehicle);
+        });
 
         // Applique la remise « occasion » une seule fois (cohérent avec le catalogue)
         function applyUsedDiscount(v) {
@@ -752,6 +780,12 @@
             return;
           }
 
+          // Attendre la locale initiale : le premier rendu part directement
+          // dans la bonne langue (pas de flash français re-traduit après coup).
+          if (window.I18N && typeof I18N.whenReady === "function") {
+            try { await I18N.whenReady(); } catch (_) { /* rendu quand même */ }
+          }
+
           const v = await fetchVehicle(id);
           if (!v) {
             showNotFound();
@@ -759,7 +793,7 @@
           }
 
           applyUsedDiscount(v);
-          renderDetail(v);
+          renderLocalized(v);
 
           // Si le véhicule vient du repli local, tenter une mise à jour
           // silencieuse depuis l'API (photos/prix à jour) sans re-bloquer.
@@ -768,7 +802,8 @@
               .then(function (fresh) {
                 if (!fresh) return;
                 applyUsedDiscount(fresh);
-                renderDetail(fresh);
+                renderedLang = null; // données à jour → forcer le re-rendu
+                renderLocalized(fresh);
               })
               .catch(function () {
                 /* on garde le rendu local */

@@ -187,7 +187,8 @@
     "sending": "Invio…",
     "info_updated": "Le tue informazioni sono state aggiornate.",
     "address_saved": "Indirizzo salvato.",
-    "delivery_saved": "La tua richiesta di consegna è stata salvata."
+    "delivery_saved": "La tua richiesta di consegna è stata salvata.",
+    "cart_added_goto": "Veicolo aggiunto! Vuoi vedere il carrello?"
   },
   "reviews": {
     "stats_verified": "Recensioni verificate",
@@ -210,7 +211,16 @@
     "add_cart": "Aggiungi al carrello",
     "adding": "Aggiunta…",
     "added": "✓ Aggiunto al carrello",
-    "view": "Vedi →"
+    "view": "Vedi →",
+    "spec_year": "Anno",
+    "spec_power": "Potenza",
+    "spec_transmission": "Cambio",
+    "spec_mileage": "Chilometraggio",
+    "about_vehicle": "Maggiori informazioni sul veicolo",
+    "request_quote": "Richiedi un preventivo",
+    "not_found_title": "Veicolo non trovato",
+    "not_found_text": "Questo veicolo non esiste o non è più disponibile.",
+    "back_to_catalog": "Torna al catalogo"
   },
   "phrasebook": {
     "(n° de commande ou votre nom) lors de votre virement afin que nous puissions associer votre paiement à la commande.": "(numero d'ordine o il vostro nome) al momento del bonifico, in modo da poter associare il vostro pagamento all'ordine.",
@@ -270,7 +280,7 @@
     "Bentley": "Bentley",
     "Berline, SUV…": "Berlina, SUV…",
     "Bienvenue 👋": "Benvenuti 👋",
-    "Boîte": "Scatola",
+    "Boîte": "Cambio",
     "Budget max": "Budget massimo",
     "Budget mensuel recommandé": "Budget mensile consigliato",
     "CD": "CD",
@@ -286,7 +296,7 @@
     "Capacité de remboursement estimée": "Capacità di rimborso stimata",
     "Carburant": "Carburante",
     "Carrosserie": "Carrozzeria",
-    "Catalogue": "Catalogo",
+    "Catalogue": "Veicoli",
     "Catalogue Véhicules — Autohaus": "Catalogo veicoli — Autohaus",
     "Catalogue véhicules": "Catalogo veicoli",
     "Catégorie": "Categoria",
@@ -499,7 +509,7 @@
     "Mercedes Classe C — Client vérifié": "Mercedes Classe C — Cliente verificato",
     "Mercedes-Benz": "Mercedes-Benz",
     "Merci d'indiquer le": "Si prega di indicare il",
-    "Merci pour votre avis ! Il sera publié après modération.": "Grazie per la tua recensione! Verrà pubblicata dopo la moderazione.",
+    "Merci pour votre avis ! Il sera publié après modération.": "Grazie per la tua recensione! Sarà pubblicata dopo la moderazione.",
     "Mes Commandes": "I miei ordini",
     "Message": "Messaggio",
     "Minimum 6 caractères": "Almeno 6 caratteri",
@@ -669,7 +679,7 @@
     "Un accompagnement complet et transparent à chaque étape de votre achat.": "Un’assistenza completa e trasparente in ogni fase del vostro acquisto.",
     "Un processus clair en 3 étapes pour trouver et recevoir votre véhicule idéal.": "Un processo chiaro in 3 fasi per trovare e ricevere il veicolo ideale.",
     "Un service après-vente complet pour toutes les marques. Pièces d’origine ou équivalentes, techniciens expérimentés.": "Un servizio post-vendita completo per tutte le marche. Ricambi originali o equivalenti, tecnici esperti.",
-    "Une erreur est survenue. Réessayez.": "Si è verificato un errore. Riprovare.",
+    "Une erreur est survenue. Réessayez.": "Si è verificato un errore durante l'invio della recensione. Riprova.",
     "Une passion pour l'automobile": "Una passione per le automobili",
     "Une protection complète pour votre véhicule avec des garanties étendues et une assistance 24/7. Roulez l’esprit tranquille.": "Una protezione completa per il tuo veicolo con garanzie estese e assistenza 24 ore su 24, 7 giorni su 7. Guida in tutta tranquillità.",
     "Une question, un projet d'achat ou de vente ? Notre équipe est à votre écoute.": "Hai una domanda, un progetto di acquisto o di vendita? Il nostro team è a tua disposizione.",
@@ -804,6 +814,17 @@
     "📦 Commandes": "📦 Ordini",
     "📸 Demandes de vente": "📸 Richieste di vendita",
     "🚗 Véhicules": "🚗 Veicoli",
-    "🚚 Livraisons": "🚚 Consegne"
+    "🚚 Livraisons": "🚚 Consegne",
+    "Puissance": "Potenza",
+    "Ajouter au panier": "Aggiungi al carrello",
+    "✓ Ajouté au panier": "✓ Aggiunto al carrello",
+    "Demander un devis": "Richiedi un preventivo",
+    "Retour au catalogue": "Torna al catalogo",
+    "Véhicule introuvable": "Veicolo non trovato",
+    "Ce véhicule n'existe pas ou n'est plus disponible.": "Questo veicolo non esiste o non è più disponibile.",
+    "Informations complémentaires sur le véhicule": "Maggiori informazioni sul veicolo",
+    "★ Recommandé": "★ Consigliato",
+    "ou": "da",
+    "/mois": "/mese"
   }
 }

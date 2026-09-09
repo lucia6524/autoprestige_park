@@ -187,7 +187,8 @@
     "sending": "Envoi…",
     "info_updated": "Vos informations ont été mises à jour.",
     "address_saved": "Adresse enregistrée.",
-    "delivery_saved": "Votre demande de livraison a été enregistrée."
+    "delivery_saved": "Votre demande de livraison a été enregistrée.",
+    "cart_added_goto": "Véhicule ajouté ! Voir votre panier ?"
   },
   "reviews": {
     "stats_verified": "Avis vérifiés",
@@ -210,6 +211,15 @@
     "add_cart": "Ajouter au panier",
     "adding": "Ajout…",
     "added": "✓ Ajouté au panier",
-    "view": "Voir →"
+    "view": "Voir →",
+    "spec_year": "Année",
+    "spec_power": "Puissance",
+    "spec_transmission": "Boîte",
+    "spec_mileage": "Kilométrage",
+    "about_vehicle": "Informations complémentaires sur le véhicule",
+    "request_quote": "Demander un devis",
+    "not_found_title": "Véhicule introuvable",
+    "not_found_text": "Ce véhicule n'existe pas ou n'est plus disponible.",
+    "back_to_catalog": "Retour au catalogue"
   }
 }

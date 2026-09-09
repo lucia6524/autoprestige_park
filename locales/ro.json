@@ -187,7 +187,8 @@
     "sending": "Se trimite…",
     "info_updated": "Informațiile tale au fost actualizate.",
     "address_saved": "Adresă salvată.",
-    "delivery_saved": "Cererea ta de livrare a fost salvată."
+    "delivery_saved": "Cererea ta de livrare a fost salvată.",
+    "cart_added_goto": "Vehicul adăugat! Vrei să vezi coșul?"
   },
   "reviews": {
     "stats_verified": "Recenzii verificate",
@@ -210,7 +211,16 @@
     "add_cart": "Adaugă în coș",
     "adding": "Se adaugă…",
     "added": "✓ Adăugat în coș",
-    "view": "Vezi →"
+    "view": "Vezi →",
+    "spec_year": "Anul",
+    "spec_power": "Puterea",
+    "spec_transmission": "Cutia",
+    "spec_mileage": "Kilometraj",
+    "about_vehicle": "Mai multe informații despre vehicul",
+    "request_quote": "Solicitați o ofertă",
+    "not_found_title": "Vehiculul nu a fost găsit",
+    "not_found_text": "Acest vehicul nu există sau nu mai este disponibil.",
+    "back_to_catalog": "Înapoi la catalog"
   },
   "phrasebook": {
     "(n° de commande ou votre nom) lors de votre virement afin que nous puissions associer votre paiement à la commande.": "(numărul comenzii sau numele dumneavoastră) atunci când efectuați transferul, pentru a putea asocia plata dumneavoastră cu comanda.",
@@ -237,7 +247,7 @@
     "Adresse": "Adresă",
     "Adresse :": "Adresă:",
     "Adresse email": "Adresă de e-mail",
-    "Ajout…": "Adăugare…",
+    "Ajout…": "Se adaugă…",
     "Anna Müller": "Anna Müller",
     "Annuler": "Anulează",
     "Année": "Anul",
@@ -270,7 +280,7 @@
     "Bentley": "Bentley",
     "Berline, SUV…": "Sedan, SUV…",
     "Bienvenue 👋": "Bine ați venit 👋",
-    "Boîte": "Cutie",
+    "Boîte": "Cutia",
     "Budget max": "Buget maxim",
     "Budget mensuel recommandé": "Bugetul lunar recomandat",
     "CD": "CD",
@@ -286,7 +296,7 @@
     "Capacité de remboursement estimée": "Capacitatea estimată de rambursare",
     "Carburant": "Combustibil",
     "Carrosserie": "Caroserie",
-    "Catalogue": "Catalog",
+    "Catalogue": "Vehicule",
     "Catalogue Véhicules — Autohaus": "Catalogul de vehicule — Autohaus",
     "Catalogue véhicules": "Catalogul de vehicule",
     "Catégorie": "Categorie",
@@ -499,7 +509,7 @@
     "Mercedes Classe C — Client vérifié": "Mercedes Clasa C — Client verificat",
     "Mercedes-Benz": "Mercedes-Benz",
     "Merci d'indiquer le": "Vă rugăm să indicați",
-    "Merci pour votre avis ! Il sera publié après modération.": "Vă mulțumim pentru recenzie! Aceasta va fi publicată după moderare.",
+    "Merci pour votre avis ! Il sera publié après modération.": "Mulțumim pentru recenzie! Va fi publicată după moderare.",
     "Mes Commandes": "Comenzile mele",
     "Message": "Mesaj",
     "Minimum 6 caractères": "Cel puțin 6 caractere",
@@ -669,7 +679,7 @@
     "Un accompagnement complet et transparent à chaque étape de votre achat.": "Un sprijin complet și transparent în fiecare etapă a achiziției dumneavoastră.",
     "Un processus clair en 3 étapes pour trouver et recevoir votre véhicule idéal.": "Un proces clar, în 3 etape, pentru a găsi și a primi mașina ideală.",
     "Un service après-vente complet pour toutes les marques. Pièces d’origine ou équivalentes, techniciens expérimentés.": "Un serviciu complet de asistență post-vânzare pentru toate mărcile. Piese originale sau echivalente, tehnicieni cu experiență.",
-    "Une erreur est survenue. Réessayez.": "A apărut o eroare. Încercați din nou.",
+    "Une erreur est survenue. Réessayez.": "A apărut o eroare la trimiterea recenziei. Încercați din nou.",
     "Une passion pour l'automobile": "O pasiune pentru automobile",
     "Une protection complète pour votre véhicule avec des garanties étendues et une assistance 24/7. Roulez l’esprit tranquille.": "O protecție completă pentru vehiculul dumneavoastră, cu garanții extinse și asistență 24/7. Conduceți fără griji.",
     "Une question, un projet d'achat ou de vente ? Notre équipe est à votre écoute.": "Aveți o întrebare, doriți să cumpărați sau să vindeți ceva? Echipa noastră vă stă la dispoziție.",
@@ -804,6 +814,17 @@
     "📦 Commandes": "📦 Comenzi",
     "📸 Demandes de vente": "📸 Cereri de vânzare",
     "🚗 Véhicules": "🚗 Vehicule",
-    "🚚 Livraisons": "🚚 Livrări"
+    "🚚 Livraisons": "🚚 Livrări",
+    "Puissance": "Puterea",
+    "Ajouter au panier": "Adaugă în coș",
+    "✓ Ajouté au panier": "✓ Adăugat în coș",
+    "Demander un devis": "Solicitați o ofertă",
+    "Retour au catalogue": "Înapoi la catalog",
+    "Véhicule introuvable": "Vehiculul nu a fost găsit",
+    "Ce véhicule n'existe pas ou n'est plus disponible.": "Acest vehicul nu există sau nu mai este disponibil.",
+    "Informations complémentaires sur le véhicule": "Mai multe informații despre vehicul",
+    "★ Recommandé": "★ Recomandat",
+    "ou": "de la",
+    "/mois": "/lună"
   }
 }

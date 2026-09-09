@@ -187,7 +187,8 @@
     "sending": "A enviar…",
     "info_updated": "As suas informações foram atualizadas.",
     "address_saved": "Endereço guardado.",
-    "delivery_saved": "O seu pedido de entrega foi guardado."
+    "delivery_saved": "O seu pedido de entrega foi guardado.",
+    "cart_added_goto": "Veículo adicionado! Ver o seu carrinho?"
   },
   "reviews": {
     "stats_verified": "Avaliações verificadas",
@@ -210,7 +211,16 @@
     "add_cart": "Adicionar ao carrinho",
     "adding": "A adicionar…",
     "added": "✓ Adicionado ao carrinho",
-    "view": "Ver →"
+    "view": "Ver →",
+    "spec_year": "Ano",
+    "spec_power": "Potência",
+    "spec_transmission": "Caixa",
+    "spec_mileage": "Quilometragem",
+    "about_vehicle": "Mais informações sobre o veículo",
+    "request_quote": "Pedir um orçamento",
+    "not_found_title": "Veículo não encontrado",
+    "not_found_text": "Este veículo não existe ou já não está disponível.",
+    "back_to_catalog": "Voltar ao catálogo"
   },
   "phrasebook": {
     "(n° de commande ou votre nom) lors de votre virement afin que nous puissions associer votre paiement à la commande.": "(n.º da encomenda ou o seu nome) no momento da transferência, para que possamos associar o seu pagamento à encomenda.",
@@ -237,7 +247,7 @@
     "Adresse": "Morada",
     "Adresse :": "Morada:",
     "Adresse email": "Endereço de e-mail",
-    "Ajout…": "Adicionar…",
+    "Ajout…": "A adicionar…",
     "Anna Müller": "Anna Müller",
     "Annuler": "Cancelar",
     "Année": "Ano",
@@ -286,7 +296,7 @@
     "Capacité de remboursement estimée": "Capacidade de reembolso estimada",
     "Carburant": "Combustível",
     "Carrosserie": "Carroçaria",
-    "Catalogue": "Catálogo",
+    "Catalogue": "Veículos",
     "Catalogue Véhicules — Autohaus": "Catálogo de Veículos — Autohaus",
     "Catalogue véhicules": "Catálogo de veículos",
     "Catégorie": "Categoria",
@@ -499,7 +509,7 @@
     "Mercedes Classe C — Client vérifié": "Mercedes Classe C — Cliente verificado",
     "Mercedes-Benz": "Mercedes-Benz",
     "Merci d'indiquer le": "Por favor, indique o",
-    "Merci pour votre avis ! Il sera publié après modération.": "Obrigado pelo seu comentário! Será publicado após moderação.",
+    "Merci pour votre avis ! Il sera publié après modération.": "Obrigado pela sua avaliação! Será publicada após moderação.",
     "Mes Commandes": "As minhas encomendas",
     "Message": "Mensagem",
     "Minimum 6 caractères": "Mínimo de 6 caracteres",
@@ -574,7 +584,7 @@
     "Prix (€)": "Preço (€)",
     "Prix croissant": "Preço crescente",
     "Prix décroissant": "Preço decrescente",
-    "Prix remisé": "Preço com desconto",
+    "Prix remisé": "Preço promocional",
     "Processus Autohaus": "Processo Autohaus",
     "Prolongez jusqu’à 24 ou 36 mois. Options d’assistance 24/7 et véhicule de remplacement disponibles.": "Prolongue até 24 ou 36 meses. Estão disponíveis opções de assistência 24 horas por dia, 7 dias por semana, e veículo de substituição.",
     "Promo": "Promoção",
@@ -669,7 +679,7 @@
     "Un accompagnement complet et transparent à chaque étape de votre achat.": "Um acompanhamento completo e transparente em cada etapa da sua compra.",
     "Un processus clair en 3 étapes pour trouver et recevoir votre véhicule idéal.": "Um processo claro em 3 etapas para encontrar e receber o seu veículo ideal.",
     "Un service après-vente complet pour toutes les marques. Pièces d’origine ou équivalentes, techniciens expérimentés.": "Um serviço pós-venda completo para todas as marcas. Peças originais ou equivalentes, técnicos experientes.",
-    "Une erreur est survenue. Réessayez.": "Ocorreu um erro. Tente novamente.",
+    "Une erreur est survenue. Réessayez.": "Ocorreu um erro ao enviar a sua avaliação. Tente novamente.",
     "Une passion pour l'automobile": "Uma paixão pelos automóveis",
     "Une protection complète pour votre véhicule avec des garanties étendues et une assistance 24/7. Roulez l’esprit tranquille.": "Uma proteção completa para o seu veículo, com garantias alargadas e assistência 24 horas por dia, 7 dias por semana. Conduza com tranquilidade.",
     "Une question, un projet d'achat ou de vente ? Notre équipe est à votre écoute.": "Tem alguma dúvida, pretende comprar ou vender? A nossa equipa está à sua disposição.",
@@ -804,6 +814,17 @@
     "📦 Commandes": "📦 Encomendas",
     "📸 Demandes de vente": "📸 Pedidos de venda",
     "🚗 Véhicules": "🚗 Veículos",
-    "🚚 Livraisons": "🚚 Entregas"
+    "🚚 Livraisons": "🚚 Entregas",
+    "Puissance": "Potência",
+    "Ajouter au panier": "Adicionar ao carrinho",
+    "✓ Ajouté au panier": "✓ Adicionado ao carrinho",
+    "Demander un devis": "Pedir um orçamento",
+    "Retour au catalogue": "Voltar ao catálogo",
+    "Véhicule introuvable": "Veículo não encontrado",
+    "Ce véhicule n'existe pas ou n'est plus disponible.": "Este veículo não existe ou já não está disponível.",
+    "Informations complémentaires sur le véhicule": "Mais informações sobre o veículo",
+    "★ Recommandé": "★ Recomendado",
+    "ou": "a partir de",
+    "/mois": "/mês"
   }
 }

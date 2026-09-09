@@ -45,6 +45,7 @@ const I18N = {
   _cache: {},  // { lang: { originalText: translatedText } }
   _failed: {}, // { lang: { originalText: true } } — phrases en échec (session) pour ne pas marteler
   _localeLoaded: {},         // fichiers locales/<lang>.json déjà chargés
+  _readyPromise: null,       // promesse d'initialisation (locale chargée)
   _originalTitle: undefined, // titre d'origine de la page (langue FR)
 
   t(key) {
@@ -212,12 +213,19 @@ const I18N = {
 
   collectTexts(root = document.body) {
     const items = [];
+    const book = this.translations.phrasebook || {};
+    const langCache = this._cache[this.currentLang] || {};
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
       const parent = node.parentElement;
       const value = node.nodeValue?.trim();
       if (!parent || !value || parent.closest('script, style, noscript, textarea, .lang-switcher, [data-no-translate]')) continue;
+      // Optimisation : les textes déjà couverts (phrasebook, cache, clés de
+      // locale) n'ont PAS besoin de DeepL — on ne les envoie pas.
+      if (book[value] !== undefined) continue;
+      if (langCache[value] !== undefined) continue;
+      if (this.t(value) !== value && /^[\w.]+$/.test(value)) continue;
       const original = this._originalText.get(node);
       if (original?.trim()) items.push({ node, text: original.trim() });
     }
@@ -225,7 +233,11 @@ const I18N = {
       if (el.closest('.lang-switcher, [data-no-translate]')) return;
       const attrs = this._originalAttributes.get(el) || {};
       ['placeholder', 'title', 'aria-label', 'alt'].forEach(name => {
-        if (attrs[name]?.trim()) items.push({ element: el, attribute: name, text: attrs[name] });
+        const text = attrs[name]?.trim();
+        if (!text) return;
+        if (book[text] !== undefined) return;
+        if (langCache[text] !== undefined) return;
+        items.push({ element: el, attribute: name, text });
       });
     });
     return items;
@@ -406,6 +418,20 @@ const I18N = {
 
   /* ===== Contenu dynamique : passes successives tant que la page évolue ===== */
 
+  // Traduit un fragment de DOM à la volée (contenu injecté par JS : fiche
+  // véhicule, cartes catalogue, avis…). Instantané via phrasebook/clés,
+  // DeepL seulement pour l'inconnu. Utilisable par les autres scripts :
+  //   document.addEventListener('languageChanged', ...) ou appel direct.
+  translateElement(root) {
+    if (!root || this.currentLang === 'fr') return;
+    this.captureOriginalContent(root);
+    this.applyLocaleKeys(root);
+    this.applyPhrasebook(root);
+    // La passe DeepL est planifiée globalement : elle collectera ce fragment
+    // avec le reste (les textes connus ont été filtrés par collectTexts).
+    this._scheduleTranslate();
+  },
+
   _scheduleTranslate() {
     if (this._translating) {
       // Du contenu est arrivé pendant une passe : on le traitera à la passe
@@ -575,6 +601,19 @@ const I18N = {
   },
 
   async init() {
+    this._readyPromise = this._init();
+    return this._readyPromise;
+  },
+
+  // Promesse résolue quand la locale initiale est chargée et appliquée.
+  // Permet aux pages (fiche véhicule…) d'attendre les traductions avant
+  // leur premier rendu — plus de textes français corrigés après coup.
+  whenReady() {
+    if (this._readyPromise) return this._readyPromise;
+    return Promise.resolve();
+  },
+
+  async _init() {
     const saved = localStorage.getItem('lang');
     const browser = this.detectBrowserLanguage();
     const initial = saved || browser || 'fr';
