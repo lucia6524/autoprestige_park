@@ -514,10 +514,30 @@ const I18N = {
     });
   },
 
+  /* ===== Détection de la langue du visiteur =====
+     1. Choix sauvegardé (localStorage 'lang') — l'utilisateur a déjà choisi
+     2. Langue de son téléphone/navigateur (navigator.languages puis navigator.language)
+        ex : "fr-FR", "en-US", "de-DE" → on garde le préfixe (fr, en, de…)
+        et on accepte les variantes régionales (pt-BR → pt, en-GB → en…)
+     3. Repli : français
+  */
+  detectBrowserLanguage() {
+    const candidates = [];
+    if (Array.isArray(navigator.languages)) candidates.push(...navigator.languages);
+    if (navigator.language) candidates.push(navigator.language);
+    if (navigator.userLanguage) candidates.push(navigator.userLanguage); // anciens IE/Edge
+    for (const raw of candidates) {
+      if (!raw || typeof raw !== 'string') continue;
+      const code = raw.trim().toLowerCase().split(/[-_]/)[0];
+      if (this.supported.includes(code)) return code;
+    }
+    return null;
+  },
+
   async init() {
     const saved = localStorage.getItem('lang');
-    const browser = (navigator.language || 'fr').slice(0, 2).toLowerCase();
-    const initial = saved || (this.supported.includes(browser) ? browser : 'fr');
+    const browser = this.detectBrowserLanguage();
+    const initial = saved || browser || 'fr';
 
     this.currentLang = initial;
     localStorage.setItem('lang', initial);
