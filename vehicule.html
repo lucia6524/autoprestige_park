@@ -299,6 +299,59 @@
         color: var(--text-muted);
         margin-bottom: 28px;
       }
+
+      /* Skeleton while loading */
+      .detail-skeleton {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 56px;
+        align-items: start;
+      }
+      @media (max-width: 960px) {
+        .detail-skeleton {
+          grid-template-columns: 1fr;
+          gap: 32px;
+        }
+      }
+      .detail-skeleton .skel {
+        background: linear-gradient(
+          90deg,
+          var(--bg-secondary) 25%,
+          var(--bg-card) 50%,
+          var(--bg-secondary) 75%
+        );
+        background-size: 200% 100%;
+        animation: skel-shimmer 1.4s infinite;
+        border-radius: 12px;
+      }
+      @keyframes skel-shimmer {
+        0% { background-position: 200% 0; }
+        100% { background-position: -200% 0; }
+      }
+      .detail-skeleton .skel-img {
+        aspect-ratio: 4 / 3;
+        border-radius: 16px;
+      }
+      .detail-skeleton .skel-line {
+        height: 18px;
+        margin-bottom: 12px;
+      }
+      .detail-skeleton .skel-line.w60 { width: 60%; }
+      .detail-skeleton .skel-line.w40 { width: 40%; }
+      .detail-skeleton .skel-price {
+        height: 42px;
+        width: 45%;
+        margin-bottom: 24px;
+      }
+      .detail-skeleton .skel-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 28px;
+      }
+      .detail-skeleton .skel-card {
+        height: 76px;
+      }
     </style>
   </head>
   <body>
@@ -319,8 +372,23 @@
 
     <main class="detail-main">
       <div id="detail-content">
-        <div class="detail-not-found">
-          <p>Chargement du véhicule…</p>
+        <!-- Squelette de chargement : affiché instantanément, remplacé par le contenu -->
+        <div class="detail-skeleton" aria-hidden="true">
+          <div class="skel skel-img"></div>
+          <div>
+            <div class="skel skel-line w40"></div>
+            <div class="skel skel-line" style="height: 34px"></div>
+            <div class="skel skel-price"></div>
+            <div class="skel-grid">
+              <div class="skel skel-card"></div>
+              <div class="skel skel-card"></div>
+              <div class="skel skel-card"></div>
+              <div class="skel skel-card"></div>
+            </div>
+            <div class="skel skel-line"></div>
+            <div class="skel skel-line"></div>
+            <div class="skel skel-line w60"></div>
+          </div>
         </div>
       </div>
     </main>
@@ -401,8 +469,17 @@
     <script src="js/main.js" defer></script>
     <script>
       (function () {
+        "use strict";
+
         function getParam(name) {
           return new URLSearchParams(window.location.search).get(name);
+        }
+
+        // Échappe le HTML inséré dans les gabarits (protection XSS)
+        function esc(value) {
+          const div = document.createElement("div");
+          div.textContent = String(value == null ? "" : value);
+          return div.innerHTML;
         }
 
         function formatKm(n) {
@@ -413,27 +490,30 @@
           return "€" + (n || 0).toLocaleString("fr-FR");
         }
 
-        function renderDetail(v) {
-          let parsedImages = v.images;
-          if (typeof parsedImages === "string") {
+        function parseImages(v) {
+          let parsed = v.images;
+          if (typeof parsed === "string") {
             try {
-              parsedImages = JSON.parse(parsedImages);
+              parsed = JSON.parse(parsed);
             } catch (_) {
-              parsedImages = [];
+              parsed = [];
             }
           }
-          const images =
-            Array.isArray(parsedImages) && parsedImages.length
-              ? parsedImages
-              : v.image
-                ? [v.image]
-                : [];
+          const list = Array.isArray(parsed) && parsed.length
+            ? parsed.filter(Boolean)
+            : v.image ? [v.image] : [];
+          // Déduupliquer tout en gardant l'ordre
+          return [...new Set(list)];
+        }
+
+        function renderDetail(v) {
+          const images = parseImages(v);
           const mainImg = images[0] || "";
           const power = v.power ? v.power + " ch" : "—";
-          const desc = (v.description || "")
+          const desc = String(v.description || "")
             .replace(/\\n/g, "\n")
             .replace(
-              /^\s*(?:prix|prix annonce|prix annoncé)\s*:?[^\n]*\n?/gim,
+              /^\s*(?:prix|prix annonce|prix annoncé)\s*:?[^n]*\n?/gim,
               "",
             )
             .trim();
@@ -448,14 +528,16 @@
           if (bc) bc.textContent = v.brand + " " + v.model;
 
           const showBadge = v.featured || v.promo;
+          const fallbackImg =
+            "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=900&q=70";
 
           const html = `
           <div class="detail-layout">
             <!-- LEFT: Gallery -->
             <div class="detail-gallery">
               <div class="detail-main-img">
-                <img id="detail-main-photo" src="${mainImg}" alt="${v.brand} ${v.model}">
-                ${showBadge ? `<span class="detail-badge-reco">${jr("detail.badge_reco", "★ Recommandé")}</span>` : ""}
+                <img id="detail-main-photo" src="${esc(mainImg || fallbackImg)}" alt="${esc(v.brand + " " + v.model)}" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                ${showBadge ? `<span class="detail-badge-reco">${esc(jr("detail.badge_reco", "★ Recommandé"))}</span>` : ""}
                 ${images.length > 1 ? '<span class="detail-img-counter"><span id="img-current">1</span>/' + images.length + "</span>" : ""}
               </div>
               ${
@@ -466,7 +548,7 @@
                     .map(
                       (src, i) => `
                     <button type="button" class="${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Photo ${i + 1}">
-                      <img src="${src}" alt="Photo ${i + 1}" loading="lazy">
+                      <img src="${esc(src)}" alt="Photo ${i + 1}" loading="lazy">
                     </button>
                   `,
                     )
@@ -479,148 +561,219 @@
 
             <!-- RIGHT: Info -->
             <div class="detail-info">
-              <div class="detail-category">${((v.body_category || v.category) || "Véhicule").toUpperCase()}</div>
-              <h1 class="detail-title">${v.brand}<br>${v.model}</h1>
+              <div class="detail-category">${esc(((v.body_category || v.category) || "Véhicule").toUpperCase())}</div>
+              <h1 class="detail-title">${esc(v.brand)}<br>${esc(v.model)}</h1>
 
               <div class="detail-price-row">
-                <span class="detail-price">${oldPrice ? `<s class="price-old">${oldPrice}</s> ` : ''}${price}</span>
-                ${oldPrice ? '<span class="detail-badge-promo">− 2 000 €</span>' : ''}
-                <span class="detail-monthly">ou €${v.monthly}/mois</span>
+                <span class="detail-price">${oldPrice ? `<s class="price-old">${esc(oldPrice)}</s> ` : ""}${esc(price)}</span>
+                ${oldPrice ? '<span class="detail-badge-promo">− 2 000 €</span>' : ""}
+                <span class="detail-monthly">${esc(jr("vehicles.monthly_from", "ou"))} €${esc(Number(v.monthly || 0).toLocaleString("fr-FR"))}${esc(jr("vehicles.per_month", "/mois"))}</span>
               </div>
 
               <div class="detail-specs">
                 <div class="detail-spec">
-                  <div class="detail-spec-label">Année</div>
-                  <div class="detail-spec-value">${v.year}</div>
+                  <div class="detail-spec-label">${esc(jr("detail.spec_year", "Année"))}</div>
+                  <div class="detail-spec-value">${esc(v.year)}</div>
                 </div>
                 <div class="detail-spec">
-                  <div class="detail-spec-label">Puissance</div>
-                  <div class="detail-spec-value">${power}</div>
+                  <div class="detail-spec-label">${esc(jr("detail.spec_power", "Puissance"))}</div>
+                  <div class="detail-spec-value">${esc(power)}</div>
                 </div>
                 <div class="detail-spec">
-                  <div class="detail-spec-label">Carburant</div>
-                  <div class="detail-spec-value">${v.fuel}</div>
+                  <div class="detail-spec-label">${esc(jr("vehicles.fuel_" + String(v.fuel || "").toLowerCase(), v.fuel || "—"))}</div>
+                  <div class="detail-spec-value">${esc(v.fuel || "—")}</div>
                 </div>
                 <div class="detail-spec">
-                  <div class="detail-spec-label">Boîte</div>
-                  <div class="detail-spec-value">${v.transmission}</div>
+                  <div class="detail-spec-label">${esc(jr("detail.spec_transmission", "Boîte"))}</div>
+                  <div class="detail-spec-value">${esc(v.transmission || "—")}</div>
                 </div>
                 <div class="detail-spec">
-                  <div class="detail-spec-label">Kilométrage</div>
-                  <div class="detail-spec-value">${formatKm(v.mileage)}</div>
+                  <div class="detail-spec-label">${esc(jr("vehicles.mileage_max", "Kilométrage"))}</div>
+                  <div class="detail-spec-value">${esc(formatKm(v.mileage))}</div>
                 </div>
               </div>
 
               ${
                 desc
                   ? `
-                <h2 class="detail-section-title">Informations complémentaires sur le véhicule</h2>
-                <div class="detail-description">${desc}</div>
+                <h2 class="detail-section-title">${esc(jr("detail.about_vehicle", "Informations complémentaires sur le véhicule"))}</h2>
+                <div class="detail-description">${esc(desc)}</div>
               `
                   : ""
               }
 
               <div class="detail-actions">
-                <button type="button" class="btn btn-primary" id="btn-add-cart" data-id="${v.id}">${jr("detail.add_cart", "Ajouter au panier")}</button>
-                <a href="contact.html?vehicule=${encodeURIComponent(v.brand + " " + v.model)}" class="btn btn-outline">Demander un devis</a>
-                <a href="vehicules.html" class="btn btn-outline">← Catalogue</a>
+                <button type="button" class="btn btn-primary" id="btn-add-cart" data-id="${esc(v.id)}">${esc(jr("detail.add_cart", "Ajouter au panier"))}</button>
+                <a href="contact.html?vehicule=${encodeURIComponent((v.brand || "") + " " + (v.model || ""))}" class="btn btn-outline">${esc(jr("detail.request_quote", "Demander un devis"))}</a>
+                <a href="vehicules.html" class="btn btn-outline">← ${esc(jr("nav.vehicles", "Catalogue"))}</a>
               </div>
             </div>
           </div>
         `;
 
           document.getElementById("detail-content").innerHTML = html;
+          bindGallery(images);
+          bindAddToCart(v);
+        }
 
-          // Thumbnail switching
+        function bindGallery(images) {
           const thumbs = document.getElementById("detail-thumbs");
-          if (thumbs) {
-            thumbs.addEventListener("click", function (e) {
-              const btn = e.target.closest("button[data-index]");
-              if (!btn) return;
-              const idx = parseInt(btn.dataset.index, 10);
-              const main = document.getElementById("detail-main-photo");
-              const counter = document.getElementById("img-current");
-              if (main && images[idx]) {
-                main.src = images[idx];
-                if (counter) counter.textContent = idx + 1;
-                thumbs.querySelectorAll("button").forEach(function (b) {
-                  b.classList.remove("active");
-                });
-                btn.classList.add("active");
-              }
-            });
-          }
+          if (!thumbs) return;
+          thumbs.addEventListener("click", function (e) {
+            const btn = e.target.closest("button[data-index]");
+            if (!btn) return;
+            const idx = parseInt(btn.dataset.index, 10);
+            const main = document.getElementById("detail-main-photo");
+            const counter = document.getElementById("img-current");
+            if (main && images[idx]) {
+              main.src = images[idx];
+              if (counter) counter.textContent = idx + 1;
+              thumbs.querySelectorAll("button").forEach(function (b) {
+                b.classList.remove("active");
+              });
+              btn.classList.add("active");
+            }
+          });
+        }
 
-          // Add to cart (requires auth)
+        function bindAddToCart(v) {
           const addBtn = document.getElementById("btn-add-cart");
-          if (addBtn) {
-            addBtn.addEventListener("click", async function () {
-              if (!window.API || !API.isLoggedIn()) {
-                if (
-                  confirm(
-                    "Vous devez être connecté pour ajouter au panier.\n\nAller à la page de connexion ?",
-                  )
-                ) {
-                  window.location.href = "connexion.html";
+          if (!addBtn || addBtn.dataset.bound) return;
+          addBtn.dataset.bound = "1";
+          addBtn.addEventListener("click", async function () {
+            if (!window.API || !API.isLoggedIn()) {
+              if (
+                confirm(
+                  jr(
+                    "js.login_required",
+                    "Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?",
+                  ),
+                )
+              ) {
+                window.location.href = "connexion.html";
+              }
+              return;
+            }
+            addBtn.disabled = true;
+            addBtn.textContent = jr("detail.adding", "Ajout…");
+            try {
+              await API.addToCart(v);
+              addBtn.textContent = jr("detail.added", "✓ Ajouté au panier");
+              setTimeout(function () {
+                if (confirm(jr("js.cart_added_goto", "Véhicule ajouté ! Voir votre panier ?"))) {
+                  window.location.href = "compte.html";
+                } else {
+                  addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
+                  addBtn.disabled = false;
                 }
-                return;
-              }
-              addBtn.disabled = true;
-              addBtn.textContent = jr("detail.adding", "Ajout…");
-              try {
-                await API.addToCart(v);
-                addBtn.textContent = jr("detail.added", "✓ Ajouté au panier");
-                setTimeout(function () {
-                  if (confirm("Véhicule ajouté ! Voir votre panier ?")) {
-                    window.location.href = "compte.html";
-                  } else {
-                    addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
-                    addBtn.disabled = false;
-                  }
-                }, 400);
-              } catch (err) {
-                alert(API.friendlyError(err));
-                addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
-                addBtn.disabled = false;
-              }
-            });
-          }
+              }, 400);
+            } catch (err) {
+              alert(API.friendlyError(err));
+              addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
+              addBtn.disabled = false;
+            }
+          });
         }
 
         function showNotFound() {
           document.getElementById("detail-content").innerHTML = `
           <div class="detail-not-found">
-            <h1>Véhicule introuvable</h1>
-            <p>Ce véhicule n'existe pas ou n'est plus disponible.</p>
-            <a href="vehicules.html" class="btn btn-primary">Retour au catalogue</a>
+            <h1>${esc(jr("detail.not_found_title", "Véhicule introuvable"))}</h1>
+            <p>${esc(jr("detail.not_found_text", "Ce véhicule n'existe pas ou n'est plus disponible."))}</p>
+            <a href="vehicules.html" class="btn btn-primary">${esc(jr("detail.back_to_catalog", "Retour au catalogue"))}</a>
           </div>
         `;
         }
 
+        // Applique la remise « occasion » une seule fois (cohérent avec le catalogue)
+        function applyUsedDiscount(v) {
+          if (v && v.type === "occasion" && !v.discountApplied) {
+            v.originalPrice = Number(v.price);
+            v.price = Math.max(0, Number(v.price) - 2000);
+            v.discountApplied = true;
+          }
+        }
+
+        // Récupère le véhicule : API d'abord, puis repli (cache catalogue +
+        // catalogue local) — la page s'affiche même quand l'API est endormie.
+        async function fetchVehicle(id) {
+          // 1) Cache catalogue (rendu instantané si la page véhicules a été vue)
+          const local =
+            typeof vehicles !== "undefined"
+              ? vehicles.find(function (car) {
+                  return Number(car.id) === id;
+                })
+              : null;
+
+          try {
+            if (window.API && typeof API.getVehicle === "function") {
+              const fromApi = await API.getVehicle(id);
+              if (fromApi) return normalize(fromApi);
+            }
+          } catch (_) {
+            /* API indisponible → repli ci-dessous */
+          }
+
+          // 2) Cache localStorage partagé avec la page catalogue
+          try {
+            const raw = localStorage.getItem("autoprestige_vehicles_v1");
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              const cached = (parsed && parsed.data ? parsed.data : []).find(
+                function (car) {
+                  return Number(car.id) === id;
+                },
+              );
+              if (cached) return normalize(cached);
+            }
+          } catch (_) {
+            /* cache illisible → ignorer */
+          }
+
+          // 3) Catalogue local (js/vehicles-data.js)
+          return local ? normalize(local) : null;
+        }
+
+        function normalize(v) {
+          if (typeof v.images === "string") {
+            try {
+              v.images = JSON.parse(v.images);
+            } catch (_) {
+              v.images = [];
+            }
+          }
+          return v;
+        }
+
         async function init() {
           const id = parseInt(getParam("id"), 10);
-          if (!id || typeof vehicles === "undefined") {
+          if (!id) {
             showNotFound();
             return;
           }
-          let v = vehicles.find(function (car) {
-            return car.id === id;
-          });
-          try {
-            if (window.API && typeof API.getVehicle === "function") {
-              v = await API.getVehicle(id);
-            }
-          } catch (_) {
-            // Use the local catalogue if the API is unavailable.
-          }
+
+          const v = await fetchVehicle(id);
           if (!v) {
             showNotFound();
             return;
           }
-          if (v.type === "occasion" && !v.discountApplied) {
-            v.price = Math.max(0, Number(v.price) - 2000);
-          }
+
+          applyUsedDiscount(v);
           renderDetail(v);
+
+          // Si le véhicule vient du repli local, tenter une mise à jour
+          // silencieuse depuis l'API (photos/prix à jour) sans re-bloquer.
+          if (window.API && typeof API.getVehicle === "function") {
+            API.getVehicle(id)
+              .then(function (fresh) {
+                if (!fresh) return;
+                applyUsedDiscount(fresh);
+                renderDetail(fresh);
+              })
+              .catch(function () {
+                /* on garde le rendu local */
+              });
+          }
         }
 
         if (document.readyState === "loading") {
