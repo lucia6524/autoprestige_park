@@ -212,20 +212,17 @@ button, input, select, textarea {
 }
 
 .logo img {
-  /* Ratio 3:1 de l'image (749x249) : plaque bleu roi lisible sur les deux thèmes */
-  width: 150px;
-  height: 50px;
+  /* Emblème transparent (logo.png) : icône compacte à côté du texte "Autohaus" */
+  width: 40px;
+  height: 40px;
   object-fit: contain;
-  border-radius: 10px;
-  flex: 0 0 auto;
-  mix-blend-mode: multiply;
+  flex: 0 0 40px;
+  mix-blend-mode: normal;
 }
 
-/* Logo JPEG : en mode sombre, blend normal pour conserver les couleurs
-   d'origine de la plaque bleue (l'inversion les dénaturerait). */
+/* PNG transparent : l'emblème noir passe en blanc sur fond sombre */
 [data-theme="dark"] .logo img {
-  mix-blend-mode: normal;
-  filter: none;
+  filter: invert(1);
 }
 
 .logo-icon {
