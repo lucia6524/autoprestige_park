@@ -140,6 +140,39 @@ const I18N = {
     });
   },
 
+  // Applique le phrasebook (textes statiques pré-traduits dans locales/*.json).
+  // Remplace le premier nœud texte si son contenu correspond exactement à une
+  // entrée du dictionnaire — instantané, sans appel réseau.
+  applyPhrasebook(root = document.body) {
+    if (!root) return;
+    const book = this.translations.phrasebook;
+    if (!book) return;
+    const skip = '.lang-switcher, [data-no-translate], script, style, textarea';
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const value = node.nodeValue;
+      const hit = book[value.trim()];
+      if (hit === undefined) continue;
+      const parent = node.parentElement;
+      if (parent && parent.closest(skip)) continue;
+      if (!this._originalText.has(node)) this._originalText.set(node, value);
+      // Préserve l'espacement d'origine (indentation) autour du texte
+      node.nodeValue = value.replace(value.trim(), hit);
+    }
+    // Placeholders, titres, aria-label, alt
+    const attrMap = { placeholder: 'data-i18n-placeholder', title: 'data-i18n-title-attr', 'aria-label': 'data-i18n-aria', alt: 'data-i18n-alt' };
+    root.querySelectorAll('[placeholder], [title], [aria-label], [alt]').forEach(el => {
+      if (el.closest('.lang-switcher, [data-no-translate]')) return;
+      Object.entries(attrMap).forEach(([name]) => {
+        const original = this._originalAttributes.get(el)?.[name] ?? el.getAttribute(name);
+        if (!original) return;
+        const hit = book[original.trim()];
+        if (hit !== undefined && hit !== original) el.setAttribute(name, hit);
+      });
+    });
+  },
+
   /* ===== Original content capture / restore ===== */
 
   captureOriginalContent(root = document.body) {
@@ -320,12 +353,16 @@ const I18N = {
     }
 
     this.captureOriginalContent();
-    // Clés statiques d'abord (locales/*.json) : nav, footer, filtres, titres…
+    // 1) Phrasebook local (locales/*.json) : application INSTANTANÉE, zéro réseau.
+    //    Couvre tous les textes statiques du site — la traduction est complète
+    //    même si le backend est endormi (Render free tier).
     this.applyLocaleKeys();
+    this.applyPhrasebook();
     const items = this.collectTexts();
     if (!items.length) return;
 
-    // Check cache
+    // 2) DeepL uniquement pour les textes absents du phrasebook (contenu
+    //    dynamique : catalogue véhicules, avis API, etc.).
     const langCache = this._cache[this.currentLang] || {};
     const uncached = items.filter(item => !langCache[item.text]);
 
@@ -411,7 +448,9 @@ const I18N = {
     if (!this.supported.includes(lang)) lang = 'fr';
     localStorage.setItem('lang', lang);
     this.currentLang = lang;
-    // Fichier de locale d'abord : nav/footer/filtres/titres sans attendre DeepL.
+    // Fichier de locale d'abord : nav/footer/filtres/titres + PHRASEBOOK.
+    // Le phrasebook couvre tout le texte statique → la page est entièrement
+    // traduite instantanément, même si DeepL est indisponible.
     await this.loadLocaleFile(lang).catch(() => {});
     this.apply();
 
@@ -420,6 +459,7 @@ const I18N = {
     } else {
       this._failed[lang] = {}; // nouveau choix de langue → on peut tout retenter
       this.loadPersistentCache(lang);
+      this.applyPhrasebook(); // immédiat, zéro réseau
       await this._runTranslationPasses().catch(err => console.warn('i18n:', err));
     }
 
@@ -549,8 +589,9 @@ const I18N = {
     this.applyLocaleKeys();
 
     if (initial !== 'fr') {
-      // Attendre que le DOM soit prêt puis traduire (cache d'abord)
+      // Phrasebook immédiat (zéro réseau) puis passes DeepL pour le dynamique
       this.loadPersistentCache(initial);
+      this.applyPhrasebook();
       await new Promise(resolve => setTimeout(resolve, 100));
       await this._runTranslationPasses().catch(err => console.warn('i18n:', err));
     }
