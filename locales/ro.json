@@ -190,6 +190,8 @@
     "delivery_saved": "Cererea ta de livrare a fost salvată."
   },
   "reviews": {
+    "stats_verified": "Recenzii verificate",
+    "stats_satisfied": "Clienți mulțumiți",
     "form_title": "Lăsați recenzia dumneavoastră",
     "form_subtitle": "Împărtășiți experiența dumneavoastră cu Autohaus.",
     "your_name": "Numele dumneavoastră",

@@ -190,6 +190,8 @@
     "delivery_saved": "Ihre Lieferanfrage wurde gespeichert."
   },
   "reviews": {
+    "stats_verified": "Verifizierte Bewertungen",
+    "stats_satisfied": "Zufriedene Kunden",
     "form_title": "Hinterlassen Sie Ihre Bewertung",
     "form_subtitle": "Teilen Sie Ihre Erfahrung mit Autohaus.",
     "your_name": "Ihr Name",

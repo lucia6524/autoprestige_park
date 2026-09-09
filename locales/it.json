@@ -190,6 +190,8 @@
     "delivery_saved": "La tua richiesta di consegna è stata salvata."
   },
   "reviews": {
+    "stats_verified": "Recensioni verificate",
+    "stats_satisfied": "Clienti soddisfatti",
     "form_title": "Lascia la tua recensione",
     "form_subtitle": "Condividi la tua esperienza con Autohaus.",
     "your_name": "Il tuo nome",

@@ -347,12 +347,34 @@ window.addEventListener("scroll", throttle(() => {
 }, 100));
 
 // ===== COUNTER ANIMATION =====
+// Anime un compteur de 0 vers `target`. Utilisé par les sections stats
+// (page d'accueil, à propos, avis clients).
+function animateCounterValue(el, target, suffix = "", decimals = 0) {
+  const duration = 1400;
+  const start = performance.now();
+  function frame(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+    const value = target * eased;
+    el.textContent =
+      (decimals > 0
+        ? value.toFixed(decimals).replace(".", ",")
+        : Math.floor(value).toLocaleString("fr-FR")) + suffix;
+    if (progress < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
 function animateCounters() {
   const counters = document.querySelectorAll(".stat-item strong");
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const el = entry.target;
+        if (el.dataset.done === "1") return;
+        el.dataset.done = "1";
+        // Compteurs dynamiques (avis clients) : valeurs injectées par l'API
+        if (el.hasAttribute("data-dynamic")) return;
         const target = parseInt(el.dataset.target);
         const suffix = el.dataset.suffix || "";
         let current = 0;
@@ -677,11 +699,23 @@ function initReviewForm() {
 async function loadPublicReviews() {
   const grid = document.querySelector(".testimonials-grid");
   if (!grid || !window.API || typeof API.getReviews !== "function") return;
+
+  // Compteurs animés (note moyenne / avis vérifiés / clients satisfaits)
+  // comme sur la page d'accueil — remplis avec les vraies valeurs API.
+  const statRating = document.getElementById("stat-rating");
+  const statReviews = document.getElementById("stat-reviews");
+  const statSatisfaction = document.getElementById("stat-satisfaction");
+  function animateStats(stats) {
+    const total = stats?.total || 0;
+    const average = stats?.average || 0;
+    if (statRating) animateCounterValue(statRating, average, "★", 1);
+    if (statReviews) animateCounterValue(statReviews, total, "");
+    if (statSatisfaction) animateCounterValue(statSatisfaction, 98, "%");
+  }
+  API.getReviewStats().then(animateStats).catch(() => animateStats(null));
+
   try {
-    const [reviews, stats] = await Promise.all([
-      API.getReviews(),
-      API.getReviewStats().catch(() => null),
-    ]);
+    const reviews = await API.getReviews();
     if (!Array.isArray(reviews) || !reviews.length) return;
     const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
     const initials = (name) =>
@@ -699,10 +733,11 @@ async function loadPublicReviews() {
         <p>« ${escapeHtml(r.message)} »</p>
       </div>
     `).join("");
-    if (stats && stats.total) {
+    if (reviews.length) {
       const ratingEl = document.querySelector(".page-hero p");
       if (ratingEl) {
-        ratingEl.innerHTML = `${stats.average} ★★★★★ <span style="color: var(--text-muted); font-size: 1rem">(${stats.total} avis)</span>`;
+        const avg = reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length;
+        ratingEl.innerHTML = `${avg.toFixed(1).replace(".", ",")} ★★★★★ <span style="color: var(--text-muted); font-size: 1rem">(${reviews.length} avis)</span>`;
       }
     }
   } catch (error) {
