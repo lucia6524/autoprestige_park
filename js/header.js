@@ -55,11 +55,10 @@
 
   function buildHeaderHTML() {
     return `
-  <header class="header" id="main-header">
+  <header class="header" id="main-header" translate="no">
     <div class="container header-inner">
-      <a href="${PAGES.home}" class="logo" data-no-translate>
+      <a href="${PAGES.home}" class="logo" data-no-translate aria-label="Autohaus — Accueil">
         <img src="logo.png" alt="Autohaus">
-        Auto<span>haus</span>
       </a>
 
       <nav class="nav" id="main-nav" aria-label="Navigation principale">
