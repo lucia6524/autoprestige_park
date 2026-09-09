@@ -156,13 +156,13 @@
       })();
     </script>
   </head>
-  <body>
+  <body data-i18n-title="meta.title_login">
     <!-- Site header (injecté par js/header.js) -->
     <div id="site-header"></div>
 
     <div class="reg-wrap">
       <div class="reg-card">
-        <div class="reg-logo">Auto<span>haus</span></div>
+        <div class="reg-logo" data-no-translate>Auto<span>haus</span></div>
         <h1 class="reg-title">Connexion</h1>
         <p class="reg-sub">Accédez à votre espace client</p>
         <div class="reg-error" id="err"></div>
@@ -187,7 +187,7 @@
               placeholder="Votre mot de passe"
               autocomplete="current-password"
             />
-            <button type="submit" class="reg-btn">Se connecter →</button>
+            <button type="submit" class="reg-btn" data-i18n="auth.login_btn">Se connecter →</button>
           </form>
           <p
             style="
@@ -215,7 +215,7 @@
               required
               placeholder="jean.dupont@gmail.com"
             />
-            <button type="submit" class="reg-btn">Envoyer le code →</button>
+            <button type="submit" class="reg-btn" data-i18n="auth.send_code_btn">Envoyer le code →</button>
           </form>
           <form id="form-otp" style="display: none">
             <div
@@ -259,8 +259,8 @@
               <input type="text" maxlength="1" inputmode="numeric" />
               <input type="text" maxlength="1" inputmode="numeric" />
             </div>
-            <button type="submit" class="reg-btn">Valider le code →</button>
-            <button type="button" class="reg-btn reg-btn-outline" id="back">
+            <button type="submit" class="reg-btn" data-i18n="auth.validate_btn">Valider le code →</button>
+            <button type="button" class="reg-btn reg-btn-outline" id="back" data-i18n="common.back">
               ← Retour
             </button>
           </form>

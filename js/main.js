@@ -22,6 +22,11 @@ function throttle(fn, limit) {
 // Le catalogue est servi par l'API (GET /api/vehicles) avec repli local
 // (js/vehicles-data.js) et cache localStorage pour un affichage instantané.
 
+// Chaîne JS traduite : clés de locales/<lang>.json si disponibles, sinon texte FR.
+function jr(key, fallback) {
+  return (window.I18N && I18N.t(key) !== key) ? I18N.t(key) : fallback;
+}
+
 const VEHICLES_CACHE_KEY = "autoprestige_vehicles_v1";
 const VEHICLES_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
@@ -176,10 +181,10 @@ function renderVehicles(list = null) {
           <div class="vehicle-price">
             <div>
               <div class="price-main">${v.originalPrice && v.originalPrice !== v.price ? `<s class="price-old">${v.originalPrice.toLocaleString('fr-FR')} €</s> ` : ''}${v.price.toLocaleString('fr-FR')} €</div>
-              <div class="price-month">${v.originalPrice && v.originalPrice !== v.price ? 'Prix remisé · ' : ''}ou ${v.monthly} €/mois</div>
+              <div class="price-month">${v.originalPrice && v.originalPrice !== v.price ? jr("vehicles.discounted_price", "Prix remisé") + ' · ' : ''}ou ${v.monthly} €/mois</div>
             </div>
             <div style="display:flex;gap:6px;align-items:center;">
-              <a href="vehicule.html?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">Voir →</a>
+              <a href="vehicule.html?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">${jr("detail.view", "Voir →")}</a>
               <button type="button" class="btn btn-primary-sm" onclick="event.stopPropagation(); addVehicleFromCatalog(${v.id}, this);">Panier</button>
             </div>
           </div>
@@ -191,7 +196,7 @@ function renderVehicles(list = null) {
 
 async function addVehicleFromCatalog(vehicleId, button) {
   if (!window.API || !API.isLoggedIn()) {
-    if (confirm("Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?")) {
+    if (confirm(jr("js.login_required", "Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?"))) {
       window.location.href = "connexion.html";
     }
     return;
@@ -202,10 +207,10 @@ async function addVehicleFromCatalog(vehicleId, button) {
 
   const originalText = button.textContent;
   button.disabled = true;
-  button.textContent = "Ajout…";
+  button.textContent = jr("js.adding", "Ajout…");
   try {
     await API.addToCart(vehicle);
-    button.textContent = "✓ Ajouté";
+    button.textContent = jr("js.added", "✓ Ajouté");
     window.location.href = "compte.html";
   } catch (error) {
     button.disabled = false;
@@ -629,7 +634,7 @@ function initReviewForm() {
   stars.forEach((s, j) => s.classList.toggle("active", j < rating));
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    alert("Merci pour votre avis ! Il sera publié après modération.");
+    alert(jr("js.review_thanks", "Merci pour votre avis ! Il sera publié après modération."));
     form.reset();
     rating = 5;
     stars.forEach((s, j) => s.classList.toggle("active", j < rating));

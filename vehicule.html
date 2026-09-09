@@ -455,7 +455,7 @@
             <div class="detail-gallery">
               <div class="detail-main-img">
                 <img id="detail-main-photo" src="${mainImg}" alt="${v.brand} ${v.model}">
-                ${showBadge ? '<span class="detail-badge-reco">★ Recommandé</span>' : ""}
+                ${showBadge ? `<span class="detail-badge-reco">${jr("detail.badge_reco", "★ Recommandé")}</span>` : ""}
                 ${images.length > 1 ? '<span class="detail-img-counter"><span id="img-current">1</span>/' + images.length + "</span>" : ""}
               </div>
               ${
@@ -521,7 +521,7 @@
               }
 
               <div class="detail-actions">
-                <button type="button" class="btn btn-primary" id="btn-add-cart" data-id="${v.id}">Ajouter au panier</button>
+                <button type="button" class="btn btn-primary" id="btn-add-cart" data-id="${v.id}">${jr("detail.add_cart", "Ajouter au panier")}</button>
                 <a href="contact.html?vehicule=${encodeURIComponent(v.brand + " " + v.model)}" class="btn btn-outline">Demander un devis</a>
                 <a href="vehicules.html" class="btn btn-outline">← Catalogue</a>
               </div>
@@ -566,21 +566,21 @@
                 return;
               }
               addBtn.disabled = true;
-              addBtn.textContent = "Ajout…";
+              addBtn.textContent = jr("detail.adding", "Ajout…");
               try {
                 await API.addToCart(v);
-                addBtn.textContent = "✓ Ajouté au panier";
+                addBtn.textContent = jr("detail.added", "✓ Ajouté au panier");
                 setTimeout(function () {
                   if (confirm("Véhicule ajouté ! Voir votre panier ?")) {
                     window.location.href = "compte.html";
                   } else {
-                    addBtn.textContent = "Ajouter au panier";
+                    addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
                     addBtn.disabled = false;
                   }
                 }, 400);
               } catch (err) {
                 alert(API.friendlyError(err));
-                addBtn.textContent = "Ajouter au panier";
+                addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
                 addBtn.disabled = false;
               }
             });

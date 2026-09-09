@@ -15,7 +15,11 @@
     "title_delivery": "Livrare — Autohaus",
     "title_maintenance": "Întreținere — Autohaus",
     "title_faq": "FAQ — Autohaus",
-    "title_legal": "Mențiuni legale — Autohaus"
+    "title_legal": "Mențiuni legale — Autohaus",
+    "title_login": "Autentificare — Autohaus",
+    "title_register": "Înregistrare — Autohaus",
+    "title_account": "Contul meu — Autohaus",
+    "title_404": "Pagină negăsită — Autohaus"
   },
   "nav": {
     "home": "Acasă",
@@ -37,7 +41,9 @@
     "about": "Despre noi",
     "reviews": "Recenzii",
     "login": "Autentificare",
-    "register": "Înregistrare"
+    "register": "Înregistrare",
+    "assurance": "Asigurare",
+    "logout": "Deconectare"
   },
   "cta": {
     "request_quote": "Cereți o ofertă",
@@ -118,7 +124,18 @@
     "type_new": "Nou",
     "type_used": "Second-hand",
     "monthly_from": "de la",
-    "per_month": "/lună"
+    "per_month": "/lună",
+    "filter_type_all": "Toate tipurile",
+    "filter_type_new": "Noi",
+    "filter_type_used": "Second-hand",
+    "budget_max": "Buget max",
+    "mileage_max": "Kilometraj max",
+    "promo_only_checkbox": "Doar promoții",
+    "sort_default": "Sortează după",
+    "sort_brand_asc": "Marcă (A → Z)",
+    "sort_brand_desc": "Marcă (Z → A)",
+    "sort_year_asc": "An (mai vechi)",
+    "discounted_price": "Preț redus"
   },
   "common": {
     "loading": "Se încarcă...",
@@ -138,10 +155,43 @@
     "light": "Treci la modul luminos",
     "dark": "Treci la modul întunecat"
   },
+  "auth": {
+    "login_btn": "Autentificare →",
+    "send_code_btn": "Trimite codul →",
+    "validate_btn": "Validează codul →",
+    "continue_btn": "Continuă →",
+    "generate_code_btn": "Generează codul de verificare →"
+  },
+  "account": {
+    "save_info": "Salvează informațiile mele",
+    "save_address": "Salvează adresa"
+  },
+  "error": {
+    "title": "Pagină negăsită",
+    "message": "Hopa! Pagina căutată nu există, a fost mutată sau nu mai este disponibilă. Fără panică, vă punem din nou pe drumul cel bun.",
+    "back_home": "← Înapoi la pagina principală",
+    "view_catalog": "Vezi catalogul"
+  },
   "filters": {
     "all": "Toate",
     "new": "Noi",
     "used": "Second-hand",
     "promo": "Promoții"
+  },
+  "js": {
+    "added": "✓ Adăugat",
+    "adding": "Se adaugă…",
+    "login_required": "Trebuie să fii autentificat pentru a adăuga acest vehicul în coș.\n\nMergi la pagina de autentificare?",
+    "review_thanks": "Mulțumim pentru recenzie! Va fi publicată după moderare.",
+    "info_updated": "Informațiile tale au fost actualizate.",
+    "address_saved": "Adresă salvată.",
+    "delivery_saved": "Cererea ta de livrare a fost salvată."
+  },
+  "detail": {
+    "badge_reco": "★ Recomandat",
+    "add_cart": "Adaugă în coș",
+    "adding": "Se adaugă…",
+    "added": "✓ Adăugat în coș",
+    "view": "Vezi →"
   }
 }

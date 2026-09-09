@@ -212,16 +212,15 @@ button, input, select, textarea {
 }
 
 .logo img {
-  /* Emblème transparent (logo.png) : icône compacte à côté du texte "Autohaus" */
-  width: 40px;
-  height: 40px;
+  /* logo.png : emblème + wordmark blancs (ratio large ~3.3:1) — dimensionné par hauteur */
+  height: 46px;
+  width: auto;
   object-fit: contain;
-  flex: 0 0 40px;
-  mix-blend-mode: normal;
+  flex: 0 0 auto;
 }
 
-/* PNG transparent : l'emblème noir passe en blanc sur fond sombre */
-[data-theme="dark"] .logo img {
+/* Mode clair : le logo blanc passe en noir pour rester lisible. Mode sombre : blanc natif. */
+[data-theme="light"] .logo img {
   filter: invert(1);
 }
 
@@ -1365,6 +1364,10 @@ section {
 @media (max-width: 768px) {
   .header-inner {
     height: 68px;
+  }
+
+  .logo img {
+    height: 38px;
   }
 
   .header-actions {
@@ -2994,7 +2997,7 @@ textarea,
 
 /* Logo adapts smoothly */
 .logo img {
-  transition: filter 0.4s ease, mix-blend-mode 0.4s ease;
+  transition: filter 0.4s ease;
 }
 
 /* Scrollbar adapts */

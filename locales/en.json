@@ -15,7 +15,11 @@
     "title_delivery": "Delivery — Autohaus",
     "title_maintenance": "Maintenance — Autohaus",
     "title_faq": "FAQ — Autohaus",
-    "title_legal": "Legal Notice — Autohaus"
+    "title_legal": "Legal Notice — Autohaus",
+    "title_login": "Login — Autohaus",
+    "title_register": "Sign up — Autohaus",
+    "title_account": "My account — Autohaus",
+    "title_404": "Page not found — Autohaus"
   },
   "nav": {
     "home": "Home",
@@ -37,7 +41,9 @@
     "about": "About",
     "reviews": "Reviews",
     "login": "Login",
-    "register": "Sign up"
+    "register": "Sign up",
+    "assurance": "Insurance",
+    "logout": "Log out"
   },
   "cta": {
     "request_quote": "Request a quote",
@@ -118,7 +124,18 @@
     "type_new": "New",
     "type_used": "Used",
     "monthly_from": "from",
-    "per_month": "/month"
+    "per_month": "/month",
+    "filter_type_all": "All types",
+    "filter_type_new": "New",
+    "filter_type_used": "Used",
+    "budget_max": "Max budget",
+    "mileage_max": "Max mileage",
+    "promo_only_checkbox": "Deals only",
+    "sort_default": "Sort by",
+    "sort_brand_asc": "Brand (A → Z)",
+    "sort_brand_desc": "Brand (Z → A)",
+    "sort_year_asc": "Year (oldest)",
+    "discounted_price": "Sale price"
   },
   "common": {
     "loading": "Loading...",
@@ -138,10 +155,43 @@
     "light": "Switch to light mode",
     "dark": "Switch to dark mode"
   },
+  "auth": {
+    "login_btn": "Log in →",
+    "send_code_btn": "Send the code →",
+    "validate_btn": "Validate the code →",
+    "continue_btn": "Continue →",
+    "generate_code_btn": "Generate the verification code →"
+  },
+  "account": {
+    "save_info": "Save my details",
+    "save_address": "Save the address"
+  },
+  "error": {
+    "title": "Page not found",
+    "message": "Oops! The page you are looking for does not exist, has been moved or is no longer available. Don't panic, we'll put you back on the right track.",
+    "back_home": "← Back to home",
+    "view_catalog": "View the catalogue"
+  },
   "filters": {
     "all": "All",
     "new": "New",
     "used": "Used",
     "promo": "Deals"
+  },
+  "js": {
+    "added": "✓ Added",
+    "adding": "Adding…",
+    "login_required": "You must be logged in to add this vehicle to your cart.\n\nGo to the login page?",
+    "review_thanks": "Thank you for your review! It will be published after moderation.",
+    "info_updated": "Your details have been updated.",
+    "address_saved": "Address saved.",
+    "delivery_saved": "Your delivery request has been saved."
+  },
+  "detail": {
+    "badge_reco": "★ Recommended",
+    "add_cart": "Add to cart",
+    "adding": "Adding…",
+    "added": "✓ Added to cart",
+    "view": "View →"
   }
 }

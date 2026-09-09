@@ -785,7 +785,7 @@
       }
     </style>
   </head>
-  <body>
+  <body data-i18n-title="meta.title_account">
     <!-- ===== SAME HEADER AS MAIN SITE ===== -->
     <!-- Site header (injecté par js/header.js) -->
     <div id="site-header"></div>
@@ -984,7 +984,7 @@
                     required
                 /></label>
                 <div class="profile-actions">
-                  <button type="submit" class="btn btn-primary">
+                  <button type="submit" class="btn btn-primary" data-i18n="account.save_info">
                     Enregistrer mes informations
                   </button>
                 </div>
@@ -1394,7 +1394,7 @@
                     <label>Téléphone<input id="delivery-phone-${o.id}" type="tel" required></label>
                     <label style="grid-column:1/-1;">Adresse de livraison<textarea id="delivery-address-${o.id}" rows="3" required placeholder="Numéro, rue, code postal, ville, pays"></textarea></label>
                   </div>
-                  <button type="submit" class="btn btn-primary" style="margin-top:14px;">Enregistrer l’adresse</button>
+                  <button type="submit" class="btn btn-primary" style="margin-top:14px;" data-i18n="account.save_address">Enregistrer l’adresse</button>
                 </form>`
                   : hasAddress
                     ? `<div style="margin-top:14px;padding:12px;background:var(--bg);border-radius:8px;"><strong>Adresse de livraison</strong><br>${escapeHtml(d.delivery_address)}<br><small>${escapeHtml(d.recipient_first_name)} ${escapeHtml(d.recipient_last_name)} · ${escapeHtml(d.recipient_phone)}</small></div>`

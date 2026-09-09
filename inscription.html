@@ -216,13 +216,13 @@
       })();
     </script>
   </head>
-  <body>
+  <body data-i18n-title="meta.title_register">
     <!-- Site header (injecté par js/header.js) -->
     <div id="site-header"></div>
 
     <div class="reg-wrap">
       <div class="reg-card">
-        <div class="reg-logo">Auto<span>haus</span></div>
+        <div class="reg-logo" data-no-translate>Auto<span>haus</span></div>
         <h1 class="reg-title" id="reg-title">Créer un compte</h1>
         <p class="reg-sub" id="reg-sub">Étape 1 sur 4 — Vos informations</p>
 
@@ -262,7 +262,7 @@
                 />
               </div>
             </div>
-            <button type="submit" class="reg-btn">Continuer →</button>
+            <button type="submit" class="reg-btn" data-i18n="auth.continue_btn">Continuer →</button>
           </form>
         </div>
 
@@ -285,8 +285,8 @@
               placeholder="+33 6 12 34 56 78"
               autocomplete="tel"
             />
-            <button type="submit" class="reg-btn">Continuer →</button>
-            <button type="button" class="reg-btn reg-btn-outline" id="back-2">
+            <button type="submit" class="reg-btn" data-i18n="auth.continue_btn">Continuer →</button>
+            <button type="button" class="reg-btn reg-btn-outline" id="back-2" data-i18n="common.back">
               ← Retour
             </button>
           </form>
@@ -316,10 +316,10 @@
             >
               Utilisé pour évaluer les options de financement.
             </p>
-            <button type="submit" class="reg-btn">
+            <button type="submit" class="reg-btn" data-i18n="auth.generate_code_btn">
               Générer le code de vérification →
             </button>
-            <button type="button" class="reg-btn reg-btn-outline" id="back-3">
+            <button type="button" class="reg-btn reg-btn-outline" id="back-3" data-i18n="common.back">
               ← Retour
             </button>
           </form>

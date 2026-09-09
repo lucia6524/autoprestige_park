@@ -15,7 +15,11 @@
     "title_delivery": "Lieferung — Autohaus",
     "title_maintenance": "Wartung — Autohaus",
     "title_faq": "FAQ — Autohaus",
-    "title_legal": "Impressum — Autohaus"
+    "title_legal": "Impressum — Autohaus",
+    "title_login": "Anmelden — Autohaus",
+    "title_register": "Registrieren — Autohaus",
+    "title_account": "Mein Konto — Autohaus",
+    "title_404": "Seite nicht gefunden — Autohaus"
   },
   "nav": {
     "home": "Startseite",
@@ -37,7 +41,9 @@
     "about": "Über uns",
     "reviews": "Bewertungen",
     "login": "Anmelden",
-    "register": "Registrieren"
+    "register": "Registrieren",
+    "assurance": "Versicherung",
+    "logout": "Abmelden"
   },
   "cta": {
     "request_quote": "Angebot anfordern",
@@ -118,7 +124,18 @@
     "type_new": "Neu",
     "type_used": "Gebraucht",
     "monthly_from": "ab",
-    "per_month": "/Monat"
+    "per_month": "/Monat",
+    "filter_type_all": "Alle Typen",
+    "filter_type_new": "Neu",
+    "filter_type_used": "Gebraucht",
+    "budget_max": "Max. Budget",
+    "mileage_max": "Max. Kilometerstand",
+    "promo_only_checkbox": "Nur Angebote",
+    "sort_default": "Sortieren nach",
+    "sort_brand_asc": "Marke (A → Z)",
+    "sort_brand_desc": "Marke (Z → A)",
+    "sort_year_asc": "Jahr (älteste)",
+    "discounted_price": "Aktionspreis"
   },
   "common": {
     "loading": "Laden...",
@@ -138,10 +155,43 @@
     "light": "Zum hellen Modus wechseln",
     "dark": "Zum dunklen Modus wechseln"
   },
+  "auth": {
+    "login_btn": "Anmelden →",
+    "send_code_btn": "Code senden →",
+    "validate_btn": "Code bestätigen →",
+    "continue_btn": "Weiter →",
+    "generate_code_btn": "Bestätigungscode generieren →"
+  },
+  "account": {
+    "save_info": "Meine Angaben speichern",
+    "save_address": "Adresse speichern"
+  },
+  "error": {
+    "title": "Seite nicht gefunden",
+    "message": "Ups! Die gesuchte Seite existiert nicht, wurde verschoben oder ist nicht mehr verfügbar. Keine Panik, wir bringen Sie wieder auf den richtigen Weg.",
+    "back_home": "← Zurück zur Startseite",
+    "view_catalog": "Katalog ansehen"
+  },
   "filters": {
     "all": "Alle",
     "new": "Neu",
     "used": "Gebraucht",
     "promo": "Angebote"
+  },
+  "js": {
+    "added": "✓ Hinzugefügt",
+    "adding": "Wird hinzugefügt…",
+    "login_required": "Sie müssen angemeldet sein, um dieses Fahrzeug in den Warenkorb zu legen.\n\nZur Anmeldeseite?",
+    "review_thanks": "Danke für Ihre Bewertung! Sie wird nach Prüfung veröffentlicht.",
+    "info_updated": "Ihre Angaben wurden aktualisiert.",
+    "address_saved": "Adresse gespeichert.",
+    "delivery_saved": "Ihre Lieferanfrage wurde gespeichert."
+  },
+  "detail": {
+    "badge_reco": "★ Empfohlen",
+    "add_cart": "In den Warenkorb",
+    "adding": "Wird hinzugefügt…",
+    "added": "✓ Zum Warenkorb hinzugefügt",
+    "view": "Ansehen →"
   }
 }

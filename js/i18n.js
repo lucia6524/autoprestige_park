@@ -6,10 +6,15 @@
  * retraduire deux fois la même phrase. Le contenu injecté dynamiquement
  * (cartes véhicules, résultats, etc.) est capté par un MutationObserver
  * et traduit en plusieurs passes tant que la page évolue.
+ *
+ * En complément, les clés statiques (nav, footer, filtres, titres…) sont
+ * chargées depuis locales/<lang>.json et appliquées instantanément via les
+ * attributs data-i18n / data-i18n-placeholder / data-i18n-aria / data-i18n-alt
+ * et data-i18n-title (sur <body>) pour le titre de l'onglet.
  */
 const I18N = {
   currentLang: 'fr',
-  translations: {},
+  translations: {},          // clés de locales/<lang>.json
   supported: ['fr', 'en', 'de', 'it', 'es', 'pt', 'ro'],
   MAX_TEXT_LENGTH: 8000,      // texte plus long : laissé en français
   BRAND_NAME: 'Autohaus',     // nom de l'entreprise : jamais traduit
@@ -39,6 +44,8 @@ const I18N = {
   _translateTimer: null,
   _cache: {},  // { lang: { originalText: translatedText } }
   _failed: {}, // { lang: { originalText: true } } — phrases en échec (session) pour ne pas marteler
+  _localeLoaded: {},         // fichiers locales/<lang>.json déjà chargés
+  _originalTitle: undefined, // titre d'origine de la page (langue FR)
 
   t(key) {
     if (!key) return '';
@@ -51,9 +58,86 @@ const I18N = {
     return typeof value === 'string' ? value : key;
   },
 
+  // Clé de locale avec repli : I18N.staticT('nav.logout', 'Déconnexion')
+  staticT(key, fallback) {
+    const value = this.t(key);
+    return value !== key ? value : fallback;
+  },
+
   apply() {
     document.documentElement.lang = this.currentLang;
+    // Titre de l'onglet via data-i18n-title sur <body> (locales/<lang>.json)
+    const titleKey = document.body?.getAttribute('data-i18n-title');
+    if (titleKey) {
+      if (this._originalTitle === undefined) this._originalTitle = document.title;
+      const value = this.t(titleKey);
+      document.title = value !== titleKey ? value : this._originalTitle;
+    }
     this.updateSwitcherUI();
+  },
+
+  /* ===== Clés de locale : traduction instantanée via locales/<lang>.json ===== */
+
+  async loadLocaleFile(lang) {
+    if (this._localeLoaded[lang]) return;
+    try {
+      const res = await fetch(`locales/${lang}.json`);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      this.translations = Object.assign({}, this.translations, data);
+      this._localeLoaded[lang] = true;
+    } catch (err) {
+      console.warn('i18n: locales/' + lang + '.json indisponible :', err?.message || err);
+    }
+  },
+
+  // Remplace uniquement le premier nœud texte : préserve les icônes SVG
+  // imbriquées dans les liens et boutons (chevrons, burger…).
+  _setFirstTextNode(el, value) {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.trim()) {
+        if (!this._originalText.has(node)) this._originalText.set(node, node.nodeValue);
+        node.nodeValue = value;
+        return;
+      }
+    }
+    el.textContent = value;
+  },
+
+  // Applique les clés statiques (nav, footer, filtres, placeholders…).
+  // Les éléments sans clé restent en français et passent par DeepL ensuite.
+  applyLocaleKeys(root = document.body) {
+    if (!root) return;
+    const skip = '.lang-switcher, [data-no-translate]';
+    root.querySelectorAll('[data-i18n]').forEach(el => {
+      if (el.closest(skip)) return;
+      const key = el.getAttribute('data-i18n');
+      const value = this.t(key);
+      if (value !== key) this._setFirstTextNode(el, value);
+    });
+    const attrMap = {
+      'data-i18n-placeholder': 'placeholder',
+      'data-i18n-aria': 'aria-label',
+      'data-i18n-alt': 'alt',
+    };
+    root.querySelectorAll('[data-i18n-placeholder], [data-i18n-aria], [data-i18n-alt]').forEach(el => {
+      if (el.closest(skip)) return;
+      if (!this._originalAttributes.has(el)) {
+        const stored = {};
+        Object.values(attrMap).forEach(name => {
+          if (el.hasAttribute(name)) stored[name] = el.getAttribute(name);
+        });
+        this._originalAttributes.set(el, stored);
+      }
+      Object.entries(attrMap).forEach(([attr, name]) => {
+        const key = el.getAttribute(attr);
+        if (!key) return;
+        const value = this.t(key);
+        if (value !== key) el.setAttribute(name, value);
+      });
+    });
   },
 
   /* ===== Original content capture / restore ===== */
@@ -68,10 +152,10 @@ const I18N = {
         if (!this._originalText.has(node)) this._originalText.set(node, node.nodeValue);
       }
     }
-    root.querySelectorAll?.('[placeholder], [title], [aria-label]').forEach(el => {
+    root.querySelectorAll?.('[placeholder], [title], [aria-label], [alt]').forEach(el => {
       if (el.closest('.lang-switcher, [data-no-translate]')) return;
       const attrs = {};
-      ['placeholder', 'title', 'aria-label'].forEach(name => {
+      ['placeholder', 'title', 'aria-label', 'alt'].forEach(name => {
         if (el.hasAttribute(name)) attrs[name] = el.getAttribute(name);
       });
       if (!this._originalAttributes.has(el)) this._originalAttributes.set(el, attrs);
@@ -85,7 +169,7 @@ const I18N = {
       const original = this._originalText.get(node);
       if (original !== undefined) node.nodeValue = original;
     }
-    document.querySelectorAll('[placeholder], [title], [aria-label]').forEach(el => {
+    document.querySelectorAll('[placeholder], [title], [aria-label], [alt]').forEach(el => {
       const attrs = this._originalAttributes.get(el);
       if (attrs) Object.entries(attrs).forEach(([name, value]) => el.setAttribute(name, value));
     });
@@ -104,10 +188,10 @@ const I18N = {
       const original = this._originalText.get(node);
       if (original?.trim()) items.push({ node, text: original.trim() });
     }
-    root.querySelectorAll?.('[placeholder], [title], [aria-label]').forEach(el => {
+    root.querySelectorAll?.('[placeholder], [title], [aria-label], [alt]').forEach(el => {
       if (el.closest('.lang-switcher, [data-no-translate]')) return;
       const attrs = this._originalAttributes.get(el) || {};
-      ['placeholder', 'title', 'aria-label'].forEach(name => {
+      ['placeholder', 'title', 'aria-label', 'alt'].forEach(name => {
         if (attrs[name]?.trim()) items.push({ element: el, attribute: name, text: attrs[name] });
       });
     });
@@ -236,6 +320,8 @@ const I18N = {
     }
 
     this.captureOriginalContent();
+    // Clés statiques d'abord (locales/*.json) : nav, footer, filtres, titres…
+    this.applyLocaleKeys();
     const items = this.collectTexts();
     if (!items.length) return;
 
@@ -325,6 +411,8 @@ const I18N = {
     if (!this.supported.includes(lang)) lang = 'fr';
     localStorage.setItem('lang', lang);
     this.currentLang = lang;
+    // Fichier de locale d'abord : nav/footer/filtres/titres sans attendre DeepL.
+    await this.loadLocaleFile(lang).catch(() => {});
     this.apply();
 
     if (lang === 'fr') {
@@ -336,6 +424,8 @@ const I18N = {
     }
 
     this.observeDynamicContent();
+    // Le catalogue et les contenus JS se re-rendent dans la nouvelle langue.
+    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
   },
 
   async load(lang) {
@@ -431,16 +521,22 @@ const I18N = {
 
     this.currentLang = initial;
     localStorage.setItem('lang', initial);
+    await this.loadLocaleFile(initial).catch(() => {});
     this.apply();
     this.injectSwitcher();
+    // Clés statiques (nav, footer, filtres, titres) dès le chargement,
+    // y compris en français (valeurs identiques au texte source).
+    this.applyLocaleKeys();
 
     if (initial !== 'fr') {
       // Attendre que le DOM soit prêt puis traduire (cache d'abord)
       this.loadPersistentCache(initial);
       await new Promise(resolve => setTimeout(resolve, 100));
       await this._runTranslationPasses().catch(err => console.warn('i18n:', err));
-      this.observeDynamicContent();
     }
+    this.observeDynamicContent();
+    // Notifier le reste de la page (catalogue, badges…) pour un rendu localisé.
+    document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: initial } }));
   }
 };
 
@@ -448,4 +544,5 @@ document.addEventListener('DOMContentLoaded', () => I18N.init());
 document.addEventListener('headerReady', () => {
   I18N.apply();
   I18N.injectSwitcher();
+  I18N.applyLocaleKeys();
 });

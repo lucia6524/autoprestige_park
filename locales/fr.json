@@ -15,7 +15,11 @@
     "title_delivery": "Livraison — Autohaus",
     "title_maintenance": "Entretien — Autohaus",
     "title_faq": "FAQ — Autohaus",
-    "title_legal": "Mentions légales — Autohaus"
+    "title_legal": "Mentions légales — Autohaus",
+    "title_login": "Connexion — Autohaus",
+    "title_register": "Inscription — Autohaus",
+    "title_account": "Mon espace — Autohaus",
+    "title_404": "Page introuvable — Autohaus"
   },
   "nav": {
     "home": "Accueil",
@@ -37,7 +41,9 @@
     "about": "À propos",
     "reviews": "Avis clients",
     "login": "Connexion",
-    "register": "Inscription"
+    "register": "Inscription",
+    "assurance": "Assurance",
+    "logout": "Déconnexion"
   },
   "cta": {
     "request_quote": "Demander un devis",
@@ -118,7 +124,18 @@
     "type_new": "Neuf",
     "type_used": "Occasion",
     "monthly_from": "à partir de",
-    "per_month": "/mois"
+    "per_month": "/mois",
+    "filter_type_all": "Tous types",
+    "filter_type_new": "Neufs",
+    "filter_type_used": "Occasions",
+    "budget_max": "Budget max",
+    "mileage_max": "Kilométrage max",
+    "promo_only_checkbox": "Promos uniquement",
+    "sort_default": "Trier par",
+    "sort_brand_asc": "Marque (A → Z)",
+    "sort_brand_desc": "Marque (Z → A)",
+    "sort_year_asc": "Année (ancien)",
+    "discounted_price": "Prix remisé"
   },
   "common": {
     "loading": "Chargement...",
@@ -138,10 +155,43 @@
     "light": "Passer en mode clair",
     "dark": "Passer en mode sombre"
   },
+  "auth": {
+    "login_btn": "Se connecter →",
+    "send_code_btn": "Envoyer le code →",
+    "validate_btn": "Valider le code →",
+    "continue_btn": "Continuer →",
+    "generate_code_btn": "Générer le code de vérification →"
+  },
+  "account": {
+    "save_info": "Enregistrer mes informations",
+    "save_address": "Enregistrer l’adresse"
+  },
+  "error": {
+    "title": "Page introuvable",
+    "message": "Oups ! La page que vous cherchez n'existe pas, a été déplacée ou n'est plus disponible. Pas de panique, on vous remet sur la bonne route.",
+    "back_home": "← Retour à l'accueil",
+    "view_catalog": "Voir le catalogue"
+  },
   "filters": {
     "all": "Tous",
     "new": "Neufs",
     "used": "Occasions",
     "promo": "Promotions"
+  },
+  "js": {
+    "added": "✓ Ajouté",
+    "adding": "Ajout…",
+    "login_required": "Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?",
+    "review_thanks": "Merci pour votre avis ! Il sera publié après modération.",
+    "info_updated": "Vos informations ont été mises à jour.",
+    "address_saved": "Adresse enregistrée.",
+    "delivery_saved": "Votre demande de livraison a été enregistrée."
+  },
+  "detail": {
+    "badge_reco": "★ Recommandé",
+    "add_cart": "Ajouter au panier",
+    "adding": "Ajout…",
+    "added": "✓ Ajouté au panier",
+    "view": "Voir →"
   }
 }
