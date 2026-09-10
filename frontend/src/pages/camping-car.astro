@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Camping-car — Autohaus"
+  description="Découvrez notre sélection de camping-cars et vans aménagés chez Autohaus."
+  i18nTitle="meta.title_rv"
+  footer={{
+    nav: ['home', 'vehicles'],
+    services: [],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1527786356703-4b100091cd2c?w=1920&q=80"
+        alt="Camping-car"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">Camping-car</span>
+      <h1>Camping-cars & Fourgons</h1>
+      <p>
+        Découvrez notre sélection de camping-cars et vans aménagés.
+        Contactez-nous pour connaître les disponibilités actuelles.
+      </p>
+      <div style="margin-top: 30px">
+        <a href="contact.html" class="btn btn-primary btn-lg">Nous contacter</a>
+      </div>
+    </div>
+  </section>
+</Layout>

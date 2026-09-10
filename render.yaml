@@ -3,12 +3,12 @@ services:
     name: autoprestige-site
     runtime: static
     plan: free
-    staticPublishPath: .
-    buildCommand: echo "no build needed"
-    routes:
-      - type: rewrite
-        source: /\*404.html
-        destination: /404.html
+    # Astro builds the site (all HTML pages pre-generated) into frontend/dist
+    staticPublishPath: frontend/dist
+    buildCommand: cd frontend && npm install --no-fund --no-audit && npm run build
+    # Render sert automatiquement le fichier 404.html du dossier publié pour
+    # les URL inexistantes — pas besoin d'une règle de réécriture. (L'ancienne
+    # règle `/\*404.html` était cassée et ne correspondait à aucune URL.)
 
   - type: web
     name: autoprestige-api

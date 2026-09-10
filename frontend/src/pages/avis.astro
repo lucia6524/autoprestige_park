@@ -1,0 +1,341 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Avis clients — Autohaus"
+  description="Découvrez les avis de nos clients satisfaits. Note moyenne 4.9/5."
+  i18nTitle="meta.title_reviews"
+  footer={{
+    nav: ['home', 'vehicles'],
+    services: ['warranty', 'delivery', 'maintenance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'full',
+  }}
+>
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&q=80"
+        alt="Avis clients"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">Avis clients</span>
+      <h1>Ce que disent nos clients</h1>
+      <p style="font-size: 1.4rem; margin-top: 12px">
+        4.9 ★★★★★
+        <span style="color: var(--text-muted); font-size: 1rem"
+          >(30 avis)</span
+        >
+      </p>
+    </div>
+  </section>
+
+  <section style="padding: 40px 0 80px">
+    <div class="container">
+      <div class="stats-grid" style="margin-bottom: 50px">
+        <div class="stat-item">
+          <strong id="stat-rating" data-dynamic>0</strong>
+          <span data-i18n="home.stats_rating">Note moyenne</span>
+        </div>
+        <div class="stat-item">
+          <strong id="stat-reviews" data-dynamic>0</strong>
+          <span data-i18n="reviews.stats_verified">Avis vérifiés</span>
+        </div>
+        <div class="stat-item">
+          <strong id="stat-satisfaction" data-dynamic>0</strong>
+          <span data-i18n="reviews.stats_satisfied">Clients satisfaits</span>
+        </div>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">MH</div>
+            <div>
+              <strong>Marcus Hoffmann</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>
+            « Excellent service ! J'ai trouvé ma BMW idéale, financement au
+            meilleur taux. Je recommande. »
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">SB</div>
+            <div>
+              <strong>Sophie Becker</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>
+            « Super concessionnaire ! Très professionnel, large choix, équipe
+            disponible et à l'écoute. »
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">TR</div>
+            <div>
+              <strong>Thomas Reinhardt</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>
+            « Vendeur honnête et fiable. Voiture de qualité, prix juste,
+            livraison rapide. Parfait. »
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">AM</div>
+            <div>
+              <strong>Anna Müller</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>
+            « Équipe très compétente. Ils ont trouvé la Volkswagen parfaite
+            pour moi. Merci ! »
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">LR</div>
+            <div>
+              <strong>Luca Rossi</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>
+            « Incroyable expérience. J'ai acheté une Audi A4, tout s'est
+            parfaitement passé. Livraison impeccable. »
+          </p>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="avatar">CD</div>
+            <div>
+              <strong>Camille Dupont</strong>
+              <div class="stars">★★★★★</div>
+            </div>
+          </div>
+          <p>
+            « Équipe formidable, prix compétitifs. Ma Renault Clio est arrivée
+            en parfait état. Je suis ravie ! »
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-form" id="review-form-section">
+      <h3 style="margin-bottom: 8px" data-i18n="reviews.form_title">
+        Donnez votre avis
+      </h3>
+      <p
+        style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;"
+        data-i18n="reviews.form_subtitle"
+      >
+        Partagez votre expérience avec Autohaus.
+      </p>
+      <form id="review-form">
+        <div class="star-rating" aria-label="Note">
+          <span data-v="1" title="1">★</span>
+          <span data-v="2" title="2">★</span>
+          <span data-v="3" title="3">★</span>
+          <span data-v="4" title="4">★</span>
+          <span data-v="5" title="5">★</span>
+        </div>
+        <div class="form-group">
+          <label data-i18n="reviews.your_name">Votre nom</label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Jean Dupont"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label data-i18n="reviews.email">Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="jean@email.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label data-i18n="reviews.vehicle">Véhicule acheté (optionnel)</label>
+          <input
+            type="text"
+            name="vehicle"
+            placeholder="Ex : BMW Série 3, Audi A4..."
+          />
+        </div>
+        <div class="form-group">
+          <label data-i18n="reviews.your_review">Votre avis</label>
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Racontez votre expérience..."
+            required
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="width: 100%"
+          id="review-submit"
+        >
+          <span data-i18n="reviews.submit">Envoyer mon avis</span>
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Même logique que la page HTML d'origine : chargement avis API +
+    // traitement formulaire.
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('review-form');
+      if (!form) return;
+
+      let rating = 5;
+      const stars = form.querySelectorAll('.star-rating span');
+      stars.forEach((star, i) => {
+        star.addEventListener('click', () => {
+          rating = i + 1;
+          stars.forEach((s, j) => s.classList.toggle('active', j < rating));
+        });
+      });
+      stars.forEach((s, j) => s.classList.toggle('active', j < rating));
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('review-submit');
+        const originalText = submitBtn ? submitBtn.innerHTML : '';
+        const fd = new FormData(form);
+        const payload = {
+          name: (fd.get('name') || '').toString().trim(),
+          email: (fd.get('email') || '').toString().trim(),
+          vehicle: (fd.get('vehicle') || '').toString().trim(),
+          rating,
+          message: (fd.get('message') || '').toString().trim(),
+        };
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = 'Envoi…';
+        }
+        try {
+          if (window.API && typeof API.submitReview === 'function') {
+            await API.submitReview(payload);
+            alert('Merci pour votre avis ! Il sera publié après modération.');
+          } else {
+            throw new Error('API indisponible');
+          }
+          form.reset();
+          rating = 5;
+          stars.forEach((s, j) => s.classList.toggle('active', j < rating));
+        } catch (error) {
+          alert(
+            (window.API ? API.friendlyError(error) : error.message) ||
+              'Une erreur est survenue. Réessayez.'
+          );
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
+        }
+      });
+
+      // Charger les avis dynamiques depuis l'API
+      const grid = document.querySelector('.testimonials-grid');
+      if (!grid || !window.API || typeof API.getReviews !== 'function') return;
+
+      const statRating = document.getElementById('stat-rating');
+      const statReviews = document.getElementById('stat-reviews');
+      const statSatisfaction = document.getElementById('stat-satisfaction');
+      function animateStats(stats) {
+        const total = stats?.total || 0;
+        const average = stats?.average || 0;
+        if (statRating) {
+          // Animate counter from 0 to average (1 decimal)
+          const duration = 1400;
+          const start = performance.now();
+          function frame(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            statRating.textContent =
+              (average * eased).toFixed(1).replace('.', ',') + '★';
+            if (progress < 1) requestAnimationFrame(frame);
+          }
+          requestAnimationFrame(frame);
+        }
+        if (statReviews) {
+          const duration = 1400;
+          const start = performance.now();
+          function frame2(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            statReviews.textContent = Math.floor(total * eased).toLocaleString('fr-FR');
+            if (progress < 1) requestAnimationFrame(frame2);
+          }
+          requestAnimationFrame(frame2);
+        }
+        if (statSatisfaction) {
+          const duration = 1400;
+          const start = performance.now();
+          function frame3(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            statSatisfaction.textContent = Math.floor(98 * eased) + '%';
+            if (progress < 1) requestAnimationFrame(frame3);
+          }
+          requestAnimationFrame(frame3);
+        }
+      }
+      API.getReviewStats().then(animateStats).catch(() => animateStats(null));
+
+      API.getReviews().then((reviews) => {
+        if (!Array.isArray(reviews) || !reviews.length) return;
+        const stars2 = (n) => '★'.repeat(n) + '☆'.repeat(5 - n);
+        const initials = (name) =>
+          name.split(/\s+/).map((w) => w[0]).join('').slice(0, 2).toUpperCase();
+        grid.innerHTML = reviews
+          .map(
+            (r) => `
+          <div class="testimonial-card">
+            <div class="testimonial-header">
+              <div class="avatar">${initials(r.name || '?')}</div>
+              <div>
+                <strong>${r.name}</strong>
+                <div class="stars">${stars2(r.rating)}</div>
+              </div>
+            </div>
+            ${r.vehicle ? `<p class="testimonial-vehicle" style="color:var(--accent-light);font-size:0.9rem;margin-bottom:6px;">${r.vehicle}</p>` : ''}
+            <p>« ${r.message} »</p>
+          </div>
+        `
+          )
+          .join('');
+        if (reviews.length) {
+          const avg = reviews.reduce((s, r) => s + (r.rating || 0), 0) / reviews.length;
+          const ratingEl = document.querySelector('.page-hero p');
+          if (ratingEl) {
+            ratingEl.innerHTML =
+              `${avg.toFixed(1).replace('.', ',')} ★★★★★ <span style="color: var(--text-muted); font-size: 1rem">(${reviews.length} avis)</span>`;
+          }
+        }
+      }).catch(() => {
+        // Les témoignages statiques restent affichés
+      });
+    });
+  </script>
+</Layout>

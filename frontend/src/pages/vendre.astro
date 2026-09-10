@@ -1,0 +1,141 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Vendre mon véhicule — Autohaus"
+  description="Vendez votre voiture au meilleur prix. Estimation gratuite et sans engagement. Offre sous 24h."
+  i18nTitle="meta.title_sell"
+  footer={{
+    nav: ['home', 'vehicles', 'financing', 'sell', 'contact'],
+    services: ['warranty', 'delivery', 'maintenance', 'insurance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <section class="hero" style="min-height: 70vh">
+    <div class="hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&q=80"
+        alt="Vendre voiture"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">Vendre mon véhicule</div>
+        <h1>
+          Vendez votre voiture<br />au
+          <span class="highlight">meilleur prix</span>
+        </h1>
+        <p>
+          Estimation gratuite et sans engagement. Notre équipe évalue votre
+          véhicule et vous propose la meilleure offre en 24h.
+        </p>
+        <div class="hero-buttons">
+          <a href="#estimation" class="btn btn-primary btn-lg"
+            >Estimer mon véhicule →</a
+          >
+          <a
+            href="https://wa.me/33142868200"
+            class="btn btn-outline btn-lg"
+            target="_blank"
+            >WhatsApp</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="estimation" style="padding: 80px 0">
+    <div class="container">
+      <div class="section-header">
+        <span class="label">Estimation gratuite</span>
+        <h2>Obtenez une offre en 24h</h2>
+        <p>
+          Remplissez le formulaire ci-dessous, nous vous recontactons
+          rapidement avec une proposition sérieuse.
+        </p>
+      </div>
+
+      <form
+        class="contact-form"
+        style="max-width: 700px; margin: 0 auto"
+        id="sell-form"
+        enctype="multipart/form-data"
+      >
+        <div class="form-row">
+          <div class="form-group">
+            <label>Marque</label>
+            <input type="text" placeholder="Ex : BMW" required />
+          </div>
+          <div class="form-group">
+            <label>Modèle</label>
+            <input type="text" placeholder="Ex : Série 3 320d" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Année</label>
+            <input type="number" placeholder="2019" required />
+          </div>
+          <div class="form-group">
+            <label>Kilométrage</label>
+            <input type="number" placeholder="85000" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Votre nom</label>
+            <input type="text" placeholder="Jean Dupont" required />
+          </div>
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" placeholder="+33 6 12 34 56 78" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label data-i18n="sell.photos_label">Photos du véhicule</label>
+          <span
+            style="font-size: 0.85rem; color: var(--text-muted)"
+            data-i18n="sell.photos_hint"
+          >
+            Cliquez pour ajouter des photos (max. 6)
+          </span>
+          <div
+            style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px"
+            data-i18n="sell.photos_formats"
+          >
+            JPG, PNG, WebP — 10 Mo max par photo
+          </div>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            style="margin-top: 8px"
+          />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="jean@email.com" required />
+        </div>
+        <div class="form-group">
+          <label>Message (optionnel)</label>
+          <textarea
+            rows="3"
+            placeholder="Des informations complémentaires..."
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          class="btn btn-primary btn-lg"
+          style="width: 100%"
+        >
+          Envoyer la demande
+        </button>
+      </form>
+    </div>
+  </section>
+</Layout>

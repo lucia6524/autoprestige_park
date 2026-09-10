@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Livraison — Autohaus"
+  description="Livraison à domicile de votre véhicule partout en France et en Europe. Transport sécurisé et suivi en temps réel."
+  i18nTitle="meta.title_delivery"
+  footer={{
+    nav: ['home', 'vehicles'],
+    services: ['warranty', 'delivery', 'maintenance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?w=1920&q=80"
+        alt="Livraison"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">Transport</span>
+      <h1>Livraison à domicile</h1>
+      <p>
+        Votre véhicule livré propre, avec plein de carburant et tous les
+        documents, partout en France et en Europe.
+      </p>
+    </div>
+  </section>
+
+  <section style="padding: 60px 0 100px">
+    <div class="container">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🚚</div>
+          <h3>Transport sécurisé</h3>
+          <p>
+            Véhicules transportés sur plateau ou en camion fermé. Assurance
+            transport incluse.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📍</div>
+          <h3>Suivi en temps réel</h3>
+          <p>
+            Numéro de suivi fourni. Vous savez exactement où se trouve votre
+            voiture.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔑</div>
+          <h3>Remise en main propre</h3>
+          <p>
+            Documents, clés et véhicule remis personnellement. Contrôle final
+            ensemble.
+          </p>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 50px">
+        <a href="contact.html" class="btn btn-primary btn-lg"
+          >Demander une livraison</a
+        >
+      </div>
+    </div>
+  </section>
+</Layout>

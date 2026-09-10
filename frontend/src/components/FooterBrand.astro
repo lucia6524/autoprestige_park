@@ -1,0 +1,21 @@
+---
+// Bloc "Marque" du footer : logo + tagline
+import { getTagline } from '../data/footer-links';
+
+interface Props {
+  /** 'full' | 'default' | 'custom' — voir footer-links.ts */
+  variant?: 'full' | 'default' | 'custom';
+  /** Texte libre si variant="custom" */
+  tagline?: string;
+}
+const { variant = 'default', tagline } = Astro.props;
+const t = getTagline(variant, tagline);
+---
+
+<div class="footer-brand">
+  <a href="index.html" class="logo" data-no-translate>
+    <img src="logo.png" alt="Autohaus" />
+    Auto<span>haus</span>
+  </a>
+  {t.i18n ? <p data-i18n="footer.tagline">{t.text}</p> : <p>{t.text}</p>}
+</div>

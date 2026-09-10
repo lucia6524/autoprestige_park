@@ -1,0 +1,71 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Entretien & Maintenance — Autohaus"
+  description="Service d'entretien et maintenance pour toutes marques. Atelier multi-marques, pièces d'origine et identiques."
+  i18nTitle="meta.title_maintenance"
+  footer={{
+    nav: ['home', 'vehicles'],
+    services: ['warranty', 'delivery', 'maintenance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1486262715619-67b85e0b08d3?w=1920&q=80"
+        alt="Entretien"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">Atelier</span>
+      <h1>Entretien & Maintenance</h1>
+      <p>
+        Un service après-vente complet pour toutes les marques. Pièces
+        d'origine ou équivalentes, techniciens expérimentés.
+      </p>
+    </div>
+  </section>
+
+  <section style="padding: 60px 0 100px">
+    <div class="container">
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🔧</div>
+          <h3>Révisions & Entretien</h3>
+          <p>
+            Vidange, filtres, freins, distribution... Selon le carnet
+            d'entretien constructeur.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🛠️</div>
+          <h3>Diagnostic électronique</h3>
+          <p>
+            Lecture des codes défaut, mise à jour logiciels, calibration des
+            systèmes d'aide à la conduite.
+          </p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✨</div>
+          <h3>Préparation esthétique</h3>
+          <p>
+            Nettoyage intérieur/extérieur professionnel, polissage, traitement
+            anti-bactérien.
+          </p>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 50px">
+        <a href="contact.html" class="btn btn-primary btn-lg"
+          >Prendre rendez-vous</a
+        >
+      </div>
+    </div>
+  </section>
+</Layout>

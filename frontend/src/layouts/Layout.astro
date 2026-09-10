@@ -1,0 +1,71 @@
+---
+// Gabarit commun : head, header statique + footer partagés, scripts communs.
+// Les pages passent leurs options footer via props (footer={...}).
+// header.js détecte le header statique et s'y branche — plus d'injection DOM.
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import type { FooterOptions } from '../types';
+
+interface Props {
+  title: string;
+  description?: string;
+  i18nTitle?: string;
+  footer?: FooterOptions;
+  scripts?: string[];
+  // Pages qui gèrent elles-mêmes leurs scripts (ex. compte, connexion,
+  // inscription) pour préserver l'ordre exact des pages HTML d'origine.
+  ownScripts?: boolean;
+}
+
+const {
+  title,
+  description = "Autohaus : votre spécialiste en véhicules neufs et d'occasion. Financement sur mesure, livraison rapide, garantie jusqu'à 24 mois.",
+  i18nTitle,
+  footer = {},
+  scripts = [],
+  ownScripts = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://ridnurabtydwlymzdexk.supabase.co" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <script is:inline>
+      var p = localStorage.getItem('theme');
+      if (p !== 'light' && p !== 'dark') p = 'dark';
+      document.documentElement.setAttribute('data-theme', p);
+    </script>
+  </head>
+  <body data-i18n-title={i18nTitle}>
+    <Header />
+
+    <slot />
+
+    <Footer {...footer} />
+
+    {!ownScripts && (
+      <>
+        <script src="js/header.js" defer is:inline></script>
+        <script src="js/i18n.js" defer is:inline></script>
+        <script src="js/api.js" defer is:inline></script>
+        {scripts.map((src) => (
+          <script src={src} defer is:inline></script>
+        ))}
+        <script src="js/main.js" defer is:inline></script>
+      </>
+    )}
+  </body>
+</html>

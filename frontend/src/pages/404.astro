@@ -1,0 +1,162 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// Page 404 — servie par Astro pour les erreurs non trouvées.
+export const prerender = true;
+---
+
+<Layout
+  title="Page introuvable — Autohaus"
+  description="La page que vous recherchez n'existe pas ou a été déplacée."
+  i18nTitle="meta.title_404"
+  footer={{
+    nav: ['home', 'vehicles', 'financing', 'sell', 'contact'],
+    services: ['warranty', 'delivery', 'maintenance', 'insurance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'full',
+  }}
+>
+  <style>
+    .error-page {
+      min-height: calc(100vh - 80px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 24px 100px;
+      text-align: center;
+    }
+    .error-content {
+      max-width: 600px;
+    }
+    .error-code {
+      font-size: clamp(6rem, 15vw, 10rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin: 0 0 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.9;
+    }
+    .error-icon {
+      font-size: 3rem;
+      margin-bottom: 24px;
+      display: block;
+      animation: errorBounce 2s ease-in-out infinite;
+    }
+    @keyframes errorBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .error-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+    .error-message {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      margin: 0 0 40px;
+      line-height: 1.6;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .error-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+    .error-actions .btn {
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 12px;
+    }
+    .error-links {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+    .error-links p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .error-links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .error-links-grid a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 8px 16px;
+      border-radius: 8px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      transition: all 0.2s ease;
+    }
+    .error-links-grid a:hover {
+      color: var(--accent-light);
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .error-decoration {
+      position: absolute;
+      bottom: -40px;
+      right: -20px;
+      font-size: 12rem;
+      opacity: 0.03;
+      pointer-events: none;
+      user-select: none;
+    }
+    [data-theme="light"] .error-decoration {
+      opacity: 0.05;
+    }
+  </style>
+
+  <main class="error-page">
+    <div class="error-content">
+      <span class="error-icon" aria-hidden="true">🚗</span>
+      <div class="error-code">404</div>
+      <h1 class="error-title" data-i18n="error.title">Page introuvable</h1>
+      <p class="error-message" data-i18n="error.message">
+        Oups ! La page que vous cherchez n'existe pas, a été déplacée ou
+        n'est plus disponible. Pas de panique, on vous remet sur la bonne
+        route.
+      </p>
+
+      <div class="error-actions">
+        <a href="index.html" class="btn btn-primary btn-lg" data-i18n="error.back_home">
+          ← Retour à l'accueil
+        </a>
+        <a href="vehicules.html" class="btn btn-outline btn-lg" data-i18n="error.view_catalog">
+          Voir le catalogue
+        </a>
+      </div>
+
+      <div class="error-links">
+        <p>Vous cherchiez peut-être :</p>
+        <div class="error-links-grid">
+          <a href="vehicules.html">Catalogue véhicules</a>
+          <a href="financement.html">Financement</a>
+          <a href="contact.html">Contact</a>
+          <a href="vendre.html">Vendre mon véhicule</a>
+          <a href="garantie.html">Garantie</a>
+          <a href="livraison.html">Livraison</a>
+          <a href="faq.html">FAQ</a>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,27 @@
+---
+// Ligne "footer-bottom" : © + liens légaux
+interface Props {
+  /** "full" = liens Mentions légales / Cookies / CGV ; "short" = texte seul */
+  legal?: 'full' | 'short';
+}
+const { legal = 'short' } = Astro.props;
+---
+
+<div class="footer-bottom">
+  <span data-i18n="footer.rights">© 2026 Autohaus. Tous droits réservés.</span>
+  {legal === 'full' ? (
+    <span>
+      <a href="mentions-legales.html" data-i18n="footer.legal"
+        >Mentions légales</a
+      >
+      ·
+      <a href="mentions-legales.html#cookies" data-i18n="footer.cookies"
+        >Cookies</a
+      >
+      ·
+      <a href="mentions-legales.html#cgv" data-i18n="footer.cgv">CGV</a>
+    </span>
+  ) : (
+    <span>Mentions légales · CGV</span>
+  )}
+</div>

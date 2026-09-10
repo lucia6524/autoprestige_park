@@ -32,7 +32,7 @@ try:
 except ImportError:
     sys.exit("Pillow manquant : pip install Pillow")
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent / "frontend" / "public"
 DATA_FILE = BASE_DIR / "js" / "vehicles-data.js"
 THUMBS_DIR = BASE_DIR / "thumbs"
 MAP_FILE = BASE_DIR / "js" / "vehicles-thumbs.js"

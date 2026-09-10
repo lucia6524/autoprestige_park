@@ -7,6 +7,20 @@
 - Backend FastAPI (auth, panier, commandes, échéancier, livraison)
 - Inscription multi-étapes + vérification email OTP
 
+## Structure
+
+```
+autoprestige/
+├── frontend/          # Site Astro (statique, génération de pages .html)
+│   ├── src/pages/     # 22 pages .astro
+│   ├── src/layouts/   # Layout, Header, Footer
+│   ├── public/        # css/, js/, locales/, thumbs/ (assets servis tels quels)
+│   └── dist/          # Sortie du build (déployée par Render)
+├── backend/           # API FastAPI (auth, véhicules, panier, commandes)
+├── render.yaml        # Déploiement Render (site statique + API + PostgreSQL)
+└── README.md
+```
+
 ## Démarrage rapide
 
 ### 1. Backend
@@ -17,7 +31,7 @@ pip install -r requirements.txt
 
 # Optionnel : envoi réel des emails
 cp .env.example .env
-# Édite .env avec ton Gmail + mot de passe d'application
+# Édite .env avec tes identifiants (Brevo SMTP, DeepL, ADMIN_PASSWORD…)
 
 python run.py
 # API sur http://127.0.0.1:8000
@@ -25,12 +39,11 @@ python run.py
 
 ### 2. Frontend
 
-Ouvre les fichiers HTML via un serveur local :
-
 ```bash
-# Depuis le dossier autoprestige/
-python3 -m http.server 5500
-# Puis http://localhost:5500
+cd frontend
+npm install
+npm run build      # génère le site 100 % statique dans frontend/dist/
+npm run dev        # (optionnel) serveur de dev Astro
 ```
 
 ## Pages importantes
@@ -49,3 +62,26 @@ python3 -m http.server 5500
 1. Inscription en 4 étapes (nom → email/tél → salaire → code email)
 2. Le code OTP interne est affiché à l'écran puis saisi par l'utilisateur
 3. Après validation → espace compte (panier, commandes, livraison)
+
+## Déploiement (Render)
+
+`render.yaml` définit :
+
+- **autoprestige-site** : site statique ; `frontend/dist` est publié après
+  `npm run build`. Le fichier `frontend/public/404.html` (copié dans dist)
+  sert malgré lui de page 404.
+- **autoprestige-api** : API Uvicorn sur le dossier `backend`.
+- **progrest** : base PostgreSQL (le réglage `PYTHON_VERSION` et de nombreuses
+  variables d'env sont à renseigner dans l'UI Render, avec `sync: false`).
+
+## Maintenance
+
+- Génération des vignettes locales WebP dans `frontend/public/thumbs/` +
+  table `frontend/public/js/vehicles-thumbs.js` :
+  ```bash
+  cd backend && python optimize_catalog_images.py
+  ```
+- Import du catalogue local (`frontend/public/js/vehicles-data.js`) vers l'API :
+  ```bash
+  cd backend && python import_vehicles.py --email ... --password ...
+  ```

@@ -1,0 +1,53 @@
+---
+// Footer Autohaus — composant partagé.
+// Reproduit les variantes existantes des pages HTML d'origine.
+// Les variantes par défaut correspondent au footer complet standard.
+import FooterBrand from './FooterBrand.astro';
+import FooterNav from './FooterNav.astro';
+import FooterServices from './FooterServices.astro';
+import FooterContact from './FooterContact.astro';
+import FooterBottom from './FooterBottom.astro';
+
+interface Props {
+  /** Contenu des colonnes Navigation / Services */
+  nav?: string[];
+  services?: string[];
+  /** Bloc contact : whatsapp et/ou adresse */
+  contactWhatsapp?: boolean;
+  contactAddress?: 'full' | 'short' | false;
+  /** Tagline du bloc marque */
+  tagline?: 'full' | 'default' | 'custom';
+  taglineText?: string;
+  /** Ligne légale : liens complets (Mentions/Cookies/CGV) ou texte court */
+  legal?: 'full' | 'short';
+}
+
+const {
+  nav = ['home', 'vehicles', 'financing', 'sell', 'contact'],
+  services = ['warranty', 'delivery', 'maintenance', 'insurance'],
+  contactWhatsapp = false,
+  contactAddress = 'full',
+  tagline = 'full',
+  taglineText,
+  legal = 'full',
+} = Astro.props;
+---
+
+<footer class="footer" translate="no">
+  <div class="container">
+    <div class="footer-grid">
+      <FooterBrand variant={tagline} tagline={taglineText} />
+
+      <FooterNav links={nav} />
+
+      <FooterServices links={services} />
+
+      <FooterContact
+        whatsapp={contactWhatsapp}
+        address={contactAddress}
+      />
+    </div>
+
+    <FooterBottom legal={legal} />
+  </div>
+</footer>

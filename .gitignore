@@ -19,3 +19,8 @@ venv/
 .DS_Store
 Thumbs.db
 .vscode/
+
+# Node / Astro frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.astro/

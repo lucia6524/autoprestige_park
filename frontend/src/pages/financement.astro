@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Simuler mon financement — Autohaus"
+  description="Simulez votre financement automobile. Découvrez les véhicules accessibles selon votre budget mensuel."
+  i18nTitle="meta.title_financing"
+  footer={{
+    nav: ['home', 'vehicles', 'financing', 'sell', 'contact'],
+    services: ['warranty', 'delivery', 'maintenance', 'insurance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <style>
+    .simu-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .simu-box label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+    .simu-box input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+    }
+    .simu-result {
+      background: rgba(37, 99, 235, 0.1);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-top: 20px;
+      display: none;
+    }
+    .simu-result strong {
+      font-size: 2rem;
+      color: var(--accent-light);
+      display: block;
+      margin: 8px 0;
+    }
+  </style>
+
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=1920&q=80"
+        alt="Financement"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">Outil de simulation</span>
+      <h1>
+        Simuler mon<br /><span style="color: var(--accent-light)"
+          >financement</span
+        >
+      </h1>
+      <p>
+        Indiquez votre salaire mensuel et découvrez instantanément les
+        véhicules accessibles (environ 33 % de votre salaire).
+      </p>
+    </div>
+  </section>
+
+  <section style="padding: 60px 0 100px">
+    <div class="container">
+      <div class="simu-box">
+        <label for="salary">Votre salaire net mensuel (€)</label>
+        <input
+          type="number"
+          id="salary"
+          placeholder="Ex : 2500"
+          min="0"
+          step="1"
+          inputmode="numeric"
+          autocomplete="off"
+        />
+
+        <button
+          class="btn btn-primary btn-lg"
+          style="width: 100%"
+          onclick="simulateFinance()"
+        >
+          Calculer mon budget
+        </button>
+
+        <div class="simu-result" id="simu-result">
+          <span>Budget mensuel recommandé</span>
+          <strong id="budget-value">0 €</strong>
+          <span
+            >Vous pouvez financer un véhicule jusqu'à ce montant
+            mensuel.</span
+          >
+          <a
+            href="vehicules.html"
+            class="btn btn-primary"
+            style="margin-top: 20px"
+            >Voir les véhicules adaptés</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    function simulateFinance() {
+      const salary = parseFloat(document.getElementById('salary').value) || 0;
+      const budget = Math.round(salary * 0.33);
+      document.getElementById('budget-value').textContent =
+        budget.toLocaleString('fr-FR') + ' €';
+      document.getElementById('simu-result').style.display = 'block';
+    }
+  </script>
+</Layout>

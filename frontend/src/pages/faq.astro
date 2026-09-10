@@ -1,0 +1,143 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="FAQ — Autohaus"
+  description="Questions fréquentes sur l'achat, la vente, la livraison et la garantie chez Autohaus."
+  i18nTitle="meta.title_faq"
+  footer={{
+    nav: ['home', 'vehicles'],
+    services: ['warranty', 'delivery', 'maintenance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <style is:global>
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .faq-question {
+      padding: 20px 24px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .faq-question:hover {
+      color: var(--accent-light);
+    }
+    .faq-answer {
+      padding: 0 24px 20px;
+      color: var(--text-secondary);
+      display: none;
+    }
+    .faq-item.open .faq-answer {
+      display: block;
+    }
+  </style>
+
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=1920&q=80"
+        alt="FAQ"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">FAQ</span>
+      <h1>Questions fréquentes</h1>
+      <p>
+        Tout ce que vous devez savoir sur l'achat, la vente, la livraison et
+        la garantie.
+      </p>
+    </div>
+  </section>
+
+  <section style="padding: 60px 0 100px">
+    <div class="container" style="max-width: 800px">
+      <div class="faq-item">
+        <div
+          class="faq-question"
+          onclick="this.parentElement.classList.toggle('open')"
+        >
+          Quels types de véhicules proposez-vous ? <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Nous proposons des véhicules neufs, des occasions récentes et des
+          véhicules de démonstration de toutes les grandes marques européennes
+          et asiatiques.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div
+          class="faq-question"
+          onclick="this.parentElement.classList.toggle('open')"
+        >
+          Les véhicules sont-ils garantis ? <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Oui. Tous nos véhicules d'occasion sont vendus avec une garantie
+          minimum de 12 mois. Des extensions jusqu'à 36 mois sont disponibles.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div
+          class="faq-question"
+          onclick="this.parentElement.classList.toggle('open')"
+        >
+          Proposez-vous le financement ? <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Oui. Nous travaillons avec plusieurs partenaires bancaires pour vous
+          proposer des solutions de financement adaptées (crédit classique,
+          LOA, LLD).
+        </div>
+      </div>
+      <div class="faq-item">
+        <div
+          class="faq-question"
+          onclick="this.parentElement.classList.toggle('open')"
+        >
+          Livrez-vous partout en France ? <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Oui, nous livrons dans toute la France et dans la plupart des pays
+          européens. Le transport est sécurisé et assuré.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div
+          class="faq-question"
+          onclick="this.parentElement.classList.toggle('open')"
+        >
+          Puis-je faire reprendre mon ancien véhicule ? <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Absolument. Nous proposons une estimation gratuite et une reprise de
+          votre véhicule actuel dans le cadre de l'achat d'un nouveau.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div
+          class="faq-question"
+          onclick="this.parentElement.classList.toggle('open')"
+        >
+          Comment se passe le paiement ? <span>+</span>
+        </div>
+        <div class="faq-answer">
+          Virement bancaire sécurisé ou paiement échelonné selon l'accord.
+          Aucun frais caché. Tout est clairement indiqué dans le contrat.
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

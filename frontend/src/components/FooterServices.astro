@@ -1,0 +1,24 @@
+---
+// Bloc "Services" du footer : liste de liens traduits
+import { SERVICE_LINKS } from '../data/footer-links';
+
+interface Props {
+  /** Clés i18n autorisées : sous-ensemble de SERVICE_LINKS */
+  links: string[];
+}
+const { links } = Astro.props;
+---
+
+<div>
+  <h4 data-i18n="footer.services">Services</h4>
+  <div class="footer-links">
+    {links.map((key) => {
+      const link = SERVICE_LINKS[key];
+      return (
+        <a href={link.href} data-i18n={link.i18n}>
+          {link.text}
+        </a>
+      );
+    })}
+  </div>
+</div>

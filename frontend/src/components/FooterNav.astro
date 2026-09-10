@@ -1,0 +1,24 @@
+---
+// Bloc "Navigation" du footer : liste de liens traduits
+import { NAV_LINKS } from '../data/footer-links';
+
+interface Props {
+  /** Clés i18n autorisées : sous-ensemble de NAV_LINKS */
+  links: string[];
+}
+const { links } = Astro.props;
+---
+
+<div>
+  <h4 data-i18n="footer.navigation">Navigation</h4>
+  <div class="footer-links">
+    {links.map((key) => {
+      const link = NAV_LINKS[key];
+      return (
+        <a href={link.href} data-i18n={link.i18n}>
+          {link.text}
+        </a>
+      );
+    })}
+  </div>
+</div>

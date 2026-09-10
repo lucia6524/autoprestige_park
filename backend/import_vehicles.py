@@ -27,7 +27,9 @@ from pathlib import Path
 import httpx
 
 # Chemin du fichier de données locales (relatif à ce script)
-DATA_FILE = Path(__file__).resolve().parent.parent / "js" / "vehicles-data.js"
+DATA_FILE = (
+    Path(__file__).resolve().parent.parent / "frontend" / "public" / "js" / "vehicles-data.js"
+)
 API_DEFAULT = "https://autoprestige-api.onrender.com/api"
 
 

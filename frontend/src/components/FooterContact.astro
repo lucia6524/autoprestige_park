@@ -1,0 +1,28 @@
+---
+// Bloc "Contact" du footer : téléphone, email, adresse, WhatsApp
+interface Props {
+  whatsapp?: boolean;
+  address?: 'full' | 'short' | 'both' | false;
+}
+const { whatsapp = false, address = false } = Astro.props;
+---
+
+<div>
+  <h4 data-i18n="footer.contact">Contact</h4>
+  <div class="footer-links">
+    <a href="tel:+33142868200">+33 1 42 86 82 00</a>
+    <a href="mailto:contact@autoprestige.fr">contact@autoprestige.fr</a>
+    {address === 'short' && <a href="#">12 Av. des Champs-Élysées</a>}
+    {(address === 'full' || address === 'both') && (
+      <a href="#" data-site-address
+        >12 Avenue des Champs-Élysées, 75008 Paris, France</a
+      >
+    )}
+    {address === 'both' && <a href="#">12 Av. des Champs-Élysées</a>}
+    {whatsapp && (
+      <a href="https://wa.me/33142868200" target="_blank" rel="noopener"
+        >WhatsApp</a
+      >
+    )}
+  </div>
+</div>

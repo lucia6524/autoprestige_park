@@ -1,0 +1,90 @@
+---
+// Header Autohaus — rendu côté serveur, copie conforme de buildHeaderHTML()
+// (js/header.js). L'attribut data-static indique à header.js de s'y brancher
+// au lieu de réinjecter le menu côté client.
+const path = Astro.url.pathname || '';
+const currentFile = path.split('/').pop() || 'index.html';
+
+const PAGES = {
+  home: 'index.html',
+  vehicles: 'vehicules.html',
+  financing: 'financement.html',
+  sell: 'vendre.html',
+  contact: 'contact.html',
+  brands: 'marques.html',
+  warranty: 'garantie.html',
+  rv: 'camping-car.html',
+  agri: 'machines-agricoles.html',
+  insurance: 'assurance.html',
+  delivery: 'livraison.html',
+  maintenance: 'entretien.html',
+  faq: 'faq.html',
+  about: 'a-propos.html',
+  reviews: 'avis.html',
+  login: 'connexion.html',
+  register: 'inscription.html',
+  account: 'compte.html',
+};
+
+const isActive = (file: string) => (currentFile === file ? 'active' : '');
+---
+
+<header class="header" id="main-header" translate="no" data-static>
+  <div class="container header-inner">
+    <a href={PAGES.home} class="logo" data-no-translate aria-label="Autohaus — Accueil">
+      <img src="logo.png" alt="Autohaus" />
+    </a>
+
+    <nav class="nav" id="main-nav" aria-label="Navigation principale">
+      <div class="mobile-user" id="mobile-user"></div>
+      <a href={PAGES.home} class={isActive(PAGES.home)} data-i18n="nav.home">Accueil</a>
+      <a href={PAGES.vehicles} class={isActive(PAGES.vehicles)} data-i18n="nav.vehicles">Véhicules</a>
+      <a href={PAGES.financing} class={isActive(PAGES.financing)} data-i18n="nav.financing">Financement</a>
+      <a href={PAGES.sell} class={isActive(PAGES.sell)} data-i18n="nav.sell">Vendre</a>
+      <a href={PAGES.contact} class={isActive(PAGES.contact)} data-i18n="nav.contact">Contact</a>
+
+      <div class="nav-item" id="nav-more">
+        <a
+          href="#"
+          class="nav-more-toggle"
+          data-i18n="nav.more"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Plus
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </a>
+        <div class="dropdown" role="menu">
+          <a href={PAGES.brands} class={isActive(PAGES.brands)} data-i18n="nav.brands">Marques</a>
+          <a href={PAGES.warranty} class={isActive(PAGES.warranty)} data-i18n="nav.warranty">Garantie</a>
+          <a href={PAGES.rv} class={isActive(PAGES.rv)} data-i18n="nav.rv">Camping-car</a>
+          <a href={PAGES.agri} class={isActive(PAGES.agri)} data-i18n="nav.agri">Machines agricoles</a>
+          <a href={PAGES.insurance} class={isActive(PAGES.insurance)} data-i18n="nav.insurance">Assurance</a>
+          <a href={PAGES.delivery} class={isActive(PAGES.delivery)} data-i18n="nav.delivery">Livraison</a>
+          <a href={PAGES.maintenance} class={isActive(PAGES.maintenance)} data-i18n="nav.maintenance">Entretien</a>
+          <a href={PAGES.faq} class={isActive(PAGES.faq)} data-i18n="nav.faq">FAQ</a>
+          <a href={PAGES.about} class={isActive(PAGES.about)} data-i18n="nav.about">À propos</a>
+          <a href={PAGES.reviews} class={isActive(PAGES.reviews)} data-i18n="nav.reviews">Avis clients</a>
+          <div class="dropdown-divider"></div>
+          <a href={PAGES.register} class={isActive(PAGES.register)} data-i18n="nav.register">Inscription</a>
+          <a href={PAGES.login} class={isActive(PAGES.login)} data-i18n="nav.login">Connexion</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="header-actions">
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Changer le thème">
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      <div class="header-auth" id="header-auth">
+        <a href={PAGES.login} class="header-auth-link" data-i18n="nav.login">Connexion</a>
+      </div>
+      <button type="button" class="mobile-toggle" aria-label="Menu" data-i18n-aria="header.menu" id="mobile-toggle">
+        <span aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>

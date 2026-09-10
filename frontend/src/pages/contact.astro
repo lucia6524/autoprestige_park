@@ -1,0 +1,204 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Contact — Autohaus"
+  description="Contactez l'équipe Autohaus. Une question, un projet d'achat ou de vente ? Nous sommes à votre écoute."
+  i18nTitle="meta.title_contact"
+  footer={{
+    nav: ['home', 'vehicles', 'financing', 'sell', 'contact'],
+    services: ['warranty', 'delivery', 'maintenance', 'insurance'],
+    contactWhatsapp: false,
+    contactAddress: false,
+    tagline: 'default',
+    legal: 'short',
+  }}
+>
+  <section class="page-hero">
+    <div class="page-hero-bg">
+      <img
+        src="https://images.unsplash.com/photo-1563720223185-11003d516935?w=1920&q=80"
+        alt="Contact"
+      />
+    </div>
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <span class="label">Nous contacter</span>
+      <h1>Contactez notre équipe</h1>
+      <p>
+        Une question, un projet d'achat ou de vente ? Notre équipe est à votre
+        écoute.
+      </p>
+    </div>
+  </section>
+
+  <section class="contact" style="padding-top: 40px">
+    <div class="container">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h3>Parlons de votre prochain véhicule</h3>
+          <p>
+            Que vous cherchiez un véhicule neuf, une occasion récente ou un
+            financement sur mesure, nous sommes là pour vous.
+          </p>
+
+          <div class="contact-details">
+            <div class="contact-item">
+              <div class="contact-item-icon">📍</div>
+              <div>
+                <strong>Adresse</strong>
+                <span data-site-address
+                  >12 Avenue des Champs-Élysées, 75008 Paris, France</span
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">📞</div>
+              <div>
+                <strong>Téléphone</strong>
+                <span><a href="tel:+33142868200">+33 1 42 86 82 00</a></span>
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">✉️</div>
+              <div>
+                <strong>Email</strong>
+                <span
+                  ><a href="mailto:contact@autoprestige.fr"
+                    >contact@autoprestige.fr</a
+                  ></span
+                >
+              </div>
+            </div>
+            <div class="contact-item">
+              <div class="contact-item-icon">🕒</div>
+              <div>
+                <strong>Horaires</strong>
+                <span
+                  >Lun – Ven : 09:00 – 19:00<br />Samedi : 10:00 – 17:00</span
+                >
+              </div>
+            </div>
+          </div>
+          <div
+            class="contact-actions"
+            style="display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;"
+          >
+            <a
+              href="https://wa.me/33142868200"
+              target="_blank"
+              rel="noopener"
+              class="btn btn-primary"
+              >WhatsApp</a
+            >
+            <a href="mailto:contact@autoprestige.fr" class="btn btn-outline"
+              >Envoyer un email</a
+            >
+          </div>
+        </div>
+
+        <form class="contact-form" id="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nom complet</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Jean Dupont"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="jean@email.com"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone">Téléphone</label>
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+33 6 12 34 56 78"
+              />
+            </div>
+            <div class="form-group">
+              <label for="subject">Sujet</label>
+              <select id="subject" name="subject">
+                <option value="info">Demande d'information</option>
+                <option value="essai">Demande d'essai</option>
+                <option value="financement">Financement</option>
+                <option value="reprise">Reprise de véhicule</option>
+                <option value="autre">Autre</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Décrivez votre projet ou posez votre question..."
+              required
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            style="width: 100%"
+          >
+            Envoyer le message
+          </button>
+          <p
+            class="contact-form-feedback"
+            id="contact-feedback"
+            role="status"
+            aria-live="polite"
+          ></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Même logique que la page HTML d'origine (feedback inline, pas d'alert).
+    document
+      .getElementById('contact-form')
+      ?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const button = form.querySelector('button[type=submit]');
+        const feedback = document.getElementById('contact-feedback');
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Envoi en cours...';
+        feedback.className = 'contact-form-feedback';
+        feedback.textContent = '';
+        try {
+          await API.sendContactMessage(Object.fromEntries(new FormData(form)));
+          form.reset();
+          feedback.className = 'contact-form-feedback success';
+          feedback.textContent =
+            'Votre message a bien été envoyé. Notre équipe vous répondra rapidement.';
+        } catch (error) {
+          feedback.className = 'contact-form-feedback error';
+          feedback.textContent = API.friendlyError(
+            error,
+            "Impossible d'envoyer votre message."
+          );
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      });
+  </script>
+</Layout>
