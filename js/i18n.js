@@ -408,6 +408,9 @@ const I18N = {
         }
       }
       if (item.node) {
+        // Idempotence : si le nœud porte déjà la traduction (passe précédente,
+        // pipeline HTML), on ne réapplique pas — sinon « x·EN·EN·EN ».
+        if (item.node.nodeValue.includes(translated)) return;
         item.node.nodeValue = item.node.nodeValue.replace(item.text, translated);
       } else if (item.element) {
         item.element.setAttribute(item.attribute, translated);
@@ -418,18 +421,231 @@ const I18N = {
 
   /* ===== Contenu dynamique : passes successives tant que la page évolue ===== */
 
+  // Construit le HTML « propre » d'une section avant l'envoi à DeepL
+  // (étape 4 du protocole) : sans scripts/styles/iframes/SVG, sans les
+  // zones [translate=no]/[data-no-translate] (étape 3 : menu, footer…),
+  // sans attributs id/class/on*/srcset, et sans les textes déjà traduits
+  // (phrasebook ou cache) pour ne pas payer deux fois.
+  _buildCleanHtml(root) {
+    const clone = root.cloneNode(true);
+    // Synchronise les textes du clone avec leurs ORIGINAUX : le clone n'a pas
+    // accès au WeakMap, or un texte déjà traduit ne doit pas repartir chez
+    // DeepL (sinon traduction de la traduction : « x·EN·EN »).
+    const liveWalker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const cloneWalker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+    let liveNode, cloneNode;
+    while ((liveNode = liveWalker.nextNode()) && (cloneNode = cloneWalker.nextNode())) {
+      const original = this._originalText.get(liveNode);
+      if (original !== undefined && cloneNode.nodeValue !== original) {
+        cloneNode.nodeValue = original;
+      }
+    }
+    clone.querySelectorAll('script, style, noscript, template, iframe, svg, canvas, [translate="no"], [data-no-translate]')
+      .forEach(el => el.remove());
+    clone.removeAttribute('id');
+    clone.removeAttribute('class');
+    [clone, ...clone.querySelectorAll('*')].forEach(el => {
+      [...el.attributes].forEach(attr => {
+        const name = attr.name.toLowerCase();
+        if (name.startsWith('on') || name === 'srcset') el.removeAttribute(attr.name);
+      });
+    });
+    const book = this.translations.phrasebook || {};
+    const langCache = this._cache[this.currentLang] || {};
+    const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const value = node.nodeValue.trim();
+      if (value && (book[value] !== undefined || langCache[value] !== undefined)) {
+        node.nodeValue = ''; // déjà traduit localement : exclu de la requête
+      }
+    }
+    return clone.innerHTML;
+  },
+
+  // Textes non vides d'un fragment HTML, dans l'ordre du document.
+  _textsFromHtml(html) {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+    const out = [];
+    let node;
+    while ((node = walker.nextNode())) {
+      if (node.nodeValue.trim()) out.push(node.nodeValue);
+    }
+    return out;
+  },
+
+  // Découpe le HTML d'une section en blocs traduisibles séparément :
+  // l'énorme grille catalogue (120 véhicules) dépasse les limites d'une
+  // requête DeepL. Chaque enfant de premier niveau devient un bloc ; un bloc
+  // encore trop gros (section encapsulante) est redécoupé récursivement
+  // jusqu'à ses feuilles (cartes véhicules, listes de filtres…).
+  _splitIntoBlocks(html, maxChars = 9000) {
+    const doc = new DOMParser().parseFromString('<div id="__i18n_root">' + html + '</div>', 'text/html');
+    const rootNode = doc.getElementById('__i18n_root');
+    if (!rootNode) return [html];
+
+    // Texte DIRECT de l'élément (ses enfants texte à lui, pas ses
+    // descendants) : un conteneur avec peu de texte mais un HTML énorme
+    // (grille de 120 cartes) DOIT être redécoupé, pas traité en feuille.
+    const ownTextLen = (el) => {
+      let n = 0;
+      for (const c of el.childNodes) {
+        if (c.nodeType === Node.TEXT_NODE) n += c.nodeValue.trim().length;
+      }
+      return n;
+    };
+
+    const split = (node, depth) => {
+      const htmlOf = (n) => n.nodeType === Node.TEXT_NODE
+        ? n.nodeValue
+        : (n.outerHTML || '');
+      if (htmlOf(node).length <= maxChars) return [htmlOf(node)];
+      // Feuille trop grosse : on ne peut pas la découper proprement.
+      if (node.nodeType === Node.TEXT_NODE || depth > 6 || !node.querySelector?.('*') || ownTextLen(node) > maxChars) {
+        return [htmlOf(node)];
+      }
+      const children = [...node.childNodes].filter(n =>
+        n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.nodeValue.trim()));
+      if (children.length <= 1) return [htmlOf(node)];
+      return children.flatMap(c => split(c, depth + 1));
+    };
+
+    const children = [...rootNode.childNodes].filter(n =>
+      n.nodeType === Node.ELEMENT_NODE || (n.nodeType === Node.TEXT_NODE && n.nodeValue.trim()));
+    if (!children.length) return [html];
+    return children.flatMap(c => split(c, 0));
+  },
+
+  // Regroupe les blocs en lots compacts pour limiter le nombre de requêtes.
+  _groupBlocks(blocks, maxChars = 9000) {
+    const groups = [];
+    let current = [], size = 0;
+    for (const b of blocks) {
+      const len = b.length;
+      if (len > maxChars) {
+        if (current.length) { groups.push(current); current = []; size = 0; }
+        groups.push([b]);
+        continue;
+      }
+      if (size + len > maxChars && current.length) {
+        groups.push(current);
+        current = []; size = 0;
+      }
+      current.push(b);
+      size += len;
+    }
+    if (current.length) groups.push(current);
+    return groups;
+  },
+
+  // Traduit une section HTML ENTIÈRE via /translate/html — DeepL reçoit le
+  // bloc d'une traite avec tag_handling=html v2 et respecte la structure
+  // (étapes 1 & 2 du protocole). Les grosses sections sont découpées en
+  // blocs (grille catalogue…) regroupés en quelques requêtes. Seuls les
+  // TEXTES de la réponse sont réinjectés dans le DOM vivant : identifiants,
+  // attributs, images et écouteurs d'événements restent intacts. En cas
+  // d'échec, repli transparent sur la passe par lots.
+  async translateSection(root) {
+    if (!root || this.currentLang === 'fr') return true;
+    const api = window.API;
+    if (!api || typeof api.request !== 'function') return false;
+    const lang = this.currentLang;
+    const html = this._buildCleanHtml(root);
+    const sent = this._textsFromHtml(html);
+    if (!sent.length) return true; // rien à confier à DeepL
+
+    this._translating = true; // l'observateur ne lance pas de passe concurrente
+    const translated = new Map(); // texte envoyé → texte traduit
+    let anySuccess = false;
+    try {
+      const blocks = this._splitIntoBlocks(html);
+      const groups = this._groupBlocks(blocks);
+      for (const group of groups) {
+        if (this.currentLang !== lang) break; // langue changée en cours
+        let ok = false;
+        try {
+          const data = await api.request('/translate/html', {
+            method: 'POST',
+            body: JSON.stringify({ html: group.join(''), target_lang: lang.toUpperCase() }),
+          });
+          if (data && typeof data.html === 'string') {
+            const sentTexts = group.flatMap(g => this._textsFromHtml(g));
+            const gotTexts = this._textsFromHtml(data.html);
+            if (gotTexts.length === sentTexts.length) {
+              sentTexts.forEach((t, i) => translated.set(t, gotTexts[i]));
+              ok = true;
+              anySuccess = true;
+            }
+          }
+        } catch (err) {
+          console.warn('i18n: /translate/html :', err?.message || err);
+        }
+        if (!ok && group.length > 1) {
+          // Lot refusé : retente bloc par bloc (un véhicule cassé ne bloque
+          // pas les 119 autres).
+          for (const single of group) {
+            try {
+              const data = await api.request('/translate/html', {
+                method: 'POST',
+                body: JSON.stringify({ html: single, target_lang: lang.toUpperCase() }),
+              });
+              if (data && typeof data.html === 'string') {
+                const sentTexts = this._textsFromHtml(single);
+                const gotTexts = this._textsFromHtml(data.html);
+                if (gotTexts.length === sentTexts.length) {
+                  sentTexts.forEach((t, i) => translated.set(t, gotTexts[i]));
+                  anySuccess = true;
+                }
+              }
+            } catch (_) { /* bloc ignoré */ }
+          }
+        }
+      }
+    } finally {
+      this._translating = false;
+    }
+    if (this.currentLang !== lang) return false; // langue changée entre-temps
+
+    if (!anySuccess) {
+      this._scheduleTranslate(); // repli : passe par lots classique
+      return false;
+    }
+
+    // Ré-injection : appaire chaque texte traduit au nœud VIVANT dont
+    // l'original correspond (ordre DeepL conservé grâce à l'appariement).
+    const pending = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      const original = this._originalText.get(node) ?? node.nodeValue;
+      if (original.trim()) pending.push({ node, original });
+    }
+    const langCache = this._cache[lang] || (this._cache[lang] = {});
+    translated.forEach((newText, old) => {
+      if (!newText || !newText.trim() || newText.trim() === old.trim()) return;
+      const idx = pending.findIndex(e => e.original.trim() === old.trim());
+      if (idx === -1) return;
+      const { node: target, original } = pending.splice(idx, 1)[0];
+      if (target.nodeValue.includes(newText)) return; // déjà appliqué (idempotence)
+      if (!this._originalText.has(target)) this._originalText.set(target, original);
+      target.nodeValue = original.replace(old, newText);
+      // Mémorise le couple : jamais retraduit (cache persistant + observateur).
+      langCache[old.trim()] = newText.trim();
+    });
+    this.savePersistentCache(lang);
+    return true;
+  },
+
   // Traduit un fragment de DOM à la volée (contenu injecté par JS : fiche
   // véhicule, cartes catalogue, avis…). Instantané via phrasebook/clés,
-  // DeepL seulement pour l'inconnu. Utilisable par les autres scripts :
-  //   document.addEventListener('languageChanged', ...) ou appel direct.
+  // puis la section entière part en UNE requête DeepL « HTML v2 ».
   translateElement(root) {
     if (!root || this.currentLang === 'fr') return;
     this.captureOriginalContent(root);
     this.applyLocaleKeys(root);
     this.applyPhrasebook(root);
-    // La passe DeepL est planifiée globalement : elle collectera ce fragment
-    // avec le reste (les textes connus ont été filtrés par collectTexts).
-    this._scheduleTranslate();
+    this.translateSection(root).catch(() => {});
   },
 
   _scheduleTranslate() {
@@ -486,6 +702,7 @@ const I18N = {
       this._failed[lang] = {}; // nouveau choix de langue → on peut tout retenter
       this.loadPersistentCache(lang);
       this.applyPhrasebook(); // immédiat, zéro réseau
+      await this.translateSection(document.body).catch(err => console.warn('i18n:', err));
       await this._runTranslationPasses().catch(err => console.warn('i18n:', err));
     }
 
@@ -628,10 +845,13 @@ const I18N = {
     this.applyLocaleKeys();
 
     if (initial !== 'fr') {
-      // Phrasebook immédiat (zéro réseau) puis passes DeepL pour le dynamique
+      // Phrasebook immédiat (zéro réseau), puis la page part en UNE requête
+      // DeepL « HTML v2 » ; les passes par lots ne traitent que les restes
+      // (attributs, contenus apparus entre-temps).
       this.loadPersistentCache(initial);
       this.applyPhrasebook();
       await new Promise(resolve => setTimeout(resolve, 100));
+      await this.translateSection(document.body).catch(err => console.warn('i18n:', err));
       await this._runTranslationPasses().catch(err => console.warn('i18n:', err));
     }
     this.observeDynamicContent();
