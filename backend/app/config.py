@@ -68,13 +68,23 @@ class Settings(BaseSettings):
 settings = Settings()
 settings.DATABASE_URL = normalize_database_url(settings.DATABASE_URL)
 parsed_origins = parse_cors_origins(settings.CORS_ORIGINS)
+# Origine(s) de production toujours autorisées, même si CORS_ORIGINS n'est
+# pas (encore) renseigné dans l'environnement Render — évite de bloquer les
+# appels du site (ex. /site-settings) quand l'env var est absente ou partielle.
+PROD_DEFAULT_ORIGINS = [
+    "https://autoprestige-park.onrender.com",
+]
 if parsed_origins:
-    settings.CORS_ORIGINS = parsed_origins
+    settings.CORS_ORIGINS = list(parsed_origins)
+    if settings.ENVIRONMENT.lower() == "production":
+        for origin in PROD_DEFAULT_ORIGINS:
+            if origin not in settings.CORS_ORIGINS:
+                settings.CORS_ORIGINS.append(origin)
 elif settings.ENVIRONMENT.lower() != "production":
     # Development: allow localhost
     settings.CORS_ORIGINS = ["http://localhost:*", "http://127.0.0.1:*"]
 else:
-    settings.CORS_ORIGINS = []
+    settings.CORS_ORIGINS = list(PROD_DEFAULT_ORIGINS)
 
 # Normalize translation provider (google | deepl)
 provider = settings.TRANSLATION_PROVIDER.strip().lower()
