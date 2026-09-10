@@ -102,6 +102,64 @@ export const prerender = true;
     .form-group input:focus {
       border-color: var(--accent);
     }
+    /* "Informations du site" : chaque champ est un formulaire autonome */
+    .settings-fields {
+      display: grid;
+      gap: 10px;
+      padding: 20px;
+    }
+    .settings-form {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-areas: "label btn" "input btn";
+      align-items: center;
+      gap: 4px 14px;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+    .settings-form label {
+      grid-area: label;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .settings-form input {
+      grid-area: input;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .settings-form input:focus {
+      border-color: var(--accent);
+    }
+    .settings-form .btn-sm {
+      grid-area: btn;
+      width: auto;
+      white-space: nowrap;
+    }
+    .settings-form.saving input {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+    @media (max-width: 640px) {
+      .settings-form {
+        grid-template-columns: 1fr;
+        grid-template-areas: "label" "input" "btn";
+      }
+      .settings-form .btn-sm {
+        width: 100%;
+      }
+    }
     .btn {
       display: inline-flex;
       align-items: center;
@@ -765,76 +823,77 @@ export const prerender = true;
           <div>
             <h2>Informations du site</h2>
             <p>
-              Ces coordonnées sont affichées sur le dashboard client et les
-              pages du site.
+              Chaque champ s'enregistre indépendamment. Les coordonnées de
+              contact (téléphone, email, WhatsApp, adresse) sont appliquées
+              aussitôt aux pages du site.
             </p>
           </div>
         </div>
         <div class="panel">
           <div class="panel-header"><h3>Coordonnées bancaires</h3></div>
-          <form
-            id="site-settings-form"
-            style="
-              padding: 20px;
-              display: grid;
-              grid-template-columns: 1fr 1fr;
-              gap: 14px;
-            "
-          >
-            <div class="form-group">
-              <label for="s-bank-holder">Titulaire du compte</label
-              ><input id="s-bank-holder" />
-            </div>
-            <div class="form-group">
-              <label for="s-bank-transfer">Type de virement</label
-              ><input id="s-bank-transfer" />
-            </div>
-            <div class="form-group">
-              <label for="s-bank-iban">IBAN</label
-              ><input id="s-bank-iban" />
-            </div>
-            <div class="form-group">
-              <label for="s-bank-bic">BIC</label
-              ><input id="s-bank-bic" />
-            </div>
-            <div
-              class="panel-header"
-              style="grid-column: 1/-1; margin: 8px 0 0"
-            >
-              <h3>Coordonnées de contact</h3>
-            </div>
-            <div class="form-group">
-              <label for="s-phone">Téléphone</label
-              ><input id="s-phone" />
-            </div>
-            <div class="form-group">
-              <label for="s-email">Email</label
-              ><input id="s-email" type="email" />
-            </div>
-            <div class="form-group">
+          <div class="settings-fields">
+            <form class="settings-form" data-sfield="bank_holder">
+              <label for="s-bank-holder">Titulaire du compte</label>
+              <input id="s-bank-holder" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+            <form class="settings-form" data-sfield="bank_transfer_type">
+              <label for="s-bank-transfer">Type de virement</label>
+              <input id="s-bank-transfer" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+            <form class="settings-form" data-sfield="bank_iban">
+              <label for="s-bank-iban">IBAN</label>
+              <input id="s-bank-iban" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+            <form class="settings-form" data-sfield="bank_bic">
+              <label for="s-bank-bic">BIC</label>
+              <input id="s-bank-bic" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+          </div>
+          <div class="panel-header"><h3>Coordonnées de contact</h3></div>
+          <div class="settings-fields">
+            <form class="settings-form" data-sfield="contact_phone">
+              <label for="s-phone">Téléphone</label>
+              <input id="s-phone" placeholder="+33 1 42 86 82 00" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+            <form class="settings-form" data-sfield="contact_email">
+              <label for="s-email">Email</label>
+              <input id="s-email" type="email" placeholder="contact@autoprestige.fr" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+            <form class="settings-form" data-sfield="contact_whatsapp">
               <label for="s-whatsapp"
                 >WhatsApp (indicatif pays, sans espaces)</label
-              ><input id="s-whatsapp" />
-            </div>
-            <div class="form-group">
-              <label for="s-address">Adresse</label><input id="s-address" />
-            </div>
-            <div
-              style="
-                grid-column: 1/-1;
-                display: flex;
-                justify-content: flex-end;
-              "
-            >
-              <button
-                type="submit"
-                class="btn btn-primary"
-                style="width: auto"
               >
-                Enregistrer les informations
+              <input id="s-whatsapp" placeholder="33142868200" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
               </button>
-            </div>
-          </form>
+            </form>
+            <form class="settings-form" data-sfield="contact_address">
+              <label for="s-address">Adresse</label>
+              <input id="s-address" />
+              <button type="submit" class="btn btn-primary btn-sm">
+                Enregistrer
+              </button>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -1202,64 +1261,49 @@ export const prerender = true;
     });
 
     // ── Site settings ───────────────────────────────────
-    // Champs du formulaire « Informations du site » → clés API.
-    const settingsFields = [
-      { id: "s-bank-holder", key: "bank_holder" },
-      { id: "s-bank-transfer", key: "bank_transfer_type" },
-      { id: "s-bank-iban", key: "bank_iban" },
-      { id: "s-bank-bic", key: "bank_bic" },
-      { id: "s-phone", key: "contact_phone" },
-      { id: "s-email", key: "contact_email" },
-      { id: "s-whatsapp", key: "contact_whatsapp" },
-      { id: "s-address", key: "contact_address" },
-    ];
-    // Snapshot des valeurs chargées : seules les modifications sont envoyées.
-    let settingsSnapshot = {};
+    // Chaque champ est un formulaire autonome : enregistrer un champ ne touche
+    // jamais les autres (l'API /site-settings fait une mise à jour partielle).
+    const settingsForms = Array.from(
+      document.querySelectorAll("form[data-sfield]"),
+    );
 
     async function loadSiteSettings() {
       try {
         const s = await api("/site-settings/admin");
-        settingsSnapshot = {};
-        settingsFields.forEach(({ id, key }) => {
-          const value = (s[key] || "").trim();
-          document.getElementById(id).value = value;
-          settingsSnapshot[key] = value;
+        settingsForms.forEach((form) => {
+          const input = form.querySelector("input");
+          input.value = (s[form.dataset.sfield] || "").trim();
         });
       } catch (e) {
         toast(e.message, "error");
       }
     }
 
-    document
-      .getElementById("site-settings-form")
-      .addEventListener("submit", async (e) => {
+    settingsForms.forEach((form) => {
+      form.addEventListener("submit", async (e) => {
         e.preventDefault();
-        // N'envoie QUE les champs réellement modifiés — on peut changer un
-        // seul réglage sans toucher aux autres.
-        const body = {};
-        settingsFields.forEach(({ id, key }) => {
-          const value = document.getElementById(id).value.trim();
-          if (value !== (settingsSnapshot[key] || "")) body[key] = value;
-        });
-        if (!Object.keys(body).length) {
-          toast("Aucune modification à enregistrer");
-          return;
-        }
+        const input = form.querySelector("input");
+        const key = form.dataset.sfield;
+        const value = input.value.trim();
+        const label = (form.querySelector("label").textContent || "").trim();
+        form.classList.add("saving");
+        if (window.Loader) Loader.show();
         try {
           const updated = await api("/site-settings", {
             method: "PUT",
-            body: JSON.stringify(body),
+            body: JSON.stringify({ [key]: value }),
           });
-          settingsSnapshot = {};
-          settingsFields.forEach(({ id, key }) => {
-            settingsSnapshot[key] = ((updated && updated[key]) || "").trim();
-            if (updated) document.getElementById(id).value = updated[key] || "";
-          });
-          toast("Informations du site enregistrées ✓");
+          if (updated && typeof updated[key] === "string")
+            input.value = updated[key].trim();
+          toast("« " + label + " » enregistré ✓");
         } catch (err) {
           toast(err.message, "error");
+        } finally {
+          form.classList.remove("saving");
+          if (window.Loader) Loader.hide();
         }
       });
+    });
 
     // ── Dashboard ────────────────────────────────────────
     async function loadDashboard() {

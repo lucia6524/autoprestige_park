@@ -193,9 +193,10 @@
       : (isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api');
     // Cache localStorage : infos contact affichées instantanément, sans
     // attendre le backend (qui peut mettre 30-60 s à sortir de veille sur
-    // Render free tier). Rafraîchi en arrière-plan si le cache a plus d'1 h.
-    const SETTINGS_CACHE_KEY = 'autoprestige_site_settings_v1';
-    const SETTINGS_CACHE_TTL = 60 * 60 * 1000; // 1 heure
+    // Render free tier). Cache court (5 min) : les modifs admin répercutées
+    // rapidement sur le site.
+    const SETTINGS_CACHE_KEY = 'autoprestige_site_settings_v2';
+    const SETTINGS_CACHE_TTL = 5 * 60 * 1000; // 5 min : les modifs admin apparaissent vite
     let settings = null;
     try {
       const raw = localStorage.getItem(SETTINGS_CACHE_KEY);
