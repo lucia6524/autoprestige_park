@@ -706,17 +706,10 @@ const footer = {
         });
       }
 
+      // URL invalide (id absent) ou véhicule introuvable → page 404, au lieu
+      // d'un rendu « Véhicule introuvable » qui laisse croire à une URL valide.
       function showNotFound() {
-        document.getElementById("detail-content").innerHTML = `
-        <div class="detail-not-found">
-          <h1>${esc(jr("detail.not_found_title", "Véhicule introuvable"))}</h1>
-          <p>${esc(jr("detail.not_found_text", "Ce véhicule n'existe pas ou n'est plus disponible."))}</p>
-          <a href="vehicules.html" class="btn btn-primary">${esc(jr("detail.back_to_catalog", "Retour au catalogue"))}</a>
-        </div>
-      `;
-        if (window.I18N && typeof I18N.translateElement === "function") {
-          I18N.translateElement(document.getElementById("detail-content"));
-        }
+        window.location.replace("404.html");
       }
 
       // Rendu dans la langue courante + re-rendu au changement de langue :

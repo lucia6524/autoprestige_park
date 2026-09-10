@@ -18,6 +18,15 @@ const footer = {
   footer={footer}
   ownScripts
 >
+  <!-- Garde d'accès : le dashboard est réservé aux membres connectés.
+       Non connecté → page 404 (URL non accessible), exécuté avant le rendu. -->
+  <script is:inline>
+    try {
+      if (!localStorage.getItem("ap_token")) {
+        window.location.replace("404.html");
+      }
+    } catch (e) {}
+  </script>
   <style is:global>
     /* ===== CLIENT DASHBOARD ===== */
     .dash-wrap {
@@ -1034,7 +1043,7 @@ const footer = {
   <script src="js/main.js" defer is:inline></script>
   <script is:inline>
     if (!API.isLoggedIn()) {
-      window.location.href = "connexion.html";
+      window.location.replace("404.html");
     }
 
     // ===== Bank details from the admin-managed site settings =====
