@@ -188,7 +188,10 @@
     "info_updated": "Vos informations ont été mises à jour.",
     "address_saved": "Adresse enregistrée.",
     "delivery_saved": "Votre demande de livraison a été enregistrée.",
-    "cart_added_goto": "Véhicule ajouté ! Voir votre panier ?"
+    "cart_added_goto": "Véhicule ajouté ! Voir votre panier ?",
+    "net_loading": "Connexion au serveur…",
+    "net_offline": "Serveur momentanément indisponible — affichage du catalogue local.",
+    "net_retry": "Nouvelle tentative…"
   },
   "reviews": {
     "stats_verified": "Avis vérifiés",

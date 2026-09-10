@@ -32,6 +32,83 @@ const VEHICLES_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
 let vehicles = window.FALLBACK_VEHICLES || [];
 
+// ===== ÉTAT RÉSEAU (backend Render free tier parfois endormi) =====
+// Bandeau discret « connexion… » pendant les appels API lents : l'utilisateur
+// voit un site instantané (cache local) et reste informé si le backend met du
+// temps à répondre, au lieu d'un gel silencieux.
+let _netBannerTimer = null;
+
+function showNetworkBanner(mode) {
+  const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
+  let banner = document.getElementById("net-status-banner");
+  if (!banner) {
+    banner = document.createElement("div");
+    banner.id = "net-status-banner";
+    banner.className = "net-status-banner";
+    banner.innerHTML = `<span class="spinner" aria-hidden="true"></span><span id="net-status-text"></span>`;
+    document.body.appendChild(banner);
+  }
+  const offline = mode === "offline";
+  banner.classList.toggle("offline", offline);
+  banner.querySelector(".spinner").style.display = offline ? "none" : "";
+  banner.querySelector("#net-status-text").textContent = offline
+    ? t("js.net_offline", "Serveur momentanément indisponible — affichage du catalogue local.")
+    : t("js.net_loading", "Connexion au serveur…");
+  banner.classList.add("show");
+  clearTimeout(_netBannerTimer);
+  if (offline) _netBannerTimer = setTimeout(hideNetworkBanner, 4000);
+}
+
+function hideNetworkBanner() {
+  clearTimeout(_netBannerTimer);
+  const banner = document.getElementById("net-status-banner");
+  if (banner) banner.classList.remove("show");
+}
+
+// Signale « appel encore en cours » après `ms` (bandeau), sans modifier la
+// promesse : l'attente réelle continue jusqu'à la réponse du serveur.
+function withSlowIndicator(promise, ms, onSlow) {
+  let settled = false;
+  promise.then(() => { settled = true; }, () => { settled = true; });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (!settled && typeof onSlow === "function") onSlow();
+      resolve();
+    }, ms);
+  });
+}
+
+// ===== SONDE TRANSFORMATIONS SUPABASE (une fois par navigateur) =====
+// Les transformations d'images Supabase sont un feature Pro. Si le projet
+// passe un jour sur un plan qui les supporte, cette sonde silencieuse le
+// détecte et active automatiquement les miniatures Supabase (?width=&quality=)
+// — sans redeployer quoi que ce soit.
+(function probeSupabaseTransforms() {
+  try {
+    const cached = sessionStorage.getItem("supaTransforms");
+    if (cached !== null) {
+      window.__SUPA_TRANSFORMS_OK = cached === "1";
+      return;
+    }
+    window.__SUPA_TRANSFORMS_OK = false;
+    const keys = Object.keys(window.VEHICLE_THUMBS || {});
+    const probe = keys.length ? keys[0] : null;
+    if (!probe) return; // aucune URL Supabase connue : rien à sonder
+    const marker = "/storage/v1/object/public/";
+    const idx = probe.indexOf(marker);
+    if (idx === -1) return;
+    const testUrl = probe.slice(0, idx) + "/storage/v1/render/image/public/" +
+      probe.slice(idx + marker.length) + "?width=8&quality=20";
+    const img = new Image();
+    img.onload = function () {
+      window.__SUPA_TRANSFORMS_OK = true;
+      sessionStorage.setItem("supaTransforms", "1");
+    };
+    img.onerror = function () { sessionStorage.setItem("supaTransforms", "0"); };
+    img.src = testUrl;
+  } catch (_) { /* stockage indisponible : sonde désactivée */ }
+})();
+
 function readVehiclesCache() {
   try {
     const raw = localStorage.getItem(VEHICLES_CACHE_KEY);
@@ -160,9 +237,9 @@ function renderVehicles(list = null) {
       <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
         <div class="vehicle-image">
           <div class="skeleton-overlay"></div>
-          <img src="${v.image}" alt="${v.brand} ${v.model}" loading="lazy" decoding="async"
+          <img src="${(window.supaThumb ? supaThumb(v.image, 600, 65) : v.image)}" data-original-src="${v.image}" alt="${v.brand} ${v.model}" loading="lazy" decoding="async"
             onload="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');"
-            onerror="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');">
+            onerror="if(window.attachImgFallback){if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}}this.classList.add('visible');this.previousElementSibling.classList.add('loaded');">
           <div class="vehicle-badges">
             ${v.featured ? `<span class="badge badge-featured">${(window.I18N && I18N.t("vehicles.badge_featured") !== "vehicles.badge_featured") ? I18N.t("vehicles.badge_featured") : "★ À la une"}</span>` : ''}
             ${v.promo ? `<span class="badge badge-promo">${(window.I18N && I18N.t("vehicles.badge_promo") !== "vehicles.badge_promo") ? I18N.t("vehicles.badge_promo") : "Promo"}</span>` : ''}
@@ -417,7 +494,12 @@ async function loadPublicVehicles() {
   if (!isCatalogPage) return;
   try {
     if (window.API && typeof API.getVehicles === "function") {
-      const managedVehicles = (await API.getVehicles()).map(normalizeVehicle);
+      const apiCall = API.getVehicles();
+      // Backend Render free tier : cold start possible (30-60 s). On affiche un
+      // bandeau discret si la réponse tarde — le rendu local reste instantané.
+      withSlowIndicator(apiCall, 6000, () => showNetworkBanner());
+      const managedVehicles = (await apiCall).map(normalizeVehicle);
+      hideNetworkBanner();
       if (Array.isArray(managedVehicles) && managedVehicles.length) {
         vehicles = managedVehicles;
         writeVehiclesCache(managedVehicles);
@@ -428,6 +510,7 @@ async function loadPublicVehicles() {
       }
     }
   } catch (error) {
+    showNetworkBanner("offline");
     console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
   }
 }

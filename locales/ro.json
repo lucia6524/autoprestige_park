@@ -188,7 +188,10 @@
     "info_updated": "Informațiile tale au fost actualizate.",
     "address_saved": "Adresă salvată.",
     "delivery_saved": "Cererea ta de livrare a fost salvată.",
-    "cart_added_goto": "Vehicul adăugat! Vrei să vezi coșul?"
+    "cart_added_goto": "Vehicul adăugat! Vrei să vezi coșul?",
+    "net_loading": "Se conectează la server…",
+    "net_offline": "Server temporar indisponibil — se afișează catalogul local.",
+    "net_retry": "Se reîncearcă…"
   },
   "reviews": {
     "stats_verified": "Recenzii verificate",

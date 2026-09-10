@@ -393,7 +393,7 @@
       </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer" translate="no">
       <div class="container">
         <div class="footer-grid">
           <div class="footer-brand">
@@ -465,6 +465,7 @@
     <script src="js/header.js" defer></script>
     <script src="js/i18n.js" defer></script>
     <script src="js/api.js" defer></script>
+    <script src="js/vehicles-thumbs.js" defer></script>
     <script src="js/vehicles-data.js" defer></script>
     <script src="js/main.js" defer></script>
     <script>
@@ -480,6 +481,22 @@
           const div = document.createElement("div");
           div.textContent = String(value == null ? "" : value);
           return div.innerHTML;
+        }
+
+        // Images Supabase optimisées : version redimensionnée via l'endpoint
+        // render (WebP auto), avec repli sur l'URL d'origine en cas d'échec
+        // (transformations indisponibles sur le plan Supabase actuel).
+        function supaFallback(img) {
+          const original = img.getAttribute("data-original-src");
+          if (original && img.src !== original) {
+            img.dataset.fallbackApplied = "1";
+            img.src = original;
+          }
+        }
+
+        function supaDetail(url) {
+          if (typeof supaThumb === "function") return supaThumb(url, 1200, 70);
+          return url;
         }
 
         function formatKm(n) {
@@ -536,7 +553,7 @@
             <!-- LEFT: Gallery -->
             <div class="detail-gallery">
               <div class="detail-main-img">
-                <img id="detail-main-photo" src="${esc(mainImg || fallbackImg)}" alt="${esc(v.brand + " " + v.model)}" onerror="this.onerror=null;this.src='${fallbackImg}';">
+                <img id="detail-main-photo" src="${esc(mainImg ? supaDetail(mainImg) : fallbackImg)}" data-original-src="${esc(mainImg)}" alt="${esc(v.brand + " " + v.model)}" onerror="if(!this.dataset.fallbackApplied&&this.dataset.originalSrc){supaFallback(this);}else{this.onerror=null;this.src='${fallbackImg}';}">
                 ${showBadge ? `<span class="detail-badge-reco">${esc(jr("detail.badge_reco", "★ Recommandé"))}</span>` : ""}
                 ${images.length > 1 ? '<span class="detail-img-counter"><span id="img-current">1</span>/' + images.length + "</span>" : ""}
               </div>
@@ -548,7 +565,7 @@
                     .map(
                       (src, i) => `
                     <button type="button" class="${i === 0 ? "active" : ""}" data-index="${i}" aria-label="Photo ${i + 1}">
-                      <img src="${esc(src)}" alt="Photo ${i + 1}" loading="lazy">
+                      <img src="${esc(src ? (typeof supaThumb === "function" ? supaThumb(src, 160, 65) : src) : "")}" data-original-src="${esc(src)}" onerror="if(!this.dataset.fallbackApplied&&this.dataset.originalSrc){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}" alt="Photo ${i + 1}" loading="lazy">
                     </button>
                   `,
                     )
@@ -626,7 +643,7 @@
             const main = document.getElementById("detail-main-photo");
             const counter = document.getElementById("img-current");
             if (main && images[idx]) {
-              main.src = images[idx];
+              main.src = typeof supaDetail === "function" ? supaDetail(images[idx]) : images[idx];
               if (counter) counter.textContent = idx + 1;
               thumbs.querySelectorAll("button").forEach(function (b) {
                 b.classList.remove("active");
@@ -724,6 +741,36 @@
 
         // Récupère le véhicule : API d'abord, puis repli (cache catalogue +
         // catalogue local) — la page s'affiche même quand l'API est endormie.
+        // Un timeout évite le gel de 30-60 s pendant le cold start du backend.
+        function withTimeout(promise, ms) {
+          return Promise.race([
+            promise,
+            new Promise(function (_, reject) {
+              setTimeout(function () { reject(new Error("timeout")); }, ms);
+            }),
+          ]);
+        }
+
+        function showDetailSkeleton() {
+          const host = document.getElementById("detail-content");
+          if (!host || host.dataset.skeleton === "1") return;
+          host.dataset.skeleton = "1";
+          host.innerHTML = `
+            <div class="skeleton-card" style="max-width:1100px;margin:0 auto;">
+              <div class="skeleton skeleton-image"></div>
+              <div class="skeleton-body">
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-specs"></div>
+                <div class="skeleton skeleton-price"></div>
+              </div>
+            </div>`;
+        }
+
+        function hideDetailSkeleton() {
+          const host = document.getElementById("detail-content");
+          if (host) delete host.dataset.skeleton;
+        }
+
         async function fetchVehicle(id) {
           // 1) Cache catalogue (rendu instantané si la page véhicules a été vue)
           const local =
@@ -733,14 +780,9 @@
                 })
               : null;
 
-          try {
-            if (window.API && typeof API.getVehicle === "function") {
-              const fromApi = await API.getVehicle(id);
-              if (fromApi) return normalize(fromApi);
-            }
-          } catch (_) {
-            /* API indisponible → repli ci-dessous */
-          }
+          // Rendu immédiat depuis le repli local, puis rafraîchissement API
+          // en arrière-plan (init() re-rend quand l'API répond).
+          if (local) return normalize(local);
 
           // 2) Cache localStorage partagé avec la page catalogue
           try {
@@ -758,8 +800,17 @@
             /* cache illisible → ignorer */
           }
 
-          // 3) Catalogue local (js/vehicles-data.js)
-          return local ? normalize(local) : null;
+          // 3) API avec timeout court : jamais plus de 10 s d'attente bloquante
+          try {
+            if (window.API && typeof API.getVehicle === "function") {
+              const fromApi = await withTimeout(API.getVehicle(id), 10000);
+              if (fromApi) return normalize(fromApi);
+            }
+          } catch (_) {
+            /* API indisponible → repli ci-dessous */
+          }
+
+          return null;
         }
 
         function normalize(v) {
@@ -780,6 +831,9 @@
             return;
           }
 
+          // Squelette immédiat : la page ne reste jamais vide pendant l'attente
+          showDetailSkeleton();
+
           // Attendre la locale initiale : le premier rendu part directement
           // dans la bonne langue (pas de flash français re-traduit après coup).
           if (window.I18N && typeof I18N.whenReady === "function") {
@@ -793,6 +847,7 @@
           }
 
           applyUsedDiscount(v);
+          hideDetailSkeleton();
           renderLocalized(v);
 
           // Si le véhicule vient du repli local, tenter une mise à jour

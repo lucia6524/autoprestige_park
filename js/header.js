@@ -191,39 +191,62 @@
     const apiBase = configuredBase
       ? configuredBase.replace(/\/$/, '') + '/api'
       : (isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api');
+    // Cache localStorage : infos contact affichées instantanément, sans
+    // attendre le backend (qui peut mettre 30-60 s à sortir de veille sur
+    // Render free tier). Rafraîchi en arrière-plan si le cache a plus d'1 h.
+    const SETTINGS_CACHE_KEY = 'autoprestige_site_settings_v1';
+    const SETTINGS_CACHE_TTL = 60 * 60 * 1000; // 1 heure
+    let settings = null;
     try {
-      const response = await fetch(apiBase + '/site-settings');
-      if (!response.ok) return;
-      const settings = await response.json();
-      const phone = (settings.contact_phone || '').trim();
-      const email = (settings.contact_email || '').trim();
-      const whatsapp = (settings.contact_whatsapp || '').replace(/[^0-9+]/g, '');
-      const address = (settings.contact_address || '').trim();
+      const raw = localStorage.getItem(SETTINGS_CACHE_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && parsed.ts && parsed.data && Date.now() - parsed.ts < SETTINGS_CACHE_TTL) {
+          settings = parsed.data;
+        }
+      }
+    } catch (_) { /* cache illisible : on ignore */ }
 
-      if (phone) {
-        document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
-          link.href = 'tel:' + phone.replace(/[^0-9+]/g, '');
-          link.textContent = phone;
-        });
+    if (!settings) {
+      try {
+        const response = await fetch(apiBase + '/site-settings');
+        if (!response.ok) return;
+        settings = await response.json();
+        try {
+          localStorage.setItem(SETTINGS_CACHE_KEY, JSON.stringify({ ts: Date.now(), data: settings }));
+        } catch (_) { /* quota dépassé : le cache est optionnel */ }
+      } catch (_) {
+        // Backend injoignable : les valeurs statiques du HTML restent affichées.
+        return;
       }
-      if (email) {
-        document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
-          link.href = 'mailto:' + email;
-          link.textContent = email;
-        });
-      }
-      if (whatsapp) {
-        document.querySelectorAll('a[href*="wa.me/"]').forEach((link) => {
-          link.href = 'https://wa.me/' + whatsapp;
-        });
-      }
-      if (address) {
-        document.querySelectorAll('[data-site-address]').forEach((element) => {
-          element.textContent = address;
-        });
-      }
-    } catch (_) {
-      // The static contact values remain available if the API is offline.
+    }
+
+    const phone = (settings.contact_phone || '').trim();
+    const email = (settings.contact_email || '').trim();
+    const whatsapp = (settings.contact_whatsapp || '').replace(/[^0-9+]/g, '');
+    const address = (settings.contact_address || '').trim();
+
+    if (phone) {
+      document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+        link.href = 'tel:' + phone.replace(/[^0-9+]/g, '');
+        link.textContent = phone;
+      });
+    }
+    if (email) {
+      document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+        link.href = 'mailto:' + email;
+        link.textContent = email;
+      });
+    }
+    if (whatsapp) {
+      document.querySelectorAll('a[href*="wa.me/"]').forEach((link) => {
+        link.href = 'https://wa.me/' + whatsapp;
+      });
+    }
+    if (address) {
+      document.querySelectorAll('[data-site-address]').forEach((element) => {
+        element.textContent = address;
+      });
     }
   }
 

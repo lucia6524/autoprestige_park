@@ -1034,6 +1034,7 @@
     </div>
 
     <script src="js/api.js"></script>
+    <script src="js/vehicles-thumbs.js"></script>
     <script src="js/header.js" defer></script>
     <script src="js/i18n.js"></script>
     <script src="js/main.js"></script>
@@ -1050,6 +1051,12 @@
           .replace(/>/g, "&gt;")
           .replace(/"/g, "&quot;")
           .replace(/'/g, "&#039;");
+      }
+      // Vignettes optimisées : images Supabase redimensionnées via l'endpoint
+      // render (WebP auto), repli sur l'URL d'origine si échec de chargement.
+      function supaRow(url, width) {
+        if (typeof supaThumb === "function") return supaThumb(url, width || 200, 65);
+        return url;
       }
       function renderBank(b) {
         document.getElementById("bank-details").innerHTML = `
@@ -1202,7 +1209,7 @@
               .map(
                 (o) => `
             <div class="item-row">
-              <img src="${o.image || ""}" alt="" onerror="this.style.opacity=0.3">
+              <img src="${supaRow(o.image)}" data-original-src="${o.image || ""}" alt="" onerror="if(!this.dataset.fallbackApplied&&this.dataset.originalSrc){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}else{this.style.opacity=0.3;}">
               <div class="item-info">
                 <h4>${o.brand} ${o.model}</h4>
                 <p>${o.year} · ${o.status}</p>
@@ -1234,7 +1241,7 @@
               .map(
                 (item) => `
           <div class="item-row">
-            <img src="${item.image || ""}" alt="" onerror="this.style.opacity=0.3">
+            <img src="${supaRow(item.image)}" data-original-src="${item.image || ""}" alt="" onerror="if(!this.dataset.fallbackApplied&&this.dataset.originalSrc){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}else{this.style.opacity=0.3;}">
             <div class="item-info">
               <h4>${item.brand} ${item.model}</h4>
               <p>${item.year} · ou ${item.monthly} €/mois</p>
@@ -1333,7 +1340,7 @@
               </div>`;
               }
               return `<div class="item-row">
-            <img src="${o.image || ""}" alt="" onerror="this.style.opacity=0.3">
+            <img src="${supaRow(o.image)}" data-original-src="${o.image || ""}" alt="" onerror="if(!this.dataset.fallbackApplied&&this.dataset.originalSrc){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}else{this.style.opacity=0.3;}">
             <div class="item-info"><h4>${o.brand} ${o.model}</h4><p>${o.year}</p>
               <span class="badge-status ${statusClass}">${statusLabel}</span></div>
             <div class="item-price">${Number(o.total_price).toLocaleString("fr-FR")} €</div>${inst}</div>`;
@@ -1401,7 +1408,7 @@
                     : "";
               return `<div class="item-row" style="flex-direction:column;align-items:stretch;">
             <div style="display:flex;gap:14px;align-items:center;flex-wrap:wrap;">
-              <img src="${o.image || ""}" alt="" style="width:96px;height:68px;object-fit:cover;border-radius:10px;" onerror="this.style.opacity=0.3">
+              <img src="${supaRow(o.image)}" data-original-src="${o.image || ""}" alt="" style="width:96px;height:68px;object-fit:cover;border-radius:10px;" onerror="if(!this.dataset.fallbackApplied&&this.dataset.originalSrc){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}else{this.style.opacity=0.3;}">
               <div class="item-info">
                 <h4>${o.brand} ${o.model}</h4>
                 <p>N° suivi : <strong>${d.tracking_number}</strong></p>

@@ -188,7 +188,10 @@
     "info_updated": "Your details have been updated.",
     "address_saved": "Address saved.",
     "delivery_saved": "Your delivery request has been saved.",
-    "cart_added_goto": "Vehicle added! View your cart?"
+    "cart_added_goto": "Vehicle added! View your cart?",
+    "net_loading": "Connecting to server…",
+    "net_offline": "Server temporarily unavailable — showing the local catalog.",
+    "net_retry": "Retrying…"
   },
   "reviews": {
     "stats_verified": "Verified reviews",

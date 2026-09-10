@@ -233,6 +233,50 @@ const API = {
 
 window.API = API;
 
+// ===== Optimisation des images du catalogue =====
+// Trois niveaux, du plus rapide au plus simple :
+//  1. Table locale (js/vehicles-thumbs.js) : copies WebP générées par
+//     backend/optimize_catalog_images.py → gain de poids immédiat.
+//  2. Transformations Supabase (?width=&quality=) : activées automatiquement
+//     si le projet passe sur un plan qui les supporte (auto-détecté).
+//  3. URL d'origine : repli transparent dans tous les autres cas.
+function supaThumb(url, width, quality) {
+  if (typeof url !== 'string' || !url) return url;
+  const w = Math.min(Math.max(parseInt(width, 10) || 600, 1), 2500);
+  const q = Math.min(Math.max(parseInt(quality, 10) || 65, 20), 100);
+  // 1) Copie WebP locale si disponible (générée côté backend)
+  const localMap = window.VEHICLE_THUMBS;
+  if (localMap && localMap[url]) return localMap[url];
+  // 2) Transformations Supabase — uniquement si le projet les supporte
+  //    (fenêtre.__SUPA_TRANSFORMS_OK, posée par la sonde auto de main.js)
+  if (window.__SUPA_TRANSFORMS_OK === true) {
+    const marker = '/storage/v1/object/public/';
+    const idx = url.indexOf(marker);
+    if (idx !== -1) {
+      return (
+        url.slice(0, idx) +
+        '/storage/v1/render/image/public/' +
+        url.slice(idx + marker.length) +
+        '?width=' + w + '&quality=' + q
+      );
+    }
+  }
+  // 3) URL d'origine
+  return url;
+}
+
+// Réinjecte l'URL d'origine si la version transformée échoue à charger.
+function attachImgFallback(img, originalUrl) {
+  if (!img || typeof originalUrl !== 'string' || !originalUrl) return;
+  img.addEventListener('error', function () {
+    if (img.dataset.fallbackApplied) return;
+    img.dataset.fallbackApplied = '1';
+    img.src = originalUrl;
+  }, { once: true });
+}
+window.supaThumb = supaThumb;
+window.attachImgFallback = attachImgFallback;
+
 
 // Update header auth links based on login state
 API.updateHeaderAuth = function() {
