@@ -75,13 +75,15 @@ DEFAULT_SETTINGS = {
 }
 
 
-async def get_or_create_settings(db: AsyncSession) -> SiteSettings:
+async def get_or_create_settings(
+    db: AsyncSession, use_cache: bool = True
+) -> SiteSettings:
     global _settings_cache, _settings_cache_ts
 
-    # Return from cache if fresh
+    # Lecture seule : renvoie un objet reconstruit du cache (transient, jamais
+    # destiné à être commit/refresh). Les écritures passent use_cache=False.
     now = time.time()
-    if _settings_cache and (now - _settings_cache_ts) < _CACHE_TTL:
-        # Reconstruct object from cache for non-mutating reads
+    if use_cache and _settings_cache and (now - _settings_cache_ts) < _CACHE_TTL:
         obj = SiteSettings(id=1, **_settings_cache)
         return obj
 
@@ -135,13 +137,15 @@ async def update_site_settings(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
 ):
-    settings = await get_or_create_settings(db)
+    # use_cache=False : on travaille sur la ligne persistée (le cache renvoie
+    # un objet transient, non commitable/refreshelable).
+    settings = await get_or_create_settings(db, use_cache=False)
     payload = data.model_dump(exclude_unset=True)
     for field, value in payload.items():
         if value is None:
             continue
         setattr(settings, field, value.strip())
+    _invalidate_settings_cache()
     await db.commit()
     await db.refresh(settings)
-    _invalidate_settings_cache()
     return settings
