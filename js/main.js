@@ -233,11 +233,11 @@ function renderVehicles(list = null) {
 
   // Batch DOM update with requestAnimationFrame for smoother rendering
   requestAnimationFrame(() => {
-    vehiclesGrid.innerHTML = filtered.map(v => `
+    vehiclesGrid.innerHTML = filtered.map((v, i) => `
       <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
         <div class="vehicle-image">
           <div class="skeleton-overlay"></div>
-          <img src="${(window.supaThumb ? supaThumb(v.image, 600, 65) : v.image)}" data-original-src="${v.image}" alt="${v.brand} ${v.model}" loading="lazy" decoding="async"
+          <img src="${(window.supaThumb ? supaThumb(v.image, 600, 65) : v.image)}" data-original-src="${v.image}" alt="${v.brand} ${v.model}" loading="${i === 0 ? "eager" : "lazy"}"${i === 0 ? ' fetchpriority="high"' : ""} decoding="async"
             onload="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');"
             onerror="if(window.attachImgFallback){if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}}this.classList.add('visible');this.previousElementSibling.classList.add('loaded');">
           <div class="vehicle-badges">

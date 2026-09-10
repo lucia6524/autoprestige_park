@@ -1366,6 +1366,13 @@ section {
     height: 68px;
   }
 
+  /* Perf mobile : le blur du header coûte cher en scroll sur GPU faibles */
+  .header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    background: var(--header-bg-scrolled);
+  }
+
   .logo img {
     height: 38px;
   }

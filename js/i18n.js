@@ -677,6 +677,13 @@ const I18N = {
 
   observeDynamicContent() {
     if (this._observer) return;
+    // Perf : en français (langue source) aucun nœud n'est à traduire —
+    // inutile d'écouter chaque mutation du DOM sur toutes les pages.
+    if (this.currentLang === 'fr' && !this._observer) {
+      const start = () => this.observeDynamicContent();
+      document.addEventListener('languageChanged', start, { once: true });
+      return;
+    }
     this._observer = new MutationObserver(() => {
       if (this.currentLang === 'fr') return;
       this._scheduleTranslate();

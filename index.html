@@ -31,7 +31,14 @@
     <section class="hero" id="accueil">
       <div class="hero-bg">
         <img
-          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=80"
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1280&q=70"
+          srcset="
+            https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=640&q=70 640w,
+            https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1280&q=70 1280w,
+            https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&q=70 1920w
+          "
+          sizes="100vw"
+          fetchpriority="high"
           alt="Voiture de luxe"
         />
       </div>
@@ -907,7 +914,24 @@
     <script src="js/i18n.js" defer></script>
     <script src="js/api.js" defer></script>
     <script src="js/vehicles-thumbs.js" defer></script>
-    <script src="js/vehicles-data.js" defer></script>
+    <script>
+      // Catalogue de secours (291 Ko) : chargé uniquement si le cache local
+      // est absent, expiré (> 30 min, cf. VEHICLES_CACHE_TTL de main.js) ou
+      // illisible. Visites suivantes : 291 Ko économisés.
+      (function () {
+        var fresh = false;
+        try {
+          var raw = localStorage.getItem("autoprestige_vehicles_v1");
+          if (raw) {
+            var parsed = JSON.parse(raw);
+            fresh = !!(parsed && parsed.ts && Date.now() - parsed.ts < 1800000);
+          }
+        } catch (e) { /* cache illisible → charger le repli */ }
+        if (!fresh) {
+          document.write('<script src="js/vehicles-data.js"><\/script>');
+        }
+      })();
+    </script>
     <script src="js/main.js" defer></script>
   </body>
 </html>
