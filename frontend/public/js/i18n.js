@@ -695,7 +695,10 @@ const I18N = {
 
   async setLanguage(lang) {
     if (!this.supported.includes(lang)) lang = 'fr';
+    // Choix explicite du visiteur via le sélecteur : mémorisé et prioritaire
+    // sur l'auto-détection du navigateur (voir _init).
     localStorage.setItem('lang', lang);
+    localStorage.setItem('lang_manual', '1');
     this.currentLang = lang;
     // Fichier de locale d'abord : nav/footer/filtres/titres + PHRASEBOOK.
     // Le phrasebook couvre tout le texte statique → la page est entièrement
@@ -805,11 +808,13 @@ const I18N = {
   },
 
   /* ===== Détection de la langue du visiteur =====
-     1. Choix sauvegardé (localStorage 'lang') — l'utilisateur a déjà choisi
-     2. Langue de son téléphone/navigateur (navigator.languages puis navigator.language)
-        ex : "fr-FR", "en-US", "de-DE" → on garde le préfixe (fr, en, de…)
-        et on accepte les variantes régionales (pt-BR → pt, en-GB → en…)
-     3. Repli : français
+     1. S'il a choisi UNE LANGUE MANUELLEMENT (sélecteur → 'lang_manual'),
+        on respecte durablement son choix (localStorage 'lang').
+     2. Sinon, la langue du navigateur est détectée À CHAQUE VISITE
+        (navigator.languages puis navigator.language) et le site s'adapte
+        automatiquement. ex : "fr-FR", "en-US", "de-DE" → préfixe (fr, en, de…)
+        et variantes régionales acceptées (pt-BR → pt, en-GB → en…).
+     3. Repli : préférence précédente mémorisée, puis français.
   */
   detectBrowserLanguage() {
     const candidates = [];
@@ -839,11 +844,16 @@ const I18N = {
 
   async _init() {
     const saved = localStorage.getItem('lang');
+    const manual = localStorage.getItem('lang_manual') === '1';
     const browser = this.detectBrowserLanguage();
-    const initial = saved || browser || 'fr';
+    // Détection automatique à chaque visite, sauf choix manuel explicite.
+    const initial = manual ? (saved || browser || 'fr') : (browser || saved || 'fr');
 
     this.currentLang = initial;
-    localStorage.setItem('lang', initial);
+    // On ne mémorise que le choix MANUEL : sans lui, la langue du navigateur
+    // est re-sondée à chaque visite (et le site s'adapte tout seul).
+    if (manual) localStorage.setItem('lang', initial);
+    else localStorage.removeItem('lang');
     await this.loadLocaleFile(initial).catch(() => {});
     this.apply();
     this.injectSwitcher();
