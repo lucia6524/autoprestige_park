@@ -316,15 +316,18 @@ const footer = {
       e.preventDefault();
       email = document.getElementById("email").value.trim();
       const password = document.getElementById("password").value;
+      if (window.Loader) Loader.show();
       try {
         const res = await API.loginWithPassword(email, password);
         API.setAuth(res.access_token, res.user);
         showOk("Connexion réussie ! Redirection vers votre espace…");
+        // Le loader reste affiché pendant la redirection.
         setTimeout(() => {
           window.location.replace("compte.html");
         }, 600);
       } catch (err) {
         showErr(err.message);
+        if (window.Loader) Loader.hide();
       }
     };
 
@@ -336,6 +339,7 @@ const footer = {
     document.getElementById("form-otp-email").onsubmit = async (e) => {
       e.preventDefault();
       email = document.getElementById("email-otp").value.trim();
+      if (window.Loader) Loader.show();
       try {
         const res = await API.loginRequestCode(email);
         document.getElementById("email-display").textContent = email;
@@ -345,6 +349,8 @@ const footer = {
         showOk("Code généré — saisissez-le ci-dessous.");
       } catch (err) {
         showErr(err.message);
+      } finally {
+        if (window.Loader) Loader.hide();
       }
     };
 
@@ -354,15 +360,18 @@ const footer = {
         .map((i) => i.value)
         .join("");
       if (code.length !== 6) return showErr("Code à 6 chiffres requis.");
+      if (window.Loader) Loader.show();
       try {
         const res = await API.login(email, code);
         API.setAuth(res.access_token, res.user);
         showOk("Connexion réussie ! Redirection vers votre espace…");
+        // Le loader reste affiché pendant la redirection.
         setTimeout(() => {
           window.location.replace("compte.html");
         }, 600);
       } catch (err) {
         showErr(err.message);
+        if (window.Loader) Loader.hide();
       }
     };
 

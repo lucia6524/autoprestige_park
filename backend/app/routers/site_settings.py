@@ -52,14 +52,15 @@ class SiteSettingsOut(BaseModel):
 
 
 class SiteSettingsUpdate(BaseModel):
-    bank_holder: str = Field(default="", max_length=255)
-    bank_iban: str = Field(default="", max_length=100)
-    bank_bic: str = Field(default="", max_length=50)
-    bank_transfer_type: str = Field(default="", max_length=100)
-    contact_phone: str = Field(default="", max_length=50)
-    contact_email: str = Field(default="", max_length=255)
-    contact_whatsapp: str = Field(default="", max_length=100)
-    contact_address: str = Field(default="", max_length=500)
+    """Mise à jour PARTIELLE : seuls les champs envoyés sont modifiés."""
+    bank_holder: Optional[str] = Field(default=None, max_length=255)
+    bank_iban: Optional[str] = Field(default=None, max_length=100)
+    bank_bic: Optional[str] = Field(default=None, max_length=50)
+    bank_transfer_type: Optional[str] = Field(default=None, max_length=100)
+    contact_phone: Optional[str] = Field(default=None, max_length=50)
+    contact_email: Optional[str] = Field(default=None, max_length=255)
+    contact_whatsapp: Optional[str] = Field(default=None, max_length=100)
+    contact_address: Optional[str] = Field(default=None, max_length=500)
 
 
 DEFAULT_SETTINGS = {
@@ -135,7 +136,10 @@ async def update_site_settings(
     db: AsyncSession = Depends(get_db),
 ):
     settings = await get_or_create_settings(db)
-    for field, value in data.model_dump().items():
+    payload = data.model_dump(exclude_unset=True)
+    for field, value in payload.items():
+        if value is None:
+            continue
         setattr(settings, field, value.strip())
     await db.commit()
     await db.refresh(settings)

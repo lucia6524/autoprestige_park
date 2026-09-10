@@ -613,6 +613,7 @@ const footer = {
         const btn = e.target.querySelector("button[type=submit]");
         btn.disabled = true;
         btn.textContent = "Envoi en cours…";
+        if (window.Loader) Loader.show();
         try {
           const res = await API.registerStep3(sessionKey, salary);
           userEmail = res.email || userEmail;
@@ -628,6 +629,7 @@ const footer = {
         } finally {
           btn.disabled = false;
           btn.textContent = "Générer le code de vérification →";
+          if (window.Loader) Loader.hide();
         }
       });
     document.getElementById("back-3").onclick = () => goToStep(2);
@@ -669,18 +671,21 @@ const footer = {
           return showError("Email manquant. Recommencez l'inscription.");
         const btn = e.target.querySelector("button[type=submit]");
         btn.disabled = true;
+        if (window.Loader) Loader.show();
         try {
           const res = await API.registerVerify(userEmail, code);
           if (res.need_password || !res.access_token) {
             goToStep(5);
             showSuccess("Code validé. Créez votre mot de passe.");
             btn.disabled = false;
+            if (window.Loader) Loader.hide();
           } else {
             clearProgress();
             API.setAuth(res.access_token, res.user);
             showSuccess(
               "Compte créé ! Redirection vers votre espace personnel…",
             );
+            // Le loader reste affiché pendant la redirection.
             setTimeout(() => {
               window.location.replace("compte.html");
             }, 800);
@@ -688,6 +693,7 @@ const footer = {
         } catch (err) {
           showError(err.message || "Code invalide ou erreur réseau.");
           btn.disabled = false;
+          if (window.Loader) Loader.hide();
         }
       });
 
@@ -706,6 +712,7 @@ const footer = {
           return showError("Email manquant. Recommencez l'inscription.");
         const btn = e.target.querySelector("button[type=submit]");
         btn.disabled = true;
+        if (window.Loader) Loader.show();
         try {
           const res = await API.registerSetPassword(userEmail, p1);
           clearProgress();
@@ -713,6 +720,7 @@ const footer = {
           showSuccess(
             "Inscription terminée ! Redirection vers votre espace personnel…",
           );
+          // Le loader reste affiché pendant la redirection.
           setTimeout(() => {
             window.location.replace("compte.html");
           }, 800);
@@ -721,6 +729,7 @@ const footer = {
             err.message || "Erreur lors de la création du mot de passe.",
           );
           btn.disabled = false;
+          if (window.Loader) Loader.hide();
         }
       });
 
@@ -729,10 +738,12 @@ const footer = {
         showError("Session expirée. Recommencez à l'étape 1.");
         return;
       }
+      if (window.Loader) Loader.show();
       try {
         const salary = Number(document.getElementById("salary").value);
         if (!Number.isFinite(salary) || salary <= 0) {
           showError("Indiquez votre salaire mensuel.");
+          if (window.Loader) Loader.hide();
           return;
         }
         const res = await API.registerStep3(sessionKey, salary);
@@ -748,6 +759,8 @@ const footer = {
         showSuccess("Nouveau code généré.");
       } catch (err) {
         showError(err.message || "Impossible de renvoyer le code.");
+      } finally {
+        if (window.Loader) Loader.hide();
       }
     };
 
