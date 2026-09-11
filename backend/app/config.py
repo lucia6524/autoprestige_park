@@ -10,9 +10,34 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 def normalize_database_url(url: str) -> str:
     """Use the async PostgreSQL driver when Render provides a Postgres URL."""
     if url.startswith("postgres://"):
-        return "postgresql+asyncpg://" + url[len("postgres://"):]
+        return normalize_database_url("postgresql://" + url[len("postgres://"):])
     if url.startswith("postgresql://"):
-        return "postgresql+asyncpg://" + url[len("postgresql://"):]
+        url = "postgresql+asyncpg://" + url[len("postgresql://"):]
+    else:
+        return url
+
+    # Render fournit une URL *externe* du type
+    #   postgresql://user:pass@host/db?sslmode=require&...
+    # `sslmode` est un paramètre libpq (psycopg2) : asyncpg ne le comprend pas
+    # et refuserait l'URL au démarrage. Le TLS étant MANDATOIRE pour une
+    # connexion externe, on convertit sslmode=require → ssl=require (asyncpg).
+    scheme, _, host_and_query = url.partition("://")
+    hostpath, _, query = host_and_query.partition("?")
+    if query:
+        params = {}
+        for pair in query.split("&"):
+            if "=" in pair:
+                key, value = pair.split("=", 1)
+                params[key.lower()] = value
+        if "sslmode" in params:
+            mode = params.pop("sslmode").lower()
+            if mode in ("require", "prefer", "verify-ca", "verify-full", "true", "1"):
+                params.setdefault("ssl", "require")
+        if params:
+            query = "&".join(f"{k}={v}" for k, v in params.items())
+            url = f"{scheme}://{hostpath}?{query}"
+        else:
+            url = f"{scheme}://{hostpath}"
     return url
 
 
