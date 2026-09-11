@@ -1,3 +1,4 @@
+import logging
 import time
 
 import httpx
@@ -5,6 +6,8 @@ from fastapi import APIRouter, HTTPException, Request as StarletteRequest
 from pydantic import BaseModel, Field
 
 from app.config import settings
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/translate", tags=["Translation"])
 

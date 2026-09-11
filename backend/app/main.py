@@ -16,7 +16,8 @@ from app.routers import auth, cart, orders, admin, vehicles, site_settings, tran
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await init_db()
-    print("✅ Database initialized")
+    # Évite un UnicodeEncodeError sur consoles Windows (cp1252) sans emoji.
+    print("Database initialized")
     yield
 
 
