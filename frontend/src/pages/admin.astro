@@ -1136,6 +1136,7 @@ export const prerender = true;
         : "https://autoprestige-api.onrender.com/api";
     let token = localStorage.getItem("admin_token") || "";
     let currentUser = null;
+    let currentUsers = [];
 
     // ── Helpers ──────────────────────────────────────────
     function toast(msg, type = "success") {
@@ -1365,6 +1366,7 @@ export const prerender = true;
         const users = await api(
           "/admin/users" + (q ? "?q=" + encodeURIComponent(q) : ""),
         );
+        currentUsers = users;
         const tbody = document.getElementById("users-tbody");
         if (!users.length) {
           tbody.innerHTML =
@@ -1386,7 +1388,7 @@ export const prerender = true;
             <td class="actions">
               <button class="btn btn-outline btn-sm" onclick="toggleActive(${u.id}, ${!u.is_active})">${u.is_active ? "Désactiver" : "Activer"}</button>
               ${!u.is_admin ? `<button class="btn btn-outline btn-sm" onclick="makeAdmin(${u.id})">Admin</button>` : ""}
-              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id}, '${escapeHtml(u.email)}')">Suppr.</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id})">Suppr.</button>
             </td>
           </tr>
         `,
@@ -1425,7 +1427,9 @@ export const prerender = true;
       }
     }
 
-    async function deleteUser(id, email) {
+    async function deleteUser(id) {
+      const target = currentUsers.find((u) => u.id === id);
+      const email = (target && target.email) || String(id);
       if (!confirm("Supprimer définitivement " + email + " ?")) return;
       try {
         await api("/admin/users/" + id, { method: "DELETE" });

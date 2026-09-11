@@ -81,23 +81,31 @@ async def register_step1(data: RegisterStep1, request: Request):
 
 
 @router.post("/register/step2")
-async def register_step2(data: RegisterStep2, session_key: str, db: AsyncSession = Depends(get_db)):
-    """Étape 2 : Email + Téléphone"""
+async def register_step2(data: RegisterStep2, session_key: str, request: Request, db: AsyncSession = Depends(get_db)):
+    """Étape 2 : Email + Téléphone
+
+    ⚠️ Anti-énumération : la réponse est STRICTEMENT identique (200, même
+    corps) que le compte existe déjà avec cet email ou non. Un flag
+    `existing_active` interdit l'envoi d'OTP et la modification du profil
+    en étape 3 — l'inscription échoue silencieusement au code sans révéler
+    l'existence du compte.
+    """
+    _check_rate_limit(_get_client_ip(request), RATE_LIMIT_MAX_REGISTER)
+
     if session_key not in _pending:
         raise HTTPException(400, "Session d'inscription invalide. Recommencez à l'étape 1.")
-    
+
     existing = await get_user_by_email(db, data.email)
-    if existing and existing.is_verified:
-        raise HTTPException(400, "Un compte existe déjà avec cet email.")
+    is_verified_existing = bool(existing and existing.is_verified)
 
     _pending[session_key].update({
         "email": data.email.lower().strip(),
         "phone": data.phone.strip(),
         "step": 2,
+        "existing_active": is_verified_existing,  # True = compte vérifié déjà existant
     })
-    # Also index by email for later steps
     _pending[data.email.lower()] = _pending[session_key]
-    
+
     return {
         "ok": True,
         "step": 2,
@@ -117,7 +125,18 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
     pending["step"] = 3
 
     email = pending["email"]
-    
+
+    # Compte vérifié déjà existant : on mime le succès (aucun envoi OTP,
+    # aucun ajout en base) pour ne pas révéler l'existence du compte à un
+    # attaquant. Le flux échouera silencieusement au code OTP.
+    if pending.get("existing_active"):
+        return {
+            "ok": True,
+            "step": 3,
+            "email": email,
+            "message": "Un code de vérification a été envoyé à votre adresse email.",
+        }
+
     # Create or update user (unverified)
     user = await get_user_by_email(db, email)
     if not user:
@@ -336,6 +355,11 @@ async def login(data: LoginRequest, request: Request, db: AsyncSession = Depends
     bcrypt identique sur tous les chemins mot de passe.
     """
     _check_rate_limit(_get_client_ip(request), RATE_LIMIT_MAX_LOGIN)
+    # Limite par email : bloque le brute-force distribué (plusieurs IPs)
+    # contre un compte ciblé. Appliquée avant le lookup pour que le 429
+    # soit identique que l'email existe ou non.
+    from app.services.rate_limit import check_rate_limit
+    check_rate_limit("login_email", f"email:{data.email.lower().strip()}")
 
     user = await get_user_by_email(db, data.email)
 

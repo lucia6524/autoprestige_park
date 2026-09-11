@@ -22,6 +22,11 @@ LIMITS: Dict[str, Tuple[int, int]] = {
     # la vérification d'existence du compte — sinon le 429 lui-même trahirait
     # quels emails sont inscrits.
     "otp_code": (3600, 5),
+    # Tentatives de connexion par email (clé "email:<adresse>") : 15 / 15 min.
+    # Complète la limite par IP : bloque le brute-force distribué (plusieurs
+    # IPs) contre un compte ciblé. Appliqué avant la recherche du compte pour
+    # que le 429 ne révèle pas l'existence de l'email.
+    "login_email": (900, 15),
 }
 
 _buckets: Dict[str, List[float]] = {}
