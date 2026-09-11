@@ -45,6 +45,63 @@ const API = {
     localStorage.removeItem('ap_token');
     localStorage.removeItem('ap_user');
   },
+  // Expiration du token (epoch s) issue du payload JWT ; 0 si illisible.
+  getTokenExp() {
+    const token = this.getToken();
+    if (!token) return 0;
+    try {
+      const part = token.split('.')[1];
+      if (!part) return 0;
+      const payload = JSON.parse(atob(part.replace(/-/g, '+').replace(/_/g, '/')));
+      return (payload && typeof payload.exp === 'number' && payload.exp) || 0;
+    } catch {
+      return 0;
+    }
+  },
+  // Échange le token courant contre un neuf (même session) s'il expire bientôt.
+  async refreshToken() {
+    if (!this.getToken()) return false;
+    try {
+      const data = await this.request('/auth/refresh', { method: 'POST' });
+      if (data && data.access_token) {
+        this.setAuth(data.access_token, data.user || this.getUser() || {});
+        return true;
+      }
+    } catch {
+      // 401 → token expiré ou révoqué : on purge la session locale.
+      this.clearAuth();
+    }
+    return false;
+  },
+  // Session glissante silencieuse : rafraîchit avant expiration, sinon purge.
+  startAutoRefresh() {
+    const check = () => {
+      const remaining = (this.getTokenExp() || 0) * 1000 - Date.now();
+      if (remaining <= 0) {
+        if (this.getToken()) this.clearAuth();
+      } else if (remaining < 10 * 60 * 1000) {
+        this.refreshToken();
+      }
+    };
+    setTimeout(check, 1500);
+    setInterval(check, 5 * 60 * 1000);
+  },
+  // Déconnexion : révoque le token côté serveur (best effort) puis purge locale.
+  async revokeToken(token) {
+    if (!token) return;
+    try {
+      await this.request('/auth/logout', {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    } catch {
+      /* réseau/session déjà révoquée : sans importance */
+    }
+  },
+  logout() {
+    this.revokeToken(this.getToken());
+    this.clearAuth();
+  },
   getUser() {
     try {
       return JSON.parse(localStorage.getItem('ap_user') || 'null');
@@ -294,12 +351,15 @@ API.updateHeaderAuth = function() {
     const btn = document.getElementById('header-logout');
     if (btn) btn.addEventListener('click', (e) => {
       e.preventDefault();
-      API.clearAuth();
+      API.logout();
       window.location.href = 'index.html';
     });
   }
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.API) API.updateHeaderAuth();
+  if (window.API) {
+    API.updateHeaderAuth();
+    API.startAutoRefresh();
+  }
 });

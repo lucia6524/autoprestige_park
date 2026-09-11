@@ -1139,7 +1139,7 @@ const footer = {
         document.querySelector('[data-panel="orders"]').click();
       });
     document.getElementById("btn-logout").onclick = () => {
-      API.clearAuth();
+      API.logout();
       location.href = "index.html";
     };
 

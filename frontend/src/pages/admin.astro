@@ -1230,6 +1230,7 @@ export const prerender = true;
     }
 
     function logout() {
+      if (window.API && typeof API.revokeToken === "function") API.revokeToken(token);
       token = "";
       currentUser = null;
       localStorage.removeItem("admin_token");

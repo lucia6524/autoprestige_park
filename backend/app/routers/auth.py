@@ -19,6 +19,19 @@ from app.deps import get_current_user
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
+
+def _user_payload(user: User) -> dict:
+    """Charge utile cliente commune (login, registration, refresh)."""
+    return {
+        "id": user.id,
+        "first_name": user.first_name,
+        "last_name": user.last_name,
+        "email": user.email,
+        "phone": user.phone,
+        "monthly_salary": user.monthly_salary,
+        "is_admin": bool(getattr(user, "is_admin", False)),
+    }
+
 # ── Rate limiter (in-memory, per IP) ──────────────────────
 _rate_limits: dict[str, list[float]] = {}
 RATE_LIMIT_WINDOW = 300  # 5 minutes
@@ -219,19 +232,38 @@ async def register_set_password(
         if _pending[k].get("email") == email.lower():
             del _pending[k]
 
-    token = create_access_token({"sub": str(user.id)})
+    token = create_access_token(user)
     return TokenResponse(
         access_token=token,
-        user={
-            "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "phone": user.phone,
-            "monthly_salary": user.monthly_salary,
-            "is_admin": bool(getattr(user, "is_admin", False)),
-        },
+        user=_user_payload(user),
     )
+
+
+@router.post("/logout")
+async def logout(
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Révoque immédiatement TOUS les tokens du compte.
+
+    Incrémente token_version en base : deps.get_current_user refuse ensuite
+    tout JWT dont `ver` ne correspond plus. À appeler au déconnexion.
+    """
+    user.token_version = (user.token_version or 0) + 1
+    await db.commit()
+    return {"ok": True, "message": "Session fermée sur tous les appareils."}
+
+
+@router.post("/refresh", response_model=TokenResponse)
+async def refresh_token(
+    user: User = Depends(get_current_user),
+):
+    """Session glissante : échange le token courant (encore valide et non
+    révoqué) contre un nouveau de même version — sans redemander de
+    mot de passe. Un token volé puis révoqué par un logout est refusé ici
+    comme partout ailleurs (même vérification `ver`)."""
+    token = create_access_token(user)
+    return TokenResponse(access_token=token, user=_user_payload(user))
 
 
 # Message anti-énumération : identique que le compte existe ou non.
@@ -333,18 +365,10 @@ async def login(data: LoginRequest, request: Request, db: AsyncSession = Depends
     if not authenticated:
         raise HTTPException(401, _GENERIC_LOGIN_ERROR)
 
-    token = create_access_token({"sub": str(user.id)})
+    token = create_access_token(user)
     return TokenResponse(
         access_token=token,
-        user={
-            "id": user.id,
-            "first_name": user.first_name,
-            "last_name": user.last_name,
-            "email": user.email,
-            "phone": user.phone,
-            "monthly_salary": user.monthly_salary,
-            "is_admin": bool(getattr(user, "is_admin", False)),
-        },
+        user=_user_payload(user),
     )
 
 

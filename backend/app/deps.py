@@ -22,6 +22,14 @@ async def get_current_user(
         raise HTTPException(status_code=401, detail="Utilisateur introuvable")
     if not user.is_verified:
         raise HTTPException(status_code=403, detail="Compte non vérifié")
+    # Révocation : le token doit porter la version de session courante.
+    # Un logout incrémente token_version → tous les tokens antérieurs 401.
+    token_ver = payload.get("ver")
+    if token_ver is None or int(token_ver) != (user.token_version or 0):
+        raise HTTPException(
+            status_code=401,
+            detail="Session révoquée. Reconnectez-vous.",
+        )
     return user
 
 

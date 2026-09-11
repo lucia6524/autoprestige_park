@@ -175,8 +175,11 @@
         btn.addEventListener('click', (e) => {
           e.preventDefault();
           e.stopPropagation();
-          if (window.API && typeof API.clearAuth === 'function') API.clearAuth();
-          ['ap_token', 'ap_user', 'token', 'access_token', 'user'].forEach(k => localStorage.removeItem(k));
+          if (window.API && typeof API.logout === 'function') API.logout();
+          else {
+            if (window.API && typeof API.clearAuth === 'function') API.clearAuth();
+            ['ap_token', 'ap_user', 'token', 'access_token', 'user'].forEach(k => localStorage.removeItem(k));
+          }
           window.location.href = PAGES.home;
         });
       }

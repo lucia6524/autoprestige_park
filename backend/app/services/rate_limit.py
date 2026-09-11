@@ -33,17 +33,27 @@ def get_client_ip(request: Request) -> str:
     Render transmet l'IP d'origine dans X-Forwarded-For. En dev local, on
     retombe sur request.client.host. Uniquement la première IP de la liste :
     les suivantes sont contrôlées par l'infrastructure, pas par le client.
+
+    ⚠️ Règle anti-spoofing corrigée : sur Render, la connexion entre le proxy
+    et uvicorn vient d'une IP privée interne (pas loopback) — la vérification
+    « loopback only » faisait retomber TOUS les visiteurs sur l'IP du proxy
+    (un seul bucket de rate-limit pour tout le site). En production, Render
+    est l'unique point d'entrée et écrase l'en-tête : la première entrée XFF
+    est fiable. En dev, on ne la lit que derrière un proxy local (loopback).
     """
+    from app.config import settings
+
     client_host = request.client.host if request.client else "unknown"
     forwarded = request.headers.get("x-forwarded-for", "")
     if not forwarded:
         return client_host
     first_hop = forwarded.split(",")[0].strip()
-    # Anti-spoofing basique : ne faire confiance à l'en-tête que si la
-    # connexion vient d'un relais interne (loopback = proxy Render en prod).
-    # En dev direct (IP publique), l'en-tête est falsifiable → on l'ignore.
-    if client_host in ("127.0.0.1", "::1", "localhost"):
+    trusted = settings.ENVIRONMENT.lower() == "production" or client_host in (
+        "127.0.0.1", "::1", "localhost",
+    )
+    if trusted:
         return first_hop or client_host
+    # Dev direct (IP publique) : l'en-tête est falsifiable → on l'ignore.
     return client_host
 
 

@@ -54,6 +54,7 @@ async def init_db():
                 "ALTER TABLE deliveries ADD COLUMN recipient_last_name VARCHAR(100) DEFAULT ''",
                 "ALTER TABLE deliveries ADD COLUMN recipient_phone VARCHAR(30) DEFAULT ''",
                 "ALTER TABLE deliveries ADD COLUMN delivery_address TEXT DEFAULT ''",
+                "ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0",
             ]
             for sql in migrations:
                 try:
@@ -81,6 +82,15 @@ async def init_db():
             users_exists = await conn.scalar(
                 text("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'users')")
             )
+            # Migration idempotente : ajoute token_version aux tables existantes
+            # (create_all ne modifie pas les tables déjà présentes).
+            has_token_version = await conn.scalar(
+                text("SELECT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'users' AND column_name = 'token_version')")
+            )
+            if not has_token_version:
+                await conn.execute(
+                    text("ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0")
+                )
         else:
             users_exists = await conn.scalar(
                 text("SELECT EXISTS (SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'users')")

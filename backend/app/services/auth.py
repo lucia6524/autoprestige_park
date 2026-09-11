@@ -34,13 +34,21 @@ def verify_password(plain: str, hashed: str) -> bool:
         return False
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
-    to_encode = data.copy()
+def create_access_token(user: User, expires_delta: Optional[timedelta] = None) -> str:
+    """JWT lié à l'utilisateur.
+
+    Embarque `ver` (token_version) : un logout incrémente cette version en
+    base et invalide immédiatement tous les tokens émis avant (voir deps.py).
+    """
+    payload = {
+        "sub": str(user.id),
+        "ver": user.token_version or 0,
+    }
     expire = datetime.now(timezone.utc) + (
         expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
-    to_encode.update({"exp": expire})
-    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
+    payload.update({"exp": expire})
+    return jwt.encode(payload, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
 def create_registration_token(email: str) -> str:

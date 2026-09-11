@@ -20,6 +20,9 @@ class User(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
 
     registration_step: Mapped[int] = mapped_column(Integer, default=1)
+    # Version de session : incrémentée à chaque logout → invalide immédiatement
+    # tous les JWT émis avant (le token embarque `ver`). Permet la révocation.
+    token_version: Mapped[int] = mapped_column(Integer, default=0, server_default="0")
 
     carts = relationship("CartItem", back_populates="user", cascade="all, delete-orphan")
     orders = relationship("Order", back_populates="user", cascade="all, delete-orphan")
