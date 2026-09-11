@@ -1,7 +1,7 @@
 """Témoignages clients (modérés) et demandes de vente avec photos."""
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from sqlalchemy import select, desc, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -10,6 +10,7 @@ from app.database import get_db
 from app.deps import get_current_admin
 from app.models.reviews import Review, SellRequest
 from app.services.email import send_review_email, send_sell_request_email
+from app.services.rate_limit import check_rate_limit, get_client_ip
 
 router = APIRouter(tags=["Reviews"])
 
@@ -97,8 +98,11 @@ async def reviews_stats(db: AsyncSession = Depends(get_db)):
 
 
 @router.post("/reviews")
-async def submit_review(data: ReviewIn, db: AsyncSession = Depends(get_db)):
+async def submit_review(data: ReviewIn, request: Request, db: AsyncSession = Depends(get_db)):
     """Soumission d'un témoignage — enregistré en attente de modération."""
+    # Rate limit : 3 avis / 5 min / IP (modération + email payant en aval).
+    check_rate_limit("review_submit", get_client_ip(request))
+
     review = Review(
         name=data.name.strip(),
         email=str(data.email).lower(),
@@ -119,8 +123,11 @@ async def submit_review(data: ReviewIn, db: AsyncSession = Depends(get_db)):
 # ── Public : demande de vente (reprise) ──────────────────
 
 @router.post("/sell-requests")
-async def submit_sell_request(data: SellRequestIn, db: AsyncSession = Depends(get_db)):
+async def submit_sell_request(data: SellRequestIn, request: Request, db: AsyncSession = Depends(get_db)):
     """Demande d'estimation avec photos du véhicule."""
+    # Rate limit : 3 demandes / 5 min / IP (payload photos lourd + email payant).
+    check_rate_limit("sell_request", get_client_ip(request))
+
     import json
 
     photos_json = "[]"

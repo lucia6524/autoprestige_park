@@ -39,11 +39,9 @@ def _check_rate_limit(ip: str, max_requests: int) -> None:
 
 
 def _get_client_ip(request: Request) -> str:
-    """Extract client IP, respecting X-Forwarded-For behind a proxy."""
-    forwarded = request.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return request.client.host if request.client else "unknown"
+    """IP client réelle — délègue au helper partagé (anti-spoofing XFF)."""
+    from app.services.rate_limit import get_client_ip
+    return get_client_ip(request)
 
 
 # Temporary registration store (in-memory for multi-step before user is created)

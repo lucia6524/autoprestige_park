@@ -28,10 +28,9 @@ def _check_translate_rate(ip: str) -> None:
 
 
 def _get_ip(req: StarletteRequest) -> str:
-    forwarded = req.headers.get("x-forwarded-for")
-    if forwarded:
-        return forwarded.split(",")[0].strip()
-    return req.client.host if req.client else "unknown"
+    """IP client réelle — délègue au helper partagé (anti-spoofing XFF)."""
+    from app.services.rate_limit import get_client_ip
+    return get_client_ip(req)
 
 
 class TranslationRequest(BaseModel):
