@@ -149,5 +149,10 @@ async def update_site_settings(
         setattr(settings, field, (value or "").strip())
     _invalidate_settings_cache()
     await db.commit()
-    await db.refresh(settings)
+    # Recharge depuis la base plutôt que db.refresh() : immunise contre
+    # l'erreur « Instance is not persistent » même si settings provenait du
+    # cache reconstruit (transient) — ce SELECT renvoie toujours une ligne
+    # fraîche attachée à cette session.
+    result = await db.execute(select(SiteSettings).where(SiteSettings.id == settings.id))
+    settings = result.scalars().first()
     return settings
