@@ -4,7 +4,7 @@ import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
-from jose import JWTError, jwt
+import jwt  # PyJWT — remplace python-jose (non maintenu, CVE-2024-33663/33664)
 from passlib.context import CryptContext
 from sqlalchemy import select, func, and_
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -54,8 +54,13 @@ def create_registration_token(email: str) -> str:
 def decode_registration_token(token: str) -> Optional[str]:
     """Renvoie l'email associé si le token est valide ET destiné à l'inscription."""
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-    except JWTError:
+        payload = jwt.decode(
+            token,
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM],
+            options={"require": ["exp"]},
+        )
+    except jwt.InvalidTokenError:
         return None
     if payload.get("purpose") != "registration":
         return None
@@ -65,8 +70,13 @@ def decode_registration_token(token: str) -> Optional[str]:
 
 def decode_token(token: str) -> Optional[dict]:
     try:
-        return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
-    except JWTError:
+        return jwt.decode(
+            token,
+            settings.SECRET_KEY,
+            algorithms=[settings.ALGORITHM],
+            options={"require": ["exp"]},  # un token sans expiration est refuse
+        )
+    except jwt.InvalidTokenError:
         return None
 
 
