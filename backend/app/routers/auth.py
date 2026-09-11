@@ -11,7 +11,7 @@ from app.schemas import (
 )
 from app.services.auth import (
     get_user_by_email, create_otp, verify_otp, create_access_token, hash_password,
-    create_registration_token, decode_registration_token,
+    verify_password, create_registration_token, decode_registration_token,
 )
 from app.services.email import send_otp_email
 from app.schemas import ProfileUpdate
@@ -234,35 +234,84 @@ async def register_set_password(
     )
 
 
+# Message anti-énumération : identique que le compte existe ou non.
+_GENERIC_OTP_MESSAGE = (
+    "Si un compte existe avec cette adresse email, "
+    "un code de vérification vient d'être envoyé."
+)
+
+
 @router.post("/login/request-code")
 async def login_request_code(email: str, request: Request, db: AsyncSession = Depends(get_db)):
-    """Generate an OTP and send it by email."""
+    """Generate an OTP and send it by email.
+
+    ⚠️ Anti-énumération : la réponse est STRICTEMENT identique (statut + corps)
+    que le compte existe ou non. Une limite par email s'applique aux deux cas
+    pour que même le 429 ne révèle rien — et pour empêcher le mail-bombing.
+    """
     _check_rate_limit(_get_client_ip(request), RATE_LIMIT_MAX_LOGIN)
-    user = await get_user_by_email(db, email)
-    if not user or not user.is_verified:
-        raise HTTPException(404, "Aucun compte vérifié avec cet email.")
-    code = await create_otp(db, email)
+    email = (email or "").strip().lower()
+    # Limite par email (5/h), appliquée AVANT toute vérification d'existence :
+    # compte réel ou inexistant, le comportement reste identique.
+    from app.services.rate_limit import check_rate_limit
+    check_rate_limit("otp_code", f"email:{email}")
 
-    email_sent = await send_otp_email(email, code, user.first_name)
-    if not email_sent:
-        raise HTTPException(503, "Impossible d'envoyer l'email de vérification. Réessayez plus tard.")
-
-    return {
+    generic = {
         "ok": True,
         "email": email,
-        "message": "Un code de vérification a été envoyé à votre adresse email.",
+        "message": _GENERIC_OTP_MESSAGE,
     }
+
+    user = await get_user_by_email(db, email)
+    if not user or not user.is_verified:
+        # Compte inexistant ou non vérifié : réponse générique, pas d'email.
+        return generic
+
+    code = await create_otp(db, email)
+    email_sent = await send_otp_email(email, code, user.first_name)
+    if not email_sent:
+        # Uniquement quand le service email est réellement indisponible.
+        raise HTTPException(503, "Impossible d'envoyer l'email de vérification. Réessayez plus tard.")
+
+    return generic
+
+
+# Message d'échec unique pour TOUTES les causes d'échec de login (compte
+# inexistant, mot de passe faux, code invalide) : aucune différence de statut
+# ni de corps ne doit révéler si un email est inscrit.
+_GENERIC_LOGIN_ERROR = "Email, mot de passe ou code de vérification incorrect."
+
+# Hash bcrypt factice, calculé une fois, pour égaliser le temps de réponse
+# entre « compte inexistant » et « mot de passe incorrect » (sinon le temps
+# de bcrypt manquant sur le chemin « inexistant » est un oracle de timing).
+_dummy_hash_cache: str = ""
+
+
+def _timing_equalizer(password: str) -> None:
+    """Exécute une vérification bcrypt factice du même coût que la réelle."""
+    global _dummy_hash_cache
+    if not _dummy_hash_cache:
+        _dummy_hash_cache = hash_password("timing-equalizer-dummy-value")
+    verify_password(password, _dummy_hash_cache)
 
 
 @router.post("/login", response_model=TokenResponse)
 async def login(data: LoginRequest, request: Request, db: AsyncSession = Depends(get_db)):
-    """Connexion par code OTP ou par mot de passe (admin)"""
+    """Connexion par code OTP ou par mot de passe (admin).
+
+    ⚠️ Anti-énumération : un seul et même message d'erreur 401 quel que soit
+    le motif (compte inexistant, mot de passe faux, code invalide), et coût
+    bcrypt identique sur tous les chemins mot de passe.
+    """
     _check_rate_limit(_get_client_ip(request), RATE_LIMIT_MAX_LOGIN)
-    from app.services.auth import verify_password
 
     user = await get_user_by_email(db, data.email)
+
     if not user or not user.is_verified:
-        raise HTTPException(401, "Compte introuvable ou non vérifié.")
+        # Égaliser le coût temporel avec le chemin « mauvais mot de passe ».
+        if data.password:
+            _timing_equalizer(data.password)
+        raise HTTPException(401, _GENERIC_LOGIN_ERROR)
 
     authenticated = False
 
@@ -271,18 +320,18 @@ async def login(data: LoginRequest, request: Request, db: AsyncSession = Depends
         if user.hashed_password and verify_password(data.password, user.hashed_password):
             authenticated = True
         else:
-            raise HTTPException(401, "Mot de passe incorrect.")
+            raise HTTPException(401, _GENERIC_LOGIN_ERROR)
     # Login par OTP
     elif data.code:
         ok = await verify_otp(db, data.email, data.code)
         if not ok:
-            raise HTTPException(401, "Code invalide ou expiré.")
+            raise HTTPException(401, _GENERIC_LOGIN_ERROR)
         authenticated = True
     else:
         raise HTTPException(400, "Code de vérification ou mot de passe requis.")
 
     if not authenticated:
-        raise HTTPException(401, "Authentification échouée.")
+        raise HTTPException(401, _GENERIC_LOGIN_ERROR)
 
     token = create_access_token({"sub": str(user.id)})
     return TokenResponse(

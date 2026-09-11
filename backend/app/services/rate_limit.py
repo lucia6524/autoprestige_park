@@ -18,6 +18,10 @@ LIMITS: Dict[str, Tuple[int, int]] = {
     "contact": (WINDOW_SECONDS, 5),         # 5 messages / 5 min / IP
     "review_submit": (WINDOW_SECONDS, 3),   # 3 avis / 5 min / IP
     "sell_request": (WINDOW_SECONDS, 3),    # 3 demandes / 5 min / IP
+    # Codes OTP par email (clé "email:<adresse>") : 5 / heure. Appliqué AVANT
+    # la vérification d'existence du compte — sinon le 429 lui-même trahirait
+    # quels emails sont inscrits.
+    "otp_code": (3600, 5),
 }
 
 _buckets: Dict[str, List[float]] = {}
