@@ -5,7 +5,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 import jwt  # PyJWT — remplace python-jose (non maintenu, CVE-2024-33663/33664)
-from passlib.context import CryptContext
+import bcrypt  # bcrypt natif — remplace passlib (abandonné, incompatible bcrypt >= 4.1)
 from sqlalchemy import select, func, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,17 +13,25 @@ from app.config import settings
 from app.models.user import User, OTPCode
 from app.time_utils import utc_now_naive
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# Coût bcrypt 12 (recommandation OWASP 2024 ; défaut bcrypt = 10).
+_BCRYPT_ROUNDS = 12
 
 
 def hash_password(password: str) -> str:
-    return pwd_context.hash(password)
+    """Hash bcrypt (sel généré aléatoirement par la lib, encodé dans le hash)."""
+    return bcrypt.hashpw(
+        password.encode("utf-8"), bcrypt.gensalt(rounds=_BCRYPT_ROUNDS)
+    ).decode("ascii")
 
 
 def verify_password(plain: str, hashed: str) -> bool:
     if not hashed:
         return False
-    return pwd_context.verify(plain, hashed)
+    try:
+        return bcrypt.checkpw(plain.encode("utf-8"), hashed.encode("ascii"))
+    except (ValueError, UnicodeEncodeError):
+        # hash malformé en base (ancien format corrompu, etc.) -> refus
+        return False
 
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
