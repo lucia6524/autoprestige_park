@@ -16,6 +16,14 @@ _translate_rate_limits: dict[str, list[float]] = {}
 _TRANSLATE_RATE_WINDOW = 300
 _TRANSLATE_RATE_MAX = 120
 
+# Quota de VOLUME par IP (5 min) : 120 requêtes × 120 Ko autoriseraient ~14 M
+# de caractères / 5 min — de quoi épuiser le quota mensuel DeepL (500 k chars
+# gratuit) en quelques minutes. On plafonne donc le total de caractères envoyés.
+_TRANSLATE_VOLUME_WINDOW = 300
+_TRANSLATE_VOLUME_MAX = 60_000  # caractères / 5 min / IP
+
+_char_usage: dict[str, list[tuple[float, int]]] = {}
+
 
 def _check_translate_rate(ip: str) -> None:
     now = time.time()
@@ -25,6 +33,21 @@ def _check_translate_rate(ip: str) -> None:
     if len(_translate_rate_limits[ip]) >= _TRANSLATE_RATE_MAX:
         raise HTTPException(429, "Trop de demandes de traduction. Réessayez plus tard.")
     _translate_rate_limits[ip].append(now)
+
+
+def _check_translate_volume(ip: str, chars: int) -> None:
+    """Plafonne le total de caractères envoyés au provider (quota), pas juste
+    le nombre de requêtes : 120 requêtes × 120 Ko épuiseraient DeepL gratuit en
+    quelques minutes (500 k caractères/mois)."""
+    now = time.time()
+    history = [(t, c) for t, c in _char_usage.get(ip, []) if now - t < _TRANSLATE_VOLUME_WINDOW]
+    total = sum(c for _, c in history) + chars
+    if total > _TRANSLATE_VOLUME_MAX:
+        raise HTTPException(
+            429,
+            "Volume de traduction dépassé. Réessayez dans quelques minutes.",
+        )
+    _char_usage[ip] = history + [(now, chars)]
 
 
 def _get_ip(req: StarletteRequest) -> str:
@@ -235,6 +258,7 @@ async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest
     original du client — seuls les textes voyagent, jamais la structure.
     """
     _check_translate_rate(_get_ip(request))
+    _check_translate_volume(_get_ip(request), len(data.html))
 
     cleaned = _sanitize_fragment_for_translation(data.html)
     if not cleaned:
@@ -321,8 +345,10 @@ async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest
 @router.post("")
 async def translate(data: TranslationRequest, request: StarletteRequest):
     _check_translate_rate(_get_ip(request))
-    if sum(len(text) for text in data.texts) > 10000:
+    total_chars = sum(len(text) for text in data.texts)
+    if total_chars > 10000:
         raise HTTPException(413, "Le contenu à traduire est trop volumineux.")
+    _check_translate_volume(_get_ip(request), total_chars)
 
     if settings.TRANSLATION_PROVIDER == "deepl":
         if not settings.DEEPL_API_KEY:

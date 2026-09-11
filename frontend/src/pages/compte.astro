@@ -993,6 +993,40 @@ const footer = {
               </div>
             </form>
           </div>
+          <div class="dash-section">
+            <h3 style="margin-bottom: 10px">Changer mon mot de passe</h3>
+            <form class="profile-edit-form" id="password-form">
+              <label
+                >Mot de passe actuel<input
+                  id="pwd-current"
+                  type="password"
+                  required
+                  autocomplete="current-password"
+              /></label>
+              <label
+                >Nouveau mot de passe<input
+                  id="pwd-new"
+                  type="password"
+                  required
+                  minlength="8"
+                  autocomplete="new-password"
+                  placeholder="8+ caractères, majuscule, minuscule, chiffre, symbole"
+              /></label>
+              <label
+                >Confirmer le nouveau mot de passe<input
+                  id="pwd-new2"
+                  type="password"
+                  required
+                  minlength="8"
+                  autocomplete="new-password"
+              /></label>
+              <div class="profile-actions">
+                <button type="submit" class="btn btn-primary">
+                  Mettre à jour le mot de passe
+                </button>
+              </div>
+            </form>
+          </div>
         </section>
 
         <!-- FINANCE -->
@@ -1153,6 +1187,33 @@ const footer = {
       document.getElementById("profile-salary").value = salary || "";
     }
     loadProfile();
+
+    document
+      .getElementById("password-form")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const current = document.getElementById("pwd-current").value;
+        const p1 = document.getElementById("pwd-new").value;
+        const p2 = document.getElementById("pwd-new2").value;
+        if (p1 !== p2) {
+          alert("Les nouveaux mots de passe ne correspondent pas.");
+          return;
+        }
+        const button = event.target.querySelector("button[type=submit]");
+        button.disabled = true;
+        try {
+          await API.changePassword(current, p1);
+          alert(
+            "Mot de passe modifié. Vos autres sessions ont été fermées — reconnectez-vous.",
+          );
+          API.logout();
+          location.href = "connexion.html";
+        } catch (err) {
+          alert(API.friendlyError(err));
+        } finally {
+          button.disabled = false;
+        }
+      });
 
     document
       .getElementById("profile-form")

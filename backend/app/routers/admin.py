@@ -430,23 +430,25 @@ async def update_delivery(
 
 class VehicleIn(BaseModel):
     category: str = Field(..., pattern="^(voiture|camping-car|machine-agricole)$")
-    brand: str
-    model: str
-    year: int = 2024
-    fuel: str = ""
-    transmission: str = ""
-    mileage: int = 0
-    price: float
-    monthly: float = 0
+    brand: str = Field(..., min_length=1, max_length=100)
+    model: str = Field(..., min_length=1, max_length=150)
+    year: int = Field(1950, ge=1950, le=2030)
+    fuel: str = Field("", max_length=50)
+    transmission: str = Field("", max_length=50)
+    mileage: int = Field(0, ge=0, le=2_000_000)
+    # Prix non négatifs : un prix négatif empoisonnerait le total du panier
+    # côté client (sum des CartItem).
+    price: float = Field(..., ge=0, le=10_000_000)
+    monthly: float = Field(0, ge=0, le=10_000_000)
     type: str = "occasion"  # neuf | occasion
-    body_category: str = ""
-    power: int = 0
+    body_category: str = Field("", max_length=100)
+    power: int = Field(0, ge=0, le=2000)
     featured: bool = False
     promo: bool = False
     is_active: bool = True
-    image: str = ""
-    images: str = ""  # JSON string array
-    description: str = ""
+    image: str = Field("", max_length=500)
+    images: str = Field("", max_length=20_000)  # JSON string array
+    description: str = Field("", max_length=10_000)
 
 
 class VehicleOut(BaseModel):
@@ -476,24 +478,24 @@ class VehicleOut(BaseModel):
 
 
 class VehicleUpdate(BaseModel):
-    category: Optional[str] = None
-    brand: Optional[str] = None
-    model: Optional[str] = None
-    year: Optional[int] = None
-    fuel: Optional[str] = None
-    transmission: Optional[str] = None
-    mileage: Optional[int] = None
-    price: Optional[float] = None
-    monthly: Optional[float] = None
-    type: Optional[str] = None
-    body_category: Optional[str] = None
-    power: Optional[int] = None
+    category: Optional[str] = Field(None, pattern="^(voiture|camping-car|machine-agricole)$")
+    brand: Optional[str] = Field(None, min_length=1, max_length=100)
+    model: Optional[str] = Field(None, min_length=1, max_length=150)
+    year: Optional[int] = Field(None, ge=1950, le=2030)
+    fuel: Optional[str] = Field(None, max_length=50)
+    transmission: Optional[str] = Field(None, max_length=50)
+    mileage: Optional[int] = Field(None, ge=0, le=2_000_000)
+    price: Optional[float] = Field(None, ge=0, le=10_000_000)
+    monthly: Optional[float] = Field(None, ge=0, le=10_000_000)
+    type: Optional[str] = Field(None, max_length=20)
+    body_category: Optional[str] = Field(None, max_length=100)
+    power: Optional[int] = Field(None, ge=0, le=2000)
     featured: Optional[bool] = None
     promo: Optional[bool] = None
     is_active: Optional[bool] = None
-    image: Optional[str] = None
-    images: Optional[str] = None
-    description: Optional[str] = None
+    image: Optional[str] = Field(None, max_length=500)
+    images: Optional[str] = Field(None, max_length=20_000)
+    description: Optional[str] = Field(None, max_length=10_000)
 
 
 from app.models.commerce import Vehicle, Notification, Installment, InstallmentPaymentStatus
@@ -601,12 +603,15 @@ async def list_payment_claims(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
     status: Optional[str] = "claimed",
+    skip: SkipParam = 0,
+    limit: LimitParam = 100,
 ):
     """Liste des échéances en attente de validation (ou filtrées par status)."""
     query = (
         select(Installment)
         .options(selectinload(Installment.order).selectinload(Order.user))
         .order_by(desc(Installment.claimed_at))
+        .offset(skip).limit(limit)
     )
     if status:
         query = query.where(Installment.payment_status == status)

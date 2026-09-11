@@ -232,27 +232,28 @@ function renderVehicles(list = null) {
   }
 
   // Batch DOM update with requestAnimationFrame for smoother rendering
+  const esc = (s) => (typeof window.escapeHtml === "function" ? window.escapeHtml(s) : s);
   requestAnimationFrame(() => {
     vehiclesGrid.innerHTML = filtered.map((v, i) => `
       <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
         <div class="vehicle-image">
           <div class="skeleton-overlay"></div>
-          <img src="${(window.supaThumb ? supaThumb(v.image, 600, 65) : v.image)}" data-original-src="${v.image}" alt="${v.brand} ${v.model}" loading="${i === 0 ? "eager" : "lazy"}"${i === 0 ? ' fetchpriority="high"' : ""} decoding="async"
+          <img src="${esc(window.supaThumb ? supaThumb(v.image, 600, 65) : v.image)}" data-original-src="${esc(v.image)}" alt="${esc(v.brand)} ${esc(v.model)}" loading="${i === 0 ? "eager" : "lazy"}"${i === 0 ? ' fetchpriority="high"' : ""} decoding="async"
             onload="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');"
             onerror="if(window.attachImgFallback){if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}}this.classList.add('visible');this.previousElementSibling.classList.add('loaded');">
           <div class="vehicle-badges">
             ${v.featured ? `<span class="badge badge-featured">${(window.I18N && I18N.t("vehicles.badge_featured") !== "vehicles.badge_featured") ? I18N.t("vehicles.badge_featured") : "★ À la une"}</span>` : ''}
             ${v.promo ? `<span class="badge badge-promo">${(window.I18N && I18N.t("vehicles.badge_promo") !== "vehicles.badge_promo") ? I18N.t("vehicles.badge_promo") : "Promo"}</span>` : ''}
-            <span class="badge badge-category">${v.body_category || v.category}</span>
+            <span class="badge badge-category">${esc(v.body_category || v.category)}</span>
           </div>
         </div>
         <div class="vehicle-body">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-            ${brandLogos[v.brand] ? `<img src="${brandLogos[v.brand]}" alt="${v.brand}" style="height:22px;width:auto;object-fit:contain;filter:var(--logo-filter);opacity:0.9;" loading="lazy" decoding="async" onerror="this.style.display='none'">` : ''}
-            <h3 class="vehicle-title" style="margin:0;">${v.brand} ${v.model}</h3>
+            ${brandLogos[v.brand] ? `<img src="${esc(brandLogos[v.brand])}" alt="${esc(v.brand)}" style="height:22px;width:auto;object-fit:contain;filter:var(--logo-filter);opacity:0.9;" loading="lazy" decoding="async" onerror="this.style.display='none'">` : ''}
+            <h3 class="vehicle-title" style="margin:0;">${esc(v.brand)} ${esc(v.model)}</h3>
           </div>
           <div class="vehicle-specs">
-            ${v.year} · ${v.fuel} · ${v.transmission}
+            ${v.year} · ${esc(v.fuel)} · ${esc(v.transmission)}
             ${v.mileage === 0 ? ' · 0 km' : ' · ' + v.mileage.toLocaleString('fr-FR') + ' km'}
           </div>
           <div class="vehicle-price">

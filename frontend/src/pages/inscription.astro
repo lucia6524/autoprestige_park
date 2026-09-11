@@ -437,8 +437,8 @@ const footer = {
             type="password"
             id="password"
             required
-            minlength="6"
-            placeholder="Minimum 6 caractères"
+            minlength="8"
+            placeholder="8+ caractères, majuscule, minuscule, chiffre, symbole"
             autocomplete="new-password"
           />
           <label for="password2">Confirmer le mot de passe</label>
@@ -446,7 +446,7 @@ const footer = {
             type="password"
             id="password2"
             required
-            minlength="6"
+            minlength="8"
             placeholder="Retapez le mot de passe"
             autocomplete="new-password"
           />
@@ -619,9 +619,6 @@ const footer = {
         try {
           const res = await API.registerStep3(sessionKey, salary);
           userEmail = res.email || userEmail;
-          lastOtpCode = res.code || null;
-          document.getElementById("otp-display-code").textContent =
-            lastOtpCode || "";
           document.getElementById("otp-email-display").textContent =
             userEmail;
           goToStep(4);
@@ -708,7 +705,7 @@ const footer = {
         clearMessages();
         const p1 = document.getElementById("password").value;
         const p2 = document.getElementById("password2").value;
-        if (p1.length < 6) return showError("Minimum 6 caractères.");
+        if (p1.length < 8) return showError("Minimum 8 caractères (majuscule, minuscule, chiffre et symbole).");
         if (p1 !== p2)
           return showError("Les mots de passe ne correspondent pas.");
         if (!userEmail)
@@ -750,9 +747,6 @@ const footer = {
           return;
         }
         const res = await API.registerStep3(sessionKey, salary);
-        lastOtpCode = res.code || null;
-        document.getElementById("otp-display-code").textContent =
-          lastOtpCode || "";
         if (res.email) {
           userEmail = res.email;
           document.getElementById("otp-email-display").textContent =

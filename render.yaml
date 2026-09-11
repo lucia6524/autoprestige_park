@@ -5,7 +5,7 @@ services:
     plan: free
     # Astro builds the site (all HTML pages pre-generated) into frontend/dist
     staticPublishPath: frontend/dist
-    buildCommand: cd frontend && npm install --no-fund --no-audit && npm run build
+    buildCommand: cd frontend && npm ci --no-fund --no-audit && npm run build
     # Render sert automatiquement le fichier 404.html du dossier publié pour
     # les URL inexistantes — pas besoin d'une règle de réécriture. (L'ancienne
     # règle `/*404.html` était cassée et ne correspondait à aucune URL.)
@@ -16,6 +16,9 @@ services:
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    # Health check sur la route de santé de l'app pour éviter que Render ne
+    # tue l'instance durant les cold starts (plan gratuit).
+    healthCheckPath: /api/health
     envVars:
       - key: PYTHON_VERSION
         value: 3.13.15

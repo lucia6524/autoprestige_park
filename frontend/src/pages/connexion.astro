@@ -343,8 +343,6 @@ const footer = {
       try {
         const res = await API.loginRequestCode(email);
         document.getElementById("email-display").textContent = email;
-        document.getElementById("otp-display-code").textContent =
-          res.code || "";
         document.getElementById("form-otp").style.display = "block";
         showOk("Code généré — saisissez-le ci-dessous.");
       } catch (err) {

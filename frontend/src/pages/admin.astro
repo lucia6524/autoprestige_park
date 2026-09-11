@@ -1916,7 +1916,7 @@ export const prerender = true;
         try {
           if (isEdit) {
             await api("/admin/vehicles/" + document.getElementById("v-id").value, {
-              method: "PUT",
+method: "PATCH",
               body: JSON.stringify(data),
             });
             toast("Véhicule modifié ✓");

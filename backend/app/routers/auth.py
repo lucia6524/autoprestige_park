@@ -1,13 +1,17 @@
+import logging
+import secrets
 import time
+from datetime import timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import delete, select
 
 from app.database import get_db
 from app.models.user import User
 from app.schemas import (
     RegisterStep1, RegisterStep2, RegisterStep3, RegisterVerify,
-    LoginRequest, TokenResponse, UserOut
+    LoginRequest, LoginRequestCode, ChangePasswordIn, TokenResponse, UserOut
 )
 from app.services.auth import (
     get_user_by_email, create_otp, verify_otp, create_access_token, hash_password,
@@ -16,6 +20,9 @@ from app.services.auth import (
 from app.services.email import send_otp_email
 from app.schemas import ProfileUpdate
 from app.deps import get_current_user
+from app.time_utils import utc_now_naive
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
@@ -66,7 +73,9 @@ _pending: dict[str, dict] = {}
 async def register_step1(data: RegisterStep1, request: Request):
     """Étape 1 : Nom + Prénom"""
     _check_rate_limit(_get_client_ip(request), RATE_LIMIT_MAX_REGISTER)
-    session_key = f"{data.first_name.strip().lower()}_{data.last_name.strip().lower()}"
+    # Clé de session imprévisible (le client la reçoit dans la réponse) : un
+    # jeton devinable `prenom_nom` permettrait d'écraser l'inscription d'autrui.
+    session_key = secrets.token_urlsafe(24)
     _pending[session_key] = {
         "first_name": data.first_name.strip(),
         "last_name": data.last_name.strip(),
@@ -115,8 +124,24 @@ async def register_step2(data: RegisterStep2, session_key: str, request: Request
 
 
 @router.post("/register/step3")
-async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession = Depends(get_db)):
-    """Étape 3 : Salaire mensuel → envoi du code OTP"""
+async def register_step3(
+    data: RegisterStep3,
+    session_key: str,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
+    """Étape 3 : Salaire mensuel → envoi du code OTP
+
+    Anti-énumération : la réponse est identique (200, même corps) que le
+    compte existe déjà ou non, y compris quand l'email échoue (pas de 503
+    différentiel : l'indisponibilité du service d'envoi ne doit pas révéler
+    l'existence d'un compte).
+    """
+    from app.services.rate_limit import check_rate_limit as _check_rl_shared
+    from app.services.rate_limit import get_client_ip as _shared_ip
+    # Anti mail-bombing même avec des adresses distinctes (clé par IP).
+    _check_rl_shared("otp_generate", _shared_ip(request))
+
     if session_key not in _pending or _pending[session_key].get("step", 0) < 2:
         raise HTTPException(400, "Complétez d'abord les étapes 1 et 2.")
 
@@ -136,6 +161,13 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
             "email": email,
             "message": "Un code de vérification a été envoyé à votre adresse email.",
         }
+
+    # Purge des inscriptions orphelines (> 24 h, jamais vérifiées) : évite que
+    # la table users ne se remplisse de lignes non vérifiées (pollution/DoS).
+    cutoff = utc_now_naive() - timedelta(hours=24)
+    await db.execute(
+        delete(User).where(User.is_verified == False, User.created_at < cutoff)
+    )
 
     # Create or update user (unverified)
     user = await get_user_by_email(db, email)
@@ -164,7 +196,9 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
 
     email_sent = await send_otp_email(email, code, pending.get("first_name", ""))
     if not email_sent:
-        raise HTTPException(503, "Impossible d'envoyer l'email de vérification. Réessayez plus tard.")
+        # Pas de 503 : même corps générique (l'existence du compte doit rester
+        # indifférenciable). L'erreur est loggée côté serveur uniquement.
+        logger.error("OTP email failed during register/step3 for %s", email)
 
     return {
         "ok": True,
@@ -174,9 +208,37 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
     }
 
 
+# Validations de mot de passe partagées (inscription + changement).
+# Le jeu complet des caractères spéciaux utilisés par la regex serveur.
+_PASSWORD_SPECIAL_RE = "[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]"
+
+
+def _validate_password_strength(password: str) -> None:
+    import re
+    if len(password) < 8:
+        raise HTTPException(400, "Le mot de passe doit contenir au moins 8 caractères.")
+    if not re.search(r"[A-Z]", password):
+        raise HTTPException(400, "Le mot de passe doit contenir au moins une majuscule.")
+    if not re.search(r"[a-z]", password):
+        raise HTTPException(400, "Le mot de passe doit contenir au moins une minuscule.")
+    if not re.search(r"[0-9]", password):
+        raise HTTPException(400, "Le mot de passe doit contenir au moins un chiffre.")
+    if not re.search(_PASSWORD_SPECIAL_RE, password):
+        raise HTTPException(400, "Le mot de passe doit contenir au moins un caractère spécial (!@#$%^&*...).")
+
+
 @router.post("/register/verify")
-async def register_verify(data: RegisterVerify, db: AsyncSession = Depends(get_db)):
+async def register_verify(
+    data: RegisterVerify,
+    request: Request,
+    db: AsyncSession = Depends(get_db),
+):
     """Étape 4 : Vérification OTP → token d'inscription + création du mot de passe (étape 5)"""
+    from app.services.rate_limit import check_rate_limit as _check_rl_shared
+    from app.services.rate_limit import get_client_ip as _shared_ip
+    # Anti brute-force du code sur cet endpoint (en plus des 5 essais/code).
+    _check_rl_shared("register_verify", _shared_ip(request))
+
     ok = await verify_otp(db, data.email, data.code)
     if not ok:
         raise HTTPException(400, "Code invalide ou expiré.")
@@ -203,6 +265,7 @@ async def register_verify(data: RegisterVerify, db: AsyncSession = Depends(get_d
 @router.post("/register/set-password", response_model=TokenResponse)
 async def register_set_password(
     data: dict,
+    request: Request,
     db: AsyncSession = Depends(get_db),
 ):
     """Étape 5 : Définir le mot de passe → compte activé + token.
@@ -211,6 +274,10 @@ async def register_set_password(
     OTP) lié à l'email fourni — sinon n'importe qui pourrait finaliser le
     compte d'autrui en connaissant son email.
     """
+    from app.services.rate_limit import check_rate_limit as _check_rl_shared
+    from app.services.rate_limit import get_client_ip as _shared_ip
+    _check_rl_shared("register_set_password", _shared_ip(request))
+
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
     reg_token = data.get("registration_token") or ""
@@ -223,17 +290,7 @@ async def register_set_password(
             "Session de vérification invalide ou expirée. Validez à nouveau le code reçu par email.",
         )
     # Validate password strength
-    import re
-    if len(password) < 8:
-        raise HTTPException(400, "Le mot de passe doit contenir au moins 8 caractères.")
-    if not re.search(r"[A-Z]", password):
-        raise HTTPException(400, "Le mot de passe doit contenir au moins une majuscule.")
-    if not re.search(r"[a-z]", password):
-        raise HTTPException(400, "Le mot de passe doit contenir au moins une minuscule.")
-    if not re.search(r"[0-9]", password):
-        raise HTTPException(400, "Le mot de passe doit contenir au moins un chiffre.")
-    if not re.search(r"[!@#$%^&*()_+\-=\[\]{};':\"\\\\|,.<>/?]", password):
-        raise HTTPException(400, "Le mot de passe doit contenir au moins un caractère spécial (!@#$%^&*...).")
+    _validate_password_strength(password)
 
     user = await get_user_by_email(db, email)
     if not user:
@@ -293,19 +350,24 @@ _GENERIC_OTP_MESSAGE = (
 
 
 @router.post("/login/request-code")
-async def login_request_code(email: str, request: Request, db: AsyncSession = Depends(get_db)):
+async def login_request_code(data: LoginRequestCode, request: Request, db: AsyncSession = Depends(get_db)):
     """Generate an OTP and send it by email.
 
     ⚠️ Anti-énumération : la réponse est STRICTEMENT identique (statut + corps)
     que le compte existe ou non. Une limite par email s'applique aux deux cas
     pour que même le 429 ne révèle rien — et pour empêcher le mail-bombing.
+    L'email transite dans le BODY (pas en query string, qui serait
+    journalisée par les proxies). En cas d'échec d'envoi, la réponse reste
+    générique (pas de 503 différentiel qui trahirait l'existence du compte).
     """
     _check_rate_limit(_get_client_ip(request), RATE_LIMIT_MAX_LOGIN)
-    email = (email or "").strip().lower()
     # Limite par email (5/h), appliquée AVANT toute vérification d'existence :
     # compte réel ou inexistant, le comportement reste identique.
+    # + limite par IP pour couper le mail-bombing multi-adresses.
     from app.services.rate_limit import check_rate_limit
+    email = (data.email or "").strip().lower()
     check_rate_limit("otp_code", f"email:{email}")
+    check_rate_limit("otp_generate", _get_client_ip(request))
 
     generic = {
         "ok": True,
@@ -321,8 +383,9 @@ async def login_request_code(email: str, request: Request, db: AsyncSession = De
     code = await create_otp(db, email)
     email_sent = await send_otp_email(email, code, user.first_name)
     if not email_sent:
-        # Uniquement quand le service email est réellement indisponible.
-        raise HTTPException(503, "Impossible d'envoyer l'email de vérification. Réessayez plus tard.")
+        # Pas de 503 : un retour distinct révèlerait qu'un compte existe.
+        # L'échec est loggé côté serveur uniquement.
+        logger.error("OTP email failed during login/request-code for %s", email)
 
     return generic
 
@@ -414,3 +477,34 @@ async def update_me(
     await db.commit()
     await db.refresh(user)
     return user
+
+
+@router.post("/change-password")
+async def change_password(
+    data: ChangePasswordIn,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Change le mot de passe du compte connecté.
+
+    Vérifie l'ancien mot de passe, impose la politique de robustesse, puis
+    incrémente token_version : tous les tokens émis avant (autres appareils)
+    sont révoqués — seul un re-login les relance.
+    """
+    if not user.hashed_password:
+        raise HTTPException(
+            400,
+            "Ce compte n'a pas de mot de passe. Utilisez le code de vérification pour vous connecter.",
+        )
+    if not verify_password(data.current_password, user.hashed_password):
+        raise HTTPException(400, "Mot de passe actuel incorrect.")
+
+    _validate_password_strength(data.new_password)
+
+    user.hashed_password = hash_password(data.new_password)
+    user.token_version = (user.token_version or 0) + 1
+    await db.commit()
+    return {
+        "ok": True,
+        "message": "Mot de passe modifié. Reconnectez-vous avec votre nouveau mot de passe (vos autres sessions ont été fermées).",
+    }

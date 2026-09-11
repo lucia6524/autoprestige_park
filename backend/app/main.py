@@ -30,8 +30,10 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    # Méthodes/headers restreints au strict nécessaire (évite une surface
+    # préflighted inutile ; TRACE/HEAD/PUT non utilisés par le frontend).
+    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 # Compress responses (JSON payloads with long image URLs compress very well)
@@ -47,6 +49,11 @@ app.add_middleware(GZipMiddleware, minimum_size=500)
 # d'une victime. Requêtes sans Origin (curl, mobile, server-to-server) : OK.
 SAFE_METHODS = {"GET", "HEAD", "OPTIONS", "TRACE"}
 
+# Taille de corps maximale pour les requêtes mutantes (uploads base64 compris).
+# Le total critique est déjà plafonné côté schema (photos ~4 Mo) : 8 Mo couvre
+# largement tout le reste (JSON) tout en bloquant les payloads de plusieurs Go.
+MAX_BODY_BYTES = 8 * 1024 * 1024
+
 
 def _origin_allowed(origin: str) -> bool:
     """Match des origines autorisées, avec support des wildcards de port
@@ -59,6 +66,26 @@ def _origin_allowed(origin: str) -> bool:
         if "*" in allowed and fnmatch(origin, allowed):
             return True
     return False
+
+
+@app.middleware("http")
+async def limit_body_size(request: Request, call_next):
+    # Moyens de transport verrouillés : les clients (navigateur/fetch) envoient
+    # toujours content-length sur les corps JSON/multipart. Un en-tête manquant
+    # ou non numérique est accepté (déréglé), le contrôle réel se fait par
+    # content-length présent — absent ici = body vide à lester de toute façon.
+    if request.method not in SAFE_METHODS:
+        content_length = request.headers.get("content-length")
+        if content_length:
+            try:
+                if int(content_length) > MAX_BODY_BYTES:
+                    return JSONResponse(
+                        status_code=413,
+                        content={"detail": "Requête trop volumineuse (max 8 Mo)."},
+                    )
+            except ValueError:
+                pass
+    return await call_next(request)
 
 
 @app.middleware("http")
@@ -84,7 +111,6 @@ async def add_security_headers(request: Request, call_next):
         return response
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
-    response.headers["X-XSS-Protection"] = "1; mode=block"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     # APIs navigateur désactivées : caméra, micro, géoloc, capteurs —
     # le site n'en utilise aucune, autant fermer la porte.
@@ -92,7 +118,15 @@ async def add_security_headers(request: Request, call_next):
         "camera=(), microphone=(), geolocation=(), "
         "payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
     )
-    response.headers["Content-Security-Policy"] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;"
+    # 'unsafe-inline' en script-src est conservé uniquement pour l'UI /docs
+    # (Swagger CDN) ; toutes les réponses sont du JSON, cible d'application
+    # nulle. On ajoute en revanche les gardes utiles sur le reste.
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; "
+        "style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; "
+        "object-src 'none'; base-uri 'self'; form-action 'self'; "
+        "frame-ancestors 'none'; connect-src 'self'"
+    )
     if settings.ENVIRONMENT.lower() == "production":
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return response

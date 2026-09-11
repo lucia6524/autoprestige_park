@@ -1,7 +1,7 @@
 """Témoignages clients (modérés) et demandes de vente avec photos."""
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from sqlalchemy import select, desc, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,9 +14,12 @@ from app.services.rate_limit import check_rate_limit, get_client_ip
 
 router = APIRouter(tags=["Reviews"])
 
-# Limite de taille du payload photos (JSON base64). 8 Mo couvre largement
-# 6 photos compressées côté client (~150-400 Ko chacune).
-MAX_PHOTOS_JSON_LENGTH = 8_000_000
+# Limite de taille du payload photos (JSON base64). 4 Mo couvre ~2 photos à
+# pleine taille (le gros du plafond anti-DoS : 8 Mo permettait de remplir la
+# base 1 Go en quelques minutes).
+MAX_PHOTOS_JSON_LENGTH = 4_000_000
+# Taille maximale d'une seule photo en base64 (~1,5 Mo de fichier réel).
+MAX_PHOTO_BYTES = 2_000_000
 # Seules les photos base64 valides sont acceptées : type image annoncé +
 # présence d'un payload base64. Bloque data:text/html, data:application/js,
 # SVG (data:image/svg+xml peut embarquer du JS) et toute autre charge utile.
@@ -66,7 +69,7 @@ class SellRequestIn(BaseModel):
             return v
         clean = []
         for p in v:
-            if not isinstance(p, str) or len(p) > 2_000_000 or not _DATA_URL_RE.match(p):
+            if not isinstance(p, str) or len(p) > MAX_PHOTO_BYTES or not _DATA_URL_RE.match(p):
                 raise ValueError("Format de photo invalide.")
             clean.append(p)
         return clean
@@ -75,8 +78,10 @@ class SellRequestIn(BaseModel):
 # ── Public : avis approuvés + soumission ─────────────────
 
 @router.get("/reviews", response_model=List[ReviewOut])
-async def list_public_reviews(db: AsyncSession = Depends(get_db)):
+async def list_public_reviews(db: AsyncSession = Depends(get_db), response: Response = None):
     """Avis approuvés uniquement (modération)."""
+    if response:
+        response.headers["Cache-Control"] = "public, max-age=60"
     result = await db.execute(
         select(Review)
         .where(Review.approved == True)
@@ -87,8 +92,10 @@ async def list_public_reviews(db: AsyncSession = Depends(get_db)):
 
 
 @router.get("/reviews/stats")
-async def reviews_stats(db: AsyncSession = Depends(get_db)):
+async def reviews_stats(db: AsyncSession = Depends(get_db), response: Response = None):
     """Note moyenne + nombre d'avis approuvés (pour le bandeau de la page)."""
+    if response:
+        response.headers["Cache-Control"] = "public, max-age=60"
     result = await db.execute(
         select(func.count(Review.id), func.coalesce(func.avg(Review.rating), 0.0))
         .where(Review.approved == True)

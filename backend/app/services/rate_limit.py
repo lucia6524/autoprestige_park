@@ -4,10 +4,13 @@ Fenêtre glissante par IP. Adapté au déploiement Render actuel (1 worker) ;
 si l'API passe en multi-worker / multi-instance, migrer ce stockage vers Redis
 ou une table en base (l'interface check(ip, scope) reste identique).
 """
+import logging
 import time
 from typing import Dict, List, Tuple
 
 from fastapi import HTTPException, Request
+
+logger = logging.getLogger(__name__)
 
 # Fenêtre par défaut : 5 minutes
 WINDOW_SECONDS = 300
@@ -27,6 +30,14 @@ LIMITS: Dict[str, Tuple[int, int]] = {
     # IPs) contre un compte ciblé. Appliqué avant la recherche du compte pour
     # que le 429 ne révèle pas l'existence de l'email.
     "login_email": (900, 15),
+    # Génération de codes OTP (login/request-code, register/step3) : 15 / 5 min
+    # / IP, en plus de la limite par email — coupe le « mail-bombing » qui
+    # viserait des adresses distinctes depuis une même IP.
+    "otp_generate": (WINDOW_SECONDS, 15),
+    # Vérification du code d'inscription : 10 / 5 min / IP (anti brute-force OTP).
+    "register_verify": (WINDOW_SECONDS, 10),
+    # Finalisation du mot de passe : 10 / 5 min / IP (anti force brute/abuse).
+    "register_set_password": (WINDOW_SECONDS, 10),
 }
 
 _buckets: Dict[str, List[float]] = {}
@@ -70,6 +81,7 @@ def check_rate_limit(scope: str, ip: str) -> None:
 
     bucket = [t for t in _buckets.get(key, []) if now - t < window]
     if len(bucket) >= max_requests:
+        logger.warning("Rate limit atteint — scope=%s ip=%s (%d/%d)", scope, ip, len(bucket), max_requests)
         raise HTTPException(
             429,
             f"Trop de demandes. Réessayez dans quelques minutes "

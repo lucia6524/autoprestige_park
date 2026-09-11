@@ -85,7 +85,9 @@ async def checkout(
         months_total=months_total,
         amount_paid=amount_paid,
         status=status,
-        paid_at=utc_now_naive() if data.payment_type == "full" else None,
+        # paid_at n'est posé QUE par l'admin quand le virement est vérifié
+        # (update_order_status → "paid") : jamais à la création.
+        paid_at=None,
     )
     db.add(order)
     await db.flush()
@@ -165,6 +167,11 @@ async def pay_installment(
         raise HTTPException(404, "Commande introuvable.")
     if order.payment_type != "monthly":
         raise HTTPException(400, "Cette commande n'est pas en paiement mensuel.")
+    # Une commande annulée (ou soldée) ne peut plus produire de réclamations :
+    # celles-ci pollueraient le flux de validation admin et prêteraient à
+    # confusion financière.
+    if order.status in ("cancelled", "paid"):
+        raise HTTPException(400, "Cette commande n'accepte plus de déclarations de paiement.")
 
     inst = next((i for i in order.installments if i.id == data.installment_id), None)
     if not inst:

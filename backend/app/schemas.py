@@ -38,6 +38,17 @@ class LoginRequest(BaseModel):
     password: Optional[str] = None
 
 
+class LoginRequestCode(BaseModel):
+    """Email dans le body (jamais en query string : les URL sont journalisées
+    par les proxies — l'adresse ne doit pas traîner dans les logs d'accès)."""
+    email: EmailStr
+
+
+class ChangePasswordIn(BaseModel):
+    current_password: str = Field(..., min_length=1, max_length=200)
+    new_password: str = Field(..., min_length=8, max_length=200)
+
+
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
