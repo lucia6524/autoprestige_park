@@ -1,5 +1,5 @@
 """Catalogue public véhicules."""
-from typing import Optional, List
+from typing import Annotated, Optional, List
 from fastapi import APIRouter, Depends, Query, Response
 from sqlalchemy import select, desc, func
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -14,6 +14,11 @@ router = APIRouter(prefix="/vehicles", tags=["Vehicles"])
 # Le catalogue est public et change rarement : on autorise un cache court
 # (CDN / navigateur / proxy) pour alléger la charge sur l'API.
 CATALOG_CACHE_CONTROL = "public, max-age=300"
+
+# Pagination bornée : le catalogue est public — un plafond sur `limit` évite
+# qu'un client extraye toute la table (ou pire, force des requêtes géantes).
+SkipParam = Annotated[int, Query(ge=0, description="Décalage de pagination")]
+LimitParam = Annotated[int, Query(ge=1, le=200, description="Taille de page (max 200)")]
 
 
 def set_catalog_cache(response: Response):
@@ -50,8 +55,8 @@ async def list_public_vehicles(
     db: AsyncSession = Depends(get_db),
     category: Optional[str] = None,
     q: Optional[str] = None,
-    skip: int = 0,
-    limit: int = 200,
+    skip: SkipParam = 0,
+    limit: LimitParam = 200,
 ):
     set_catalog_cache(response)
     query = select(Vehicle).where(Vehicle.is_active == True).order_by(desc(Vehicle.featured), desc(Vehicle.created_at))

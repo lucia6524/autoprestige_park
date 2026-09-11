@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from typing import Optional, List
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from typing import Annotated
 from sqlalchemy import select, func, desc
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -21,6 +22,13 @@ from app.services.auth import hash_password
 from app.time_utils import as_utc_naive, utc_now_naive
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
+
+
+# ── Pagination bornée (anti-DoS) ────────────────────────
+# Plafonner `limit` empêche un client de demander 100 000 lignes d'un coup
+# (payload géant + charge DB). `skip` reste libre mais non négatif.
+SkipParam = Annotated[int, Query(ge=0, description="Décalage de pagination")]
+LimitParam = Annotated[int, Query(ge=1, le=200, description="Taille de page (max 200)")]
 
 
 # ── Schemas ──────────────────────────────────────────────
@@ -160,8 +168,8 @@ async def list_users(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
     q: Optional[str] = Query(None),
-    skip: int = 0,
-    limit: int = 50,
+    skip: SkipParam = 0,
+    limit: LimitParam = 50,
 ):
     query = select(User).order_by(desc(User.created_at)).offset(skip).limit(limit)
     if q:
@@ -270,8 +278,8 @@ async def list_orders(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
     status: Optional[str] = None,
-    skip: int = 0,
-    limit: int = 50,
+    skip: SkipParam = 0,
+    limit: LimitParam = 50,
 ):
     query = select(Order).options(
         selectinload(Order.user), selectinload(Order.delivery)
@@ -497,8 +505,8 @@ async def list_vehicles(
     db: AsyncSession = Depends(get_db),
     category: Optional[str] = None,
     q: Optional[str] = None,
-    skip: int = 0,
-    limit: int = 100,
+    skip: SkipParam = 0,
+    limit: LimitParam = 100,
 ):
     query = select(Vehicle).order_by(desc(Vehicle.created_at))
     if category:
@@ -739,7 +747,7 @@ async def list_notifications(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
     unread_only: bool = False,
-    limit: int = 50,
+    limit: LimitParam = 50,
 ):
     query = select(Notification).order_by(desc(Notification.created_at)).limit(limit)
     if unread_only:
