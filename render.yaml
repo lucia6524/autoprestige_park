@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: autoprestige-site
+    name: autohaus-park
     runtime: static
     plan: free
     # Astro builds the site (all HTML pages pre-generated) into frontend/dist
@@ -8,10 +8,10 @@ services:
     buildCommand: cd frontend && npm install --no-fund --no-audit && npm run build
     # Render sert automatiquement le fichier 404.html du dossier publié pour
     # les URL inexistantes — pas besoin d'une règle de réécriture. (L'ancienne
-    # règle `/\*404.html` était cassée et ne correspondait à aucune URL.)
+    # règle `/*404.html` était cassée et ne correspondait à aucune URL.)
 
   - type: web
-    name: autoprestige-api
+    name: autohaus-park-api
     runtime: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
@@ -21,7 +21,7 @@ services:
         value: 3.13.15
       - key: DATABASE_URL
         fromDatabase:
-          name: progrest
+          name: autohaus-park-db
           property: connectionString
       - key: ENVIRONMENT
         value: production
@@ -38,7 +38,7 @@ services:
       - key: SMTP_PORT
         value: "587"
       - key: SMTP_USER
-        value: b7c0a1001@smtp-brevo.com
+        sync: false
       - key: SMTP_PASSWORD
         sync: false
       - key: SMTP_FROM
@@ -53,7 +53,7 @@ services:
         sync: false
 
 databases:
-  - name: progrest
-    databaseName: progrest
-    user: progrest
+  - name: autohaus-park-db
+    databaseName: autohaus_park_db
+    user: autohaus_park
     plan: free

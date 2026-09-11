@@ -193,7 +193,7 @@
     const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
     const apiBase = configuredBase
       ? configuredBase.replace(/\/$/, '') + '/api'
-      : (isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api');
+      : (isLocal ? 'http://127.0.0.1:8000/api' : 'https://autohaus-park-api.onrender.com/api');
     // Cache localStorage : infos contact affichées instantanément, sans
     // attendre le backend (qui peut mettre 30-60 s à sortir de veille sur
     // Render free tier). Cache court (5 min) : les modifs admin répercutées

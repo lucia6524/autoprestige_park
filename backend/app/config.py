@@ -72,7 +72,7 @@ parsed_origins = parse_cors_origins(settings.CORS_ORIGINS)
 # pas (encore) renseigné dans l'environnement Render — évite de bloquer les
 # appels du site (ex. /site-settings) quand l'env var est absente ou partielle.
 PROD_DEFAULT_ORIGINS = [
-    "https://autoprestige-park.onrender.com",
+    "https://autohaus-park.onrender.com",
 ]
 if parsed_origins:
     settings.CORS_ORIGINS = list(parsed_origins)
@@ -99,6 +99,15 @@ settings.TRANSLATION_PROVIDER = provider
 if settings.ENVIRONMENT.lower() == "production":
     if len(settings.SECRET_KEY) < 32:
         raise RuntimeError("SECRET_KEY must be set via environment variable and be at least 32 characters in production.")
+    # Une clé auto-générée (défaut secrets.token_urlsafe) passerait le check
+    # de longueur ci-dessus mais régénère une clé NOUVELLE à chaque démarrage :
+    # tous les JWT/OTP hashes sont alors invalidés à chaque redeploy. Il faut
+    # donc qu'elle soit explicitement fournie dans l'environnement en prod.
+    if not os.environ.get("SECRET_KEY"):
+        raise RuntimeError(
+            "SECRET_KEY must be defined as an environment variable in production "
+            "(not auto-generated): otherwise sessions reset on every deploy."
+        )
     if not settings.ADMIN_PASSWORD or len(settings.ADMIN_PASSWORD) < 12:
         raise RuntimeError("ADMIN_PASSWORD must be set via environment variable and be at least 12 characters in production.")
     if settings.CORS_ORIGINS == ["*"] or not settings.CORS_ORIGINS:

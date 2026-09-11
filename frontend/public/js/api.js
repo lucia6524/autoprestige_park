@@ -6,7 +6,7 @@ const API_BASE = (() => {
   if (configuredBase) return configuredBase.replace(/\/$/, '') + '/api';
 
   const isLocal = ['localhost', '127.0.0.1', '::1'].includes(window.location.hostname);
-  return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autoprestige-api.onrender.com/api';
+  return isLocal ? 'http://127.0.0.1:8000/api' : 'https://autohaus-park-api.onrender.com/api';
 })();
 
 // Escape HTML to prevent XSS attacks
@@ -166,8 +166,9 @@ const API = {
     });
   },
   loginRequestCode(email) {
-    return this.request(`/auth/login/request-code?email=${encodeURIComponent(email)}`, {
+    return this.request('/auth/login/request-code', {
       method: 'POST',
+      body: JSON.stringify({ email }),
     });
   },
   login(email, codeOrPassword, isPassword = false) {
@@ -190,6 +191,16 @@ const API = {
     return this.request('/auth/me', {
       method: 'PATCH',
       body: JSON.stringify(profile),
+    });
+  },
+
+  changePassword(currentPassword, newPassword) {
+    return this.request('/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({
+        current_password: currentPassword,
+        new_password: newPassword,
+      }),
     });
   },
 
