@@ -52,7 +52,9 @@ class SiteSettingsOut(BaseModel):
 
 
 class SiteSettingsUpdate(BaseModel):
-    """Mise à jour PARTIELLE : seuls les champs envoyés sont modifiés."""
+    """Mise à jour PARTIELLE et autonome : seul le champ envoyé est modifié.
+    Une valeur vide ("" ou null) EFFACE le champ ; un champ absent du payload
+    reste inchangé."""
     bank_holder: Optional[str] = Field(default=None, max_length=255)
     bank_iban: Optional[str] = Field(default=None, max_length=100)
     bank_bic: Optional[str] = Field(default=None, max_length=50)
@@ -142,9 +144,9 @@ async def update_site_settings(
     settings = await get_or_create_settings(db, use_cache=False)
     payload = data.model_dump(exclude_unset=True)
     for field, value in payload.items():
-        if value is None:
-            continue
-        setattr(settings, field, value.strip())
+        # Champ présent (même vide ou null) → on remplace la valeur.
+        # Champ absent du payload → inchangé (formulaires indépendants).
+        setattr(settings, field, (value or "").strip())
     _invalidate_settings_cache()
     await db.commit()
     await db.refresh(settings)

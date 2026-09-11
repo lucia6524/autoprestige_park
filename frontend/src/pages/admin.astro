@@ -879,7 +879,15 @@ export const prerender = true;
             </form>
             <form class="settings-form" data-sfield="contact_whatsapp">
               <label for="s-whatsapp"
-                >WhatsApp (indicatif pays, sans espaces)</label
+                >WhatsApp (indicatif pays, sans espaces) —
+                <a
+                  href="#"
+                  id="s-whatsapp-test"
+                  target="_blank"
+                  rel="noopener"
+                  style="display: none"
+                  >Tester le numéro ↗</a
+                ></label
               >
               <input id="s-whatsapp" placeholder="33142868200" />
               <button type="submit" class="btn btn-primary btn-sm">
@@ -1267,6 +1275,21 @@ export const prerender = true;
       document.querySelectorAll("form[data-sfield]"),
     );
 
+    // Lien « Tester le numéro » du champ WhatsApp : ouvre wa.me avec le
+    // numéro enregistré, pour vérification immédiate après chaque sauvegarde.
+    const whatsappTestLink = document.getElementById("s-whatsapp-test");
+    function updateWhatsappTestLink(value) {
+      if (!whatsappTestLink) return;
+      const digits = (value || "").replace(/[^0-9+]/g, "");
+      if (digits) {
+        whatsappTestLink.href = "https://wa.me/" + digits;
+        whatsappTestLink.style.display = "inline";
+      } else {
+        whatsappTestLink.removeAttribute("href");
+        whatsappTestLink.style.display = "none";
+      }
+    }
+
     async function loadSiteSettings() {
       try {
         const s = await api("/site-settings/admin");
@@ -1274,6 +1297,7 @@ export const prerender = true;
           const input = form.querySelector("input");
           input.value = (s[form.dataset.sfield] || "").trim();
         });
+        updateWhatsappTestLink(s.contact_whatsapp);
       } catch (e) {
         toast(e.message, "error");
       }
@@ -1285,7 +1309,7 @@ export const prerender = true;
         const input = form.querySelector("input");
         const key = form.dataset.sfield;
         const value = input.value.trim();
-        const label = (form.querySelector("label").textContent || "").trim();
+        const label = (form.querySelector("label").firstChild.textContent || "").trim();
         form.classList.add("saving");
         if (window.Loader) Loader.show();
         try {
@@ -1295,6 +1319,8 @@ export const prerender = true;
           });
           if (updated && typeof updated[key] === "string")
             input.value = updated[key].trim();
+          if (key === "contact_whatsapp")
+            updateWhatsappTestLink(updated.contact_whatsapp);
           toast("« " + label + " » enregistré ✓");
         } catch (err) {
           toast(err.message, "error");

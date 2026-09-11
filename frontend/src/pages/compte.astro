@@ -1061,13 +1061,23 @@ const footer = {
       if (typeof supaThumb === "function") return supaThumb(url, width || 200, 65);
       return url;
     }
+    // Champs autonomes : une ligne dont la valeur a été vidée par l'admin
+    // est simplement masquée (pas d'affichage vide ou de valeur obsolète).
+    function bankRow(label, value) {
+      const v = String(value || "").trim();
+      if (!v) return "";
+      return `<div class="bank-row"><div class="bk-label">${label}</div><div class="bk-value">${escapeHtml(v)}</div></div>`;
+    }
     function renderBank(b) {
-      document.getElementById("bank-details").innerHTML = `
-        <div class="bank-row"><div class="bk-label">Titulaire</div><div class="bk-value">${escapeHtml(b.bank_holder)}</div></div>
-        <div class="bank-row"><div class="bk-label">IBAN</div><div class="bk-value">${escapeHtml(b.bank_iban)}</div></div>
-        <div class="bank-row"><div class="bk-label">BIC</div><div class="bk-value">${escapeHtml(b.bank_bic)}</div></div>
-        <div class="bank-row"><div class="bk-label">Type de virement</div><div class="bk-value">${escapeHtml(b.bank_transfer_type)}</div></div>
-      `;
+      const rows = [
+        bankRow("Titulaire", b.bank_holder),
+        bankRow("IBAN", b.bank_iban),
+        bankRow("BIC", b.bank_bic),
+        bankRow("Type de virement", b.bank_transfer_type),
+      ].join("");
+      document.getElementById("bank-details").innerHTML =
+        rows ||
+        '<div class="empty-box">Coordonnées bancaires indisponibles.</div>';
     }
     API.getSiteSettings()
       .then(renderBank)

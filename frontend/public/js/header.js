@@ -227,26 +227,49 @@
     const whatsapp = (settings.contact_whatsapp || '').replace(/[^0-9+]/g, '');
     const address = (settings.contact_address || '').trim();
 
+    // Champs autonomes : si la valeur est vide côté admin, l'élément est
+    // masqué du site (on n'affiche jamais l'ancienne valeur statique du HTML).
+    // Sinon, la valeur admin remplace la valeur statique.
     if (phone) {
       document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
         link.href = 'tel:' + phone.replace(/[^0-9+]/g, '');
         link.textContent = phone;
+        link.style.display = '';
+      });
+    } else {
+      document.querySelectorAll('a[href^="tel:"]').forEach((link) => {
+        link.style.display = 'none';
       });
     }
     if (email) {
       document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
         link.href = 'mailto:' + email;
         link.textContent = email;
+        link.style.display = '';
+      });
+    } else {
+      document.querySelectorAll('a[href^="mailto:"]').forEach((link) => {
+        link.style.display = 'none';
       });
     }
     if (whatsapp) {
       document.querySelectorAll('a[href*="wa.me/"]').forEach((link) => {
         link.href = 'https://wa.me/' + whatsapp;
+        link.style.display = '';
+      });
+    } else {
+      document.querySelectorAll('a[href*="wa.me/"]').forEach((link) => {
+        link.style.display = 'none';
       });
     }
     if (address) {
       document.querySelectorAll('[data-site-address]').forEach((element) => {
         element.textContent = address;
+        element.style.display = '';
+      });
+    } else {
+      document.querySelectorAll('[data-site-address]').forEach((element) => {
+        element.style.display = 'none';
       });
     }
   }
