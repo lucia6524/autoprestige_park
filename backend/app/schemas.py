@@ -67,12 +67,15 @@ class ProfileUpdate(BaseModel):
 
 
 # ===== Cart =====
+# ⚠️ Sécurité : seuls vehicle_id est utilisé par l'API — le prix et les autres
+# attributs sont toujours rechargés depuis le catalogue serveur (anti-fraude).
 class CartItemIn(BaseModel):
     vehicle_id: int
-    brand: str
-    model: str
-    year: int
-    price: float
+    # Champs conservés pour compatibilité d'appel, mais ignorés par le serveur.
+    brand: str = ""
+    model: str = ""
+    year: int = 0
+    price: float = 0
     monthly: float = 0
     image: str = ""
 

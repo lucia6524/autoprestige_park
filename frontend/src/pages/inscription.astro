@@ -476,6 +476,8 @@ const footer = {
     let currentStep = 1;
     let sessionKey = null;
     let userEmail = null;
+    // Preuve signée que l'OTP a été validé (délivrée à l'étape 4, exigée à l'étape 5)
+    let registrationToken = null;
     let lastOtpCode = null;
 
     const titles = {
@@ -500,7 +502,7 @@ const footer = {
         };
         sessionStorage.setItem(
           REG_STORAGE_KEY,
-          JSON.stringify({ ...data, lastOtpCode }),
+          JSON.stringify({ ...data, lastOtpCode, registrationToken }),
         );
       } catch (_) {}
     }
@@ -675,6 +677,7 @@ const footer = {
         try {
           const res = await API.registerVerify(userEmail, code);
           if (res.need_password || !res.access_token) {
+            registrationToken = res.registration_token || null;
             goToStep(5);
             showSuccess("Code validé. Créez votre mot de passe.");
             btn.disabled = false;
@@ -714,7 +717,7 @@ const footer = {
         btn.disabled = true;
         if (window.Loader) Loader.show();
         try {
-          const res = await API.registerSetPassword(userEmail, p1);
+          const res = await API.registerSetPassword(userEmail, p1, registrationToken);
           clearProgress();
           API.setAuth(res.access_token, res.user);
           showSuccess(
@@ -772,6 +775,7 @@ const footer = {
       sessionKey = saved.sessionKey || null;
       userEmail = saved.userEmail || saved.email || null;
       lastOtpCode = saved.lastOtpCode || null;
+      registrationToken = saved.registrationToken || null;
 
       if (saved.first_name)
         document.getElementById("first_name").value = saved.first_name;

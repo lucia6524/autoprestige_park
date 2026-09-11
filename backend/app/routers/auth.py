@@ -10,7 +10,8 @@ from app.schemas import (
     LoginRequest, TokenResponse, UserOut
 )
 from app.services.auth import (
-    get_user_by_email, create_otp, verify_otp, create_access_token, hash_password
+    get_user_by_email, create_otp, verify_otp, create_access_token, hash_password,
+    create_registration_token, decode_registration_token,
 )
 from app.services.email import send_otp_email
 from app.schemas import ProfileUpdate
@@ -145,7 +146,7 @@ async def register_step3(data: RegisterStep3, session_key: str, db: AsyncSession
 
 @router.post("/register/verify")
 async def register_verify(data: RegisterVerify, db: AsyncSession = Depends(get_db)):
-    """Étape 4 : Vérification OTP → puis création du mot de passe (étape 5)"""
+    """Étape 4 : Vérification OTP → token d'inscription + création du mot de passe (étape 5)"""
     ok = await verify_otp(db, data.email, data.code)
     if not ok:
         raise HTTPException(400, "Code invalide ou expiré.")
@@ -163,6 +164,8 @@ async def register_verify(data: RegisterVerify, db: AsyncSession = Depends(get_d
         "step": 4,
         "email": user.email,
         "need_password": True,
+        # Preuve signée que l'OTP a été validé — exigée par set-password (15 min)
+        "registration_token": create_registration_token(user.email),
         "message": "Code validé. Créez votre mot de passe pour finaliser.",
     }
 
@@ -172,11 +175,23 @@ async def register_set_password(
     data: dict,
     db: AsyncSession = Depends(get_db),
 ):
-    """Étape 5 : Définir le mot de passe → compte activé + token"""
+    """Étape 5 : Définir le mot de passe → compte activé + token.
+
+    ⚠️ Exige un registration_token valide (délivré uniquement après validation
+    OTP) lié à l'email fourni — sinon n'importe qui pourrait finaliser le
+    compte d'autrui en connaissant son email.
+    """
     email = (data.get("email") or "").strip().lower()
     password = data.get("password") or ""
+    reg_token = data.get("registration_token") or ""
     if not email:
         raise HTTPException(400, "Email requis.")
+    token_email = decode_registration_token(reg_token)
+    if not token_email or token_email != email:
+        raise HTTPException(
+            403,
+            "Session de vérification invalide ou expirée. Validez à nouveau le code reçu par email.",
+        )
     # Validate password strength
     import re
     if len(password) < 8:

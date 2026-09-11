@@ -35,6 +35,34 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
 
 
+def create_registration_token(email: str) -> str:
+    """Token éphémère délivré après validation OTP réussie.
+
+    Prouve que le porteur a validé le code email — exigé par
+    /auth/register/set-password pour lier la création du mot de passe à la
+    vérification OTP (sinon le endpoint ne fait confiance qu'à un email
+    fourni dans le body, falsifiable).
+    """
+    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    return jwt.encode(
+        {"sub": email.lower().strip(), "purpose": "registration", "exp": expire},
+        settings.SECRET_KEY,
+        algorithm=settings.ALGORITHM,
+    )
+
+
+def decode_registration_token(token: str) -> Optional[str]:
+    """Renvoie l'email associé si le token est valide ET destiné à l'inscription."""
+    try:
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+    except JWTError:
+        return None
+    if payload.get("purpose") != "registration":
+        return None
+    email = payload.get("sub")
+    return email if isinstance(email, str) and email else None
+
+
 def decode_token(token: str) -> Optional[dict]:
     try:
         return jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])

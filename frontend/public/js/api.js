@@ -102,10 +102,10 @@ const API = {
       body: JSON.stringify({ email, code }),
     });
   },
-  registerSetPassword(email, password) {
+  registerSetPassword(email, password, registrationToken) {
     return this.request('/auth/register/set-password', {
       method: 'POST',
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, registration_token: registrationToken || '' }),
     });
   },
   loginRequestCode(email) {

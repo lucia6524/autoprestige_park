@@ -1178,6 +1178,14 @@ export const prerender = true;
       }).format(n || 0);
     }
 
+    // ⚠️ Sécurité XSS : toute donnée venant d'un utilisateur (nom, email,
+    // message, véhicule…) est échappée avant insertion dans innerHTML.
+    function escapeHtml(value) {
+      const div = document.createElement("div");
+      div.textContent = String(value == null ? "" : value);
+      return div.innerHTML;
+    }
+
     function formatDate(d) {
       if (!d) return "—";
       return new Date(d).toLocaleDateString("fr-FR", {
@@ -1367,9 +1375,9 @@ export const prerender = true;
             (u) => `
           <tr>
             <td>#${u.id}</td>
-            <td><strong>${u.first_name} ${u.last_name}</strong></td>
-            <td>${u.email}</td>
-            <td>${u.phone || "—"}</td>
+            <td><strong>${escapeHtml(u.first_name)} ${escapeHtml(u.last_name)}</strong></td>
+            <td>${escapeHtml(u.email)}</td>
+            <td>${escapeHtml(u.phone || "—")}</td>
             <td>${u.is_verified ? '<span class="badge badge-green">Oui</span>' : '<span class="badge badge-red">Non</span>'}</td>
             <td>${u.is_active ? '<span class="badge badge-green">Oui</span>' : '<span class="badge badge-red">Non</span>'}</td>
             <td>${u.is_admin ? '<span class="badge badge-blue">Admin</span>' : "—"}</td>
@@ -1377,7 +1385,7 @@ export const prerender = true;
             <td class="actions">
               <button class="btn btn-outline btn-sm" onclick="toggleActive(${u.id}, ${!u.is_active})">${u.is_active ? "Désactiver" : "Activer"}</button>
               ${!u.is_admin ? `<button class="btn btn-outline btn-sm" onclick="makeAdmin(${u.id})">Admin</button>` : ""}
-              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id}, '${u.email}')">Suppr.</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteUser(${u.id}, '${escapeHtml(u.email)}')">Suppr.</button>
             </td>
           </tr>
         `,
@@ -1445,10 +1453,10 @@ export const prerender = true;
           <tr>
             <td>#${o.id}</td>
             <td>
-              <strong>${o.user_name || "—"}</strong><br>
-              <span style="color:var(--muted);font-size:0.8rem">${o.user_email}</span>
+              <strong>${escapeHtml(o.user_name || "—")}</strong><br>
+              <span style="color:var(--muted);font-size:0.8rem">${escapeHtml(o.user_email)}</span>
             </td>
-            <td>${o.brand} ${o.model} (${o.year})</td>
+            <td>${escapeHtml(o.brand)} ${escapeHtml(o.model)} (${o.year})</td>
             <td>${formatPrice(o.total_price)}</td>
             <td>${formatPrice(o.amount_paid)}</td>
             <td>${o.payment_type === "monthly" ? "Mensuel (" + o.months_total + "m)" : "Comptant"}</td>
@@ -1491,15 +1499,15 @@ export const prerender = true;
               .filter(Boolean)
               .join(" ");
             const destination = recipient
-              ? `${recipient}<br><span style="color:var(--muted);font-size:.8rem">${o.recipient_phone || "Téléphone non renseigné"}</span>`
+              ? `${escapeHtml(recipient)}<br><span style="color:var(--muted);font-size:.8rem">${escapeHtml(o.recipient_phone || "Téléphone non renseigné")}</span>`
               : "Adresse client à renseigner";
             const status = o.delivery_status || "preparing";
             return `<tr>
               <td>#${o.id}</td>
-              <td><strong>${o.user_name || "—"}</strong><br><span style="color:var(--muted);font-size:.8rem">${o.user_email || ""}</span></td>
-              <td>${o.brand} ${o.model}</td>
-              <td>${destination}<br><span style="color:var(--muted);font-size:.8rem">${o.delivery_address || "Adresse non renseignée"}</span></td>
-              <td>${o.tracking_number || "—"}<br><span style="color:var(--muted);font-size:.8rem">${o.carrier || "—"}</span></td>
+              <td><strong>${escapeHtml(o.user_name || "—")}</strong><br><span style="color:var(--muted);font-size:.8rem">${escapeHtml(o.user_email || "")}</span></td>
+              <td>${escapeHtml(o.brand)} ${escapeHtml(o.model)}</td>
+              <td>${destination}<br><span style="color:var(--muted);font-size:.8rem">${escapeHtml(o.delivery_address || "Adresse non renseignée")}</span></td>
+              <td>${escapeHtml(o.tracking_number || "—")}<br><span style="color:var(--muted);font-size:.8rem">${escapeHtml(o.carrier || "—")}</span></td>
               <td>${statusBadge(status)}</td>
               <td class="actions">
                 ${status !== "delivered" ? `<button class="btn btn-success btn-sm" onclick="validateDelivery(${o.id})">Valider livrée</button>` : ""}
@@ -1666,8 +1674,8 @@ export const prerender = true;
             (c) => `
           <tr>
             <td>${formatDate(c.due_date)}</td>
-            <td><strong>${c.user_name || "—"}</strong><br><span style="color:var(--muted);font-size:0.8rem">${c.user_email}</span></td>
-            <td>${c.brand} ${c.model}</td>
+            <td><strong>${escapeHtml(c.user_name || "—")}</strong><br><span style="color:var(--muted);font-size:0.8rem">${escapeHtml(c.user_email)}</span></td>
+            <td>${escapeHtml(c.brand)} ${escapeHtml(c.model)}</td>
             <td>${formatPrice(c.amount)}</td>
             <td>${formatDate(c.claimed_at)}</td>
             <td>${statusBadge(c.status)}</td>
@@ -1729,8 +1737,8 @@ export const prerender = true;
             (r) => `
           <tr>
             <td>#${r.id}</td>
-            <td><strong>${r.first_name} ${r.last_name}</strong></td>
-            <td>${r.vehicle_brand} ${r.vehicle_model}</td>
+            <td><strong>${escapeHtml(r.first_name)} ${escapeHtml(r.last_name)}</strong></td>
+            <td>${escapeHtml(r.vehicle_brand)} ${escapeHtml(r.vehicle_model)}</td>
             <td>${(r.mileage || 0).toLocaleString("fr-FR")} km</td>
             <td>${r.photos_count || 0}</td>
             <td>${statusBadge(r.status)}</td>
@@ -1780,10 +1788,10 @@ export const prerender = true;
             (r) => `
           <tr>
             <td>#${r.id}</td>
-            <td><strong>${r.name}</strong></td>
-            <td>${r.vehicle || "—"}</td>
+            <td><strong>${escapeHtml(r.name)}</strong></td>
+            <td>${escapeHtml(r.vehicle || "—")}</td>
             <td>${"★".repeat(r.rating)} (${r.rating})</td>
-            <td>${r.message.slice(0, 60)}${r.message.length > 60 ? "…" : ""}</td>
+            <td>${escapeHtml(r.message.slice(0, 60))}${r.message.length > 60 ? "…" : ""}</td>
             <td>${statusBadge(r.status)}</td>
             <td>${formatDate(r.created_at)}</td>
             <td class="actions">
@@ -1844,8 +1852,8 @@ export const prerender = true;
             (v) => `
           <tr>
             <td>#${v.id}</td>
-            <td>${v.category || "—"}</td>
-            <td><strong>${v.brand} ${v.model}</strong></td>
+            <td>${escapeHtml(v.category || "—")}</td>
+            <td><strong>${escapeHtml(v.brand)} ${escapeHtml(v.model)}</strong></td>
             <td>${v.year}</td>
             <td>${formatPrice(v.price)}</td>
             <td>${v.type || "—"}</td>

@@ -2,7 +2,7 @@
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from sqlalchemy import select, desc, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -16,6 +16,13 @@ router = APIRouter(tags=["Reviews"])
 # Limite de taille du payload photos (JSON base64). 8 Mo couvre largement
 # 6 photos compressées côté client (~150-400 Ko chacune).
 MAX_PHOTOS_JSON_LENGTH = 8_000_000
+# Seules les photos base64 valides sont acceptées : type image annoncé +
+# présence d'un payload base64. Bloque data:text/html, data:application/js,
+# SVG (data:image/svg+xml peut embarquer du JS) et toute autre charge utile.
+import re as _re
+
+_DATA_URL_RE = _re.compile(
+    r"^data:image/(?!svg\+xml)(png|jpeg|jpg|gif|webp|avif);base64,[A-Za-z0-9+/=]+$")
 
 
 # ── Schemas publics ──────────────────────────────────────
@@ -50,6 +57,18 @@ class SellRequestIn(BaseModel):
     email: EmailStr
     notes: str = Field(default="", max_length=4000)
     photos: List[str] = Field(default=[], max_length=6)
+
+    @field_validator("photos")
+    @classmethod
+    def validate_photos(cls, v):
+        if not v:
+            return v
+        clean = []
+        for p in v:
+            if not isinstance(p, str) or len(p) > 2_000_000 or not _DATA_URL_RE.match(p):
+                raise ValueError("Format de photo invalide.")
+            clean.append(p)
+        return clean
 
 
 # ── Public : avis approuvés + soumission ─────────────────
@@ -107,10 +126,9 @@ async def submit_sell_request(data: SellRequestIn, db: AsyncSession = Depends(ge
     photos_json = "[]"
     photo_count = 0
     if data.photos:
-        # Validation basique : seules les data-URLs d'images sont acceptées
-        clean = [p for p in data.photos if isinstance(p, str) and p.startswith("data:image/")]
-        if len(clean) != len(data.photos):
-            raise HTTPException(400, "Format de photo invalide.")
+        # Validation stricte déjà faite par le validator Pydantic (data-URL
+        # image base64 uniquement, pas de SVG). Double contrôle de la taille.
+        clean = data.photos
         photos_json = json.dumps(clean)
         if len(photos_json) > MAX_PHOTOS_JSON_LENGTH:
             raise HTTPException(413, "Les photos sont trop volumineuses. Réduisez leur nombre ou leur taille.")

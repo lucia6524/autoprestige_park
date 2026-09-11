@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
+from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import init_db
@@ -35,6 +36,44 @@ app.add_middleware(
 
 # Compress responses (JSON payloads with long image URLs compress very well)
 app.add_middleware(GZipMiddleware, minimum_size=500)
+
+
+# ── CSRF defense (Origin validation) ─────────────────────
+# L'auth se fait par Bearer token (pas de cookies d'authentification), donc le
+# CSRF classique est déjà neutralisé. Ce middleware bloque en plus toute
+# requête mutante (POST/PUT/PATCH/DELETE) dont l'Origin ne fait pas partie des
+# origines frontend autorisées — empêche un site malveillant de déclencher des
+# actions (envoi d'emails payants, inscription, etc.) depuis le navigateur
+# d'une victime. Requêtes sans Origin (curl, mobile, server-to-server) : OK.
+SAFE_METHODS = {"GET", "HEAD", "OPTIONS", "TRACE"}
+
+
+def _origin_allowed(origin: str) -> bool:
+    """Match des origines autorisées, avec support des wildcards de port
+    (ex. http://localhost:* utilisés en développement)."""
+    from fnmatch import fnmatch
+
+    for allowed in settings.CORS_ORIGINS:
+        if allowed == origin:
+            return True
+        if "*" in allowed and fnmatch(origin, allowed):
+            return True
+    return False
+
+
+@app.middleware("http")
+async def csrf_origin_check(request: Request, call_next):
+    if request.method not in SAFE_METHODS:
+        origin = request.headers.get("origin")
+        if origin:
+            if not _origin_allowed(origin):
+                return JSONResponse(
+                    status_code=403,
+                    content={"detail": "Origine non autorisée (protection CSRF)."},
+                )
+        # Pas d'Origin → client non-navigateur (curl, app mobile) : autorisé.
+        # Les navigateurs envoient toujours Origin sur les requêtes mutantes.
+    return await call_next(request)
 
 
 @app.middleware("http")

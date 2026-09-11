@@ -4,7 +4,7 @@ from sqlalchemy import select, delete
 
 from app.database import get_db
 from app.models.user import User
-from app.models.commerce import CartItem
+from app.models.commerce import CartItem, Vehicle
 from app.schemas import CartItemIn, CartItemOut, CartOut
 from app.deps import get_current_user
 
@@ -29,6 +29,16 @@ async def add_to_cart(
     user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
+    # ⚠️ Sécurité : le prix, la marque, le modèle, etc. ne JAMAIS provenir du
+    # client (sinon un utilisateur commande un véhicule à 1 €). On recharge
+    # tout depuis le catalogue serveur ; le body ne sert qu'à identifier.
+    v_result = await db.execute(
+        select(Vehicle).where(Vehicle.id == data.vehicle_id, Vehicle.is_active == True)
+    )
+    vehicle = v_result.scalars().first()
+    if not vehicle:
+        raise HTTPException(404, "Véhicule introuvable ou indisponible.")
+
     # Prevent duplicates
     result = await db.execute(
         select(CartItem).where(
@@ -42,13 +52,13 @@ async def add_to_cart(
 
     item = CartItem(
         user_id=user.id,
-        vehicle_id=data.vehicle_id,
-        brand=data.brand,
-        model=data.model,
-        year=data.year,
-        price=data.price,
-        monthly=data.monthly,
-        image=data.image,
+        vehicle_id=vehicle.id,
+        brand=vehicle.brand,
+        model=vehicle.model,
+        year=vehicle.year,
+        price=vehicle.price,
+        monthly=vehicle.monthly,
+        image=vehicle.image,
     )
     db.add(item)
     await db.commit()
