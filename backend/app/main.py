@@ -51,9 +51,10 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
     allow_credentials=True,
-    # Méthodes/headers restreints au strict nécessaire (évite une surface
-    # préflighted inutile ; TRACE/HEAD/PUT non utilisés par le frontend).
-    allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    # Méthodes restreintes au strict nécessaire (TRACE/HEAD inutilisés par le
+    # frontend ; PUT sert aux formulaires « Informations du site » de l'admin,
+    # bloqués par le preflight CORS avant ce correctif).
+    allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     allow_headers=["Authorization", "Content-Type"],
 )
 
