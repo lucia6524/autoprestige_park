@@ -9,6 +9,24 @@ services:
     # Render sert automatiquement le fichier 404.html du dossier publié pour
     # les URL inexistantes — pas besoin d'une règle de réécriture. (L'ancienne
     # règle `/*404.html` était cassée et ne correspondait à aucune URL.)
+    # En-têtes de sécurité appliqués par Render (le fichier `_headers` n'est
+    # pas supporté par Render static — cf. https://render.com/docs/static-site-headers).
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: DENY
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Permissions-Policy
+        value: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
+      - path: /*
+        name: Content-Security-Policy
+        value: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https://autohaus-park-api.onrender.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
   - type: web
     name: autohaus-park-api
