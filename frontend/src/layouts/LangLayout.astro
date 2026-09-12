@@ -47,13 +47,8 @@ for (const code of LOCALES) {
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {alternates.map((a) => <link rel="alternate" hreflang={a.hreflang} href={a.href} />)}
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://ridnurabtydwlymzdexk.supabase.co" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" as="font" type="font/woff2" href={asset('fonts/inter-var.woff2')} crossorigin />
     <link rel="stylesheet" href={asset('css/style.css')} />
     <script is:inline>
       var p = localStorage.getItem('theme');

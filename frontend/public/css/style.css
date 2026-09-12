@@ -1,3 +1,12 @@
+/* ===== FONTS (Inter variable, auto-hébergée) ===== */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/inter-var.woff2') format('woff2');
+}
+
 /* ===== RESET & BASE ===== */
 *, *::before, *::after {
   margin: 0;
