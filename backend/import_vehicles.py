@@ -5,13 +5,13 @@ Usage:
     cd backend
     pip install httpx   # déjà dans requirements.txt
 
-    # Via variables d'environnement
-    export ADMIN_EMAIL="admin@autoprestige.fr"
+    # Via variables d'environnement (mêmes identifiants admin que Render)
+    export ADMIN_EMAIL="votre-email-admin@exemple.fr"
     export ADMIN_PASSWORD="votre-mot-de-passe-admin"
     python import_vehicles.py
 
     # Ou via arguments (l'API par défaut pointe vers la prod)
-    python import_vehicles.py --email admin@autoprestige.fr --password "mdp" \
+    python import_vehicles.py --email votre-email-admin@exemple.fr --password "mdp" \
         --api https://autoprestige-api.onrender.com/api
 
 Le script est idempotent : il récupère les véhicules déjà présents et ne crée

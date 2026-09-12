@@ -115,7 +115,7 @@ async def _bootstrap_admin(db: AsyncSession) -> None:
     from app.models.user import User
     from app.services.auth import get_user_by_email, hash_password, verify_password
 
-    if not settings.ADMIN_PASSWORD:
+    if not settings.ADMIN_PASSWORD or not settings.ADMIN_EMAIL:
         return
 
     admin = await get_user_by_email(db, settings.ADMIN_EMAIL)

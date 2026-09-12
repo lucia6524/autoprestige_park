@@ -83,7 +83,10 @@ class Settings(BaseSettings):
     CORS_ORIGINS: str = ""  # Empty = localhost only in dev, must be set in production
 
     # Admin account (created at startup if absent)
-    ADMIN_EMAIL: str = "admin@autoprestige.fr"
+    # AUCUNE valeur par défaut : l'email et le mot de passe de l'administrateur
+    # doivent être fournis par l'environnement (variables Render), jamais
+    # codés dans le dépôt (un identifiant public ferait de l'admin une cible).
+    ADMIN_EMAIL: str = ""
     ADMIN_PASSWORD: str = ""
 
     class Config:
@@ -125,5 +128,7 @@ if settings.ENVIRONMENT.lower() == "production":
         )
     if not settings.ADMIN_PASSWORD or len(settings.ADMIN_PASSWORD) < 12:
         raise RuntimeError("ADMIN_PASSWORD must be set via environment variable and be at least 12 characters in production.")
+    if not settings.ADMIN_EMAIL:
+        raise RuntimeError("ADMIN_EMAIL must be set via environment variable in production (no default admin account).")
     if settings.CORS_ORIGINS == ["*"] or not settings.CORS_ORIGINS:
         raise RuntimeError("CORS_ORIGINS must explicitly list the frontend origins in production.")
