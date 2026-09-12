@@ -473,6 +473,12 @@ class VehicleOut(BaseModel):
     image: str
     images: str
     description: str
+    description_en: str = ""
+    description_de: str = ""
+    description_it: str = ""
+    description_es: str = ""
+    description_pt: str = ""
+    description_ro: str = ""
     created_at: datetime
 
     class Config:
@@ -498,6 +504,13 @@ class VehicleUpdate(BaseModel):
     image: str | None = Field(None, max_length=500)
     images: str | None = Field(None, max_length=20_000)
     description: str | None = Field(None, max_length=10_000)
+    # Descriptions pré-traduites (backfill SEO ou édition manuelle admin)
+    description_en: str | None = Field(None, max_length=10_000)
+    description_de: str | None = Field(None, max_length=10_000)
+    description_it: str | None = Field(None, max_length=10_000)
+    description_es: str | None = Field(None, max_length=10_000)
+    description_pt: str | None = Field(None, max_length=10_000)
+    description_ro: str | None = Field(None, max_length=10_000)
 
 
 from app.models.commerce import InstallmentPaymentStatus, Notification, Vehicle  # noqa: E402

@@ -21,6 +21,7 @@ import argparse
 import json
 import os
 import sys
+import time
 from pathlib import Path
 
 import httpx
@@ -95,6 +96,17 @@ def to_api_payload(v: dict) -> dict:
     }
 
 
+def post_with_retry(client: httpx.Client, url: str, *, headers=None, json=None, attempts: int = 3):
+    """POST avec retry réseau (instance Render froide : timeouts transitoires)."""
+    for attempt in range(attempts):
+        try:
+            return client.post(url, headers=headers, json=json)
+        except (httpx.TimeoutException, httpx.TransportError):
+            if attempt == attempts - 1:
+                raise
+            time.sleep(2 * (attempt + 1))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Importe le catalogue local vers l'API admin.")
     parser.add_argument("--api", default=os.getenv("API_BASE", API_DEFAULT), help="Base URL de l'API (ex: https://autohaus-park-api.onrender.com/api)")
@@ -109,11 +121,13 @@ def main() -> None:
     vehicles = load_fallback_vehicles()
     print(f"📦 {len(vehicles)} véhicules chargés depuis {DATA_FILE.name}")
 
-    client = httpx.Client(timeout=30)
+    # Timeout large : instance Render gratuite souvent froide (login bcrypt, CPU lent)
+    client = httpx.Client(timeout=120)
 
     # 1) Login admin
     print("🔑 Connexion admin…")
-    r = client.post(
+    r = post_with_retry(
+        client,
         f"{args.api}/auth/login",
         json={"email": args.email, "password": args.password},
     )
@@ -125,8 +139,12 @@ def main() -> None:
 
     # 2) Véhicules déjà présents (pour éviter les doublons)
     print("📋 Récupération des véhicules existants…")
-    existing = client.get(f"{args.api}/admin/vehicles", headers=headers, params={"limit": 200})
-    if existing.status_code == 200:
+    try:
+        existing = client.get(f"{args.api}/admin/vehicles", headers=headers, params={"limit": 200})
+    except (httpx.TimeoutException, httpx.TransportError):
+        print("⚠️ Listing impossible (réseau), import complet sans dédup.")
+        existing = None
+    if existing is not None and existing.status_code == 200:
         existing_list = existing.json()
     else:
         print(f"⚠️ Impossible de lister les véhicules ({existing.status_code}), import complet sans dédup.")
@@ -153,7 +171,7 @@ def main() -> None:
             created += 1
             continue
 
-        r = client.post(f"{args.api}/admin/vehicles", headers=headers, json=payload)
+        r = post_with_retry(client, f"{args.api}/admin/vehicles", headers=headers, json=payload)
         if r.status_code in (200, 201):
             created += 1
         else:
