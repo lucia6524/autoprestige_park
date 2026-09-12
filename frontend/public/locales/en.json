@@ -135,8 +135,9 @@
     "sort_brand_asc": "Brand (A → Z)",
     "sort_brand_desc": "Brand (Z → A)",
     "sort_year_asc": "Year (oldest)",
-    "discounted_price": "Sale price",
-    "show_all": "See all vehicles"  },
+    "discounted_price": "Sale price",
+    "show_all": "See all vehicles"
+  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",
@@ -827,6 +828,24 @@
     "Informations complémentaires sur le véhicule": "More information about the vehicle",
     "★ Recommandé": "★ Recommended",
     "ou": "from",
-    "/mois": "/month"
+    "/mois": "/month",
+    "Motorisation": "Engine",
+    "Finition": "Trim",
+    "Équipements": "Equipment",
+    "Équipement mentionné": "Listed equipment",
+    "Équipements mentionnés": "Listed equipment",
+    "Automatique": "Automatic",
+    "Manuelle": "Manual",
+    "Berline": "Saloon",
+    "SUV": "SUV",
+    "Coupé": "Coupé",
+    "Cabriolet": "Convertible",
+    "Break": "Estate",
+    "Citadine": "City car",
+    "neuf": "New",
+    "occasion": "Used",
+    "promo": "Offer",
+    "Voir le véhicule": "View the vehicle",
+    "Réserver": "Book now"
   }
 }

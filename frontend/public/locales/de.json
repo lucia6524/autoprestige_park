@@ -135,8 +135,9 @@
     "sort_brand_asc": "Marke (A → Z)",
     "sort_brand_desc": "Marke (Z → A)",
     "sort_year_asc": "Jahr (älteste)",
-    "discounted_price": "Aktionspreis",
-    "show_all": "Alle Fahrzeuge ansehen"  },
+    "discounted_price": "Aktionspreis",
+    "show_all": "Alle Fahrzeuge ansehen"
+  },
   "common": {
     "loading": "Laden...",
     "error": "Ein Fehler ist aufgetreten",
@@ -827,6 +828,24 @@
     "Informations complémentaires sur le véhicule": "Weitere Informationen zum Fahrzeug",
     "★ Recommandé": "★ Empfohlen",
     "ou": "ab",
-    "/mois": "/Monat"
+    "/mois": "/Monat",
+    "Motorisation": "Motorisierung",
+    "Finition": "Ausstattung",
+    "Équipements": "Ausstattung",
+    "Équipement mentionné": "Ausgewiesene Ausstattung",
+    "Équipements mentionnés": "Ausgewiesene Ausstattung",
+    "Automatique": "Automatik",
+    "Manuelle": "Schaltgetriebe",
+    "Berline": "Limousine",
+    "SUV": "SUV",
+    "Coupé": "Coupé",
+    "Cabriolet": "Cabrio",
+    "Break": "Kombi",
+    "Citadine": "Kleinwagen",
+    "neuf": "Neu",
+    "occasion": "Gebraucht",
+    "promo": "Angebot",
+    "Voir le véhicule": "Fahrzeug ansehen",
+    "Réserver": "Reservieren"
   }
 }

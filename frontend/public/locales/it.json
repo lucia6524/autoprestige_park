@@ -135,8 +135,9 @@
     "sort_brand_asc": "Marca (A → Z)",
     "sort_brand_desc": "Marca (Z → A)",
     "sort_year_asc": "Anno (più vecchi)",
-    "discounted_price": "Prezzo scontato",
-    "show_all": "Vedi tutti i veicoli"  },
+    "discounted_price": "Prezzo scontato",
+    "show_all": "Vedi tutti i veicoli"
+  },
   "common": {
     "loading": "Caricamento...",
     "error": "Si è verificato un errore",
@@ -827,6 +828,24 @@
     "Informations complémentaires sur le véhicule": "Maggiori informazioni sul veicolo",
     "★ Recommandé": "★ Consigliato",
     "ou": "da",
-    "/mois": "/mese"
+    "/mois": "/mese",
+    "Motorisation": "Motorizzazione",
+    "Finition": "Allestimento",
+    "Équipements": "Equipaggiamento",
+    "Équipement mentionné": "Attrezzatura indicata",
+    "Équipements mentionnés": "Attrezzatura indicata",
+    "Automatique": "Automatico",
+    "Manuelle": "Manuale",
+    "Berline": "Berlina",
+    "SUV": "SUV",
+    "Coupé": "Coupé",
+    "Cabriolet": "Cabrio",
+    "Break": "Station wagon",
+    "Citadine": "Utilitaria",
+    "neuf": "Nuovo",
+    "occasion": "Usato",
+    "promo": "Offerta",
+    "Voir le véhicule": "Vedi il veicolo",
+    "Réserver": "Prenota"
   }
 }

@@ -135,8 +135,9 @@
     "sort_brand_asc": "Marcă (A → Z)",
     "sort_brand_desc": "Marcă (Z → A)",
     "sort_year_asc": "An (mai vechi)",
-    "discounted_price": "Preț redus",
-    "show_all": "Vezi toate vehiculele"  },
+    "discounted_price": "Preț redus",
+    "show_all": "Vezi toate vehiculele"
+  },
   "common": {
     "loading": "Se încarcă...",
     "error": "A apărut o eroare",
@@ -827,6 +828,24 @@
     "Informations complémentaires sur le véhicule": "Mai multe informații despre vehicul",
     "★ Recommandé": "★ Recomandat",
     "ou": "de la",
-    "/mois": "/lună"
+    "/mois": "/lună",
+    "Motorisation": "Motorizare",
+    "Finition": "Echipare",
+    "Équipements": "Echipamente",
+    "Équipement mentionné": "Echipament menționat",
+    "Équipements mentionnés": "Echipamente menționate",
+    "Automatique": "Automată",
+    "Manuelle": "Manuală",
+    "Berline": "Sedan",
+    "SUV": "SUV",
+    "Coupé": "Coupe",
+    "Cabriolet": "Cabriolet",
+    "Break": "Break",
+    "Citadine": "Citadină",
+    "neuf": "Nou",
+    "occasion": "Second-hand",
+    "promo": "Ofertă",
+    "Voir le véhicule": "Vezi vehiculul",
+    "Réserver": "Rezervă"
   }
 }

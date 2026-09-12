@@ -135,8 +135,9 @@
     "sort_brand_asc": "Marca (A → Z)",
     "sort_brand_desc": "Marca (Z → A)",
     "sort_year_asc": "Ano (mais antigo)",
-    "discounted_price": "Preço promocional",
-    "show_all": "Ver todos os veículos"  },
+    "discounted_price": "Preço promocional",
+    "show_all": "Ver todos os veículos"
+  },
   "common": {
     "loading": "A carregar...",
     "error": "Ocorreu um erro",
@@ -827,6 +828,24 @@
     "Informations complémentaires sur le véhicule": "Mais informações sobre o veículo",
     "★ Recommandé": "★ Recomendado",
     "ou": "a partir de",
-    "/mois": "/mês"
+    "/mois": "/mês",
+    "Motorisation": "Motorização",
+    "Finition": "Acabamento",
+    "Équipements": "Equipamento",
+    "Équipement mentionné": "Equipamento mencionado",
+    "Équipements mentionnés": "Equipamentos mencionados",
+    "Automatique": "Automático",
+    "Manuelle": "Manual",
+    "Berline": "Berlina",
+    "SUV": "SUV",
+    "Coupé": "Coupé",
+    "Cabriolet": "Descapotável",
+    "Break": "Carrinha",
+    "Citadine": "Citadino",
+    "neuf": "Novo",
+    "occasion": "Usado",
+    "promo": "Oferta",
+    "Voir le véhicule": "Ver o veículo",
+    "Réserver": "Reservar"
   }
 }
