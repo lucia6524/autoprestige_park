@@ -20,7 +20,6 @@ que les manquants (détection par marque + modèle + année).
 import argparse
 import json
 import os
-import re
 import sys
 from pathlib import Path
 
@@ -30,7 +29,7 @@ import httpx
 DATA_FILE = (
     Path(__file__).resolve().parent.parent / "frontend" / "public" / "js" / "vehicles-data.js"
 )
-API_DEFAULT = "https://autoprestige-api.onrender.com/api"
+API_DEFAULT = "https://autohaus-park-api.onrender.com/api"
 
 
 def load_fallback_vehicles() -> list[dict]:
@@ -98,7 +97,7 @@ def to_api_payload(v: dict) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Importe le catalogue local vers l'API admin.")
-    parser.add_argument("--api", default=os.getenv("API_BASE", API_DEFAULT), help="Base URL de l'API (ex: https://autoprestige-api.onrender.com/api)")
+    parser.add_argument("--api", default=os.getenv("API_BASE", API_DEFAULT), help="Base URL de l'API (ex: https://autohaus-park-api.onrender.com/api)")
     parser.add_argument("--email", default=os.getenv("ADMIN_EMAIL", ""), help="Email du compte admin")
     parser.add_argument("--password", default=os.getenv("ADMIN_PASSWORD", ""), help="Mot de passe admin")
     parser.add_argument("--dry-run", action="store_true", help="Affiche ce qui serait importé sans rien créer")
