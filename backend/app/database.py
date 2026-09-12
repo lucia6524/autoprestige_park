@@ -98,36 +98,61 @@ async def init_db():
         if not users_exists:
             raise RuntimeError("Database schema initialization failed: users table was not created.")
 
-    # Créer le compte admin par défaut s'il n'existe pas
-    from app.models.user import User
-    from app.services.auth import get_user_by_email, hash_password
-
+    # Créer / synchroniser le compte admin depuis l'environnement
     async with AsyncSessionLocal() as db:
-        admin = await get_user_by_email(db, settings.ADMIN_EMAIL)
-        if not admin:
-            if not settings.ADMIN_PASSWORD:
-                print("ADMIN_PASSWORD non défini — compte admin non créé. Configurez ADMIN_PASSWORD dans vos variables d'environnement.")
-            else:
-                admin = User(
-                    first_name="Admin",
-                    last_name="Autohaus",
-                    email=settings.ADMIN_EMAIL.lower(),
-                    phone="",
-                    monthly_salary=0,
-                    hashed_password=hash_password(settings.ADMIN_PASSWORD),
-                    is_verified=True,
-                    is_active=True,
-                    is_admin=True,
-                    registration_step=4,
-                )
-                db.add(admin)
-                await db.commit()
-                print("Admin créé : " + settings.ADMIN_EMAIL)
-        elif not admin.is_admin:
-            admin.is_admin = True
-            admin.is_verified = True
-            admin.is_active = True
-            if not admin.hashed_password and settings.ADMIN_PASSWORD:
-                admin.hashed_password = hash_password(settings.ADMIN_PASSWORD)
-            await db.commit()
-            print("Droits admin accordés à : " + settings.ADMIN_EMAIL)
+        await _bootstrap_admin(db)
+
+
+async def _bootstrap_admin(db: AsyncSession) -> None:
+    """Crée ou synchronise le compte admin depuis l'environnement.
+
+    La source de vérité est ADMIN_PASSWORD / ADMIN_EMAIL (variables Render).
+    À CHAQUE démarrage : si un mot de passe admin est défini et qu'il diffère
+    de celui stocké (ou que le compte n'existe pas), le hash est (ré)écrit.
+    Sans cela, changer ADMIN_PASSWORD sur Render ne mettrait jamais à jour un
+    compte admin déjà créé lors d'un déploiement précédent.
+    """
+    from app.models.user import User
+    from app.services.auth import get_user_by_email, hash_password, verify_password
+
+    if not settings.ADMIN_PASSWORD:
+        return
+
+    admin = await get_user_by_email(db, settings.ADMIN_EMAIL)
+    if admin is None:
+        admin = User(
+            first_name="Admin",
+            last_name="Autohaus",
+            email=settings.ADMIN_EMAIL.lower(),
+            phone="",
+            monthly_salary=0,
+            hashed_password=hash_password(settings.ADMIN_PASSWORD),
+            is_verified=True,
+            is_active=True,
+            is_admin=True,
+            registration_step=4,
+        )
+        db.add(admin)
+        await db.commit()
+        print("Admin créé : " + settings.ADMIN_EMAIL)
+        return
+
+    password_changed = not admin.hashed_password or not verify_password(
+        settings.ADMIN_PASSWORD, admin.hashed_password
+    )
+    needs_sync = (
+        password_changed
+        or not admin.is_admin
+        or not admin.is_verified
+        or not admin.is_active
+    )
+    if not needs_sync:
+        return
+
+    if password_changed:
+        admin.hashed_password = hash_password(settings.ADMIN_PASSWORD)
+    admin.is_admin = True
+    admin.is_verified = True
+    admin.is_active = True
+    await db.commit()
+    print("Compte admin synchronisé avec l'environnement : " + settings.ADMIN_EMAIL)
