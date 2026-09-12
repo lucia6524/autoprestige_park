@@ -161,3 +161,85 @@ async def test_translate_html_with_multiline_text_no_502(client, monkeypatch):
     html = resp.json()["html"]
     assert "New vehicles" in html
     assert "carefully selected" in html
+
+
+# ── Réinjection par parseur (attributs, textarea, entités) ──────────────
+
+
+async def test_translate_html_preserves_attribute_values(client, monkeypatch):
+    """Un texte identique dans un attribut et un nœud texte : seul le NŒUD
+    TEXTE est traduit (le str.replace historique traduisait l'attribut et
+    laissait le texte en français)."""
+
+    async def fake_translate_texts(texts, target_lang):
+        mapping = {"Voir les détails": "See details"}
+        return [mapping[t] for t in texts]
+
+    monkeypatch.setattr(tr, "_translate_texts", fake_translate_texts)
+
+    resp = await client.post(
+        "/api/translate/html",
+        json={"html": '<a title="Voir les détails" href="/v">Voir les détails</a>', "target_lang": "EN"},
+    )
+    assert resp.status_code == 200, resp.text
+    html = resp.json()["html"]
+    assert 'title="Voir les détails"' in html  # attribut intact
+    assert ">See details<" in html             # texte traduit
+
+
+async def test_translate_html_textarea_content_is_never_translated(client, monkeypatch):
+    """Le contenu d'un <textarea> est une VALEUR saisie par l'utilisateur :
+    il ne doit être ni extrait, ni traduit (aligne le backend sur le front)."""
+    sent = []
+
+    async def fake_translate_texts(texts, target_lang):
+        sent.extend(texts)
+        return [f"EN:{t}" for t in texts]
+
+    monkeypatch.setattr(tr, "_translate_texts", fake_translate_texts)
+
+    resp = await client.post(
+        "/api/translate/html",
+        json={"html": "<p>Traduis-moi.</p><textarea>Ne pas traduire</textarea>", "target_lang": "EN"},
+    )
+    assert resp.status_code == 200, resp.text
+    assert sent == ["Traduis-moi."]
+    html = resp.json()["html"]
+    assert "EN:Traduis-moi." in html
+    assert "<textarea>Ne pas traduire</textarea>" in html
+
+
+async def test_translate_html_matches_entity_encoded_text(client, monkeypatch):
+    """Un texte porteur d'entités (&amp;) doit être trouvé et traduit — la
+    réponse rééchappe correctement les caractères spéciaux."""
+
+    async def fake_translate_texts(texts, target_lang):
+        mapping = {"Essai & démo gratuite": "Test & free demo"}
+        return [mapping[t] for t in texts]
+
+    monkeypatch.setattr(tr, "_translate_texts", fake_translate_texts)
+
+    resp = await client.post(
+        "/api/translate/html",
+        json={"html": "<p>Essai &amp; démo gratuite</p>", "target_lang": "EN"},
+    )
+    assert resp.status_code == 200, resp.text
+    assert "<p>Test &amp; free demo</p>" in resp.json()["html"]
+
+
+async def test_translate_html_keeps_untranslated_markup_verbatim(client, monkeypatch):
+    """Le markup non traduit doit ressortir à l'identique (attributs, ordre,
+    entités) : seule la traduction des nœuds texte est rééchappée."""
+
+    async def fake_translate_texts(texts, target_lang):
+        return list(texts)  # aucune traduction
+
+    monkeypatch.setattr(tr, "_translate_texts", fake_translate_texts)
+
+    html = '<div class="a" data-x="1">Bonjour.</div><!-- commentaire -->'
+    resp = await client.post(
+        "/api/translate/html",
+        json={"html": html, "target_lang": "EN"},
+    )
+    assert resp.status_code == 200, resp.text
+    assert resp.json()["html"] == html

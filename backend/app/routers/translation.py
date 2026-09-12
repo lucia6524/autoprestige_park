@@ -1,5 +1,8 @@
 import logging
 import time
+from html import escape as _html_escape
+from html import unescape as _html_unescape
+from html.parser import HTMLParser
 
 import httpx
 from fastapi import APIRouter, HTTPException
@@ -241,14 +244,10 @@ def _extract_texts_from_html(html: str) -> list[str]:
     """Extrait les nœuds texte d'un fragment HTML, dans l'ordre.
 
     Ignore `translate="no"` et les balises non traduisibles
-    (script, style, noscript, template, iframe, svg, canvas) avec leurs
-    descendants. Chaque occurrence est retournée telle quelle (doublons
-    compris) pour permettre le remplacement une par une dans le HTML original.
+    (script, style, textarea…) avec leurs descendants. Chaque occurrence est
+    retournée telle quelle (doublons compris) pour permettre le remplacement
+    une par une dans le HTML original.
     """
-    from html.parser import HTMLParser
-
-    skip_tags = {"script", "style", "noscript", "template", "iframe", "svg", "canvas"}
-
     class TextExtractor(HTMLParser):
         def __init__(self):
             super().__init__(convert_charrefs=True)
@@ -256,11 +255,7 @@ def _extract_texts_from_html(html: str) -> list[str]:
             self.skip_depth = 0
 
         def handle_starttag(self, tag, attrs):
-            attrs_dict = dict(attrs)
-            if (
-                tag in skip_tags
-                or attrs_dict.get("translate") == "no"
-            ):
+            if tag in _SKIP_TAGS or dict(attrs).get("translate") == "no":
                 self.skip_depth += 1
 
         def handle_startendtag(self, tag, attrs):
@@ -281,6 +276,124 @@ def _extract_texts_from_html(html: str) -> list[str]:
     except Exception:
         raise HTTPException(400, "HTML invalide.") from None
     return parser.texts
+
+
+# Balises dont le CONTENU ne doit jamais être traduit (ni extrait).
+_SKIP_TAGS = {"script", "style", "noscript", "template", "iframe", "svg", "canvas", "textarea"}
+
+
+def _reinject_translations(html: str, translations: dict[str, str]) -> str:
+    """Réinjecte les traductions dans un fragment HTML SANS toucher au markup.
+
+    Contrairement à un `str.replace(text, new, 1)` sur le HTML brut — qui peut
+    remplacer la PREMIÈRE occurrence de la chaîne, y compris dans une VALEUR
+    D'ATTRIBUT (ex. <a title="Voir les détails">Voir les détails</a> voyait
+    son attribut traduit et son texte laissé en français) — cette fonction
+    reconstruit le HTML via un parseur :
+
+    - seuls les NŒUDS TEXTE traduisibles sont remplacés ; les attributs
+      (title, alt, aria-label, href…) sont réémis à l'identique ;
+    - l'appariement utilise le texte DÉCODÉ et NORMALISÉ (entités `&amp;`
+      décodées, espaces réduits) : un texte porteur d'entités était jusque-là
+      introuvable dans le HTML brut et restait en français ;
+    - les nœuds non traduits sont réémis tels quels (entités et espaces
+      conservés) ; seuls les nœuds traduits sont rééchappés.
+    """
+    out: list[str] = []
+    # Tampon du nœud texte courant : pièces brutes (réémises telles quelles)
+    # + texte décodé accumulé (clé d'appariement). Vidé à chaque balise.
+    pending_raw: list[str] = []
+    pending_decoded: list[str] = []
+
+    def _flush() -> None:
+        if not pending_raw:
+            return
+        decoded = "".join(pending_decoded)
+        norm = " ".join(decoded.split())
+        new = translations.get(norm) if norm else None
+        if new is not None:
+            out.append(_html_escape(new))
+        else:
+            out.append("".join(pending_raw))
+        pending_raw.clear()
+        pending_decoded.clear()
+
+    class Reinjector(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=False)
+            self.skip_depth = 0
+
+        def _emit_tag(self, tag: str, attrs: list[tuple[str, str | None]], self_closing: bool) -> None:
+            parts = [f"<{tag}"]
+            for name, value in attrs:
+                if value is None:
+                    parts.append(f" {name}")
+                else:
+                    parts.append(f' {name}="{_html_escape(value, quote=True)}"')
+            parts.append("/>" if self_closing else ">")
+            out.append("".join(parts))
+
+        def handle_starttag(self, tag, attrs):
+            _flush()
+            if tag in _SKIP_TAGS or dict(attrs).get("translate") == "no":
+                self.skip_depth += 1
+            self._emit_tag(tag, attrs, False)
+
+        def handle_startendtag(self, tag, attrs):
+            _flush()
+            self._emit_tag(tag, attrs, True)
+
+        def handle_endtag(self, tag):
+            _flush()
+            if self.skip_depth > 0:
+                self.skip_depth -= 1
+            out.append(f"</{tag}>")
+
+        def handle_data(self, data):
+            if self.skip_depth > 0:
+                out.append(data)
+                return
+            pending_raw.append(data)
+            pending_decoded.append(data)
+
+        def handle_entityref(self, name):
+            if self.skip_depth > 0:
+                out.append(f"&{name};")
+                return
+            pending_raw.append(f"&{name};")
+            pending_decoded.append(_html_unescape(f"&{name};"))
+
+        def handle_charref(self, name):
+            if self.skip_depth > 0:
+                out.append(f"&#{name};")
+                return
+            pending_raw.append(f"&#{name};")
+            pending_decoded.append(_html_unescape(f"&#{name};"))
+
+        def handle_comment(self, data):
+            _flush()
+            out.append(f"<!--{data}-->")
+
+        def handle_decl(self, decl):
+            _flush()
+            out.append(f"<!{decl}>")
+
+        def handle_pi(self, data):
+            _flush()
+            out.append(f"<?{data}>")
+
+        def unknown_decl(self, data):
+            _flush()
+            out.append(f"<![{data}]>")
+
+    parser = Reinjector()
+    try:
+        parser.feed(html)
+        parser.close()
+        _flush()
+    except Exception:
+        raise HTTPException(400, "HTML invalide.") from None
+    return "".join(out)
 
 
 
@@ -308,17 +421,16 @@ async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest
         raise _raise_provider_unavailable("Google Translate", exc) from exc
 
     translated_map = {
-        old: new
+        " ".join(old.split()): new
         for old, new in zip(unique, translated, strict=False)
         if " ".join(old.split()) != " ".join(new.split())
     }
 
-    result = data.html
-    for text in texts:
-        new = translated_map.get(text)
-        if new is not None:
-            result = result.replace(text, new, 1)
-    return {"html": result}
+    if not translated_map:
+        return {"html": data.html}
+    # Réinjection PARSEUR : seuls les nœuds texte changent, jamais les
+    # valeurs d'attributs, et l'appariement tolère les entités HTML.
+    return {"html": _reinject_translations(data.html, translated_map)}
 
 
 @router.post("")
