@@ -369,6 +369,18 @@ button, input, select, textarea {
   border-color: rgba(255, 255, 255, 0.25);
 }
 
+.catalog-show-all-btn {
+  display: block;
+  margin: 32px auto 8px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.catalog-show-all-btn[hidden] {
+  display: none;
+}
+
 .btn-lg {
   padding: 16px 32px;
   font-size: 1rem;

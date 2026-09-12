@@ -30,7 +30,19 @@ function jr(key, fallback) {
 const VEHICLES_CACHE_KEY = "autoprestige_vehicles_v1";
 const VEHICLES_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
+// Catalogue paginé : 50 véhicules affichés, puis « Voir tous les véhicules ».
+// Moins de véhicules rendus = moins de texte envoyé au service de traduction.
+const CATALOG_LIMIT = 50;
+let _showAllActive = false;
+
 let vehicles = window.FALLBACK_VEHICLES || [];
+
+// Un changement de filtre remet le catalogue à 50 véhicules : les handlers
+// filtres appellent _catalogRender() (et non renderVehicles) pour le reset.
+function _catalogRender(list = null) {
+  _showAllActive = false;
+  renderVehicles(list);
+}
 
 // ===== ÉTAT RÉSEAU (backend Render free tier parfois endormi) =====
 // Bandeau discret « connexion… » pendant les appels API lents : l'utilisateur
@@ -210,10 +222,42 @@ function populateBrands() {
 }
 
 // ===== RENDER VEHICLES =====
+// Bouton « Voir tous les véhicules » sous la grille catalogue.
+function _ensureShowAllButton() {
+  if (!vehiclesGrid) return null;
+  let btn = document.getElementById("catalog-show-all");
+  if (btn) return btn;
+  btn = document.createElement("button");
+  btn.type = "button";
+  btn.id = "catalog-show-all";
+  btn.className = "btn btn-primary catalog-show-all-btn";
+  btn.innerHTML = `<span data-i18n="vehicles.show_all">${jr("vehicles.show_all", "Voir tous les véhicules")}</span><span class="show-all-count"></span>`;
+  vehiclesGrid.after(btn);
+  btn.addEventListener("click", () => {
+    _showAllActive = true;
+    renderVehicles();
+  });
+  return btn;
+}
+
+function _updateShowAllButton(filtered) {
+  const btn = _ensureShowAllButton();
+  if (!btn) return;
+  const countEl = btn.querySelector(".show-all-count");
+  if (filtered.length > CATALOG_LIMIT && !_showAllActive) {
+    btn.hidden = false;
+    if (countEl) countEl.textContent = " (" + (filtered.length - CATALOG_LIMIT) + ")";
+  } else {
+    btn.hidden = true;
+    if (countEl) countEl.textContent = "";
+  }
+}
+
 function renderVehicles(list = null) {
   if (!vehiclesGrid) return;
 
   const filtered = list !== null ? list : applyFilters();
+  const limited = (_showAllActive || filtered.length <= CATALOG_LIMIT) ? filtered : filtered.slice(0, CATALOG_LIMIT);
 
   if (resultsCount) {
     const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
@@ -228,13 +272,14 @@ function renderVehicles(list = null) {
         <p style="font-size:1.2rem;margin-bottom:8px;">${t("vehicles.no_results", "Aucun véhicule trouvé")}</p>
         <p>${t("vehicles.no_results_hint", "Essayez de modifier vos filtres.")}</p>
       </div>`;
+    _updateShowAllButton(filtered);
     return;
   }
 
   // Batch DOM update with requestAnimationFrame for smoother rendering
   const esc = (s) => (typeof window.escapeHtml === "function" ? window.escapeHtml(s) : s);
   requestAnimationFrame(() => {
-    vehiclesGrid.innerHTML = filtered.map((v, i) => `
+    vehiclesGrid.innerHTML = limited.map((v, i) => `
       <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
         <div class="vehicle-image">
           <div class="skeleton-overlay"></div>
@@ -269,6 +314,7 @@ function renderVehicles(list = null) {
         </div>
       </article>
     `).join("");
+    _updateShowAllButton(filtered);
   });
 }
 
@@ -372,14 +418,14 @@ function applyFilters() {
 
 // ===== BIND FILTER EVENTS =====
 function bindFilterEvents() {
-  if (searchInput) searchInput.addEventListener("input", debounce(() => renderVehicles(), 250));
-  if (filterBrand) filterBrand.addEventListener("change", () => renderVehicles());
-  if (filterFuel) filterFuel.addEventListener("change", () => renderVehicles());
-  if (filterType) filterType.addEventListener("change", () => renderVehicles());
-  if (filterPrice) filterPrice.addEventListener("change", () => renderVehicles());
-  if (filterMileage) filterMileage.addEventListener("change", () => renderVehicles());
-  if (filterPromo) filterPromo.addEventListener("change", () => renderVehicles());
-  if (sortBy) sortBy.addEventListener("change", () => renderVehicles());
+  if (searchInput) searchInput.addEventListener("input", debounce(() => _catalogRender(), 250));
+  if (filterBrand) filterBrand.addEventListener("change", () => _catalogRender());
+  if (filterFuel) filterFuel.addEventListener("change", () => _catalogRender());
+  if (filterType) filterType.addEventListener("change", () => _catalogRender());
+  if (filterPrice) filterPrice.addEventListener("change", () => _catalogRender());
+  if (filterMileage) filterMileage.addEventListener("change", () => _catalogRender());
+  if (filterPromo) filterPromo.addEventListener("change", () => _catalogRender());
+  if (sortBy) sortBy.addEventListener("change", () => _catalogRender());
 
   if (resetFiltersBtn) {
     resetFiltersBtn.addEventListener("click", () => {
@@ -391,7 +437,7 @@ function bindFilterEvents() {
       if (filterMileage) filterMileage.value = "all";
       if (sortBy) sortBy.value = "default";
       if (filterPromo) filterPromo.checked = false;
-      renderVehicles();
+      _catalogRender();
     });
   }
 
@@ -406,7 +452,7 @@ function bindFilterEvents() {
         if (f === "neuf") list = vehicles.filter(v => v.type === "neuf");
         else if (f === "occasion") list = vehicles.filter(v => v.type === "occasion");
         else if (f === "promo") list = vehicles.filter(v => v.promo);
-        renderVehicles(list);
+        _catalogRender(list);
       });
     });
   }

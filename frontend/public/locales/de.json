@@ -135,8 +135,8 @@
     "sort_brand_asc": "Marke (A → Z)",
     "sort_brand_desc": "Marke (Z → A)",
     "sort_year_asc": "Jahr (älteste)",
-    "discounted_price": "Aktionspreis"
-  },
+    "discounted_price": "Aktionspreis",
+    "show_all": "Alle Fahrzeuge ansehen"  },
   "common": {
     "loading": "Laden...",
     "error": "Ein Fehler ist aufgetreten",

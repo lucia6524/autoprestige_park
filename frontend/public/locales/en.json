@@ -135,8 +135,8 @@
     "sort_brand_asc": "Brand (A → Z)",
     "sort_brand_desc": "Brand (Z → A)",
     "sort_year_asc": "Year (oldest)",
-    "discounted_price": "Sale price"
-  },
+    "discounted_price": "Sale price",
+    "show_all": "See all vehicles"  },
   "common": {
     "loading": "Loading...",
     "error": "An error occurred",

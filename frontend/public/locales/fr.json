@@ -135,8 +135,8 @@
     "sort_brand_asc": "Marque (A → Z)",
     "sort_brand_desc": "Marque (Z → A)",
     "sort_year_asc": "Année (ancien)",
-    "discounted_price": "Prix remisé"
-  },
+    "discounted_price": "Prix remisé",
+    "show_all": "Voir tous les véhicules"  },
   "common": {
     "loading": "Chargement...",
     "error": "Une erreur est survenue",

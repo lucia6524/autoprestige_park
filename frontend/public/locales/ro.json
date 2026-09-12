@@ -135,8 +135,8 @@
     "sort_brand_asc": "Marcă (A → Z)",
     "sort_brand_desc": "Marcă (Z → A)",
     "sort_year_asc": "An (mai vechi)",
-    "discounted_price": "Preț redus"
-  },
+    "discounted_price": "Preț redus",
+    "show_all": "Vezi toate vehiculele"  },
   "common": {
     "loading": "Se încarcă...",
     "error": "A apărut o eroare",

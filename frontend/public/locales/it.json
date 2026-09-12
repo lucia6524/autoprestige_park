@@ -135,8 +135,8 @@
     "sort_brand_asc": "Marca (A → Z)",
     "sort_brand_desc": "Marca (Z → A)",
     "sort_year_asc": "Anno (più vecchi)",
-    "discounted_price": "Prezzo scontato"
-  },
+    "discounted_price": "Prezzo scontato",
+    "show_all": "Vedi tutti i veicoli"  },
   "common": {
     "loading": "Caricamento...",
     "error": "Si è verificato un errore",
