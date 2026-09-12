@@ -32,10 +32,6 @@ services:
         sync: false
       - key: CORS_ORIGINS
         sync: false
-      - key: ADMIN_EMAIL
-        sync: false
-      - key: ADMIN_PASSWORD
-        sync: false
       - key: SMTP_HOST
         value: smtp-relay.brevo.com
       - key: SMTP_PORT
