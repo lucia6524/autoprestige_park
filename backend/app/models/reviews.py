@@ -1,7 +1,9 @@
 """Témoignages clients (modérés) et demandes de vente avec photos."""
 from datetime import datetime
-from sqlalchemy import String, Integer, Boolean, DateTime, Text
+
+from sqlalchemy import Boolean, DateTime, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column
+
 from app.database import Base
 from app.time_utils import utc_now_naive
 

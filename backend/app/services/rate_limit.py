@@ -6,7 +6,6 @@ ou une table en base (l'interface check(ip, scope) reste identique).
 """
 import logging
 import time
-from typing import Dict, List, Tuple
 
 from fastapi import HTTPException, Request
 
@@ -17,7 +16,7 @@ WINDOW_SECONDS = 300
 
 # Scopes indépendants : chaque endpoint a son propre compteur.
 # (fenêtre, max requêtes)
-LIMITS: Dict[str, Tuple[int, int]] = {
+LIMITS: dict[str, tuple[int, int]] = {
     "contact": (WINDOW_SECONDS, 5),         # 5 messages / 5 min / IP
     "review_submit": (WINDOW_SECONDS, 3),   # 3 avis / 5 min / IP
     "sell_request": (WINDOW_SECONDS, 3),    # 3 demandes / 5 min / IP
@@ -40,7 +39,7 @@ LIMITS: Dict[str, Tuple[int, int]] = {
     "register_set_password": (WINDOW_SECONDS, 10),
 }
 
-_buckets: Dict[str, List[float]] = {}
+_buckets: dict[str, list[float]] = {}
 
 
 def get_client_ip(request: Request) -> str:

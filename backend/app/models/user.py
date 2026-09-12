@@ -1,8 +1,11 @@
 from datetime import datetime
-from sqlalchemy import String, Integer, Float, Boolean, DateTime, Text, ForeignKey
+
+from sqlalchemy import Boolean, DateTime, Float, Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.database import Base
 from app.time_utils import utc_now_naive
+
 
 class User(Base):
     __tablename__ = "users"

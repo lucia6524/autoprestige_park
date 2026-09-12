@@ -26,6 +26,12 @@ const I18N = {
   BACKOFF_MS: [400, 1200, 2500], // attente avant réessai d'un lot échoué
   MAX_CACHE_ENTRIES: 1500,    // entrées max par langue dans le localStorage
   MAX_PASSES: 4,              // passes max tant que la page évolue
+  // Coupe-circuit : après un échec DUR du provider (clé invalide, quota,
+  // indisponible, rate-limit), on cesse toute traduction réseau pendant
+  // cette durée — sinon chaque page en échec générait des centaines de
+  // requêtes (repli bloc-par-bloc + passes + observateur). Sans revenir,
+  // le site reste français mais n'asphyxie plus le backend.
+  PROVIDER_COOLDOWN_MS: 20000,
 
   flags: {
     fr: '🇫🇷', en: '🇬🇧', de: '🇩🇪', it: '🇮🇹',
@@ -47,6 +53,27 @@ const I18N = {
   _localeLoaded: {},         // fichiers locales/<lang>.json déjà chargés
   _readyPromise: null,       // promesse d'initialisation (locale chargée)
   _originalTitle: undefined, // titre d'origine de la page (langue FR)
+  _circuit: { openUntil: 0, kind: '' },  // coupe-circuit du provider DeepL
+
+  // Le message d'erreur ne porte pas le statut HTTP (api.request ne renvoie
+  // que le `detail` du backend), mais les libellés sont caractéristiques :
+  // on les détecte pour distinguer « le SERVEUR/le provider est en panne »
+  // (coupe-circuit + aucun repli bloc-par-bloc) de « mon message est mal
+  // formé » (repli bloc-par-bloc légitime, ex. 422 HTML invalide).
+  _isProviderHardFailure(msg) {
+    return !!(msg && /quota|clé api|clé de traduction|indisponible|trop de demandes|volume de traduction|reviens|réessayez/i.test(msg));
+  },
+
+  _circuitOpen() {
+    return this._circuit.openUntil > Date.now();
+  },
+
+  _recordProviderFailure(msg) {
+    if (this._circuitOpen()) return; // déjà en pause
+    this._circuit.openUntil = Date.now() + this.PROVIDER_COOLDOWN_MS;
+    this._circuit.kind = msg || 'inconnu';
+    console.warn('i18n: traduction en pause 20 s (provider indisponible) :', this._circuit.kind);
+  },
 
   t(key) {
     if (!key) return '';
@@ -300,6 +327,7 @@ const I18N = {
 
   async translateTexts(texts, targetLang) {
     if (!texts.length) return [];
+    if (this._circuitOpen()) return texts.map((t) => t); // récupération : rien à traduire
     const results = new Array(texts.length).fill(null);
     const failed = this._failed[targetLang] || (this._failed[targetLang] = {});
 
@@ -322,7 +350,9 @@ const I18N = {
           results[entry.index] = value || entry.text;
         });
       } catch (err) {
-        console.warn('i18n: DeepL indisponible, textes laissés en français :', err?.message || err);
+        const msg = err?.message || '';
+        console.warn('i18n: DeepL indisponible, textes laissés en français :', msg || err);
+        if (this._isProviderHardFailure(msg)) this._recordProviderFailure(msg);
         chunk.forEach(entry => {
           results[entry.index] = entry.text;
           failed[entry.text] = true;
@@ -548,6 +578,7 @@ const I18N = {
   // d'échec, repli transparent sur la passe par lots.
   async translateSection(root) {
     if (!root || this.currentLang === 'fr') return true;
+    if (this._circuitOpen()) return false; // provider en pause : rien à demander
     const api = window.API;
     if (!api || typeof api.request !== 'function') return false;
     const lang = this.currentLang;
@@ -563,7 +594,9 @@ const I18N = {
       const groups = this._groupBlocks(blocks);
       for (const group of groups) {
         if (this.currentLang !== lang) break; // langue changée en cours
+        if (this._circuitOpen()) break; // échec dur rencontré : on arrête tout
         let ok = false;
+        let hardFailure = '';
         try {
           const data = await api.request('/translate/html', {
             method: 'POST',
@@ -579,12 +612,22 @@ const I18N = {
             }
           }
         } catch (err) {
-          console.warn('i18n: /translate/html :', err?.message || err);
+          const msg = err?.message || '';
+          console.warn('i18n: /translate/html :', msg || err);
+          if (this._isProviderHardFailure(msg)) {
+            // Le BACKEND/DeepL est en panne (quota, clé, indisponible,
+            // rate-limit) : retenter bloc par bloc n'apportera rien et
+            // mitraille le serveur (des centaines de requêtes par page).
+            hardFailure = msg;
+            this._recordProviderFailure(msg);
+          }
         }
-        if (!ok && group.length > 1) {
-          // Lot refusé : retente bloc par bloc (un véhicule cassé ne bloque
-          // pas les 119 autres).
+        if (!ok && group.length > 1 && !hardFailure) {
+          // Échec de FORMAT/structure uniquement (ex. 422 HTML invalide) :
+          // le lot entier à échoué mais un bloc isolé peut passer — un
+          // véhicule cassé ne bloque pas les 119 autres.
           for (const single of group) {
+            if (this._circuitOpen()) break;
             try {
               const data = await api.request('/translate/html', {
                 method: 'POST',
@@ -598,7 +641,11 @@ const I18N = {
                   anySuccess = true;
                 }
               }
-            } catch (_) { /* bloc ignoré */ }
+            } catch (err) {
+              const msg = err?.message || '';
+              if (this._isProviderHardFailure(msg)) this._recordProviderFailure(msg);
+              /* sinon : bloc ignoré silencieusement */
+            }
           }
         }
       }
@@ -649,6 +696,7 @@ const I18N = {
   },
 
   _scheduleTranslate() {
+    if (this._circuitOpen()) return; // provider en pause : on ne relance rien
     if (this._translating) {
       // Du contenu est arrivé pendant une passe : on le traitera à la passe
       // suivante au lieu de l'ignorer (sinon les cartes véhicules, résultats
@@ -663,11 +711,13 @@ const I18N = {
   },
 
   async _runTranslationPasses() {
+    if (this._circuitOpen()) return;
     this._translating = true;
     try {
       for (let pass = 0; pass < this.MAX_PASSES; pass++) {
         this._dirty = false;
         await this.translatePage();
+        if (this._circuitOpen()) break; // panne survenue en cours : stop
         if (!this._dirty) break; // page stable : terminé
       }
     } finally {

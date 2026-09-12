@@ -4,24 +4,36 @@ import time
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, Request
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import delete, select
 
 from app.config import settings
-
 from app.database import get_db
+from app.deps import get_current_user
 from app.models.user import User
 from app.schemas import (
-    RegisterStep1, RegisterStep2, RegisterStep3, RegisterVerify,
-    LoginRequest, LoginRequestCode, ChangePasswordIn, TokenResponse, UserOut
+    ChangePasswordIn,
+    LoginRequest,
+    LoginRequestCode,
+    ProfileUpdate,
+    RegisterStep1,
+    RegisterStep2,
+    RegisterStep3,
+    RegisterVerify,
+    TokenResponse,
+    UserOut,
 )
 from app.services.auth import (
-    get_user_by_email, create_otp, verify_otp, create_access_token, hash_password,
-    verify_password, create_registration_token, decode_registration_token,
+    create_access_token,
+    create_otp,
+    create_registration_token,
+    decode_registration_token,
+    get_user_by_email,
+    hash_password,
+    verify_otp,
+    verify_password,
 )
 from app.services.email import send_otp_email
-from app.schemas import ProfileUpdate
-from app.deps import get_current_user
 from app.time_utils import utc_now_naive
 
 logger = logging.getLogger(__name__)
@@ -168,7 +180,7 @@ async def register_step3(
     # la table users ne se remplisse de lignes non vérifiées (pollution/DoS).
     cutoff = utc_now_naive() - timedelta(hours=24)
     await db.execute(
-        delete(User).where(User.is_verified == False, User.created_at < cutoff)
+        delete(User).where(User.is_verified.is_(False), User.created_at < cutoff)
     )
 
     # Create or update user (unverified)

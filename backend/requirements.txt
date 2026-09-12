@@ -15,3 +15,9 @@ httpx==0.28.1
 # Les versions <= 0.49.x portent des vulnérabilités (PYSEC-2026-2280/2281/248/
 # 249/1941/1942/161) — fix versions : 1.0.1, 1.1.0, 1.3.0+. On planche 1.3.1.
 starlette>=1.3.1,<1.4.0
+
+# --- Migrations / tests / qualité ---
+alembic==1.14.0
+pytest==8.3.4
+pytest-asyncio==0.25.2
+ruff==0.8.6

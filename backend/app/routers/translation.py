@@ -2,7 +2,8 @@ import logging
 import time
 
 import httpx
-from fastapi import APIRouter, HTTPException, Request as StarletteRequest
+from fastapi import APIRouter, HTTPException
+from fastapi import Request as StarletteRequest
 from pydantic import BaseModel, Field
 
 from app.config import settings
@@ -57,6 +58,28 @@ def _get_ip(req: StarletteRequest) -> str:
     """IP client réelle — délègue au helper partagé (anti-spoofing XFF)."""
     from app.services.rate_limit import get_client_ip
     return get_client_ip(req)
+
+
+def _raise_provider_error(provider_name: str, exc: httpx.HTTPStatusError) -> HTTPException:
+    """Logge le statut/corps RÉEL renvoyé par le provider puis lève l'erreur
+    HTTP appropriée. Sans ce log, un 502 opaque masque la cause exacte
+    (clé invalide 401/403, quota 456, quota temporaire 429, indisponibilité)."""
+    status = exc.response.status_code
+    body = (exc.response.text or "")[:300]
+    logger.error("%s rejeté (HTTP %s) : %.300s", provider_name, status, body)
+    if status == 429:
+        return HTTPException(503, "Quota de traduction atteint. Réessayez plus tard.")
+    if status == 456:  # DeepL : quota mensuel épuisé (implémentation gratuite)
+        return HTTPException(503, "Quota mensuel de traduction atteint. Revenez le mois prochain.")
+    if status in (401, 403):
+        return HTTPException(502, "Clé API de traduction invalide ou non activée.")
+    return HTTPException(502, f"{provider_name} est momentanément indisponible.")
+
+
+def _raise_provider_unavailable(provider_name: str, exc: Exception) -> HTTPException:
+    """Échec réseau/timeout vers le provider — loggé pour diagnostic."""
+    logger.error("%s injoignable : %s", provider_name, exc)
+    return HTTPException(502, f"{provider_name} est momentanément indisponible.")
 
 
 class TranslationRequest(BaseModel):
@@ -203,7 +226,7 @@ def _sanitize_fragment_for_translation(html: str) -> str:
         parser.feed(html)
         parser.close()
     except Exception:
-        raise HTTPException(400, "HTML invalide.")
+        raise HTTPException(400, "HTML invalide.") from None
     body = "".join(parser.out).strip()
     if not body:
         return ""
@@ -246,7 +269,7 @@ def _restore_translated_fragment(raw: str, cleaned: str, original_html: str) -> 
         return original_html  # structure inattendue → on ne casse rien
 
     result = original_html
-    for old, new in zip(sent.chunks, texts):
+    for old, new in zip(sent.chunks, texts, strict=False):
         if " ".join(old.split()) != " ".join(new.split()):
             result = result.replace(old, new, 1)
     return result
@@ -292,14 +315,9 @@ async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest
                 resp.raise_for_status()
                 data_deepl = resp.json()
         except httpx.HTTPStatusError as exc:
-            status = exc.response.status_code
-            if status == 429:
-                raise HTTPException(503, "Quota de traduction atteint. Réessayez plus tard.") from exc
-            if status in (401, 403):
-                raise HTTPException(502, "Clé API de traduction invalide ou non activée.") from exc
-            raise HTTPException(502, f"{provider_name} est momentanément indisponible.") from exc
+            raise _raise_provider_error(provider_name, exc) from exc
         except (httpx.HTTPError, httpx.TimeoutException) as exc:
-            raise HTTPException(502, f"{provider_name} est momentanément indisponible.") from exc
+            raise _raise_provider_unavailable(provider_name, exc) from exc
 
         translations = data_deepl.get("translations", [])
         if not translations or not isinstance(translations[0].get("text"), str):
@@ -323,21 +341,18 @@ async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest
             parser.feed(cleaned)
             parser.close()
         except Exception:
-            raise HTTPException(400, "HTML invalide.")
+            raise HTTPException(400, "HTML invalide.") from None
         if not parser.texts:
             return {"html": data.html}
         try:
             translated_texts = await _translate_with_google(parser.texts, data.target_lang)
         except httpx.HTTPStatusError as exc:
-            status = exc.response.status_code
-            if status == 429:
-                raise HTTPException(503, "Quota de traduction atteint. Réessayez plus tard.") from exc
-            raise HTTPException(502, "Google Translate est momentanément indisponible.") from exc
+            raise _raise_provider_error("Google Translate", exc) from exc
         except (httpx.HTTPError, httpx.TimeoutException) as exc:
-            raise HTTPException(502, "Google Translate est momentanément indisponible.") from exc
+            raise _raise_provider_unavailable("Google Translate", exc) from exc
         # Ré-injection : remplace les textes du fragment original.
         result = data.html
-        for old, new in zip(parser.texts, translated_texts):
+        for old, new in zip(parser.texts, translated_texts, strict=False):
             if " ".join(old.split()) != " ".join(new.split()):
                 result = result.replace(old, new, 1)
         return {"html": result}
@@ -367,14 +382,9 @@ async def translate(data: TranslationRequest, request: StarletteRequest):
     try:
         translations = await translate_func(data.texts, data.target_lang)
     except httpx.HTTPStatusError as exc:
-        status = exc.response.status_code
-        if status == 429:
-            raise HTTPException(503, "Quota de traduction atteint. Réessayez plus tard.") from exc
-        if status in (401, 403):
-            raise HTTPException(502, "Clé API de traduction invalide ou non activée.") from exc
-        raise HTTPException(502, f"{provider_name} est momentanément indisponible.") from exc
+        raise _raise_provider_error(provider_name, exc) from exc
     except (httpx.HTTPError, httpx.TimeoutException) as exc:
-        raise HTTPException(502, f"{provider_name} est momentanément indisponible.") from exc
+        raise _raise_provider_unavailable(provider_name, exc) from exc
 
     if len(translations) != len(data.texts):
         raise HTTPException(502, f"Réponse {provider_name} invalide.")

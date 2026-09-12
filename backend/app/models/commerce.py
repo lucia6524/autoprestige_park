@@ -1,9 +1,12 @@
+import enum
 from datetime import datetime
-from sqlalchemy import String, Integer, Float, Boolean, DateTime, Text, ForeignKey, Enum as SAEnum
+
+from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+
 from app.database import Base
 from app.time_utils import utc_now_naive
-import enum
+
 
 class PaymentType(str, enum.Enum):
     FULL = "full"           # paiement comptant

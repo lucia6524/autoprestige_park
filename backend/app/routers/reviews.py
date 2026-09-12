@@ -1,9 +1,8 @@
 """Témoignages clients (modérés) et demandes de vente avec photos."""
-from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, EmailStr, Field, field_validator
-from sqlalchemy import select, desc, func
+from sqlalchemy import desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.database import get_db
@@ -23,7 +22,7 @@ MAX_PHOTO_BYTES = 2_000_000
 # Seules les photos base64 valides sont acceptées : type image annoncé +
 # présence d'un payload base64. Bloque data:text/html, data:application/js,
 # SVG (data:image/svg+xml peut embarquer du JS) et toute autre charge utile.
-import re as _re
+import re as _re  # noqa: E402
 
 _DATA_URL_RE = _re.compile(
     r"^data:image/(?!svg\+xml)(png|jpeg|jpg|gif|webp|avif);base64,[A-Za-z0-9+/=]+$")
@@ -60,7 +59,7 @@ class SellRequestIn(BaseModel):
     phone: str = Field(..., min_length=6, max_length=30)
     email: EmailStr
     notes: str = Field(default="", max_length=4000)
-    photos: List[str] = Field(default=[], max_length=6)
+    photos: list[str] = Field(default=[], max_length=6)
 
     @field_validator("photos")
     @classmethod
@@ -77,14 +76,14 @@ class SellRequestIn(BaseModel):
 
 # ── Public : avis approuvés + soumission ─────────────────
 
-@router.get("/reviews", response_model=List[ReviewOut])
+@router.get("/reviews", response_model=list[ReviewOut])
 async def list_public_reviews(db: AsyncSession = Depends(get_db), response: Response = None):
     """Avis approuvés uniquement (modération)."""
     if response:
         response.headers["Cache-Control"] = "public, max-age=60"
     result = await db.execute(
         select(Review)
-        .where(Review.approved == True)
+        .where(Review.approved.is_(True))
         .order_by(desc(Review.created_at))
         .limit(100)
     )
@@ -98,7 +97,7 @@ async def reviews_stats(db: AsyncSession = Depends(get_db), response: Response =
         response.headers["Cache-Control"] = "public, max-age=60"
     result = await db.execute(
         select(func.count(Review.id), func.coalesce(func.avg(Review.rating), 0.0))
-        .where(Review.approved == True)
+        .where(Review.approved.is_(True))
     )
     total, avg = result.one()
     return {"total": int(total), "average": round(float(avg), 1)}
@@ -186,11 +185,11 @@ class ReviewModeration(BaseModel):
     approved: bool
 
 
-@router.get("/admin/reviews", response_model=List[AdminReviewOut])
+@router.get("/admin/reviews", response_model=list[AdminReviewOut])
 async def admin_list_reviews(
     admin: object = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
-    approved: Optional[bool] = None,
+    approved: bool | None = None,
 ):
     query = select(Review).order_by(desc(Review.created_at)).limit(200)
     if approved is not None:
@@ -255,11 +254,11 @@ class SellRequestStatusUpdate(BaseModel):
     status: str = Field(..., pattern="^(new|contacted|closed)$")
 
 
-@router.get("/admin/sell-requests", response_model=List[AdminSellRequestOut])
+@router.get("/admin/sell-requests", response_model=list[AdminSellRequestOut])
 async def admin_list_sell_requests(
     admin: object = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
-    status: Optional[str] = None,
+    status: str | None = None,
 ):
     import json
 

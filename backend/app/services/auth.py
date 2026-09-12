@@ -1,16 +1,15 @@
 import hashlib
 import hmac
 import secrets
-from datetime import datetime, timedelta, timezone
-from typing import Optional
+from datetime import UTC, datetime, timedelta
 
-import jwt  # PyJWT — remplace python-jose (non maintenu, CVE-2024-33663/33664)
 import bcrypt  # bcrypt natif — remplace passlib (abandonné, incompatible bcrypt >= 4.1)
-from sqlalchemy import select, func, and_
+import jwt  # PyJWT — remplace python-jose (non maintenu, CVE-2024-33663/33664)
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.config import settings
-from app.models.user import User, OTPCode
+from app.models.user import OTPCode, User
 from app.time_utils import utc_now_naive
 
 # Coût bcrypt 12 (recommandation OWASP 2024 ; défaut bcrypt = 10).
@@ -34,7 +33,7 @@ def verify_password(plain: str, hashed: str) -> bool:
         return False
 
 
-def create_access_token(user: User, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(user: User, expires_delta: timedelta | None = None) -> str:
     """JWT lié à l'utilisateur.
 
     Embarque `ver` (token_version) : un logout incrémente cette version en
@@ -44,7 +43,7 @@ def create_access_token(user: User, expires_delta: Optional[timedelta] = None) -
         "sub": str(user.id),
         "ver": user.token_version or 0,
     }
-    expire = datetime.now(timezone.utc) + (
+    expire = datetime.now(UTC) + (
         expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     )
     payload.update({"exp": expire})
@@ -59,7 +58,7 @@ def create_registration_token(email: str) -> str:
     vérification OTP (sinon le endpoint ne fait confiance qu'à un email
     fourni dans le body, falsifiable).
     """
-    expire = datetime.now(timezone.utc) + timedelta(minutes=15)
+    expire = datetime.now(UTC) + timedelta(minutes=15)
     return jwt.encode(
         {"sub": email.lower().strip(), "purpose": "registration", "exp": expire},
         settings.SECRET_KEY,
@@ -67,7 +66,7 @@ def create_registration_token(email: str) -> str:
     )
 
 
-def decode_registration_token(token: str) -> Optional[str]:
+def decode_registration_token(token: str) -> str | None:
     """Renvoie l'email associé si le token est valide ET destiné à l'inscription."""
     try:
         payload = jwt.decode(
@@ -84,7 +83,7 @@ def decode_registration_token(token: str) -> Optional[str]:
     return email if isinstance(email, str) and email else None
 
 
-def decode_token(token: str) -> Optional[dict]:
+def decode_token(token: str) -> dict | None:
     try:
         return jwt.decode(
             token,
@@ -137,7 +136,7 @@ async def create_otp(db: AsyncSession, email: str) -> str:
 
     # Invalider les anciens codes non utilisés
     result = await db.execute(
-        select(OTPCode).where(OTPCode.email == email, OTPCode.used == False)
+        select(OTPCode).where(OTPCode.email == email, OTPCode.used.is_(False))
     )
     for old in result.scalars().all():
         old.used = True
@@ -168,7 +167,7 @@ async def verify_otp(db: AsyncSession, email: str, code: str) -> bool:
     # Dernier code non utilisé pour cet email
     result = await db.execute(
         select(OTPCode)
-        .where(OTPCode.email == email, OTPCode.used == False)
+        .where(OTPCode.email == email, OTPCode.used.is_(False))
         .order_by(OTPCode.created_at.desc())
     )
     otp = result.scalars().first()
@@ -200,11 +199,11 @@ async def verify_otp(db: AsyncSession, email: str, code: str) -> bool:
     return True
 
 
-async def get_user_by_email(db: AsyncSession, email: str) -> Optional[User]:
+async def get_user_by_email(db: AsyncSession, email: str) -> User | None:
     result = await db.execute(select(User).where(User.email == email.lower()))
     return result.scalars().first()
 
 
-async def get_user_by_id(db: AsyncSession, user_id: int) -> Optional[User]:
+async def get_user_by_id(db: AsyncSession, user_id: int) -> User | None:
     result = await db.execute(select(User).where(User.id == user_id))
     return result.scalars().first()

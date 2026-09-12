@@ -1,17 +1,22 @@
 from datetime import timedelta
+
 from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from app.database import get_db
-from app.models.user import User
-from app.models.commerce import (
-    CartItem, Order, Installment, Delivery, DeliveryEvent,
-    PaymentType, OrderStatus, DeliveryStatus
-)
-from app.schemas import CheckoutIn, OrderOut, PayInstallmentIn, DeliveryDetailsIn
 from app.deps import get_current_user
+from app.models.commerce import (
+    CartItem,
+    Delivery,
+    Installment,
+    Order,
+    OrderStatus,
+    PaymentType,
+)
+from app.models.user import User
+from app.schemas import CheckoutIn, DeliveryDetailsIn, OrderOut, PayInstallmentIn
 from app.time_utils import utc_now_naive
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
@@ -157,7 +162,7 @@ async def pay_installment(
     Le client déclare avoir effectué le virement pour cette échéance.
     Statut → claimed. L'admin doit valider après vérification bancaire.
     """
-    from app.models.commerce import Notification, InstallmentPaymentStatus
+    from app.models.commerce import InstallmentPaymentStatus, Notification
 
     result = await db.execute(
         _order_query().where(Order.id == order_id, Order.user_id == user.id)

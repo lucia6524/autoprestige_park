@@ -1,5 +1,4 @@
 import time
-from typing import Optional
 
 from fastapi import APIRouter, Depends
 from pydantic import BaseModel, Field
@@ -14,7 +13,7 @@ from app.models.user import User
 router = APIRouter(prefix="/site-settings", tags=["Site settings"])
 
 # Simple in-memory cache for site settings (single-row, rarely changes)
-_settings_cache: Optional[dict] = None
+_settings_cache: dict | None = None
 _settings_cache_ts: float = 0
 _CACHE_TTL = 300  # 5 minutes
 
@@ -55,14 +54,14 @@ class SiteSettingsUpdate(BaseModel):
     """Mise à jour PARTIELLE et autonome : seul le champ envoyé est modifié.
     Une valeur vide ("" ou null) EFFACE le champ ; un champ absent du payload
     reste inchangé."""
-    bank_holder: Optional[str] = Field(default=None, max_length=255)
-    bank_iban: Optional[str] = Field(default=None, max_length=100)
-    bank_bic: Optional[str] = Field(default=None, max_length=50)
-    bank_transfer_type: Optional[str] = Field(default=None, max_length=100)
-    contact_phone: Optional[str] = Field(default=None, max_length=50)
-    contact_email: Optional[str] = Field(default=None, max_length=255)
-    contact_whatsapp: Optional[str] = Field(default=None, max_length=100)
-    contact_address: Optional[str] = Field(default=None, max_length=500)
+    bank_holder: str | None = Field(default=None, max_length=255)
+    bank_iban: str | None = Field(default=None, max_length=100)
+    bank_bic: str | None = Field(default=None, max_length=50)
+    bank_transfer_type: str | None = Field(default=None, max_length=100)
+    contact_phone: str | None = Field(default=None, max_length=50)
+    contact_email: str | None = Field(default=None, max_length=255)
+    contact_whatsapp: str | None = Field(default=None, max_length=100)
+    contact_address: str | None = Field(default=None, max_length=500)
 
 
 DEFAULT_SETTINGS = {

@@ -1,6 +1,9 @@
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
+from contextlib import suppress
+
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
-from sqlalchemy import select, text
+
 from app.config import settings
 
 # Pool tuning: keep connections alive, recycle stale ones, ping before use
@@ -26,7 +29,8 @@ class Base(DeclarativeBase):
 
 
 # Import models after Base exists so every table is registered before startup.
-from app.models import commerce, site_settings, user, reviews  # noqa: F401
+from app.models import commerce, reviews, site_settings, user  # noqa: F401,E402
+
 
 async def get_db():
     async with AsyncSessionLocal() as session:
@@ -57,10 +61,8 @@ async def init_db():
                 "ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0",
             ]
             for sql in migrations:
-                try:
+                with suppress(Exception):
                     await conn.execute(text(sql))
-                except Exception:
-                    pass
 
         # Index sur les colonnes filtrées/triées du catalogue (idempotents)
         # create_all ne crée pas les index des tables déjà existantes → CREATE INDEX IF NOT EXISTS.
@@ -73,10 +75,8 @@ async def init_db():
             "CREATE INDEX IF NOT EXISTS ix_installments_payment_status ON installments (payment_status)",
         ]
         for sql in indexes:
-            try:
+            with suppress(Exception):
                 await conn.execute(text(sql))
-            except Exception:
-                pass
 
         if conn.dialect.name == "postgresql":
             users_exists = await conn.scalar(
@@ -100,7 +100,7 @@ async def init_db():
 
     # Créer le compte admin par défaut s'il n'existe pas
     from app.models.user import User
-    from app.services.auth import hash_password, get_user_by_email
+    from app.services.auth import get_user_by_email, hash_password
 
     async with AsyncSessionLocal() as db:
         admin = await get_user_by_email(db, settings.ADMIN_EMAIL)

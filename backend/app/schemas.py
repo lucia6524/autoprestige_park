@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, List
+
 from pydantic import BaseModel, EmailStr, Field
 
 
@@ -34,8 +34,8 @@ class RegisterVerify(BaseModel):
 class LoginRequest(BaseModel):
     email: EmailStr
     # For OTP login after registration, or password if set
-    code: Optional[str] = None
-    password: Optional[str] = None
+    code: str | None = None
+    password: str | None = None
 
 
 class LoginRequestCode(BaseModel):
@@ -107,7 +107,7 @@ class CartItemOut(BaseModel):
 
 
 class CartOut(BaseModel):
-    items: List[CartItemOut]
+    items: list[CartItemOut]
     total: float
     count: int
 
@@ -116,7 +116,7 @@ class CartOut(BaseModel):
 class CheckoutIn(BaseModel):
     cart_item_id: int
     payment_type: str = Field(..., pattern="^(full|monthly)$")
-    months: Optional[int] = Field(None, ge=3, le=84)  # for monthly
+    months: int | None = Field(None, ge=3, le=84)  # for monthly
 
 
 class InstallmentOut(BaseModel):
@@ -125,9 +125,9 @@ class InstallmentOut(BaseModel):
     amount: float
     due_date: datetime
     paid: bool
-    paid_at: Optional[datetime]
+    paid_at: datetime | None
     payment_status: str = "unpaid"
-    claimed_at: Optional[datetime] = None
+    claimed_at: datetime | None = None
     admin_note: str = ""
 
     class Config:
@@ -150,14 +150,14 @@ class DeliveryOut(BaseModel):
     status: str
     tracking_number: str
     carrier: str
-    estimated_delivery: Optional[datetime]
+    estimated_delivery: datetime | None
     current_location: str
     notes: str
     recipient_first_name: str = ""
     recipient_last_name: str = ""
     recipient_phone: str = ""
     delivery_address: str = ""
-    events: List[DeliveryEventOut] = []
+    events: list[DeliveryEventOut] = []
 
     class Config:
         from_attributes = True
@@ -177,9 +177,9 @@ class OrderOut(BaseModel):
     amount_paid: float
     status: str
     created_at: datetime
-    paid_at: Optional[datetime]
-    installments: List[InstallmentOut] = []
-    delivery: Optional[DeliveryOut] = None
+    paid_at: datetime | None
+    installments: list[InstallmentOut] = []
+    delivery: DeliveryOut | None = None
 
     class Config:
         from_attributes = True

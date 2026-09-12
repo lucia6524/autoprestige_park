@@ -2,23 +2,25 @@
 Admin API — réservé aux utilisateurs is_admin=True
 """
 from datetime import datetime, timedelta
-from typing import Optional, List
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
-from typing import Annotated
-from sqlalchemy import select, func, desc
+from pydantic import BaseModel, Field
+from sqlalchemy import desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from pydantic import BaseModel, EmailStr, Field
 
 from app.database import get_db
 from app.deps import get_current_admin
-from app.models.user import User
 from app.models.commerce import (
-    Order, CartItem, Installment, Delivery, DeliveryEvent,
-    DeliveryStatus, OrderStatus,
+    Delivery,
+    DeliveryEvent,
+    DeliveryStatus,
+    Installment,
+    Order,
+    OrderStatus,
 )
-from app.services.auth import hash_password
+from app.models.user import User
 from app.time_utils import as_utc_naive, utc_now_naive
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
@@ -62,12 +64,12 @@ class AdminUserOut(BaseModel):
 
 
 class AdminUserUpdate(BaseModel):
-    is_active: Optional[bool] = None
-    is_admin: Optional[bool] = None
-    is_verified: Optional[bool] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    phone: Optional[str] = None
+    is_active: bool | None = None
+    is_admin: bool | None = None
+    is_verified: bool | None = None
+    first_name: str | None = None
+    last_name: str | None = None
+    phone: str | None = None
 
 
 class AdminOrderOut(BaseModel):
@@ -87,17 +89,17 @@ class AdminOrderOut(BaseModel):
     amount_paid: float
     status: str
     created_at: datetime
-    paid_at: Optional[datetime] = None
-    delivery_status: Optional[str] = None
-    tracking_number: Optional[str] = None
-    carrier: Optional[str] = None
-    current_location: Optional[str] = None
-    delivery_notes: Optional[str] = None
-    estimated_delivery: Optional[datetime] = None
-    recipient_first_name: Optional[str] = None
-    recipient_last_name: Optional[str] = None
-    recipient_phone: Optional[str] = None
-    delivery_address: Optional[str] = None
+    paid_at: datetime | None = None
+    delivery_status: str | None = None
+    tracking_number: str | None = None
+    carrier: str | None = None
+    current_location: str | None = None
+    delivery_notes: str | None = None
+    estimated_delivery: datetime | None = None
+    recipient_first_name: str | None = None
+    recipient_last_name: str | None = None
+    recipient_phone: str | None = None
+    delivery_address: str | None = None
 
     class Config:
         from_attributes = True
@@ -108,13 +110,13 @@ class OrderStatusUpdate(BaseModel):
 
 
 class DeliveryUpdate(BaseModel):
-    status: Optional[str] = Field(None, pattern="^(preparing|shipped|in_transit|out_for_delivery|delivered)$")
-    tracking_number: Optional[str] = None
-    carrier: Optional[str] = None
-    current_location: Optional[str] = None
-    notes: Optional[str] = None
-    estimated_delivery: Optional[datetime] = None
-    event_message: Optional[str] = None
+    status: str | None = Field(None, pattern="^(preparing|shipped|in_transit|out_for_delivery|delivered)$")
+    tracking_number: str | None = None
+    carrier: str | None = None
+    current_location: str | None = None
+    notes: str | None = None
+    estimated_delivery: datetime | None = None
+    event_message: str | None = None
 
 
 # ── Dashboard stats ──────────────────────────────────────
@@ -128,7 +130,7 @@ async def admin_stats(
     users_result = await db.execute(
         select(
             func.count(User.id).label("total"),
-            func.count(User.id).filter(User.is_verified == True).label("verified"),
+            func.count(User.id).filter(User.is_verified.is_(True)).label("verified"),
         )
     )
     u = users_result.one()
@@ -163,11 +165,11 @@ async def admin_stats(
 
 # ── Users ────────────────────────────────────────────────
 
-@router.get("/users", response_model=List[AdminUserOut])
+@router.get("/users", response_model=list[AdminUserOut])
 async def list_users(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
-    q: Optional[str] = Query(None),
+    q: str | None = Query(None),
     skip: SkipParam = 0,
     limit: LimitParam = 50,
 ):
@@ -273,11 +275,11 @@ async def delete_user(
 
 # ── Orders ───────────────────────────────────────────────
 
-@router.get("/orders", response_model=List[AdminOrderOut])
+@router.get("/orders", response_model=list[AdminOrderOut])
 async def list_orders(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
-    status: Optional[str] = None,
+    status: str | None = None,
     skip: SkipParam = 0,
     limit: LimitParam = 50,
 ):
@@ -478,35 +480,35 @@ class VehicleOut(BaseModel):
 
 
 class VehicleUpdate(BaseModel):
-    category: Optional[str] = Field(None, pattern="^(voiture|camping-car|machine-agricole)$")
-    brand: Optional[str] = Field(None, min_length=1, max_length=100)
-    model: Optional[str] = Field(None, min_length=1, max_length=150)
-    year: Optional[int] = Field(None, ge=1950, le=2030)
-    fuel: Optional[str] = Field(None, max_length=50)
-    transmission: Optional[str] = Field(None, max_length=50)
-    mileage: Optional[int] = Field(None, ge=0, le=2_000_000)
-    price: Optional[float] = Field(None, ge=0, le=10_000_000)
-    monthly: Optional[float] = Field(None, ge=0, le=10_000_000)
-    type: Optional[str] = Field(None, max_length=20)
-    body_category: Optional[str] = Field(None, max_length=100)
-    power: Optional[int] = Field(None, ge=0, le=2000)
-    featured: Optional[bool] = None
-    promo: Optional[bool] = None
-    is_active: Optional[bool] = None
-    image: Optional[str] = Field(None, max_length=500)
-    images: Optional[str] = Field(None, max_length=20_000)
-    description: Optional[str] = Field(None, max_length=10_000)
+    category: str | None = Field(None, pattern="^(voiture|camping-car|machine-agricole)$")
+    brand: str | None = Field(None, min_length=1, max_length=100)
+    model: str | None = Field(None, min_length=1, max_length=150)
+    year: int | None = Field(None, ge=1950, le=2030)
+    fuel: str | None = Field(None, max_length=50)
+    transmission: str | None = Field(None, max_length=50)
+    mileage: int | None = Field(None, ge=0, le=2_000_000)
+    price: float | None = Field(None, ge=0, le=10_000_000)
+    monthly: float | None = Field(None, ge=0, le=10_000_000)
+    type: str | None = Field(None, max_length=20)
+    body_category: str | None = Field(None, max_length=100)
+    power: int | None = Field(None, ge=0, le=2000)
+    featured: bool | None = None
+    promo: bool | None = None
+    is_active: bool | None = None
+    image: str | None = Field(None, max_length=500)
+    images: str | None = Field(None, max_length=20_000)
+    description: str | None = Field(None, max_length=10_000)
 
 
-from app.models.commerce import Vehicle, Notification, Installment, InstallmentPaymentStatus
+from app.models.commerce import InstallmentPaymentStatus, Notification, Vehicle  # noqa: E402
 
 
-@router.get("/vehicles", response_model=List[VehicleOut])
+@router.get("/vehicles", response_model=list[VehicleOut])
 async def list_vehicles(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
-    category: Optional[str] = None,
-    q: Optional[str] = None,
+    category: str | None = None,
+    q: str | None = None,
     skip: SkipParam = 0,
     limit: LimitParam = 100,
 ):
@@ -584,7 +586,7 @@ class PaymentClaimOut(BaseModel):
     amount: float
     due_date: datetime
     payment_status: str
-    claimed_at: Optional[datetime]
+    claimed_at: datetime | None
     admin_note: str
     brand: str
     model: str
@@ -598,11 +600,11 @@ class PaymentClaimAction(BaseModel):
     admin_note: str = ""
 
 
-@router.get("/payment-claims", response_model=List[PaymentClaimOut])
+@router.get("/payment-claims", response_model=list[PaymentClaimOut])
 async def list_payment_claims(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
-    status: Optional[str] = "claimed",
+    status: str | None = "claimed",
     skip: SkipParam = 0,
     limit: LimitParam = 100,
 ):
@@ -651,8 +653,9 @@ async def resolve_payment_claim(
     approve → échéance payée + maj commande
     reject  → client peut re-déclarer
     """
-    from app.models.commerce import Delivery, DeliveryEvent, DeliveryStatus, OrderStatus
     from datetime import timedelta
+
+    from app.models.commerce import Delivery, DeliveryEvent, DeliveryStatus, OrderStatus
 
     result = await db.execute(
         select(Installment)
@@ -675,7 +678,7 @@ async def resolve_payment_claim(
         notifs = await db.execute(
             select(Notification).where(
                 Notification.installment_id == inst.id,
-                Notification.is_read == False,
+                Notification.is_read.is_(False),
             )
         )
         for n in notifs.scalars().all():
@@ -713,7 +716,7 @@ async def resolve_payment_claim(
     notifs = await db.execute(
         select(Notification).where(
             Notification.installment_id == inst.id,
-            Notification.is_read == False,
+            Notification.is_read.is_(False),
         )
     )
     for n in notifs.scalars().all():
@@ -737,9 +740,9 @@ class NotificationOut(BaseModel):
     type: str
     title: str
     message: str
-    user_id: Optional[int]
-    order_id: Optional[int]
-    installment_id: Optional[int]
+    user_id: int | None
+    order_id: int | None
+    installment_id: int | None
     is_read: bool
     created_at: datetime
 
@@ -747,7 +750,7 @@ class NotificationOut(BaseModel):
         from_attributes = True
 
 
-@router.get("/notifications", response_model=List[NotificationOut])
+@router.get("/notifications", response_model=list[NotificationOut])
 async def list_notifications(
     admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
@@ -756,7 +759,7 @@ async def list_notifications(
 ):
     query = select(Notification).order_by(desc(Notification.created_at)).limit(limit)
     if unread_only:
-        query = query.where(Notification.is_read == False)
+        query = query.where(Notification.is_read.is_(False))
     result = await db.execute(query)
     return list(result.scalars().all())
 

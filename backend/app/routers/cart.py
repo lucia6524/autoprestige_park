@@ -1,12 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, delete
 
 from app.database import get_db
-from app.models.user import User
-from app.models.commerce import CartItem, Vehicle
-from app.schemas import CartItemIn, CartItemOut, CartOut
 from app.deps import get_current_user
+from app.models.commerce import CartItem, Vehicle
+from app.models.user import User
+from app.schemas import CartItemIn, CartItemOut, CartOut
 
 router = APIRouter(prefix="/cart", tags=["Cart"])
 
@@ -33,7 +33,7 @@ async def add_to_cart(
     # client (sinon un utilisateur commande un véhicule à 1 €). On recharge
     # tout depuis le catalogue serveur ; le body ne sert qu'à identifier.
     v_result = await db.execute(
-        select(Vehicle).where(Vehicle.id == data.vehicle_id, Vehicle.is_active == True)
+        select(Vehicle).where(Vehicle.id == data.vehicle_id, Vehicle.is_active.is_(True))
     )
     vehicle = v_result.scalars().first()
     if not vehicle:

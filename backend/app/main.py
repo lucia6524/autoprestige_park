@@ -1,16 +1,36 @@
+import logging
 from contextlib import asynccontextmanager
-from fastapi import FastAPI, Request, Response
+
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 
-from app.config import settings
-from app.database import init_db
+# Journaux applicatifs visibles dans Render (Brevo, DeepL, quotas…) :
+# sans niveau INFO, les succès d'envoi d'email restent invisibles.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+)
+
+from app.config import settings  # noqa: E402  (après logging.basicConfig, voulu)
+from app.database import init_db  # noqa: E402
+
 # Import models so Base.metadata knows them
-from app.models import user, commerce  # noqa: F401
-from app.models import site_settings as site_settings_model  # noqa: F401
-from app.models import reviews as reviews_model  # noqa: F401
-from app.routers import auth, cart, orders, admin, vehicles, site_settings, translation, contact, reviews
+from app.models import commerce, user  # noqa: F401,E402
+from app.models import reviews as reviews_model  # noqa: F401,E402
+from app.models import site_settings as site_settings_model  # noqa: F401,E402
+from app.routers import (  # noqa: E402
+    admin,
+    auth,
+    cart,
+    contact,
+    orders,
+    reviews,
+    site_settings,
+    translation,
+    vehicles,
+)
 
 
 @asynccontextmanager
@@ -93,12 +113,11 @@ async def limit_body_size(request: Request, call_next):
 async def csrf_origin_check(request: Request, call_next):
     if request.method not in SAFE_METHODS:
         origin = request.headers.get("origin")
-        if origin:
-            if not _origin_allowed(origin):
-                return JSONResponse(
-                    status_code=403,
-                    content={"detail": "Origine non autorisée (protection CSRF)."},
-                )
+        if origin and not _origin_allowed(origin):
+            return JSONResponse(
+                status_code=403,
+                content={"detail": "Origine non autorisée (protection CSRF)."},
+            )
         # Pas d'Origin → client non-navigateur (curl, app mobile) : autorisé.
         # Les navigateurs envoient toujours Origin sur les requêtes mutantes.
     return await call_next(request)

@@ -85,3 +85,19 @@ npm run dev        # (optionnel) serveur de dev Astro
   ```bash
   cd backend && python import_vehicles.py --email ... --password ...
   ```
+- Tests + lint :
+  ```bash
+  cd backend
+  python -m pytest                   # suite de tests API (10 tests)
+  python -m ruff check app tests     # lint
+  ```
+- Migrations de schéma (`backend/alembic/`) :
+  ```bash
+  cd backend
+  DATABASE_URL=... alembic upgrade head   # applique les migrations
+  alembic revision --autogenerate -m "description"   # nouvelle migration
+  ```
+  À noter : `init_db` crée le schéma au démarrage (`create_all`) pour une base
+  neuve. Pour une base existante, la migration initiale est une *baseline* :
+  appliquez `alembic stamp head` UNE fois pour enregistrer le schéma courant,
+  puis migrez ensuite avec `alembic upgrade head`.
