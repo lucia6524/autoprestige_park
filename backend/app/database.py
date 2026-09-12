@@ -106,7 +106,7 @@ async def init_db():
         admin = await get_user_by_email(db, settings.ADMIN_EMAIL)
         if not admin:
             if not settings.ADMIN_PASSWORD:
-                print("⚠️  ADMIN_PASSWORD non défini — compte admin non créé. Configurez ADMIN_PASSWORD dans vos variables d'environnement.")
+                print("ADMIN_PASSWORD non défini — compte admin non créé. Configurez ADMIN_PASSWORD dans vos variables d'environnement.")
             else:
                 admin = User(
                     first_name="Admin",
@@ -122,7 +122,7 @@ async def init_db():
                 )
                 db.add(admin)
                 await db.commit()
-                print(f"✅ Admin créé : {settings.ADMIN_EMAIL}")
+                print("Admin créé : " + settings.ADMIN_EMAIL)
         elif not admin.is_admin:
             admin.is_admin = True
             admin.is_verified = True
@@ -130,4 +130,4 @@ async def init_db():
             if not admin.hashed_password and settings.ADMIN_PASSWORD:
                 admin.hashed_password = hash_password(settings.ADMIN_PASSWORD)
             await db.commit()
-            print(f"✅ Droits admin accordés à : {settings.ADMIN_EMAIL}")
+            print("Droits admin accordés à : " + settings.ADMIN_EMAIL)

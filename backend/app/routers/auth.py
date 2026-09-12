@@ -7,6 +7,8 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import delete, select
 
+from app.config import settings
+
 from app.database import get_db
 from app.models.user import User
 from app.schemas import (
@@ -200,12 +202,22 @@ async def register_step3(
         # indifférenciable). L'erreur est loggée côté serveur uniquement.
         logger.error("OTP email failed during register/step3 for %s", email)
 
-    return {
+    response = {
         "ok": True,
         "step": 3,
         "email": email,
         "message": "Un code de vérification a été envoyé à votre adresse email.",
     }
+    if settings.ENVIRONMENT.lower() != "production":
+        # Repli dev : sans clé Brevo (ou pour tester), on renvoie le code dans
+        # la réponse pour continuer l'inscription. JAMAIS en production.
+        response["dev_code"] = code
+        response["message"] = (
+            f"DEV — email non configuré, code : {code}"
+            if not email_sent
+            else f"Un code de vérification a été envoyé à votre adresse email (dev : {code})."
+        )
+    return response
 
 
 # Validations de mot de passe partagées (inscription + changement).

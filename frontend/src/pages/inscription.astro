@@ -622,6 +622,11 @@ const footer = {
           document.getElementById("otp-email-display").textContent =
             userEmail;
           goToStep(4);
+          if (res.dev_code) {
+            const display = document.getElementById("otp-display-code");
+            if (display) display.textContent = res.dev_code;
+            return;
+          }
           showSuccess("Code généré — saisissez-le pour continuer.");
         } catch (err) {
           showError(err.message || "Erreur réseau.");
@@ -751,6 +756,10 @@ const footer = {
           userEmail = res.email;
           document.getElementById("otp-email-display").textContent =
             userEmail;
+        }
+        if (res.dev_code) {
+          const display = document.getElementById("otp-display-code");
+          if (display) display.textContent = res.dev_code;
         }
         saveProgress();
         showSuccess("Nouveau code généré.");
