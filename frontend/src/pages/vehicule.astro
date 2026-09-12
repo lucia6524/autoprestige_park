@@ -714,7 +714,7 @@ const footer = {
 
       // Rendu dans la langue courante + re-rendu au changement de langue :
       // les labels de la fiche (specs, boutons) sont traduits instantanément
-      // via les clés i18n + phrasebook local, sans attendre DeepL.
+      // via les clés i18n + phrasebook local, sans attendre la traduction.
       let currentVehicle = null;
       let renderedLang = null;
 
@@ -730,7 +730,7 @@ const footer = {
       }
 
       // Le contenu dynamique (descriptions, transmission…) est traduit par la
-      // passe DeepL planifiée ; la langue choisie suit l'utilisateur partout.
+      // passe en file d'attente ; la langue choisie suit l'utilisateur partout.
       document.addEventListener("languageChanged", function () {
         if (!currentVehicle) return;
         renderedLang = null;

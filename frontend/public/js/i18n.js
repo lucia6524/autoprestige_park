@@ -1,7 +1,7 @@
 /**
- * Autohaus i18n — traduction dynamique via DeepL (endpoint backend /translate).
+ * Autohaus i18n — traduction dynamique via Google (endpoint backend /translate).
  * Aucun appel direct à un service de traduction depuis le navigateur : le
- * backend détient la clé et regroupe les textes par lots vers DeepL.
+ * backend regroupe les textes par lots vers Google (endpoint gratuit).
  * Les traductions sont mises en cache dans le localStorage pour ne jamais
  * retraduire deux fois la même phrase. Le contenu injecté dynamiquement
  * (cartes véhicules, résultats, etc.) est capté par un MutationObserver
@@ -53,7 +53,7 @@ const I18N = {
   _localeLoaded: {},         // fichiers locales/<lang>.json déjà chargés
   _readyPromise: null,       // promesse d'initialisation (locale chargée)
   _originalTitle: undefined, // titre d'origine de la page (langue FR)
-  _circuit: { openUntil: 0, kind: '' },  // coupe-circuit du provider DeepL
+  _circuit: { openUntil: 0, kind: '' },  // coupe-circuit du provider de traduction
 
   // Le message d'erreur ne porte pas le statut HTTP (api.request ne renvoie
   // que le `detail` du backend), mais les libellés sont caractéristiques :
@@ -135,7 +135,7 @@ const I18N = {
   },
 
   // Applique les clés statiques (nav, footer, filtres, placeholders…).
-  // Les éléments sans clé restent en français et passent par DeepL ensuite.
+  // Les éléments sans clé restent en français et passent par le service de traduction ensuite.
   applyLocaleKeys(root = document.body) {
     if (!root) return;
     const skip = '.lang-switcher, [data-no-translate]';
@@ -249,7 +249,7 @@ const I18N = {
       const value = node.nodeValue?.trim();
       if (!parent || !value || parent.closest('script, style, noscript, textarea, .lang-switcher, [data-no-translate]')) continue;
       // Optimisation : les textes déjà couverts (phrasebook, cache, clés de
-      // locale) n'ont PAS besoin de DeepL — on ne les envoie pas.
+      // locale) n'ont PAS besoin du service de traduction — on ne les envoie pas.
       if (book[value] !== undefined) continue;
       if (langCache[value] !== undefined) continue;
       if (this.t(value) !== value && /^[\w.]+$/.test(value)) continue;
@@ -276,7 +276,7 @@ const I18N = {
       && /[a-zA-ZàâäéèêëîïôöùûüçœÀÂÄÉÈÊËÎÏÔÖÙÛÜÇŒ]/.test(text);
   },
 
-  /* ===== Traduction via le backend (DeepL côté serveur) ===== */
+  /* ===== Traduction via le backend (service de traduction) ===== */
 
   // Appel de l'endpoint /translate du backend.
   // window.API vient de js/api.js, chargé avant DOMContentLoaded.
@@ -339,7 +339,7 @@ const I18N = {
     if (!eligible.length) return texts.map((text, i) => results[i] === null ? text : results[i]);
 
     // Requêtes groupées vers le backend : quelques requêtes par page.
-    // En cas d'échec définitif d'un lot (backend indisponible, quota DeepL
+    // En cas d'échec définitif d'un lot (backend indisponible, quota du service de traduction
     // épuisé…), les textes restent en français et ne sont pas retentés
     // pendant la session.
     for (const chunk of this.chunkEntries(eligible)) {
@@ -351,7 +351,7 @@ const I18N = {
         });
       } catch (err) {
         const msg = err?.message || '';
-        console.warn('i18n: DeepL indisponible, textes laissés en français :', msg || err);
+        console.warn('i18n: le service de traduction indisponible, textes laissés en français :', msg || err);
         if (this._isProviderHardFailure(msg)) this._recordProviderFailure(msg);
         chunk.forEach(entry => {
           results[entry.index] = entry.text;
@@ -403,7 +403,7 @@ const I18N = {
     const items = this.collectTexts();
     if (!items.length) return;
 
-    // 2) DeepL uniquement pour les textes absents du phrasebook (contenu
+    // 2) le service de traduction uniquement pour les textes absents du phrasebook (contenu
     //    dynamique : catalogue véhicules, avis API, etc.).
     const langCache = this._cache[this.currentLang] || {};
     const uncached = items.filter(item => !langCache[item.text]);
@@ -419,7 +419,7 @@ const I18N = {
       this._cache[this.currentLang] = langCache;
     }
 
-    // Le nom de l'entreprise doit rester intact : DeepL peut le traiter comme
+    // Le nom de l'entreprise doit rester intact : le service de traduction peut le traiter comme
     // un nom commun allemand ("Autohaus" = concession). Si une traduction
     // altère ou supprime la marque, on rejette la traduction (texte FR gardé).
     const brand = this.BRAND_NAME;
@@ -451,7 +451,7 @@ const I18N = {
 
   /* ===== Contenu dynamique : passes successives tant que la page évolue ===== */
 
-  // Construit le HTML « propre » d'une section avant l'envoi à DeepL
+  // Construit le HTML « propre » d'une section avant l'envoi au service de traduction
   // (étape 4 du protocole) : sans scripts/styles/iframes/SVG, sans les
   // zones [translate=no]/[data-no-translate] (étape 3 : menu, footer…),
   // sans attributs id/class/on*/srcset, et sans les textes déjà traduits
@@ -460,7 +460,7 @@ const I18N = {
     const clone = root.cloneNode(true);
     // Synchronise les textes du clone avec leurs ORIGINAUX : le clone n'a pas
     // accès au WeakMap, or un texte déjà traduit ne doit pas repartir chez
-    // DeepL (sinon traduction de la traduction : « x·EN·EN »).
+    // Utilise le même HTML que la passe 1 (sinon traduction de la traduction : « x·EN·EN »).
     const liveWalker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const cloneWalker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
     let liveNode, cloneNode;
@@ -507,7 +507,7 @@ const I18N = {
 
   // Découpe le HTML d'une section en blocs traduisibles séparément :
   // l'énorme grille catalogue (120 véhicules) dépasse les limites d'une
-  // requête DeepL. Chaque enfant de premier niveau devient un bloc ; un bloc
+  // requête au service de traduction. Chaque enfant de premier niveau devient un bloc ; un bloc
   // encore trop gros (section encapsulante) est redécoupé récursivement
   // jusqu'à ses feuilles (cartes véhicules, listes de filtres…).
   _splitIntoBlocks(html, maxChars = 9000) {
@@ -569,7 +569,7 @@ const I18N = {
     return groups;
   },
 
-  // Traduit une section HTML ENTIÈRE via /translate/html — DeepL reçoit le
+  // Traduit une section HTML ENTIÈRE via /translate/html — le service de traduction reçoit le
   // bloc d'une traite avec tag_handling=html v2 et respecte la structure
   // (étapes 1 & 2 du protocole). Les grosses sections sont découpées en
   // blocs (grille catalogue…) regroupés en quelques requêtes. Seuls les
@@ -584,7 +584,7 @@ const I18N = {
     const lang = this.currentLang;
     const html = this._buildCleanHtml(root);
     const sent = this._textsFromHtml(html);
-    if (!sent.length) return true; // rien à confier à DeepL
+    if (!sent.length) return true; // rien à confier au service de traduction
 
     this._translating = true; // l'observateur ne lance pas de passe concurrente
     const translated = new Map(); // texte envoyé → texte traduit
@@ -615,7 +615,7 @@ const I18N = {
           const msg = err?.message || '';
           console.warn('i18n: /translate/html :', msg || err);
           if (this._isProviderHardFailure(msg)) {
-            // Le BACKEND/DeepL est en panne (quota, clé, indisponible,
+            // Le backend / le service de traduction est en panne (quota, clé, indisponible,
             // rate-limit) : retenter bloc par bloc n'apportera rien et
             // mitraille le serveur (des centaines de requêtes par page).
             hardFailure = msg;
@@ -660,7 +660,7 @@ const I18N = {
     }
 
     // Ré-injection : appaire chaque texte traduit au nœud VIVANT dont
-    // l'original correspond (ordre DeepL conservé grâce à l'appariement).
+    // l'original correspond (ordre du service de traduction conservé grâce à l'appariement).
     const pending = [];
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
@@ -686,7 +686,7 @@ const I18N = {
 
   // Traduit un fragment de DOM à la volée (contenu injecté par JS : fiche
   // véhicule, cartes catalogue, avis…). Instantané via phrasebook/clés,
-  // puis la section entière part en UNE requête DeepL « HTML v2 ».
+  // puis la section entière part en UNE requête « HTML v2 » du service de traduction.
   translateElement(root) {
     if (!root || this.currentLang === 'fr') return;
     this.captureOriginalContent(root);
@@ -752,7 +752,7 @@ const I18N = {
     this.currentLang = lang;
     // Fichier de locale d'abord : nav/footer/filtres/titres + PHRASEBOOK.
     // Le phrasebook couvre tout le texte statique → la page est entièrement
-    // traduite instantanément, même si DeepL est indisponible.
+    // traduite instantanément, même si le service de traduction est indisponible.
     await this.loadLocaleFile(lang).catch(() => {});
     this.apply();
 
@@ -913,7 +913,7 @@ const I18N = {
 
     if (initial !== 'fr') {
       // Phrasebook immédiat (zéro réseau), puis la page part en UNE requête
-      // DeepL « HTML v2 » ; les passes par lots ne traitent que les restes
+      // « HTML v2 » du service de traduction ; les passes par lots ne traitent que les restes
       // (attributs, contenus apparus entre-temps).
       this.loadPersistentCache(initial);
       this.applyPhrasebook();

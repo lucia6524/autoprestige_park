@@ -50,10 +50,8 @@ services:
         value: autoprestigepark@outlook.com
       - key: BREVO_API_KEY
         sync: false
-      - key: TRANSLATION_PROVIDER
-        value: deepl
-      - key: DEEPL_API_KEY
-        sync: false
+      # Traduction dynamique : endpoint public gratuit de Google (sans clé).
+      # Le provider DeepL est retiré — aucun quota à configurer.
 
 databases:
   - name: autohaus-park-db

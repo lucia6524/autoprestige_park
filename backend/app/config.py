@@ -70,12 +70,11 @@ class Settings(BaseSettings):
     SMTP_FROM: str = "noreply@autoprestige.fr"
     CONTACT_RECIPIENT_EMAIL: str = "contact@autoprestige.fr"
     BREVO_API_KEY: str = ""
-    # Translation provider: "google" (recommandé) ou "deepl"
-    TRANSLATION_PROVIDER: str = "google"
+    # --- Traduction automatique (dynamique) ---
+    # Service gratuit utilisé : endpoint public Google (sans clé). Les champs
+    # ci-dessous ne servent qu'à l'API officielle payante (librement réactivable).
     GOOGLE_TRANSLATE_API_KEY: str = ""
     GOOGLE_TRANSLATE_API_URL: str = "https://translation.googleapis.com/language/translate/v2"
-    DEEPL_API_KEY: str = ""
-    DEEPL_API_URL: str = "https://api-free.deepl.com/v2/translate"
 
     OTP_EXPIRE_MINUTES: int = 10
     OTP_MAX_ATTEMPTS: int = 5          # tentatives max par code
@@ -111,16 +110,6 @@ elif settings.ENVIRONMENT.lower() != "production":
     settings.CORS_ORIGINS = ["http://localhost:*", "http://127.0.0.1:*"]
 else:
     settings.CORS_ORIGINS = list(PROD_DEFAULT_ORIGINS)
-
-# Normalize translation provider (google | deepl)
-provider = settings.TRANSLATION_PROVIDER.strip().lower()
-if provider not in ("google", "deepl"):
-    provider = "google"
-# Commodity: provider par défaut "google", mais si seule la clé DeepL est
-# définie, on bascule automatiquement sur deepl.
-if provider == "google" and not settings.GOOGLE_TRANSLATE_API_KEY and settings.DEEPL_API_KEY:
-    provider = "deepl"
-settings.TRANSLATION_PROVIDER = provider
 
 if settings.ENVIRONMENT.lower() == "production":
     if len(settings.SECRET_KEY) < 32:

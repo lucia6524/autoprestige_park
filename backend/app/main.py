@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 
-# Journaux applicatifs visibles dans Render (Brevo, DeepL, quotas…) :
+# Journaux applicatifs visibles dans Render (Brevo, traduction, quotas…) :
 # sans niveau INFO, les succès d'envoi d'email restent invisibles.
 logging.basicConfig(
     level=logging.INFO,

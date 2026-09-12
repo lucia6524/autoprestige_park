@@ -31,7 +31,7 @@ pip install -r requirements.txt
 
 # Optionnel : envoi réel des emails
 cp .env.example .env
-# Édite .env avec tes identifiants (Brevo SMTP, DeepL, ADMIN_PASSWORD…)
+# Édite .env avec tes identifiants (Brevo SMTP, ADMIN_PASSWORD…)
 
 python run.py
 # API sur http://127.0.0.1:8000

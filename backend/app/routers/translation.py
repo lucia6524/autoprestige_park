@@ -6,27 +6,34 @@ from fastapi import APIRouter, HTTPException
 from fastapi import Request as StarletteRequest
 from pydantic import BaseModel, Field
 
-from app.config import settings
-
 logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/translate", tags=["Translation"])
 
 # Rate limit: max 120 batched translation requests per IP per 5 minutes.
-# Le frontend regroupe ~40 phrases par requête : une page complète tient en
+# Le frontend groupe ~40 phrases par requête : une page complète tient en
 # 1 à 3 requêtes, donc 120 laissent largement la place à une vraie navigation
-# tout en plafonnant l'abus du quota DeepL.
+# tout en plafonnant l'abus.
 _translate_rate_limits: dict[str, list[float]] = {}
 _TRANSLATE_RATE_WINDOW = 300
 _TRANSLATE_RATE_MAX = 120
 
 # Quota de VOLUME par IP (5 min) : 120 requêtes × 120 Ko autoriseraient ~14 M
-# de caractères / 5 min — de quoi épuiser le quota mensuel DeepL (500 k chars
-# gratuit) en quelques minutes. On plafonne donc le total de caractères envoyés.
+# de caractères / 5 min — on plafonne le total de caractères enviés.
 _TRANSLATE_VOLUME_WINDOW = 300
 _TRANSLATE_VOLUME_MAX = 60_000  # caractères / 5 min / IP
 
 _char_usage: dict[str, list[tuple[float, int]]] = {}
+
+# Endpoint public de Google, utilisé par le widget Google Traduction :
+# GRATUIT et sans clé API. Non officiel (pas de SLA) mais stable et massivement
+# utilisé. Le frontend met tout en cache (localStorage) → volume réel faible.
+GOOGLE_FREE_API_URL = "https://translate.google.com/translate_a/t"
+
+# Délai imposé entre deux appels : l'endpoint est sensible au « trop fréquent »
+# (429). 1 phrase = 1 requête courte ; 3 requêtes / seconde max pour une page.
+_FREE_DELAY_BETWEEN = 0.35
+_FREE_RETRY_BACKOFF = [1.0, 3.0, 8.0]
 
 
 def _check_translate_rate(ip: str) -> None:
@@ -40,9 +47,8 @@ def _check_translate_rate(ip: str) -> None:
 
 
 def _check_translate_volume(ip: str, chars: int) -> None:
-    """Plafonne le total de caractères envoyés au provider (quota), pas juste
-    le nombre de requêtes : 120 requêtes × 120 Ko épuiseraient DeepL gratuit en
-    quelques minutes (500 k caractères/mois)."""
+    """Plafonne le total de caractères envoyés au provider (évite qu'une seule
+    IP n'épuise le quota informel de Google en quelques minutes)."""
     now = time.time()
     history = [(t, c) for t, c in _char_usage.get(ip, []) if now - t < _TRANSLATE_VOLUME_WINDOW]
     total = sum(c for _, c in history) + chars
@@ -61,18 +67,16 @@ def _get_ip(req: StarletteRequest) -> str:
 
 
 def _raise_provider_error(provider_name: str, exc: httpx.HTTPStatusError) -> HTTPException:
-    """Logge le statut/corps RÉEL renvoyé par le provider puis lève l'erreur
+    """Logge le statut/corps RÉEL renvoyé par Google puis lève l'erreur
     HTTP appropriée. Sans ce log, un 502 opaque masque la cause exacte
-    (clé invalide 401/403, quota 456, quota temporaire 429, indisponibilité)."""
+    (429 à répétition, indisponibilité…)."""
     status = exc.response.status_code
     body = (exc.response.text or "")[:300]
     logger.error("%s rejeté (HTTP %s) : %.300s", provider_name, status, body)
     if status == 429:
-        return HTTPException(503, "Quota de traduction atteint. Réessayez plus tard.")
-    if status == 456:  # DeepL : quota mensuel épuisé (implémentation gratuite)
-        return HTTPException(503, "Quota mensuel de traduction atteint. Revenez le mois prochain.")
+        return HTTPException(503, "Quota de traduction momentanément atteint. Réessayez plus tard.")
     if status in (401, 403):
-        return HTTPException(502, "Clé API de traduction invalide ou non activée.")
+        return HTTPException(502, "Accès au service de traduction refusé.")
     return HTTPException(502, f"{provider_name} est momentanément indisponible.")
 
 
@@ -92,272 +96,150 @@ class HtmlTranslationRequest(BaseModel):
     target_lang: str = Field(..., pattern="^(EN|DE|IT|ES|PT|RO)$")
 
 
-async def _translate_with_google(texts: list[str], target_lang: str) -> list[str]:
-    """Async Google Cloud Translation v2 via httpx — API key auth."""
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        resp = await client.post(
-            settings.GOOGLE_TRANSLATE_API_URL,
-            headers={"x-goog-api-key": settings.GOOGLE_TRANSLATE_API_KEY},
-            json={
-                "q": texts,
-                "source": "fr",
-                "target": target_lang.lower(),
-                # "text" évite que Google échappe les entités HTML (&amp; etc.)
-                "format": "text",
-            },
-        )
-        resp.raise_for_status()
-        data = resp.json()
-    translations = data.get("data", {}).get("translations", [])
-    return [item.get("translatedText", "") for item in translations]
+async def _translate_google_free(text: str, target_lang: str) -> str:
+    """Traduit UNE phrase via l'endpoint public gratuit de Google.
 
-
-async def _translate_with_deepl(texts: list[str], target_lang: str) -> list[str]:
-    """Async DeepL translation via httpx — no thread blocking."""
-    # DeepL exige une variante régionale pour le portugais : le site utilise
-    # le portugais européen (locales/pt.json), donc PT-PT.
-    deepl_target = "PT-PT" if target_lang.upper() == "PT" else target_lang
-    # Corps JSON (accepté par DeepL v2) — évite la régression httpx 0.28 sur
-    # les requêtes x-www-form-urlencoded avec AsyncClient.
-    payload = {
-        "text": texts,
-        "source_lang": "FR",
-        "target_lang": deepl_target,
+    Retourne le texte traduit. Lève httpx.HTTPStatusError / HTTPError qui
+    seront traduites en 502/503 par l'appelant — le frontend coupe alors les
+    appels pendant un cooldown (`PROVIDER_COOLDOWN_MS`).
+    """
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+            "(KHTML, like Gecko) Chrome/125.0 Safari/537.36"
+        ),
+        "Content-Length": "0",
     }
+    last_error: Exception | None = None
+    for attempt, wait in enumerate([0, *_FREE_RETRY_BACKOFF]):
+        if attempt:
+            time.sleep(wait)
+        try:
+            async with httpx.AsyncClient(timeout=20.0) as client:
+                resp = await client.post(
+                    GOOGLE_FREE_API_URL,
+                    params={"client": "gtx", "sl": "fr", "tl": target_lang.lower(), "dt": "t", "q": text},
+                    headers=headers,
+                )
+            resp.raise_for_status()
+            data = resp.json()
+            if data:
+                return data[0]
+            raise HTTPException(502, "Réponse Google invalide.")
+        except httpx.HTTPStatusError as exc:
+            last_error = exc
+            if exc.response.status_code == 429:
+                # Google nous demande de ralentir : on retente après backoff.
+                continue
+            raise
+        except (httpx.HTTPError, httpx.TimeoutException) as exc:
+            last_error = exc
+            continue
+    if isinstance(last_error, httpx.HTTPStatusError):
+        raise last_error
+    raise last_error  # type: ignore[misc]
 
-    async with httpx.AsyncClient(timeout=15.0) as client:
-        resp = await client.post(
-            settings.DEEPL_API_URL,
-            json=payload,
-            headers={
-                "Authorization": f"DeepL-Auth-Key {settings.DEEPL_API_KEY}",
-            },
-        )
-        resp.raise_for_status()
-        data = resp.json()
-    return [item["text"] for item in data.get("translations", [])]
+
+async def _translate_texts(texts: list[str], target_lang: str) -> list[str]:
+    """Traduit une liste de phrases (FR→target) avec délai entre chaque appel.
+
+    1 phrase = 1 appel discret à l'endpoint gratuit (réponse par phrase).
+    Le délai entre chaque appel prévient le rate-limit de Google.
+    """
+    result: list[str] = []
+    for i, text in enumerate(texts):
+        if i:
+            await _sleep(_FREE_DELAY_BETWEEN)
+        result.append(await _translate_google_free(text, target_lang))
+    return result
 
 
-def _sanitize_fragment_for_translation(html: str) -> str:
-    """Nettoie un fragment HTML avant l'envoi à DeepL.
+async def _sleep(seconds: float) -> None:
+    import asyncio
+    await asyncio.sleep(seconds)
 
-    Étape 4 du protocole : un HTML malformé fait ignorer des blocs entiers par
-    DeepL. On retire donc scripts/styles, éléments non traduisibles, attributs
-    d'événement, et on garantit une racine unique — seule structure qu'une
-    réponse HTML de DeepL est garantie de préserver.
+
+def _extract_texts_from_html(html: str) -> list[str]:
+    """Extrait les nœuds texte d'un fragment HTML, dans l'ordre.
+
+    Ignore `translate="no"` et les balises non traduisibles
+    (script, style, noscript, template, iframe, svg, canvas) avec leurs
+    descendants. Chaque occurrence est retournée telle quelle (doublons
+    compris) pour permettre le remplacement une par une dans le HTML original.
     """
     from html.parser import HTMLParser
 
-    void_elements = {
-        "area", "base", "br", "col", "embed", "hr", "img", "input",
-        "link", "meta", "param", "source", "track", "wbr",
-    }
     skip_tags = {"script", "style", "noscript", "template", "iframe", "svg", "canvas"}
 
-    class Cleaner(HTMLParser):
+    class TextExtractor(HTMLParser):
         def __init__(self):
             super().__init__(convert_charrefs=True)
-            self.out: list[str] = []
-            self.stack: list[str] = []
+            self.texts: list[str] = []
             self.skip_depth = 0
 
         def handle_starttag(self, tag, attrs):
             attrs_dict = dict(attrs)
-            if tag in skip_tags or attrs_dict.get("translate") == "no":
-                if tag in void_elements:
-                    return
-                if self.skip_depth == 0:
-                    self.skip_depth = 1
-                else:
-                    self.skip_depth += 1
-                self.stack.append(tag)
-                return
-            if self.skip_depth > 0:
-                self.stack.append(tag)
+            if (
+                tag in skip_tags
+                or attrs_dict.get("translate") == "no"
+            ):
                 self.skip_depth += 1
-                return
-            self.out.append(self._emit(tag, attrs, void_elements))
-            if tag not in void_elements:
-                self.stack.append(tag)
 
         def handle_startendtag(self, tag, attrs):
-            if self.skip_depth > 0:
-                return
-            self.out.append(self._emit(tag, attrs, void_elements))
+            return
 
         def handle_endtag(self, tag):
-            if tag in void_elements:
-                return
             if self.skip_depth > 0:
-                if self.stack:
-                    self.stack.pop()
                 self.skip_depth -= 1
-                return
-            if tag in skip_tags:
-                return
-            if tag in self.stack:
-                while self.stack:
-                    if self.stack.pop() == tag:
-                        break
-            self.out.append(f"</{tag}>")
 
         def handle_data(self, data):
-            if self.skip_depth == 0:
-                self.out.append(data)
+            if self.skip_depth == 0 and data.strip():
+                self.texts.append(data)
 
-        @staticmethod
-        def _emit(tag, attrs, void_elements):
-            kept = []
-            for name, value in attrs:
-                if value is None:
-                    kept.append(name)
-                    continue
-                # Attributs d'événement/JS retirés (sécurité + propreté DeepL)
-                if name.lower().startswith("on") or name == "srcset":
-                    continue
-                kept.append(f'{name}="{value}"')
-            attr_str = (" " + " ".join(kept)) if kept else ""
-            if tag in void_elements:
-                return f"<{tag}{attr_str}>"
-            return f"<{tag}{attr_str}>"
-
-    parser = Cleaner()
+    parser = TextExtractor()
     try:
         parser.feed(html)
         parser.close()
     except Exception:
         raise HTTPException(400, "HTML invalide.") from None
-    body = "".join(parser.out).strip()
-    if not body:
-        return ""
-    # Racine unique : DeepL HTML v2 garantit la structure pour UN document.
-    return f"<div>{body}</div>"
+    return parser.texts
 
-
-def _restore_translated_fragment(raw: str, cleaned: str, original_html: str) -> str:
-    """Remplace les textes du HTML original par la version traduite.
-
-    La réponse de DeepL est un document reformaté ; on n'insère donc JAMAIS
-    son HTML tel quel. On appaire chaque texte traduit au texte du fragment
-    NETTOYÉ (exactement ce qui a été envoyé), puis on remplace ce texte dans
-    le HTML original : attributs, images, inputs et structure du client sont
-    intégralement conservés.
-    """
-    from html.parser import HTMLParser
-
-    class TextCollector(HTMLParser):
-        def __init__(self):
-            super().__init__(convert_charrefs=True)
-            self.chunks: list[str] = []
-
-        def handle_data(self, data):
-            if data.strip():
-                self.chunks.append(data)
-
-    try:
-        collector = TextCollector()
-        collector.feed(raw)
-        collector.close()
-        sent = TextCollector()
-        sent.feed(cleaned)
-        sent.close()
-    except Exception:
-        return original_html  # réponse illisible → fragment original intact
-
-    texts = collector.chunks
-    if not texts or len(texts) != len(sent.chunks):
-        return original_html  # structure inattendue → on ne casse rien
-
-    result = original_html
-    for old, new in zip(sent.chunks, texts, strict=False):
-        if " ".join(old.split()) != " ".join(new.split()):
-            result = result.replace(old, new, 1)
-    return result
 
 
 @router.post("/html")
 async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest):
-    """Traduction d'un fragment HTML entier (tag_handling=html, v2).
-
-    Le fragment est nettoyé (scripts/styles/translate=no retirés), envoyé en
-    UNE requête DeepL, puis les textes traduits sont réinjectés dans le HTML
-    original du client — seuls les textes voyagent, jamais la structure.
-    """
+    """Traduction d'un fragment HTML : les nœuds texte sont extraits, traduits
+    (Google gratuit, 1 appel par phrase), puis ré-injectés dans le HTML rendu par
+    le navigateur — le style et la structure ne voyagent jamais vers Google."""
     _check_translate_rate(_get_ip(request))
     _check_translate_volume(_get_ip(request), len(data.html))
 
-    cleaned = _sanitize_fragment_for_translation(data.html)
-    if not cleaned:
+    texts = _extract_texts_from_html(data.html)
+    if not texts:
         return {"html": data.html}
 
-    provider_name = "DeepL"
-    if settings.TRANSLATION_PROVIDER == "deepl":
-        if not settings.DEEPL_API_KEY:
-            raise HTTPException(503, "DeepL n'est pas configuré.")
+    # Déduplication avant traduction (même texte en plusieurs endroits = 1 appel).
+    unique = list(dict.fromkeys(texts))
 
-        deepl_target = "PT-PT" if data.target_lang.upper() == "PT" else data.target_lang
-        payload = {
-            "text": [cleaned],
-            "source_lang": "FR",
-            "target_lang": deepl_target,
-            # Étapes 1 & 2 du protocole : mode HTML v2, document envoyé entier.
-            "tag_handling": "html",
-            "tag_handling_version": "v2",
-            "ignore_tags": "script,style",  # défensif : s'ajoute à translate=no
-        }
-        try:
-            async with httpx.AsyncClient(timeout=30.0) as client:
-                resp = await client.post(
-                    settings.DEEPL_API_URL,
-                    json=payload,
-                    headers={"Authorization": f"DeepL-Auth-Key {settings.DEEPL_API_KEY}"},
-                )
-                resp.raise_for_status()
-                data_deepl = resp.json()
-        except httpx.HTTPStatusError as exc:
-            raise _raise_provider_error(provider_name, exc) from exc
-        except (httpx.HTTPError, httpx.TimeoutException) as exc:
-            raise _raise_provider_unavailable(provider_name, exc) from exc
+    try:
+        translated = await _translate_texts(unique, data.target_lang)
+    except httpx.HTTPStatusError as exc:
+        raise _raise_provider_error("Google Translate", exc) from exc
+    except (httpx.HTTPError, httpx.TimeoutException) as exc:
+        raise _raise_provider_unavailable("Google Translate", exc) from exc
 
-        translations = data_deepl.get("translations", [])
-        if not translations or not isinstance(translations[0].get("text"), str):
-            raise HTTPException(502, f"Réponse {provider_name} invalide.")
-        raw = translations[0]["text"]
-    else:
-        # Repli Google : collecte des nœuds texte du fragment nettoyé.
-        from html.parser import HTMLParser
+    translated_map = {
+        old: new
+        for old, new in zip(unique, translated, strict=False)
+        if " ".join(old.split()) != " ".join(new.split())
+    }
 
-        class _TextOnly(HTMLParser):
-            def __init__(self):
-                super().__init__(convert_charrefs=True)
-                self.texts: list[str] = []
-
-            def handle_data(self, data):
-                if data.strip():
-                    self.texts.append(data)
-
-        parser = _TextOnly()
-        try:
-            parser.feed(cleaned)
-            parser.close()
-        except Exception:
-            raise HTTPException(400, "HTML invalide.") from None
-        if not parser.texts:
-            return {"html": data.html}
-        try:
-            translated_texts = await _translate_with_google(parser.texts, data.target_lang)
-        except httpx.HTTPStatusError as exc:
-            raise _raise_provider_error("Google Translate", exc) from exc
-        except (httpx.HTTPError, httpx.TimeoutException) as exc:
-            raise _raise_provider_unavailable("Google Translate", exc) from exc
-        # Ré-injection : remplace les textes du fragment original.
-        result = data.html
-        for old, new in zip(parser.texts, translated_texts, strict=False):
-            if " ".join(old.split()) != " ".join(new.split()):
-                result = result.replace(old, new, 1)
-        return {"html": result}
-
-    return {"html": _restore_translated_fragment(raw, cleaned, data.html)}
+    result = data.html
+    for text in texts:
+        new = translated_map.get(text)
+        if new is not None:
+            result = result.replace(text, new, 1)
+    return {"html": result}
 
 
 @router.post("")
@@ -368,24 +250,13 @@ async def translate(data: TranslationRequest, request: StarletteRequest):
         raise HTTPException(413, "Le contenu à traduire est trop volumineux.")
     _check_translate_volume(_get_ip(request), total_chars)
 
-    if settings.TRANSLATION_PROVIDER == "deepl":
-        if not settings.DEEPL_API_KEY:
-            raise HTTPException(503, "DeepL n'est pas configuré.")
-        provider_name = "DeepL"
-        translate_func = _translate_with_deepl
-    else:
-        if not settings.GOOGLE_TRANSLATE_API_KEY:
-            raise HTTPException(503, "Google Translate n'est pas configuré.")
-        provider_name = "Google Translate"
-        translate_func = _translate_with_google
-
     try:
-        translations = await translate_func(data.texts, data.target_lang)
+        translations = await _translate_texts(data.texts, data.target_lang)
     except httpx.HTTPStatusError as exc:
-        raise _raise_provider_error(provider_name, exc) from exc
+        raise _raise_provider_error("Google Translate", exc) from exc
     except (httpx.HTTPError, httpx.TimeoutException) as exc:
-        raise _raise_provider_unavailable(provider_name, exc) from exc
+        raise _raise_provider_unavailable("Google Translate", exc) from exc
 
     if len(translations) != len(data.texts):
-        raise HTTPException(502, f"Réponse {provider_name} invalide.")
+        raise HTTPException(502, "Réponse Google Translate invalide.")
     return {"translations": translations}
