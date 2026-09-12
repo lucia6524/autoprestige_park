@@ -41,6 +41,25 @@ _FREE_DELAY_BETWEEN = 0.35
 _FREE_RETRY_BACKOFF = [1.0, 3.0, 8.0]
 
 
+def _coerce_translated_string(data_first) -> str:
+    """Extrait la chaîne traduite de la réponse Google.
+
+    Le format usuel (client=gtx, dt=t) renvoie CHAQUE segment de traduction
+    concaténé en une seule chaîne (les retours à la ligne internes des phrases
+    sont conservés). Certains dumps renvoient une liste de segments
+    `[[texte_traduit, texte_source, ...], ...]` — on la concatène alors par
+    retours à la ligne pour retomber sur le même format.
+    """
+    if isinstance(data_first, str):
+        return data_first
+    parts: list[str] = []
+    if isinstance(data_first, list):
+        for seg in data_first:
+            if isinstance(seg, list) and seg and isinstance(seg[0], str):
+                parts.append(seg[0])
+    return "\n".join(parts)
+
+
 def _check_translate_rate(ip: str) -> None:
     now = time.time()
     if ip not in _translate_rate_limits:
@@ -133,7 +152,15 @@ async def _translate_google_free_batch(texts: list[str], target_lang: str) -> li
             data = resp.json()
             if not data:
                 raise HTTPException(502, "Réponse Google invalide.")
-            translated = (data[0] or "").split("\n")
+            translated_str = _coerce_translated_string(data[0])
+            if len(texts) == 1:
+                # Phrase isolée (très souvent multi-lignes, ex. nœuds texte du
+                # HTML) : la réponse ENTIÈRE est sa traduction. Découper par
+                # `\n` rendrait un nombre de lignes ≠ nombre de phrases dès
+                # que Google conserve les retours à la ligne internes → 502.
+                # On renvoie donc le bloc complet tel quel.
+                return [translated_str or texts[0]]
+            translated = translated_str.split("\n")
             if len(translated) != len(texts):
                 raise HTTPException(502, "Réponse Google invalide.")
             return translated

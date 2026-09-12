@@ -93,3 +93,71 @@ async def test_translate_html_translate_no_is_ignored(client, monkeypatch):
     assert sent == ["Traduis-moi."]
     assert "EN:Traduis-moi." in resp.json()["html"]
     assert "Garder." in resp.json()["html"]
+
+
+class _FakeGoogleResp:
+    status_code = 200
+
+    def __init__(self, payload):
+        self._payload = payload
+
+    def raise_for_status(self):
+        return None
+
+    def json(self):
+        return self._payload
+
+
+class _FakeGoogleClient:
+    """Remplace httpx.AsyncClient : post() renvoie la réponse simulée."""
+
+    def __init__(self, payload):
+        self._payload = payload
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *args):
+        return False
+
+    async def post(self, *args, **kwargs):
+        return _FakeGoogleResp(self._payload)
+
+
+async def test_single_multiline_phrase_returns_whole_block(client, monkeypatch):
+    """Une phrase multi-lignes ne doit PAS être découpée (régression 502)."""
+    source = "\nUn processus clair en 3 étapes pour trouver et recevoir votre\nvéhicule idéal.\n"
+    google_reply = "A clear 3-step process to find and receive your\nideal vehicle."
+    fake = _FakeGoogleClient([google_reply, "fr", "en"])
+    monkeypatch.setattr(tr.httpx, "AsyncClient", lambda *a, **k: fake)
+
+    out = await tr._translate_google_free_batch([source], "EN")
+    assert out == [google_reply]
+    assert out[0] == google_reply  # le bloc entier, pas un découpage par lignes
+
+
+async def test_multi_phrase_batch_still_split_by_lines(client, monkeypatch):
+    """Un lot de phrases SANS retour à la ligne garde le découpage par \\n."""
+    google_reply = "Hello world\nHow are you?"
+    fake = _FakeGoogleClient([google_reply, "fr", "en"])
+    monkeypatch.setattr(tr.httpx, "AsyncClient", lambda *a, **k: fake)
+
+    out = await tr._translate_google_free_batch(["Bonjour.", "Comment allez-vous ?"], "EN")
+    assert out == ["Hello world", "How are you?"]
+
+
+async def test_translate_html_with_multiline_text_no_502(client, monkeypatch):
+    """L'endpoint HTML avec un nœud texte multi-lignes doit répondre 200."""
+    source = "Véhicules neufs et\nsélectionnés avec soin"
+    google_reply = "New vehicles\ncarefully selected"
+    fake = _FakeGoogleClient([google_reply, "fr", "en"])
+    monkeypatch.setattr(tr.httpx, "AsyncClient", lambda *a, **k: fake)
+
+    resp = await client.post(
+        "/api/translate/html",
+        json={"html": f"<p>{source}</p>", "target_lang": "EN"},
+    )
+    assert resp.status_code == 200, resp.text
+    html = resp.json()["html"]
+    assert "New vehicles" in html
+    assert "carefully selected" in html
