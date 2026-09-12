@@ -14,15 +14,22 @@ export type Locale = (typeof LOCALES)[number];
 export const SITE_URL = 'https://autohaus-park.onrender.com';
 
 /**
- * POC phase 1 : pages réellement présentes dans CHAQUE arbre localisé.
- * Tant qu'une page n'y figure pas pour une langue : les liens depuis cet
- * arbre pointent vers sa version FR (../) et elle n'est JAMAIS déclarée en
- * hreflang pour cette langue (jamais de hreflang vers une page inexistante).
- * À étendre au fil des phases (voir docs/plan-seo-multilingue.md).
+ * Pages réellement présentes dans CHAQUE arbre localisé, à l'identique :
+ * les arbres /lang/ sont générés au build à partir des pages FR dist/ (script
+ * gen-lang-pages.mjs) ; pour EN, a-propos/faq/contact sont écrites à la main
+ * dans src/pages/en/ (Astro les sort à chaque build, le générateur ne les
+ * écrase pas). Tant qu'une page n'y figure pas pour une langue : les liens
+ * depuis cet arbre pointent vers sa version FR (../) et elle n'est JAMAIS
+ * déclarée en hreflang pour cette langue (jamais de hreflang vers une page
+ * inexistante). À étendre au fil des phases (voir docs/plan-seo-multilingue.md).
  */
 export const LOCALIZED_PAGES: Partial<Record<Locale, Set<string>>> = {
-  en: new Set(['contact.html', 'faq.html', 'a-propos.html']),
-  // de/es/it/pt/ro : ajoutés en phase suivante
+  en: new Set(['index.html', 'vehicules.html', 'garantie.html', 'financement.html', 'livraison.html', 'contact.html', 'faq.html', 'a-propos.html']),
+  de: new Set(['index.html', 'vehicules.html', 'garantie.html', 'financement.html', 'livraison.html', 'contact.html', 'faq.html', 'a-propos.html']),
+  it: new Set(['index.html', 'vehicules.html', 'garantie.html', 'financement.html', 'livraison.html', 'contact.html', 'faq.html', 'a-propos.html']),
+  es: new Set(['index.html', 'vehicules.html', 'garantie.html', 'financement.html', 'livraison.html', 'contact.html', 'faq.html', 'a-propos.html']),
+  pt: new Set(['index.html', 'vehicules.html', 'garantie.html', 'financement.html', 'livraison.html', 'contact.html', 'faq.html', 'a-propos.html']),
+  ro: new Set(['index.html', 'vehicules.html', 'garantie.html', 'financement.html', 'livraison.html', 'contact.html', 'faq.html', 'a-propos.html']),
 };
 
 const _cache = new Map<string, Record<string, unknown>>();

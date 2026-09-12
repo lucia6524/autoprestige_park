@@ -370,14 +370,14 @@ API.updateHeaderAuth = function() {
     const safeName = escapeHtml(name);
     el.innerHTML = `
       <div class="header-auth-user">
-        <a href="compte.html">${safeName}</a>
+        <a href="${typeof pageHref === 'function' ? pageHref('compte.html') : 'compte.html'}">${safeName}</a>
         <a href="#" id="header-logout" style="color:#dc2626;font-weight:500;">${(window.I18N && I18N.t('nav.logout') !== 'nav.logout') ? I18N.t('nav.logout') : 'Déconnexion'}</a>
       </div>`;
     const btn = document.getElementById('header-logout');
     if (btn) btn.addEventListener('click', (e) => {
       e.preventDefault();
       API.logout();
-      window.location.href = 'index.html';
+      window.location.href = typeof pageHref === 'function' ? pageHref('index.html') : 'index.html';
     });
   }
 };

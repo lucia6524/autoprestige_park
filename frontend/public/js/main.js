@@ -27,6 +27,20 @@ function jr(key, fallback) {
   return (window.I18N && I18N.t(key) !== key) ? I18N.t(key) : fallback;
 }
 
+// Sur les pages localisées (data-static-i18n, arbres /en/…), les liens vers des
+// pages NON localisées (compte, connexion, mentions légales…) pointent sur la
+// version FR (../). Sur les pages FR, le lien est inchangé (même logique que
+// localizedPage dans header.js, même source AP_I18N_PAGES).
+function pageHref(file) {
+  const root = document.documentElement;
+  if (root.hasAttribute('data-static-i18n') && window.AP_I18N_PAGES) {
+    const tree = root.getAttribute('lang') || 'fr';
+    const known = window.AP_I18N_PAGES[tree] || [];
+    return known.includes(String(file).split(/[?#]/)[0]) ? file : '../' + file;
+  }
+  return file;
+}
+
 const VEHICLES_CACHE_KEY = "autoprestige_vehicles_v1";
 const VEHICLES_CACHE_TTL = 30 * 60 * 1000; // 30 minutes
 
@@ -280,7 +294,7 @@ function renderVehicles(list = null) {
   const esc = (s) => (typeof window.escapeHtml === "function" ? window.escapeHtml(s) : s);
   requestAnimationFrame(() => {
     vehiclesGrid.innerHTML = limited.map((v, i) => `
-      <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='vehicule.html?id=${v.id}'" style="cursor:pointer;">
+      <article class="vehicle-card" data-id="${v.id}" onclick="window.location.href='${pageHref('vehicule.html')}?id=${v.id}'" style="cursor:pointer;">
         <div class="vehicle-image">
           <div class="skeleton-overlay"></div>
           <img src="${esc(window.supaThumb ? supaThumb(v.image, 600, 65) : v.image)}" data-original-src="${esc(v.image)}" alt="${esc(v.brand)} ${esc(v.model)}" loading="${i === 0 ? "eager" : "lazy"}"${i === 0 ? ' fetchpriority="high"' : ""} decoding="async"
@@ -307,7 +321,7 @@ function renderVehicles(list = null) {
               <div class="price-month">${v.originalPrice && v.originalPrice !== v.price ? jr("vehicles.discounted_price", "Prix remisé") + ' · ' : ''}ou ${v.monthly} €/mois</div>
             </div>
             <div style="display:flex;gap:6px;align-items:center;">
-              <a href="vehicule.html?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">${jr("detail.view", "Voir →")}</a>
+              <a href="${pageHref('vehicule.html')}?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">${jr("detail.view", "Voir →")}</a>
               <button type="button" class="btn btn-primary-sm" onclick="event.stopPropagation(); addVehicleFromCatalog(${v.id}, this);">Panier</button>
             </div>
           </div>
@@ -321,7 +335,7 @@ function renderVehicles(list = null) {
 async function addVehicleFromCatalog(vehicleId, button) {
   if (!window.API || !API.isLoggedIn()) {
     if (confirm(jr("js.login_required", "Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?"))) {
-      window.location.href = "connexion.html";
+      window.location.href = pageHref("connexion.html");
     }
     return;
   }
@@ -335,7 +349,7 @@ async function addVehicleFromCatalog(vehicleId, button) {
   try {
     await API.addToCart(vehicle);
     button.textContent = jr("js.added", "✓ Ajouté");
-    window.location.href = "compte.html";
+    window.location.href = pageHref("compte.html");
   } catch (error) {
     button.disabled = false;
     button.textContent = originalText;
@@ -752,7 +766,7 @@ function initCookieBanner() {
   bar.innerHTML = `
     <div class="cookie-inner">
       <p>${t('cookies.text', 'Nous utilisons des cookies pour le fonctionnement du site (thème, préférences) et améliorer votre expérience.')}
-        <a href="mentions-legales.html#cookies" style="color:var(--accent-light);">${t('cookies.learn_more', 'En savoir plus')}</a></p>
+        <a href="${pageHref('mentions-legales.html')}#cookies" style="color:var(--accent-light);">${t('cookies.learn_more', 'En savoir plus')}</a></p>
       <div class="cookie-actions">
         <button type="button" class="btn btn-outline" id="cookie-refuse">${t('cookies.refuse', 'Refuser')}</button>
         <button type="button" class="btn btn-primary" id="cookie-accept">${t('cookies.accept', 'Accepter')}</button>

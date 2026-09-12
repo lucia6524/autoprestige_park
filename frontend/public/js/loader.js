@@ -22,7 +22,7 @@
     o = document.createElement('div');
     o.id = OVERLAY_ID;
     o.innerHTML =
-      '<img class="ap-logo-spin" src="logo.png" alt="" aria-hidden="true">';
+      '<img class="ap-logo-spin" src="../logo.png" alt="" aria-hidden="true">';
     (document.body || document.documentElement).appendChild(o);
     return o;
   }

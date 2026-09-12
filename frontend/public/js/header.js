@@ -22,25 +22,38 @@
     chevronDown: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
   };
 
+  // Localise un lien sur les pages traduites AU BUILD (data-static-i18n, arbres
+  // /en/, /de/, …) : si la variante locale <même fichier> existe, on garde le
+  // chemin relatif selon AP_I18N_PAGES (même source que le sélecteur de langue).
+  // Sinon on retombe sur la version FR (../). Sur les pages FR → lien inchangé.
+  function localizedPage(file) {
+    const root = document.documentElement;
+    if (!root.hasAttribute('data-static-i18n')) return file;
+    const tree = root.getAttribute('lang') || 'fr';
+    const known = (window.AP_I18N_PAGES && window.AP_I18N_PAGES[tree]) || [];
+    const base = String(file).split(/[?#]/)[0];
+    return known.includes(base) ? file : '../' + file;
+  }
+
   const PAGES = {
-    home: 'index.html',
-    vehicles: 'vehicules.html',
-    financing: 'financement.html',
-    sell: 'vendre.html',
-    contact: 'contact.html',
-    brands: 'marques.html',
-    warranty: 'garantie.html',
-    rv: 'camping-car.html',
-    agri: 'machines-agricoles.html',
-    insurance: 'assurance.html',
-    delivery: 'livraison.html',
-    maintenance: 'entretien.html',
-    faq: 'faq.html',
-    about: 'a-propos.html',
-    reviews: 'avis.html',
-    login: 'connexion.html',
-    register: 'inscription.html',
-    account: 'compte.html',
+    home: localizedPage('index.html'),
+    vehicles: localizedPage('vehicules.html'),
+    financing: localizedPage('financement.html'),
+    sell: localizedPage('vendre.html'),
+    contact: localizedPage('contact.html'),
+    brands: localizedPage('marques.html'),
+    warranty: localizedPage('garantie.html'),
+    rv: localizedPage('camping-car.html'),
+    agri: localizedPage('machines-agricoles.html'),
+    insurance: localizedPage('assurance.html'),
+    delivery: localizedPage('livraison.html'),
+    maintenance: localizedPage('entretien.html'),
+    faq: localizedPage('faq.html'),
+    about: localizedPage('a-propos.html'),
+    reviews: localizedPage('avis.html'),
+    login: localizedPage('connexion.html'),
+    register: localizedPage('inscription.html'),
+    account: localizedPage('compte.html'),
   };
 
   function currentFile() {
