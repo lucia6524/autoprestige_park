@@ -11,17 +11,18 @@ logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/translate", tags=["Translation"])
 
 # Rate limit: max 120 batched translation requests per IP per 5 minutes.
-# Le frontend groupe ~40 phrases par requête : une page complète tient en
-# 1 à 3 requêtes, donc 120 laissent largement la place à une vraie navigation
-# tout en plafonnant l'abus.
+# Le frontend découpe chaque page en blocs HTML (≤9 Ko) ; avec le groupage
+# par lots, une page complète tient en quelques requêtes — 120 laissent
+# largement la place à une vraie navigation tout en plafonnant l'abus.
 _translate_rate_limits: dict[str, list[float]] = {}
 _TRANSLATE_RATE_WINDOW = 300
 _TRANSLATE_RATE_MAX = 120
 
-# Quota de VOLUME par IP (5 min) : 120 requêtes × 120 Ko autoriseraient ~14 M
-# de caractères / 5 min — on plafonne le total de caractères enviés.
+# Quota de VOLUME par IP (5 min), en caractères de TEXTE réellement traduits
+# (le HTML balancé n'est jamais compté). Les phrases sont groupées par lots
+# (≤9 000 caractères) → une page catalogue entière représente ~40 Ko.
 _TRANSLATE_VOLUME_WINDOW = 300
-_TRANSLATE_VOLUME_MAX = 60_000  # caractères / 5 min / IP
+_TRANSLATE_VOLUME_MAX = 120_000  # caractères / 5 min / IP
 
 _char_usage: dict[str, list[tuple[float, int]]] = {}
 
@@ -30,8 +31,12 @@ _char_usage: dict[str, list[tuple[float, int]]] = {}
 # utilisé. Le frontend met tout en cache (localStorage) → volume réel faible.
 GOOGLE_FREE_API_URL = "https://translate.google.com/translate_a/t"
 
-# Délai imposé entre deux appels : l'endpoint est sensible au « trop fréquent »
-# (429). 1 phrase = 1 requête courte ; 3 requêtes / seconde max pour une page.
+# Groupage : jusqu'à 40 phrases (ou 9 000 caractères) par appel Google,
+# séparées par des retours à la ligne. Google renvoie une réponse avec le
+# MÊME nombre de lignes → 1 appel peut traduire un lot complet de phrases.
+_FREE_BATCH_MAX_ITEMS = 40
+_FREE_BATCH_MAX_CHARS = 9_000
+# Délai imposé entre deux LOTS : l'endpoint est sensible au « trop fréquent ».
 _FREE_DELAY_BETWEEN = 0.35
 _FREE_RETRY_BACKOFF = [1.0, 3.0, 8.0]
 
@@ -96,12 +101,14 @@ class HtmlTranslationRequest(BaseModel):
     target_lang: str = Field(..., pattern="^(EN|DE|IT|ES|PT|RO)$")
 
 
-async def _translate_google_free(text: str, target_lang: str) -> str:
-    """Traduit UNE phrase via l'endpoint public gratuit de Google.
+async def _translate_google_free_batch(texts: list[str], target_lang: str) -> list[str]:
+    """Traduit UN LOT de phrases via l'endpoint public gratuit de Google.
 
-    Retourne le texte traduit. Lève httpx.HTTPStatusError / HTTPError qui
-    seront traduites en 502/503 par l'appelant — le frontend coupe alors les
-    appels pendant un cooldown (`PROVIDER_COOLDOWN_MS`).
+    Les phrases sont concaténées par retour à la ligne et envoyées en UN seul
+    appel : Google renvoie la traduction avec le même nombre de lignes.
+    Retourne une liste de traductions, dans l'ordre. Lève HTTPStatusError /
+    HTTPError (traduites en 502/503 par l'appelant) ou HTTPException 502 si la
+    réponse n'est pas découpable en autant de lignes qu'attendu.
     """
     headers = {
         "User-Agent": (
@@ -110,22 +117,26 @@ async def _translate_google_free(text: str, target_lang: str) -> str:
         ),
         "Content-Length": "0",
     }
+    payload = "\n".join(texts)
     last_error: Exception | None = None
     for attempt, wait in enumerate([0, *_FREE_RETRY_BACKOFF]):
         if attempt:
-            time.sleep(wait)
+            await _sleep(wait)
         try:
-            async with httpx.AsyncClient(timeout=20.0) as client:
+            async with httpx.AsyncClient(timeout=25.0) as client:
                 resp = await client.post(
                     GOOGLE_FREE_API_URL,
-                    params={"client": "gtx", "sl": "fr", "tl": target_lang.lower(), "dt": "t", "q": text},
+                    params={"client": "gtx", "sl": "fr", "tl": target_lang.lower(), "dt": "t", "q": payload},
                     headers=headers,
                 )
             resp.raise_for_status()
             data = resp.json()
-            if data:
-                return data[0]
-            raise HTTPException(502, "Réponse Google invalide.")
+            if not data:
+                raise HTTPException(502, "Réponse Google invalide.")
+            translated = (data[0] or "").split("\n")
+            if len(translated) != len(texts):
+                raise HTTPException(502, "Réponse Google invalide.")
+            return translated
         except httpx.HTTPStatusError as exc:
             last_error = exc
             if exc.response.status_code == 429:
@@ -140,17 +151,57 @@ async def _translate_google_free(text: str, target_lang: str) -> str:
     raise last_error  # type: ignore[misc]
 
 
-async def _translate_texts(texts: list[str], target_lang: str) -> list[str]:
-    """Traduit une liste de phrases (FR→target) avec délai entre chaque appel.
+async def _translate_google_free(text: str, target_lang: str) -> str:
+    """Traduit UNE phrase (repli : lot d'une seule phrase)."""
+    return (await _translate_google_free_batch([text], target_lang))[0]
 
-    1 phrase = 1 appel discret à l'endpoint gratuit (réponse par phrase).
-    Le délai entre chaque appel prévient le rate-limit de Google.
+
+async def _translate_texts(texts: list[str], target_lang: str) -> list[str]:
+    """Traduit une liste de phrases FR→target, groupées par LOTS.
+
+    Jusqu'à 40 phrases (≤9 000 caractères) par appel Google : une page
+    complète tient en quelques appels au lieu d'un appel par phrase.
+    Repli : 1 appel par phrase si la réponse du lot n'est pas découpable ;
+    les phrases contenant un retour à la ligne sont envoyées seules.
     """
-    result: list[str] = []
+    result: list[str] = [""] * len(texts)
+    pending: list[str] = []
+    pending_idx: list[int] = []
+    pending_chars = 0
+
+    async def _flush() -> None:
+        nonlocal pending, pending_idx, pending_chars
+        if not pending:
+            return
+        batch, idxs = pending, pending_idx
+        try:
+            translated = await _translate_google_free_batch(batch, target_lang)
+            for pos, idx in enumerate(idxs):
+                result[idx] = translated[pos]
+        except HTTPException:
+            # Réponse Google non découpable : repli 1 appel par phrase.
+            for pos, idx in enumerate(idxs):
+                result[idx] = await _translate_google_free(batch[pos], target_lang)
+        pending, pending_idx, pending_chars = [], [], 0
+
     for i, text in enumerate(texts):
-        if i:
+        if "\n" in text:
+            await _flush()
+            result[i] = await _translate_google_free(text, target_lang)
+            continue
+        if (
+            pending
+            and (
+                len(pending) >= _FREE_BATCH_MAX_ITEMS
+                or pending_chars + len(text) > _FREE_BATCH_MAX_CHARS
+            )
+        ):
+            await _flush()
             await _sleep(_FREE_DELAY_BETWEEN)
-        result.append(await _translate_google_free(text, target_lang))
+        pending.append(text)
+        pending_idx.append(i)
+        pending_chars += len(text)
+    await _flush()
     return result
 
 
@@ -209,17 +260,18 @@ def _extract_texts_from_html(html: str) -> list[str]:
 @router.post("/html")
 async def translate_html(data: HtmlTranslationRequest, request: StarletteRequest):
     """Traduction d'un fragment HTML : les nœuds texte sont extraits, traduits
-    (Google gratuit, 1 appel par phrase), puis ré-injectés dans le HTML rendu par
-    le navigateur — le style et la structure ne voyagent jamais vers Google."""
+    (Google gratuit, phrases groupées par lots), puis ré-injectés dans le HTML
+    rendu par le navigateur — le style et la structure ne voyagent jamais."""
     _check_translate_rate(_get_ip(request))
-    _check_translate_volume(_get_ip(request), len(data.html))
 
     texts = _extract_texts_from_html(data.html)
     if not texts:
         return {"html": data.html}
 
-    # Déduplication avant traduction (même texte en plusieurs endroits = 1 appel).
+    # Déduplication avant traduction (même texte en plusieurs endroits = 1 lot).
     unique = list(dict.fromkeys(texts))
+    # Le quota de volume compte le TEXTE réellement traduit, jamais le markup.
+    _check_translate_volume(_get_ip(request), sum(len(t) for t in unique))
 
     try:
         translated = await _translate_texts(unique, data.target_lang)
