@@ -1130,7 +1130,7 @@ export const prerender = true;
       window.location.hostname,
     );
     const API = configuredBase
-      ? configuredBase.replace(/\\/$/, "") + "/api"
+      ? configuredBase.replace(/\/$/, "") + "/api"
       : isLocal
         ? "http://127.0.0.1:8000/api"
         : "https://autohaus-park-api.onrender.com/api";
