@@ -20,6 +20,8 @@ interface Props {
   taglineText?: string;
   /** Ligne légale : liens complets (Mentions/Cookies/CGV) ou texte court */
   legal?: 'full' | 'short';
+  /** Build-time i18n : langue de l'arbre (absent = pages FR racine) */
+  lang?: import('../i18n/site').Locale;
 }
 
 const {
@@ -30,24 +32,26 @@ const {
   tagline = 'full',
   taglineText,
   legal = 'full',
+  lang,
 } = Astro.props;
 ---
 
 <footer class="footer" translate="no">
   <div class="container">
     <div class="footer-grid">
-      <FooterBrand variant={tagline} tagline={taglineText} />
+      <FooterBrand variant={tagline} tagline={taglineText} lang={lang} />
 
-      <FooterNav links={nav} />
+      <FooterNav links={nav} lang={lang} />
 
-      <FooterServices links={services} />
+      <FooterServices links={services} lang={lang} />
 
       <FooterContact
         whatsapp={contactWhatsapp}
         address={contactAddress}
+        lang={lang}
       />
     </div>
 
-    <FooterBottom legal={legal} />
+    <FooterBottom legal={legal} lang={lang} />
   </div>
 </footer>

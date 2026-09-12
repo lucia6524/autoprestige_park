@@ -11,4 +11,12 @@ export default defineConfig({
   build: {
     format: 'file',
   },
+
+  // i18n SSG : le FR reste à la racine (URLs actuelles inchangées), les
+  // arbres localisés (/en/...) s'ajoutent à côté (voir docs/plan-seo-multilingue.md).
+  i18n: {
+    defaultLocale: 'fr',
+    locales: ['fr', 'en', 'de', 'it', 'es', 'pt', 'ro'],
+    routing: { prefixDefaultLocale: false },
+  },
 });

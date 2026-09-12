@@ -1,27 +1,33 @@
 ---
 // Ligne "footer-bottom" : © + liens légaux
+import { fText, fHref } from '../data/footer-links';
+import { getDict, type Locale } from '../i18n/site';
+
 interface Props {
   /** "full" = liens Mentions légales / Cookies / CGV ; "short" = texte seul */
   legal?: 'full' | 'short';
+  /** Build-time i18n : langue de l'arbre (absent = pages FR racine) */
+  lang?: Locale;
 }
-const { legal = 'short' } = Astro.props;
+const { legal = 'short', lang } = Astro.props;
+const ctx = lang ? { lang, dict: getDict(lang) } : undefined;
 ---
 
 <div class="footer-bottom">
-  <span data-i18n="footer.rights">© 2026 Autohaus. Tous droits réservés.</span>
+  <span data-i18n="footer.rights">{fText(ctx, 'footer.rights', '© 2026 Autohaus. Tous droits réservés.')}</span>
   {legal === 'full' ? (
     <span>
-      <a href="mentions-legales.html" data-i18n="footer.legal"
-        >Mentions légales</a
+      <a href={fHref(ctx, 'mentions-legales.html')} data-i18n="footer.legal"
+        >{fText(ctx, 'footer.legal', 'Mentions légales')}</a
       >
       ·
-      <a href="mentions-legales.html#cookies" data-i18n="footer.cookies"
-        >Cookies</a
+      <a href={fHref(ctx, 'mentions-legales.html#cookies')} data-i18n="footer.cookies"
+        >{fText(ctx, 'footer.cookies', 'Cookies')}</a
       >
       ·
-      <a href="mentions-legales.html#cgv" data-i18n="footer.cgv">CGV</a>
+      <a href={fHref(ctx, 'mentions-legales.html#cgv')} data-i18n="footer.cgv">{fText(ctx, 'footer.cgv', 'CGV')}</a>
     </span>
   ) : (
-    <span>Mentions légales · CGV</span>
+    <span>{fText(ctx, 'footer.legal_short', 'Mentions légales · CGV')}</span>
   )}
 </div>

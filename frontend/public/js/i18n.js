@@ -750,6 +750,32 @@ const I18N = {
     localStorage.setItem('lang', lang);
     localStorage.setItem('lang_manual', '1');
     this.currentLang = lang;
+
+    // Pages déjà traduites AU BUILD (arbres /en/…, cf. LangLayout) : le texte
+    // est dans le HTML — on applique le dictionnaire (footer, libellés) sans
+    // AUCUNE traduction réseau, puis changer de langue = NAVIGUER vers la
+    // variante si elle existe (window.AP_I18N_PAGES, généré au build), sinon
+    // vers la version FR (jamais de lien mort).
+    if (document.documentElement.hasAttribute('data-static-i18n')) {
+      await this.loadLocaleFile(lang).catch(() => {});
+      this.apply();
+      this.applyLocaleKeys();
+      this.applyPhrasebook();
+      this.observeDynamicContent();
+      const here = location.pathname.split('/').pop() || 'index.html';
+      const currentTree = document.documentElement.getAttribute('lang') || 'fr';
+      if (lang !== currentTree) {
+        const known = window.AP_I18N_PAGES || {};
+        if (lang === 'fr') location.href = '../' + here;
+        else if (Array.isArray(known[lang]) && known[lang].includes(here)) {
+          location.href = '/' + lang + '/' + here;
+        } else {
+          location.href = '../' + here; // variante absente → version FR
+        }
+      }
+      return;
+    }
+
     // Fichier de locale d'abord : nav/footer/filtres/titres + PHRASEBOOK.
     // Le phrasebook couvre tout le texte statique → la page est entièrement
     // traduite instantanément, même si le service de traduction est indisponible.
@@ -893,6 +919,23 @@ const I18N = {
   },
 
   async _init() {
+    // Pages traduites au build (arbres /en/…) : la langue est celle du
+    // <html> — PAS d'auto-détection navigateur (l'URL fait foi), et surtout
+    // AUCUNE passe de traduction runtime (le contenu est déjà dans la bonne
+    // langue ; traduire EN→EN serait absurde et coûteux).
+    if (document.documentElement.hasAttribute('data-static-i18n')) {
+      const htmlLang = document.documentElement.getAttribute('lang');
+      this.currentLang = this.supported.includes(htmlLang) ? htmlLang : 'fr';
+      await this.loadLocaleFile(this.currentLang).catch(() => {});
+      this.apply();
+      this.injectSwitcher();
+      this.applyLocaleKeys();
+      this.applyPhrasebook();
+      this.observeDynamicContent();
+      document.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: this.currentLang } }));
+      return;
+    }
+
     const saved = localStorage.getItem('lang');
     const manual = localStorage.getItem('lang_manual') === '1';
     const browser = this.detectBrowserLanguage();
