@@ -45,16 +45,23 @@ _buckets: dict[str, list[float]] = {}
 def get_client_ip(request: Request) -> str:
     """IP client réelle derrière le proxy Render.
 
-    Render transmet l'IP d'origine dans X-Forwarded-For. En dev local, on
-    retombe sur request.client.host. Uniquement la première IP de la liste :
-    les suivantes sont contrôlées par l'infrastructure, pas par le client.
+    X-Forwarded-For est une liste où chaque proxy AJOUTE l'IP qu'il reçoit à la
+    FIN. Le client ne peut forger que les valeurs de TÊTE de liste — jamais la
+    dernière (ajoutée par l'edge Render, point d'entrée unique). Un attaquant
+    qui injecte `X-Forwarded-For: 8.8.8.1` ferait donc uniquement grossir les
+    valeurs de tête : on lit le DERNIER saut (la vraie IP du visiteur).
 
-    ⚠️ Règle anti-spoofing corrigée : sur Render, la connexion entre le proxy
-    et uvicorn vient d'une IP privée interne (pas loopback) — la vérification
-    « loopback only » faisait retomber TOUS les visiteurs sur l'IP du proxy
-    (un seul bucket de rate-limit pour tout le site). En production, Render
-    est l'unique point d'entrée et écrase l'en-tête : la première entrée XFF
-    est fiable. En dev, on ne la lit que derrière un proxy local (loopback).
+    ⚠️ Lien avec la faille corrigée : le code prenait le PREMIER saut. Le site
+    est en production derrière Render, qui ne remplace pas l'en-tête mais le
+    lit tel quel (constaté en prod : une valeur forgée était bien comptée). La
+    règle « première entrée = fiable » était donc contournable d'une seule
+    machine en changeant l'IP à chaque requête (tous les rate-limits IP
+    neutralisés). Le dernier saut ne peut être altéré par le client.
+
+    En dev direct (Python lancé en local, sans proxy), l'en-tête est
+    falsifiable et uvicorn n'est derrière aucun edge fiable → on l'ignore et
+    on retombe sur request.client.host. En dev derrière un proxy local
+    (uvicorn --proxy-headers, loopback), on lit le même dernier saut.
     """
     from app.config import settings
 
@@ -62,14 +69,14 @@ def get_client_ip(request: Request) -> str:
     forwarded = request.headers.get("x-forwarded-for", "")
     if not forwarded:
         return client_host
-    first_hop = forwarded.split(",")[0].strip()
     trusted = settings.ENVIRONMENT.lower() == "production" or client_host in (
         "127.0.0.1", "::1", "localhost",
     )
-    if trusted:
-        return first_hop or client_host
-    # Dev direct (IP publique) : l'en-tête est falsifiable → on l'ignore.
-    return client_host
+    if not trusted:
+        # Dev direct (IP publique) : l'en-tête est falsifiable → on l'ignore.
+        return client_host
+    hops = [h.strip() for h in forwarded.split(",") if h.strip()]
+    return hops[-1] or client_host
 
 
 def check_rate_limit(scope: str, ip: str) -> None:

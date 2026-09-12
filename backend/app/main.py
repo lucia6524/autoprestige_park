@@ -41,10 +41,18 @@ async def lifespan(app: FastAPI):
     yield
 
 
+# Docs interactives (Swagger/ReDoc) et schéma OpenAPI : disponibles en dev,
+# masqués en production — le plan exact des endpoints ne doit pas être public,
+# et cela permet de retirer le CDN tiers (unpkg) du CSP en prod.
+_docs_enabled = settings.ENVIRONMENT.lower() != "production"
+
 app = FastAPI(
     title=settings.APP_NAME,
     version="1.0.0",
     lifespan=lifespan,
+    docs_url="/docs" if _docs_enabled else None,
+    redoc_url="/redoc" if _docs_enabled else None,
+    openapi_url="/openapi.json" if _docs_enabled else None,
 )
 
 app.add_middleware(
@@ -74,6 +82,8 @@ SAFE_METHODS = {"GET", "HEAD", "OPTIONS", "TRACE"}
 # Taille de corps maximale pour les requêtes mutantes (uploads base64 compris).
 # Le total critique est déjà plafonné côté schema (photos ~4 Mo) : 8 Mo couvre
 # largement tout le reste (JSON) tout en bloquant les payloads de plusieurs Go.
+# En complément du Content-Length, le Transfer-Encoding: chunked est refusé
+# (sinon la limite serait contournable → corps déballé en mémoire → DoS).
 MAX_BODY_BYTES = 8 * 1024 * 1024
 
 
@@ -92,21 +102,35 @@ def _origin_allowed(origin: str) -> bool:
 
 @app.middleware("http")
 async def limit_body_size(request: Request, call_next):
-    # Moyens de transport verrouillés : les clients (navigateur/fetch) envoient
-    # toujours content-length sur les corps JSON/multipart. Un en-tête manquant
-    # ou non numérique est accepté (déréglé), le contrôle réel se fait par
-    # content-length présent — absent ici = body vide à lester de toute façon.
-    if request.method not in SAFE_METHODS:
-        content_length = request.headers.get("content-length")
-        if content_length:
-            try:
-                if int(content_length) > MAX_BODY_BYTES:
-                    return JSONResponse(
-                        status_code=413,
-                        content={"detail": "Requête trop volumineuse (max 8 Mo)."},
-                    )
-            except ValueError:
-                pass
+    if request.method in SAFE_METHODS:
+        return await call_next(request)
+
+    # Un client navigateur (fetch/JSON) envoie toujours un Content-Length.
+    # Transfer-Encoding: chunked (corps découpé, SANS Content-Length) permet
+    # de passer sous le contrôle ci-dessous : uvicorn décode alors quand même
+    # tout le corps en mémoire → saturation de l'instance (DoS). On le refuse
+    # donc explicitement sur les requêtes mutantes, sans attendre de décoder.
+    transfer_encoding = request.headers.get("transfer-encoding", "")
+    if "chunked" in transfer_encoding.lower():
+        return JSONResponse(
+            status_code=413,
+            content={"detail": "Transfer-Encoding chunked refusé (max 8 Mo)."},
+        )
+
+    content_length = request.headers.get("content-length")
+    if content_length:
+        try:
+            if int(content_length) > MAX_BODY_BYTES:
+                return JSONResponse(
+                    status_code=413,
+                    content={"detail": "Requête trop volumineuse (max 8 Mo)."},
+                )
+        except ValueError:
+            # Content-Length non numérique : traitement refusé.
+            return JSONResponse(
+                status_code=413,
+                content={"detail": "Content-Length invalide."},
+            )
     return await call_next(request)
 
 
@@ -139,11 +163,16 @@ async def add_security_headers(request: Request, call_next):
         "camera=(), microphone=(), geolocation=(), "
         "payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
     )
-    # 'unsafe-inline' en script-src est conservé uniquement pour l'UI /docs
-    # (Swagger CDN) ; toutes les réponses sont du JSON, cible d'application
-    # nulle. On ajoute en revanche les gardes utiles sur le reste.
+    # 'unsafe-inline' en script-src est nécessaire uniquement pour l'UI /docs
+    # (Swagger CDN). En production les docs sont désactivées → on resserre le
+    # CSP (pas de script tiers, pas de script inline) car l'API ne sert que
+    # du JSON.
+    if settings.ENVIRONMENT.lower() == "production":
+        script_src = "script-src 'self'"
+    else:
+        script_src = "script-src 'self' 'unsafe-inline' https://unpkg.com"
     response.headers["Content-Security-Policy"] = (
-        "default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com; "
+        "default-src 'self'; " + script_src + "; "
         "style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; "
         "object-src 'none'; base-uri 'self'; form-action 'self'; "
         "frame-ancestors 'none'; connect-src 'self'"
