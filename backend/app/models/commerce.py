@@ -63,6 +63,15 @@ class Vehicle(Base):
     image: Mapped[str] = mapped_column(String(500), default="")
     images: Mapped[str] = mapped_column(Text, default="")  # JSON array as string
     description: Mapped[str] = mapped_column(Text, default="")
+    # Descriptions localisées (phase 3 SEO — docs/plan-seo-multilingue.md) :
+    # pré-traduites UNE fois par le script pretranslate_vehicles.py. Vide =
+    # pas encore traduite → l'API renvoie la description FR (repli garanti).
+    description_en: Mapped[str] = mapped_column(Text, default="")
+    description_de: Mapped[str] = mapped_column(Text, default="")
+    description_it: Mapped[str] = mapped_column(Text, default="")
+    description_es: Mapped[str] = mapped_column(Text, default="")
+    description_pt: Mapped[str] = mapped_column(Text, default="")
+    description_ro: Mapped[str] = mapped_column(Text, default="")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive)
     updated_at: Mapped[datetime] = mapped_column(DateTime, default=utc_now_naive, onupdate=utc_now_naive)
 

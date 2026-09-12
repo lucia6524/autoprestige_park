@@ -64,6 +64,34 @@ async def init_db():
                 with suppress(Exception):
                     await conn.execute(text(sql))
 
+        # Descriptions localisées du catalogue (phase 3 SEO) : ajout idempotent
+        # sur TOUTES les bases existantes — create_all ne modifie pas les tables
+        # déjà créées, et le startCommand Render ne lance pas `alembic upgrade`.
+        # (La migration Alembic correspondante reste la référence du schéma.)
+        if conn.dialect.name == "postgresql":
+            for lang in ("en", "de", "it", "es", "pt", "ro"):
+                col = f"description_{lang}"
+                exists = await conn.scalar(
+                    text(
+                        "SELECT 1 FROM information_schema.columns "
+                        "WHERE table_name = 'vehicles' AND column_name = :col"
+                    ),
+                    {"col": col},
+                )
+                if not exists:
+                    await conn.execute(
+                        text(f"ALTER TABLE vehicles ADD COLUMN {col} TEXT NOT NULL DEFAULT ''")
+                    )
+        elif conn.dialect.name == "sqlite":
+            # SQLite : ALTER idempotent par suppression d'exception (même
+            # pattern que les migrations ci-dessus ; pragma_table_info n'accepte
+            # pas de paramètre lié via aiosqlite).
+            for lang in ("en", "de", "it", "es", "pt", "ro"):
+                with suppress(Exception):
+                    await conn.execute(
+                        text(f"ALTER TABLE vehicles ADD COLUMN description_{lang} TEXT NOT NULL DEFAULT ''")
+                    )
+
         # Index sur les colonnes filtrées/triées du catalogue (idempotents)
         # create_all ne crée pas les index des tables déjà existantes → CREATE INDEX IF NOT EXISTS.
         indexes = [
