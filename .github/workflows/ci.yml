@@ -31,7 +31,7 @@ jobs:
         env:
           ENVIRONMENT: development
           SECRET_KEY: ci-secret-key-not-for-production-0123456789
-          DATABASE_URL: sqlite+aiosqlite:///:memory:
+          DATABASE_URL: "sqlite+aiosqlite:///:memory:"
         run: python -m pytest -q
 
   frontend:
