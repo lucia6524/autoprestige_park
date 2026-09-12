@@ -93,6 +93,14 @@ for (const code of LOCALES) {
       })();
     </script>
     <script src={asset('js/loader.js')} defer is:inline></script>
+    <script is:inline>
+      // Enregistre le service worker (cache des assets) — jamais bloquant.
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').catch(function () {});
+        });
+      }
+    </script>
   </head>
   <body>
     <LangHeader lang={lang} currentFile={file} />

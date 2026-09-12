@@ -73,6 +73,14 @@ const {
       })();
     </script>
     <script src="js/loader.js" defer is:inline></script>
+    <script is:inline>
+      // Enregistre le service worker (cache des assets) — jamais bloquant.
+      if ('serviceWorker' in navigator && location.protocol === 'https:') {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').catch(function () {});
+        });
+      }
+    </script>
   </head>
   <body data-i18n-title={i18nTitle}>
     <Header />
