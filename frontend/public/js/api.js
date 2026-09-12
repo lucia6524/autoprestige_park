@@ -118,13 +118,27 @@ const API = {
     const token = this.getToken();
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
+    // Le backend Render free s'endort après 15 min sans trafic et met 30-60 s
+    // à se réveiller. Sans ce garde-fou, un fetch adressé au serveur endormi
+    // peut rester bloqué ~90 s (catalogue, traductions, formulaires…) jusqu'au
+    // time-out TCP natif. On abandonne proprement après `timeoutMs` et les
+    // appels dégradent (catalogue local, textes en français) sans geler la page.
+    const timeoutMs = options.timeoutMs || 15000;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+
     let res;
     try {
-      res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+      res = await fetch(`${API_BASE}${path}`, {
+        ...options, headers, signal: controller.signal,
+      });
     } catch (netErr) {
+      // Abandon (timeout) ou échec réseau : toujours le même message utilisateur.
       throw new Error(
         'Le service est momentanément indisponible. Veuillez réessayer dans quelques instants.'
       );
+    } finally {
+      clearTimeout(timer);
     }
     const data = await res.json().catch(() => ({}));
     if (!res.ok) {

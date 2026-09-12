@@ -285,6 +285,10 @@ const I18N = {
     if (!api || typeof api.request !== 'function') throw new Error('API indisponible');
     const data = await api.request('/translate', {
       method: 'POST',
+      // Un lot répond normalement en < 2 s à chaud. En cas de cold start du
+      // backend (free tier endormi), on abandonne vite pour laisser les textes
+      // en français plutôt que d'attendre des dizaines de secondes.
+      timeoutMs: 10000,
       body: JSON.stringify({ texts, target_lang: targetLang.toUpperCase() }),
     });
     const list = data && Array.isArray(data.translations) ? data.translations : null;
