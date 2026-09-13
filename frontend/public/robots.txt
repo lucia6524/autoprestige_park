@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /compte.html
+Disallow: /connexion.html
+Disallow: /inscription.html
+
+Sitemap: https://autohaus-park.onrender.com/sitemap.xml

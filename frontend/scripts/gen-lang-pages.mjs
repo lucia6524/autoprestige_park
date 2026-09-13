@@ -449,6 +449,42 @@ function primeOverrides(lang) {
   console.log(`[prime:${lang}] map réamorcée avec ${Object.keys(overrides).length} overrides (${Object.keys(existing.map).length} entrées)`);
 }
 
+/**
+ * Pages FR publiques non localisées (pas d'arbre /lang/) — incluses telles
+ * quelles dans le sitemap. Les pages compte/connexion/inscription/admin sont
+ * exclues (privées/techniques).
+ */
+const FR_ONLY_SEO = [
+  'assurance.html', 'avis.html', 'camping-car.html', 'entretien.html',
+  'machines-agricoles.html', 'marques.html', 'mentions-legales.html', 'vendre.html',
+];
+
+const ALL_LOCALIZED = [...CORE, ...ADDITIONAL];
+
+function genSitemap() {
+  const lines = [];
+  lines.push('<?xml version="1.0" encoding="UTF-8"?>');
+  lines.push('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
+  lines.push('        xmlns:xhtml="http://www.w3.org/1999/xhtml">');
+  const xhtml = (hreflang, href) =>
+    `    <xhtml:link rel="alternate" hreflang="${hreflang}" href="${href}" />`;
+  for (const page of ALL_LOCALIZED) {
+    lines.push('  <url>');
+    lines.push(`    <loc>${SITE_URL}/${page}</loc>`);
+    for (const l of LANGS) lines.push(xhtml(l, `${SITE_URL}/${l}/${page}`));
+    lines.push(xhtml('x-default', `${SITE_URL}/${page}`));
+    lines.push('  </url>');
+  }
+  for (const page of FR_ONLY_SEO) {
+    lines.push('  <url>');
+    lines.push(`    <loc>${SITE_URL}/${page}</loc>`);
+    lines.push('  </url>');
+  }
+  lines.push('</urlset>');
+  writeFileSync(join(DIST, 'sitemap.xml'), lines.join('\n') + '\n');
+  console.log(`[sitemap] dist/sitemap.xml ✓ (${ALL_LOCALIZED.length + FR_ONLY_SEO.length} pages)`);
+}
+
 const arg = process.argv[2];
 const FRESH = process.argv.includes('--fresh');
 if (arg === '--collect') {
@@ -462,5 +498,6 @@ if (arg === '--collect') {
 } else {
   console.log('# Génération des pages localisées…');
   for (const lang of LANGS) generate(lang);
+  genSitemap();
   console.log('# Terminé.');
 }
