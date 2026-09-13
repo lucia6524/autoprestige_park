@@ -324,9 +324,13 @@ function renderVehicles(list = null) {
 
 async function addVehicleFromCatalog(vehicleId, button) {
   if (!window.API || !API.isLoggedIn()) {
-    if (confirm(jr("js.login_required", "Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?"))) {
-      window.location.href = pageHref("connexion.html");
-    }
+    const go = await Notify.ask({
+      title: "Connexion requise",
+      message: "Pour ajouter ce véhicule à votre panier, connectez-vous à votre espace client. Souhaitez-vous le faire maintenant ?",
+      confirmLabel: "Se connecter",
+      cancelLabel: "Plus tard",
+    });
+    if (go) window.location.href = pageHref("connexion.html");
     return;
   }
 
@@ -339,11 +343,15 @@ async function addVehicleFromCatalog(vehicleId, button) {
   try {
     await API.addToCart(vehicle);
     button.textContent = jr("js.added", "✓ Ajouté");
+    Notify.success(
+      jr("js.added_full", (vehicle.brand || "Le véhicule") + " a été ajouté à votre panier."),
+      { title: "Ajouté au panier" },
+    );
     window.location.href = pageHref("compte.html");
   } catch (error) {
     button.disabled = false;
     button.textContent = originalText;
-    alert(API.friendlyError(error));
+    Notify.error(API.friendlyError(error));
   }
 }
 
@@ -807,7 +815,10 @@ function initReviewForm() {
     try {
       if (window.API && typeof API.submitReview === "function") {
         await API.submitReview(payload);
-        alert(jr("js.review_thanks", "Merci pour votre avis ! Il sera publié après modération."));
+        Notify.success(
+          "Votre avis a bien été transmis. Il sera publié dès sa validation par notre équipe — merci pour votre confiance.",
+          { title: "Avis envoyé" },
+        );
       } else {
         throw new Error("API indisponible");
       }
@@ -815,9 +826,9 @@ function initReviewForm() {
       rating = 5;
       stars.forEach((s, j) => s.classList.toggle("active", j < rating));
     } catch (error) {
-      alert(
+      Notify.error(
         (window.API ? API.friendlyError(error) : error.message) ||
-        jr("js.review_error", "Une erreur est survenue. Réessayez.")
+        "L'envoi de votre avis a échoué. Vérifiez votre connexion puis réessayez."
       );
     } finally {
       if (submitBtn) {

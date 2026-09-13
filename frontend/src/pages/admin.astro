@@ -543,6 +543,7 @@ export const prerender = true;
     })();
   </script>
   <script src="js/loader.js" defer is:inline></script>
+  <script src="js/notify.js" defer is:inline></script>
 </head>
 <body>
 
@@ -1135,7 +1136,14 @@ export const prerender = true;
     let currentUsers = [];
 
     // ── Helpers ──────────────────────────────────────────
+    // Toasts délégués au système partagé (js/notify.js), avec repli local
+    // si le script n'est pas encore chargé.
     function toast(msg, type = "success") {
+      const t = type === "error" ? "error" : type === "warning" ? "warning" : "success";
+      if (window.Notify) {
+        Notify[msg.length > 90 ? "info" : t](msg, { title: type === "error" ? "Erreur" : "Espace administrateur" });
+        return;
+      }
       const el = document.getElementById("toast");
       el.textContent = msg;
       el.className = "toast show " + type;
@@ -1409,7 +1417,13 @@ export const prerender = true;
     }
 
     async function makeAdmin(id) {
-      if (!confirm("Donner les droits administrateur à cet utilisateur ?"))
+      if (
+        !(await Notify.ask({
+          title: "Attribuer les droits administrateur",
+          message: "Cet utilisateur obtiendra un accès complet à la gestion du catalogue, des commandes et des comptes. Souhaitez-vous continuer ?",
+          confirmLabel: "Attribuer les droits",
+        }))
+      )
         return;
       try {
         await api("/admin/users/" + id, {
@@ -1426,7 +1440,15 @@ export const prerender = true;
     async function deleteUser(id) {
       const target = currentUsers.find((u) => u.id === id);
       const email = (target && target.email) || String(id);
-      if (!confirm("Supprimer définitivement " + email + " ?")) return;
+      if (
+        !(await Notify.ask({
+          title: "Supprimer ce compte",
+          message: "Le compte " + email + " sera définitivement supprimé, avec son historique de commandes. Cette action est irréversible.",
+          confirmLabel: "Supprimer définitivement",
+          tone: "danger",
+        }))
+      )
+        return;
       try {
         await api("/admin/users/" + id, { method: "DELETE" });
         toast("Utilisateur supprimé");
@@ -1523,7 +1545,14 @@ export const prerender = true;
     }
 
     async function validateDelivery(orderId) {
-      if (!confirm("Confirmer que cette livraison a été effectuée ?")) return;
+      if (
+        !(await Notify.ask({
+          title: "Valider la livraison",
+          message: "Confirmez-vous que le véhicule a bien été livré au client ? Le client verra immédiatement le statut « Livré » dans son espace.",
+          confirmLabel: "Oui, livraison effectuée",
+        }))
+      )
+        return;
       try {
         await api("/admin/orders/" + orderId + "/delivery", {
           method: "PATCH",
@@ -1707,7 +1736,15 @@ export const prerender = true;
     }
 
     async function rejectClaim(id) {
-      if (!confirm("Refuser cette demande de paiement ?")) return;
+      if (
+        !(await Notify.ask({
+          title: "Refuser la demande de paiement",
+          message: "Le client sera informé du refus et devra soumettre une nouvelle demande après régularisation. Continuer ?",
+          confirmLabel: "Refuser la demande",
+          tone: "danger",
+        }))
+      )
+        return;
       try {
         await api("/admin/claims/" + id, {
           method: "PATCH",
@@ -1822,7 +1859,15 @@ export const prerender = true;
     }
 
     async function rejectReview(id) {
-      if (!confirm("Refuser cet avis ?")) return;
+      if (
+        !(await Notify.ask({
+          title: "Refuser cet avis",
+          message: "L'avis ne sera pas publié et son auteur ne pourra pas le soumettre à nouveau avec ce contenu. Continuer ?",
+          confirmLabel: "Refuser l'avis",
+          tone: "danger",
+        }))
+      )
+        return;
       try {
         await api("/admin/reviews/" + id, {
           method: "PATCH",

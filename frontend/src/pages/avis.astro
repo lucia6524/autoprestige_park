@@ -234,7 +234,10 @@ import Layout from '../layouts/Layout.astro';
         try {
           if (window.API && typeof API.submitReview === 'function') {
             await API.submitReview(payload);
-            alert('Merci pour votre avis ! Il sera publié après modération.');
+            Notify.success(
+              'Votre avis a bien été transmis. Il sera publié dès sa validation par notre équipe — merci pour votre confiance.',
+              { title: 'Avis envoyé' }
+            );
           } else {
             throw new Error('API indisponible');
           }
@@ -242,9 +245,9 @@ import Layout from '../layouts/Layout.astro';
           rating = 5;
           stars.forEach((s, j) => s.classList.toggle('active', j < rating));
         } catch (error) {
-          alert(
+          Notify.error(
             (window.API ? API.friendlyError(error) : error.message) ||
-              'Une erreur est survenue. Réessayez.'
+              "L'envoi de votre avis a échoué. Vérifiez votre connexion puis réessayez."
           );
         } finally {
           if (submitBtn) {

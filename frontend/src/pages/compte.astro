@@ -1194,20 +1194,24 @@ const footer = {
         const p1 = document.getElementById("pwd-new").value;
         const p2 = document.getElementById("pwd-new2").value;
         if (p1 !== p2) {
-          alert("Les nouveaux mots de passe ne correspondent pas.");
+          Notify.warning(
+            "Les deux mots de passe saisis sont différents. Vérifiez puis réessayez.",
+            { title: "Mots de passe différents" },
+          );
           return;
         }
         const button = event.target.querySelector("button[type=submit]");
         button.disabled = true;
         try {
           await API.changePassword(current, p1);
-          alert(
-            "Mot de passe modifié. Vos autres sessions ont été fermées — reconnectez-vous.",
+          Notify.success(
+            "Votre mot de passe a été modifié. Par sécurité, vos autres sessions ont été fermées — reconnectez-vous.",
+            { title: "Mot de passe mis à jour" },
           );
           API.logout();
           location.href = "connexion.html";
         } catch (err) {
-          alert(API.friendlyError(err));
+          Notify.error(API.friendlyError(err));
         } finally {
           button.disabled = false;
         }
@@ -1251,9 +1255,12 @@ const footer = {
             salary.toLocaleString("fr-FR") + " €";
           document.getElementById("fin-max").textContent =
             maxMonthly.toLocaleString("fr-FR") + " €";
-          alert("Vos informations ont été mises à jour.");
+          Notify.success(
+            "Vos informations personnelles ont été enregistrées.",
+            { title: "Profil mis à jour" },
+          );
         } catch (error) {
-          alert(API.friendlyError(error));
+          Notify.error(API.friendlyError(error));
         } finally {
           button.disabled = false;
         }
@@ -1350,16 +1357,17 @@ const footer = {
     window.doCheckout = async (cartItemId, paymentType, months) => {
       try {
         const order = await API.checkout(cartItemId, paymentType, months);
-        alert(
+        Notify.success(
           paymentType === "full"
-            ? "Paiement comptant enregistré. Consultez la livraison après confirmation du virement."
-            : `Échéancier créé : ${order.months_total} × ${order.monthly_amount} €`,
+            ? "Votre paiement comptant a été enregistré. Le suivi de livraison sera disponible dès confirmation du virement par notre équipe."
+            : `Votre échéancier de ${order.months_total} mensualités de ${order.monthly_amount} € a été créé. Retrouvez-le dans l'onglet « Commandes ».`,
+          { title: paymentType === "full" ? "Paiement enregistré" : "Échéancier créé", duration: 7000 },
         );
         loadCart();
         refreshCounts();
         document.querySelector('[data-panel="orders"]').click();
       } catch (err) {
-        alert(API.friendlyError(err));
+        Notify.error(API.friendlyError(err));
       }
     };
 
@@ -1422,20 +1430,24 @@ const footer = {
     }
     window.payInst = async (oid, iid) => {
       if (
-        !confirm(
-          "Confirmez-vous avoir effectué le virement bancaire pour cette échéance ?\n\nL'admin vérifiera la réception puis validera le paiement.",
-        )
+        !(await Notify.ask({
+          title: "Confirmer le virement",
+          message: "Confirmez-vous avoir effectué le virement bancaire pour cette échéance ? Notre équipe vérifiera sa réception puis validera votre paiement sous 24 h ouvrées.",
+          confirmLabel: "Oui, j'ai payé",
+          cancelLabel: "Pas encore",
+        }))
       )
         return;
       try {
         await API.payInstallment(oid, iid);
-        alert(
-          "Demande envoyée. L'administrateur validera après vérification du virement. Le statut passera à « Payée » une fois validé.",
+        Notify.success(
+          "Votre demande a été transmise. Le statut passera à « Payée » dès validation du virement par notre équipe.",
+          { title: "Demande envoyée", duration: 7000 },
         );
         loadOrders();
         refreshCounts();
       } catch (e) {
-        alert(API.friendlyError(e));
+        Notify.error(API.friendlyError(e));
       }
     };
 
@@ -1553,10 +1565,13 @@ const footer = {
             .getElementById(`delivery-address-${orderId}`)
             .value.trim(),
         });
-        alert("Votre demande de livraison a été enregistrée.");
+        Notify.success(
+          "Votre demande de livraison a été enregistrée. Notre équipe vous contactera dès que l'expédition sera planifiée.",
+          { title: "Livraison demandée" },
+        );
         loadDelivery();
       } catch (e) {
-        alert(API.friendlyError(e));
+        Notify.error(API.friendlyError(e));
         button.disabled = false;
       }
     };

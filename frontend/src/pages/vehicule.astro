@@ -673,16 +673,13 @@ const footer = {
         addBtn.dataset.bound = "1";
         addBtn.addEventListener("click", async function () {
           if (!window.API || !API.isLoggedIn()) {
-            if (
-              confirm(
-                jr(
-                  "js.login_required",
-                  "Vous devez être connecté pour ajouter ce véhicule au panier.\n\nAller à la page de connexion ?",
-                ),
-              )
-            ) {
-              window.location.href = "connexion.html";
-            }
+            const go = await Notify.ask({
+              title: "Connexion requise",
+              message: "Pour ajouter ce véhicule à votre panier, connectez-vous à votre espace client. Souhaitez-vous le faire maintenant ?",
+              confirmLabel: "Se connecter",
+              cancelLabel: "Plus tard",
+            });
+            if (go) window.location.href = "connexion.html";
             return;
           }
           addBtn.disabled = true;
@@ -690,8 +687,18 @@ const footer = {
           try {
             await API.addToCart(v);
             addBtn.textContent = jr("detail.added", "✓ Ajouté au panier");
-            setTimeout(function () {
-              if (confirm(jr("js.cart_added_goto", "Véhicule ajouté ! Voir votre panier ?"))) {
+            Notify.success(
+              (v.brand || "Le véhicule") + " " + (v.model || "") + " a été ajouté à votre panier.",
+              { title: "Ajouté au panier" },
+            );
+            setTimeout(async function () {
+              const go = await Notify.ask({
+                title: "Poursuivre la commande ?",
+                message: "Votre véhicule vous attend dans votre panier. Souhaitez-vous consulter votre panier maintenant ?",
+                confirmLabel: "Voir mon panier",
+                cancelLabel: "Continuer mes achats",
+              });
+              if (go) {
                 window.location.href = "compte.html";
               } else {
                 addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
@@ -699,7 +706,7 @@ const footer = {
               }
             }, 400);
           } catch (err) {
-            alert(API.friendlyError(err));
+            Notify.error(API.friendlyError(err));
             addBtn.textContent = jr("detail.add_cart", "Ajouter au panier");
             addBtn.disabled = false;
           }
