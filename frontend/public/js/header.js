@@ -55,9 +55,9 @@
 
   function buildHeaderHTML() {
     return `
-  <header class="header" id="main-header" translate="no">
+  <header class="header" id="main-header">
     <div class="container header-inner">
-      <a href="${PAGES.home}" class="logo" data-no-translate aria-label="Autohaus — Accueil">
+      <a href="${PAGES.home}" class="logo" translate="no" aria-label="Autohaus — Accueil">
         <img src="logo.png" alt="Autohaus">
       </a>
 
@@ -168,7 +168,7 @@
       const name = [user.first_name, user.last_name].filter(Boolean).join(' ') || user.email || 'Mon compte';
       const safeName = escapeHtml(name);
       el.innerHTML = `
-        <span class="mobile-user-name" data-no-translate>${safeName}</span>
+        <span class="mobile-user-name" translate="no">${safeName}</span>
         <button type="button" class="mobile-user-logout" id="mobile-logout">Déconnexion</button>`;
       const btn = document.getElementById('mobile-logout');
       if (btn) {
