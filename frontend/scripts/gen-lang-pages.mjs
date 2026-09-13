@@ -124,9 +124,10 @@ function attrTokens(inner) {
 function buildLocalized(html, { map, langMap, siblings, generate, collect }) {
   const out = [];
   let skipDepth = 0;
+  const ntStack = []; // pile des balises ouvrantes data-no-translate (logo, marque)
 
   function processText(text) {
-    if (skipDepth > 0) {
+    if (skipDepth > 0 || ntStack.length > 0) {
       out.push(text);
       return;
     }
@@ -191,11 +192,17 @@ function buildLocalized(html, { map, langMap, siblings, generate, collect }) {
 
   function processTag(raw) {
     const t = parseTag(raw);
+    const inNt = ntStack.length > 0;
     if (t.closing) {
+      // Une balise fermante ne sort de la zone data-no-translate que si c'est
+      // celle de SA racine (les fermantes imbriquées — </span> dans <h1> — n'y
+      // touchent pas).
       if (skipDepth > 0) skipDepth--;
+      else if (inNt && t.name === ntStack[ntStack.length - 1]) ntStack.pop();
       out.push(raw);
       return;
     }
+    const noTranslate = /data-no-translate/.test(raw);
     if (skipDepth > 0) {
       if (!t.selfClosing && SKIP_TAGS.has(t.name)) skipDepth++;
       // Contenu de script/style/textarea non traduit, mais les ATTRIBUTS doivent
@@ -203,8 +210,20 @@ function buildLocalized(html, { map, langMap, siblings, generate, collect }) {
       out.push(applyTagAttrs(raw, t));
       return;
     }
+    if (inNt) {
+      // Zone data-no-translate (logo, marque Autohaus) : TOUT le texte reste
+      // identique, seuls les attributs sont traités (src/href réécrits).
+      if (!t.selfClosing && noTranslate) ntStack.push(t.name);
+      out.push(applyTagAttrs(raw, t));
+      return;
+    }
     if (!t.selfClosing && SKIP_TAGS.has(t.name)) {
       skipDepth++;
+      out.push(applyTagAttrs(raw, t));
+      return;
+    }
+    if (!t.selfClosing && noTranslate) {
+      ntStack.push(t.name);
       out.push(applyTagAttrs(raw, t));
       return;
     }
@@ -290,19 +309,38 @@ async function translateBatch(texts, lang) {
   }
 }
 
+/**
+ * Traductions choisies (« overrides ») pour les textes-phares de l'accueil,
+ * priorité maximale : homogénéité entre pages statiques (/lang/), phrasebook
+ * runtime et qualité native (locales/home/<lang>.json, écrites à la main).
+ */
+function loadHomeOverrides(lang) {
+  try {
+    return JSON.parse(readFileSync(join(LOCALES, 'home', `${lang}.json`), 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
 async function collect(lang, fresh = false) {
   const mapFile = join(MAPS_DIR, `pages_fr_${lang}.json`);
   if (!fresh && existsSync(mapFile)) {
     console.log(`[collect:${lang}] map existante → skip (relancer avec --fresh pour forcer)`);
     return;
   }
-  const map = primeFromPhrasebook(lang);
+  const overrides = loadHomeOverrides(lang);
+  const map = { ...primeFromPhrasebook(lang), ...overrides };
   const collectSet = new Set();
   for (const page of GENERATED[lang]) {
     const file = join(DIST, page);
     if (!existsSync(file)) continue;
     const html = readFileSync(file, 'utf8');
     buildLocalized(html, { collect: collectSet });
+  }
+  const unused = Object.keys(overrides).filter((k) => !collectSet.has(k));
+  if (unused.length) {
+    console.warn(`[collect:${lang}] ⚠️  ${unused.length} overrides jamais vus sur les pages FR → clés à corriger :`);
+    for (const k of unused) console.warn('    - ' + JSON.stringify(k));
   }
   const missing = [...collectSet].filter((k) => !(k in map));
   console.log(`[collect:${lang}] ${collectSet.size} clés uniques, ${missing.length} à traduire via API`);
@@ -384,11 +422,42 @@ function generate(lang) {
   }
 }
 
+/**
+ * Fusionne les overrides de l'accueil (locales/home/<lang>.json) dans une map
+ * existante — priorité aux overrides, SANS appel réseau (les autres traductions
+ * restent telles quelles). À relancer après avoir modifié les overrides.
+ */
+function primeOverrides(lang) {
+  const overrides = loadHomeOverrides(lang);
+  const mapFile = join(MAPS_DIR, `pages_fr_${lang}.json`);
+  const existing = existsSync(mapFile)
+    ? JSON.parse(readFileSync(mapFile, 'utf8'))
+    : { lang, generatedAt: new Date().toISOString(), pages: GENERATED[lang], map: {} };
+  const collectSet = new Set();
+  for (const page of GENERATED[lang]) {
+    const file = join(DIST, page);
+    if (!existsSync(file)) continue;
+    buildLocalized(readFileSync(file, 'utf8'), { collect: collectSet });
+  }
+  const unused = Object.keys(overrides).filter((k) => !collectSet.has(k) && !(k in existing.map));
+  if (unused.length) {
+    console.warn(`[prime:${lang}] ⚠️  ${unused.length} overrides sans entrée (clés à corriger) :`);
+    for (const k of unused) console.warn('    - ' + JSON.stringify(k));
+  }
+  existing.map = { ...existing.map, ...overrides };
+  writeFileSync(mapFile, JSON.stringify(existing, null, 1));
+  console.log(`[prime:${lang}] map réamorcée avec ${Object.keys(overrides).length} overrides (${Object.keys(existing.map).length} entrées)`);
+}
+
 const arg = process.argv[2];
 const FRESH = process.argv.includes('--fresh');
 if (arg === '--collect') {
   console.log('# Collecte des traductions (API /translate)…');
   for (const lang of LANGS) await collect(lang, FRESH);
+  console.log('# Terminé.');
+} else if (arg === '--prime') {
+  console.log('# Fusion des overrides dans les maps existantes…');
+  for (const lang of LANGS) primeOverrides(lang);
   console.log('# Terminé.');
 } else {
   console.log('# Génération des pages localisées…');

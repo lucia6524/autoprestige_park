@@ -171,16 +171,30 @@ const I18N = {
   // Applique le phrasebook (textes statiques pré-traduits dans locales/*.json).
   // Remplace le premier nœud texte si son contenu correspond exactement à une
   // entrée du dictionnaire — instantané, sans appel réseau.
+  // Le "page book" (map de traduction des pages, pages_fr_<lang>.json) est
+  // consulté en complément : il couvre TOUT le texte de la page actuelle avec
+  // les mêmes traductions que les pages statiques /lang/. Résultat : le passage
+  // de langue est complet et instantané, y compris sur la page FR.
+  _bookLookup(key) {
+    if (key === undefined) return undefined;
+    // Le page-book (map des pages) est la source d'autorité : il garantit une
+    // traduction IDENTIQUE entre les pages statiques /lang/ et le passage de
+    // langue en runtime. Le phrasebook ne sert que de complément.
+    if (this._pageBook) {
+      const hit = this._pageBook[key];
+      if (hit !== undefined) return hit;
+    }
+    return this.translations.phrasebook?.[key];
+  },
+
   applyPhrasebook(root = document.body) {
     if (!root) return;
-    const book = this.translations.phrasebook;
-    if (!book) return;
     const skip = '.lang-switcher, [data-no-translate], script, style, textarea';
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     let node;
     while ((node = walker.nextNode())) {
       const value = node.nodeValue;
-      const hit = book[value.trim()];
+      const hit = this._bookLookup(value.trim());
       if (hit === undefined) continue;
       const parent = node.parentElement;
       if (parent && parent.closest(skip)) continue;
@@ -195,7 +209,7 @@ const I18N = {
       Object.entries(attrMap).forEach(([name]) => {
         const original = this._originalAttributes.get(el)?.[name] ?? el.getAttribute(name);
         if (!original) return;
-        const hit = book[original.trim()];
+        const hit = this._bookLookup(original.trim());
         if (hit !== undefined && hit !== original) el.setAttribute(name, hit);
       });
     });
@@ -248,9 +262,11 @@ const I18N = {
       const parent = node.parentElement;
       const value = node.nodeValue?.trim();
       if (!parent || !value || parent.closest('script, style, noscript, textarea, .lang-switcher, [data-no-translate]')) continue;
-      // Optimisation : les textes déjà couverts (phrasebook, cache, clés de
-      // locale) n'ont PAS besoin du service de traduction — on ne les envoie pas.
+      // Optimisation : les textes déjà couverts (phrasebook, page-book, cache,
+      // clés de locale) n'ont PAS besoin du service de traduction — on ne les
+      // envoie pas.
       if (book[value] !== undefined) continue;
+      if (this._pageBook && this._pageBook[value] !== undefined) continue;
       if (langCache[value] !== undefined) continue;
       if (this.t(value) !== value && /^[\w.]+$/.test(value)) continue;
       const original = this._originalText.get(node);
@@ -263,6 +279,7 @@ const I18N = {
         const text = attrs[name]?.trim();
         if (!text) return;
         if (book[text] !== undefined) return;
+        if (this._pageBook && this._pageBook[text] !== undefined) return;
         if (langCache[text] !== undefined) return;
         items.push({ element: el, attribute: name, text });
       });
@@ -747,6 +764,29 @@ const I18N = {
 
   /* ===== Language change ===== */
 
+  // Page book : la map de traduction des pages (locales/pages/pages_fr_<lang>.json,
+  // générée au build) est la MÊME source que les pages statiques /lang/. Chargée
+  // côté runtime, elle couvre instantanément tout le texte de la page FR → aucun
+  // chargement progressif : le passage de langue est immédiat et cohérent.
+  async loadPageBook(lang) {
+    if (lang === 'fr') {
+      this._pageBook = null;
+      this._pageBookLang = null;
+      return;
+    }
+    if (this._pageBook && this._pageBookLang === lang) return;
+    try {
+      const res = await fetch(`locales/pages/pages_fr_${lang}.json`, { cache: 'no-store' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      this._pageBook = (data && typeof data === 'object' && typeof data.map === 'object') ? data.map : data;
+      this._pageBookLang = lang;
+    } catch (err) {
+      console.warn('i18n: page-map ' + lang + ' indisponible (repli phrasebook) :', err);
+      this._pageBook = null;
+    }
+  },
+
   async setLanguage(lang) {
     if (!this.supported.includes(lang)) lang = 'fr';
     // Choix explicite du visiteur via le sélecteur : mémorisé et prioritaire
@@ -788,9 +828,12 @@ const I18N = {
 
     if (lang === 'fr') {
       this.restoreOriginalContent();
+      this._pageBook = null;
+      this._pageBookLang = null;
     } else {
       this._failed[lang] = {}; // nouveau choix de langue → on peut tout retenter
       this.loadPersistentCache(lang);
+      await this.loadPageBook(lang); // page-book d'abord → traduction complète & instantanée
       this.applyPhrasebook(); // immédiat, zéro réseau
       await this.translateSection(document.body).catch(err => console.warn('i18n:', err));
       await this._runTranslationPasses().catch(err => console.warn('i18n:', err));
