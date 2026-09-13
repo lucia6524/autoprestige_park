@@ -26,7 +26,12 @@ services:
         value: camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()
       - path: /*
         name: Content-Security-Policy
-        value: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https://autohaus-park-api.onrender.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+        # GTranslate free (traduction côté navigateur) : dropdown.js + lib.min.js
+        # depuis cdn.gtranslate.net (script-src) et appels XHR vers
+        # translate-pa.googleapis.com (connect-src). Sans ces domaines dans le
+        # CSP, le navigateur ne charge pas le widget et le sélecteur de langue
+        # n'apparaît jamais.
+        value: default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.gtranslate.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https://autohaus-park-api.onrender.com https://cdn.gtranslate.net https://translate-pa.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
       # --- Performance : cache navigateur long sur les assets statiques ---
       # Le défaut Render (`max-age=0, s-maxage=300`) force une revalidation à
       # chaque visite → 7 fichiers JS + CSS rechargés 0,5-1 s chacun.

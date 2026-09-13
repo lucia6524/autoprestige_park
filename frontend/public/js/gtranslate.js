@@ -65,4 +65,53 @@
       showNotice(lang);
     }
   }, CHECK_DELAY_MS);
+
+  // --- Re-traduction du contenu chargé dynamiquement -----------------------
+  // GTranslate ne traduit que le DOM présent au moment du clic ; le contenu
+  // injecté ensuite par JS (cartes véhicules, avis…) reste en français.
+  // Astuce : on relance doGTranslate('fr|<langue>') (même appel que le
+  // sélecteur, sans rechargement) dès qu'un tel élément apparaît.
+  // -------------------------------------------------------------------------
+  var DYNAMIC_SELECTOR = '.vehicle-card, .testimonial-card';
+  var RETRANSLATE_DELAY_MS = 500;
+
+  function retranslate() {
+    var tgt = targetLang();
+    if (!tgt || tgt === DEFAULT_LANG) return;
+    if (typeof window.doGTranslate !== 'function') return;
+    try {
+      window.doGTranslate(DEFAULT_LANG + '|' + tgt);
+    } catch (e) { /* widget indisponible : on laisse le visiteur re-cliquer */ }
+  }
+
+  var retranslateTimer = null;
+  function scheduleRetranslate() {
+    if (retranslateTimer) clearTimeout(retranslateTimer);
+    retranslateTimer = window.setTimeout(retranslate, RETRANSLATE_DELAY_MS);
+  }
+
+  function looksDynamic(node) {
+    if (!node || node.nodeType !== 1) return false;
+    return (
+      (node.matches && node.matches(DYNAMIC_SELECTOR)) ||
+      (node.querySelector && node.querySelector(DYNAMIC_SELECTOR) !== null)
+    );
+  }
+
+  if (window.MutationObserver) {
+    var observer = new MutationObserver(function (mutations) {
+      for (var i = 0; i < mutations.length; i += 1) {
+        for (var j = 0; j < mutations[i].addedNodes.length; j += 1) {
+          if (looksDynamic(mutations[i].addedNodes[j])) { scheduleRetranslate(); return; }
+        }
+      }
+    });
+    if (document.body) {
+      observer.observe(document.body, { childList: true, subtree: true });
+    } else {
+      window.addEventListener('DOMContentLoaded', function () {
+        observer.observe(document.body, { childList: true, subtree: true });
+      });
+    }
+  }
 })();
