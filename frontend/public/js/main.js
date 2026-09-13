@@ -70,8 +70,8 @@ function showNetworkBanner(mode) {
   banner.classList.toggle("offline", offline);
   banner.querySelector(".spinner").style.display = offline ? "none" : "";
   banner.querySelector("#net-status-text").textContent = offline
-    ? t("js.net_offline", "Serveur momentanément indisponible — affichage du catalogue local.")
-    : t("js.net_loading", "Connexion au serveur…");
+    ? "Serveur momentanément indisponible — affichage du catalogue local."
+    : "Connexion au serveur…";
   banner.classList.add("show");
   clearTimeout(_netBannerTimer);
   if (offline) _netBannerTimer = setTimeout(hideNetworkBanner, 4000);
@@ -201,7 +201,6 @@ const filterBtns = document.querySelectorAll(".filter-btn");
 const mobileToggle = document.querySelector(".mobile-toggle");
 const nav = document.querySelector(".nav");
 const header = document.querySelector(".header");
-const contactForm = document.getElementById("contact-form");
 
 // Advanced filter elements
 const searchInput = document.getElementById("search-input");

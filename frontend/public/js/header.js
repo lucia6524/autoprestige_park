@@ -349,6 +349,84 @@
     }
   }
 
+  // Bloc « Langue » dans le menu « Plus » (desktop hover + menu mobile).
+  // La traduction est celle du widget GTranslate (Layout.astro) : on pilote
+  // simplement son <select class="gt_selector"> caché — même mécanisme que
+  // le sélecteur de l'entête, un seul système, zéro doublon.
+  var LANGS = [
+    { code: 'fr', label: 'Français' },
+    { code: 'en', label: 'English' },
+    { code: 'de', label: 'Deutsch' },
+    { code: 'it', label: 'Italiano' },
+    { code: 'es', label: 'Español' },
+    { code: 'pt', label: 'Português' },
+    { code: 'ro', label: 'Română' },
+  ];
+
+  function storedLang() {
+    try {
+      var raw = localStorage.getItem('__GT_TRANSLATE_LANGS');
+      if (!raw) return 'fr';
+      var stored = JSON.parse(raw);
+      return stored && typeof stored.tgtLang === 'string' && stored.tgtLang ? stored.tgtLang : 'fr';
+    } catch (_) {
+      return 'fr';
+    }
+  }
+
+  function pickLanguage(code) {
+    var selector = document.querySelector('.gt_selector');
+    if (selector) {
+      var value = 'fr|' + code;
+      var option = selector.querySelector('option[value="' + value + '"]');
+      if (option) {
+        selector.value = value;
+        selector.dispatchEvent(new Event('change', { bubbles: true }));
+        return;
+      }
+    }
+    // Repli si le widget n'est pas encore initialisé : même cookie que lui.
+    document.cookie = 'googtrans=fr|' + code + ';path=/';
+    window.location.reload();
+  }
+
+  function injectLangMenu() {
+    var dropdown = document.querySelector('#nav-more .dropdown');
+    if (!dropdown || dropdown.querySelector('.lang-menu')) return;
+    var current = storedLang();
+
+    var divider = document.createElement('div');
+    divider.className = 'dropdown-divider';
+
+    var wrap = document.createElement('div');
+    wrap.className = 'lang-menu';
+    wrap.setAttribute('role', 'group');
+    wrap.setAttribute('aria-label', 'Choix de la langue');
+
+    var title = document.createElement('span');
+    title.className = 'lang-menu-title notranslate';
+    title.textContent = '🌐 Langue';
+    wrap.appendChild(title);
+
+    LANGS.forEach(function (lang) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'lang-menu-item notranslate' + (lang.code === current ? ' active' : '');
+      btn.setAttribute('data-lang', lang.code);
+      btn.setAttribute('aria-pressed', lang.code === current ? 'true' : 'false');
+      btn.textContent = lang.label;
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        pickLanguage(lang.code);
+      });
+      wrap.appendChild(btn);
+    });
+
+    dropdown.appendChild(divider);
+    dropdown.appendChild(wrap);
+  }
+
   function injectHeader() {
     // Mode dual :
     //  - Pages Astro : le header est déjà rendu côté serveur (data-static),
@@ -374,6 +452,7 @@
     updateMobileUser();
     initThemeToggle();
     updateSiteContactInfo();
+    injectLangMenu();
 
     document.dispatchEvent(new CustomEvent('headerReady'));
   }

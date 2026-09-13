@@ -825,6 +825,42 @@ const footer = {
   </section>
 
   <script is:inline>
+    // Formulaire contact (section accueil) → POST /api/contact/message.
+    // Même contrat que la page contact : feedback inline, pas d'alert.
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("contact-form");
+      if (!form || !window.API) return;
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const button = form.querySelector("button[type=submit]");
+        const originalText = button.textContent;
+        button.disabled = true;
+        button.textContent = "Envoi en cours...";
+        try {
+          await API.sendContactMessage(
+            Object.fromEntries(new FormData(form)),
+          );
+          form.reset();
+          Notify.success(
+            "Votre message a bien été envoyé. Notre équipe vous répondra rapidement.",
+            { title: "Message envoyé" },
+          );
+        } catch (error) {
+          Notify.error(
+            API.friendlyError
+              ? API.friendlyError(error)
+              : "Impossible d'envoyer votre message.",
+            { title: "Erreur" },
+          );
+        } finally {
+          button.disabled = false;
+          button.textContent = originalText;
+        }
+      });
+    });
+  </script>
+
+  <script is:inline>
     // Catalogue de secours (291 Ko) : chargé uniquement si le cache local
     // est absent, expiré (> 30 min, cf. VEHICLES_CACHE_TTL de main.js) ou
     // illisible. Visites suivantes : 291 Ko économisés.

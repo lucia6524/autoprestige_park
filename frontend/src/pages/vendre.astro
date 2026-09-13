@@ -68,31 +68,31 @@ import Layout from '../layouts/Layout.astro';
         <div class="form-row">
           <div class="form-group">
             <label>Marque</label>
-            <input type="text" placeholder="Ex : BMW" required />
+            <input type="text" name="brand" placeholder="Ex : BMW" required />
           </div>
           <div class="form-group">
             <label>Modèle</label>
-            <input type="text" placeholder="Ex : Série 3 320d" required />
+            <input type="text" name="model" placeholder="Ex : Série 3 320d" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Année</label>
-            <input type="number" placeholder="2019" required />
+            <input type="number" name="year" placeholder="2019" min="1950" max="2030" required />
           </div>
           <div class="form-group">
             <label>Kilométrage</label>
-            <input type="number" placeholder="85000" required />
+            <input type="number" name="mileage" placeholder="85000" min="0" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Votre nom</label>
-            <input type="text" placeholder="Jean Dupont" required />
+            <input type="text" name="name" placeholder="Jean Dupont" required />
           </div>
           <div class="form-group">
             <label>Téléphone</label>
-            <input type="tel" placeholder="+33 6 12 34 56 78" required />
+            <input type="tel" name="phone" placeholder="+33 6 12 34 56 78" required />
           </div>
         </div>
         <div class="form-group">
@@ -111,6 +111,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <input
             type="file"
+            name="photos"
             accept="image/jpeg,image/png,image/webp"
             multiple
             style="margin-top: 8px"
@@ -118,17 +119,19 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="jean@email.com" required />
+          <input type="email" name="email" placeholder="jean@email.com" required />
         </div>
         <div class="form-group">
           <label>Message (optionnel)</label>
           <textarea
             rows="3"
+            name="notes"
             placeholder="Des informations complémentaires..."
           ></textarea>
         </div>
         <button
           type="submit"
+          id="sell-submit"
           class="btn btn-primary btn-lg"
           style="width: 100%"
         >
@@ -137,4 +140,93 @@ import Layout from '../layouts/Layout.astro';
       </form>
     </div>
   </section>
+
+  <script is:inline>
+    // Envoi de la demande d'estimation vers POST /api/sell-requests
+    // (photos redimensionnées côté client pour respecter la limite API).
+    document.addEventListener("DOMContentLoaded", () => {
+      const form = document.getElementById("sell-form");
+      if (!form || !window.API) return;
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById("sell-submit");
+        const original = btn ? btn.innerHTML : "";
+        const fd = new FormData(form);
+        const payload = {
+          brand: (fd.get("brand") || "").toString().trim(),
+          model: (fd.get("model") || "").toString().trim(),
+          year: parseInt(fd.get("year"), 10) || 0,
+          mileage: parseInt(fd.get("mileage"), 10) || 0,
+          name: (fd.get("name") || "").toString().trim(),
+          phone: (fd.get("phone") || "").toString().trim(),
+          email: (fd.get("email") || "").toString().trim(),
+          notes: (fd.get("notes") || "").toString().trim(),
+          photos: [],
+        };
+        if (btn) {
+          btn.disabled = true;
+          btn.innerHTML = "Envoi en cours…";
+        }
+        try {
+          const input = form.querySelector('input[type="file"]');
+          const files = input ? Array.from(input.files || []) : [];
+          if (files.length) {
+            const resized = await Promise.all(
+              files.slice(0, 6).map(resizeImage)
+            );
+            payload.photos = resized.filter(Boolean);
+          }
+          const result = await API.submitSellRequest(payload);
+          Notify.success(
+            result.message ||
+              "Votre demande a bien été envoyée. Nous vous recontactons sous 24h.",
+            { title: "Demande envoyée" },
+          );
+          form.reset();
+        } catch (error) {
+          Notify.error(
+            (window.API ? API.friendlyError(error) : null) ||
+              "L'envoi a échoué. Vérifiez votre connexion puis réessayez.",
+            { title: "Erreur" },
+          );
+        } finally {
+          if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = original;
+          }
+        }
+      });
+
+      function resizeImage(file) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onerror = () => resolve(null);
+          reader.onload = () => {
+            const img = new Image();
+            img.onerror = () => resolve(null);
+            img.onload = () => {
+              const maxDim = 1200;
+              let w = img.naturalWidth;
+              let h = img.naturalHeight;
+              if (w > maxDim || h > maxDim) {
+                const ratio = Math.min(maxDim / w, maxDim / h);
+                w = Math.round(w * ratio);
+                h = Math.round(h * ratio);
+              }
+              const canvas = document.createElement("canvas");
+              canvas.width = w;
+              canvas.height = h;
+              canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+              const out = canvas.toDataURL("image/jpeg", 0.82);
+              // Limite API : 2 Mo par photo base64
+              resolve(out.length <= 2000000 ? out : null);
+            };
+            img.src = reader.result;
+          };
+          reader.readAsDataURL(file);
+        });
+      }
+    });
+  </script>
 </Layout>

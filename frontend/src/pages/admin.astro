@@ -1691,7 +1691,7 @@ export const prerender = true;
       claimFilter = status;
       try {
         const claims = await api(
-          "/admin/claims" + (status ? "?status=" + status : ""),
+          "/admin/payment-claims" + (status ? "?status=" + status : ""),
         );
         const tbody = document.getElementById("claims-tbody");
         if (!claims.length) {
@@ -1708,10 +1708,10 @@ export const prerender = true;
             <td>${escapeHtml(c.brand)} ${escapeHtml(c.model)}</td>
             <td>${formatPrice(c.amount)}</td>
             <td>${formatDate(c.claimed_at)}</td>
-            <td>${statusBadge(c.status)}</td>
+            <td>${statusBadge(c.payment_status)}</td>
             <td class="actions">
-              ${c.status === "claimed" ? `<button class="btn btn-success btn-sm" onclick="validateClaim(${c.id})">Valider</button>
-              <button class="btn btn-danger btn-sm" onclick="rejectClaim(${c.id})">Refuser</button>` : ""}
+              ${c.payment_status === "claimed" ? `<button class="btn btn-success btn-sm" onclick="validateClaim(${c.installment_id})">Valider</button>
+              <button class="btn btn-danger btn-sm" onclick="rejectClaim(${c.installment_id})">Refuser</button>` : ""}
             </td>
           </tr>
         `,
@@ -1724,9 +1724,9 @@ export const prerender = true;
 
     async function validateClaim(id) {
       try {
-        await api("/admin/claims/" + id, {
-          method: "PATCH",
-          body: JSON.stringify({ status: "paid" }),
+        await api("/admin/payment-claims/" + id, {
+          method: "POST",
+          body: JSON.stringify({ action: "approve" }),
         });
         toast("Paiement validé ✓");
         loadClaims(claimFilter);
@@ -1746,9 +1746,9 @@ export const prerender = true;
       )
         return;
       try {
-        await api("/admin/claims/" + id, {
-          method: "PATCH",
-          body: JSON.stringify({ status: "rejected" }),
+        await api("/admin/payment-claims/" + id, {
+          method: "POST",
+          body: JSON.stringify({ action: "reject" }),
         });
         toast("Demande refusée");
         loadClaims(claimFilter);
@@ -1775,10 +1775,10 @@ export const prerender = true;
             (r) => `
           <tr>
             <td>#${r.id}</td>
-            <td><strong>${escapeHtml(r.first_name)} ${escapeHtml(r.last_name)}</strong></td>
-            <td>${escapeHtml(r.vehicle_brand)} ${escapeHtml(r.vehicle_model)}</td>
+            <td><strong>${escapeHtml(r.name)}</strong></td>
+            <td>${escapeHtml(r.brand)} ${escapeHtml(r.model)}</td>
             <td>${(r.mileage || 0).toLocaleString("fr-FR")} km</td>
-            <td>${r.photos_count || 0}</td>
+            <td>${r.photo_count || 0}</td>
             <td>${statusBadge(r.status)}</td>
             <td>${formatDate(r.created_at)}</td>
             <td class="actions">
@@ -1797,7 +1797,7 @@ export const prerender = true;
 
     async function updateSellRequest(id, status) {
       try {
-        await api("/admin/sell-requests/" + id, {
+        await api("/admin/sell-requests/" + id + "/status", {
           method: "PATCH",
           body: JSON.stringify({ status }),
         });
@@ -1812,9 +1812,13 @@ export const prerender = true;
     async function loadReviews(status = "") {
       reviewFilter = status;
       try {
-        const reviews = await api(
-          "/admin/reviews" + (status ? "?status=" + status : ""),
-        );
+        // Filtre backend : ?approved=true/false (les listes ne renvoient pas
+        // de champ "status" : l'état est le booléen "approved").
+        const params = new URLSearchParams();
+        if (status === "approved") params.set("approved", "true");
+        else if (status === "pending") params.set("approved", "false");
+        const query = params.toString();
+        const reviews = await api("/admin/reviews" + (query ? "?" + query : ""));
         const tbody = document.getElementById("reviews-tbody");
         if (!reviews.length) {
           tbody.innerHTML =
@@ -1830,10 +1834,10 @@ export const prerender = true;
             <td>${escapeHtml(r.vehicle || "—")}</td>
             <td>${"★".repeat(r.rating)} (${r.rating})</td>
             <td>${escapeHtml(r.message.slice(0, 60))}${r.message.length > 60 ? "…" : ""}</td>
-            <td>${statusBadge(r.status)}</td>
+            <td>${r.approved ? '<span class="badge badge-green">Approuvé</span>' : '<span class="badge badge-yellow">En attente</span>'}</td>
             <td>${formatDate(r.created_at)}</td>
             <td class="actions">
-              ${r.status === "pending" ? `<button class="btn btn-success btn-sm" onclick="approveReview(${r.id})">Approuver</button>
+              ${!r.approved ? `<button class="btn btn-success btn-sm" onclick="approveReview(${r.id})">Approuver</button>
               <button class="btn btn-danger btn-sm" onclick="rejectReview(${r.id})">Refuser</button>` : ""}
             </td>
           </tr>
@@ -1849,7 +1853,7 @@ export const prerender = true;
       try {
         await api("/admin/reviews/" + id, {
           method: "PATCH",
-          body: JSON.stringify({ status: "approved" }),
+          body: JSON.stringify({ approved: true }),
         });
         toast("Avis approuvé ✓");
         loadReviews(reviewFilter);
@@ -1871,7 +1875,7 @@ export const prerender = true;
       try {
         await api("/admin/reviews/" + id, {
           method: "PATCH",
-          body: JSON.stringify({ status: "rejected" }),
+          body: JSON.stringify({ approved: false }),
         });
         toast("Avis refusé");
         loadReviews(reviewFilter);

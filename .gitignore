@@ -27,3 +27,5 @@ Thumbs.db
 frontend/node_modules/
 frontend/dist/
 frontend/.astro/
+frontend/.audit-dumps/
+frontend/scripts/__pycache__/
