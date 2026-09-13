@@ -62,11 +62,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60  # 1 hour (reduced from 7 days for security)
     DATABASE_URL: str = f"sqlite+aiosqlite:///{BASE_DIR / 'data' / 'autoprestige.db'}"
 
-    # Email (SMTP)
-    SMTP_HOST: str = ""
-    SMTP_PORT: int = 587
-    SMTP_USER: str = ""
-    SMTP_PASSWORD: str = ""
+    # Email (Brevo API uniquement — pas de SMTP)
     SMTP_FROM: str = "noreply@autoprestige.fr"
     CONTACT_RECIPIENT_EMAIL: str = "contact@autoprestige.fr"
     BREVO_API_KEY: str = ""

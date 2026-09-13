@@ -140,9 +140,3 @@ async def send_sell_request_email(
         content,
         reply_to=email,
     )
-
-
-# Keep backward compatibility
-async def send_resend_email(to_email: str, subject: str, body: str) -> bool:
-    """Legacy Resend function — now delegates to Brevo."""
-    return await _send_brevo_email(to_email, subject, body)

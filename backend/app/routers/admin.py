@@ -1,16 +1,19 @@
 """
 Admin API — réservé aux utilisateurs is_admin=True
 """
-from datetime import datetime, timedelta
+import json
+from datetime import date, datetime, timedelta
+from decimal import Decimal
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import Response
 from pydantic import BaseModel, Field
 from sqlalchemy import desc, func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
-from app.database import get_db
+from app.database import Base, get_db
 from app.deps import get_current_admin
 from app.models.commerce import (
     Delivery,
@@ -21,7 +24,7 @@ from app.models.commerce import (
     OrderStatus,
 )
 from app.models.user import User
-from app.time_utils import as_utc_naive, utc_now_naive
+from app.time_utils import UTC, as_utc_naive, utc_now_naive
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
@@ -539,6 +542,20 @@ async def list_vehicles(
     return list(result.scalars().all())
 
 
+@router.get("/vehicles/{vehicle_id}", response_model=VehicleOut)
+async def get_vehicle(
+    vehicle_id: int,
+    admin: User = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """Un véhicule complet (édition/activation côté admin)."""
+    result = await db.execute(select(Vehicle).where(Vehicle.id == vehicle_id))
+    v = result.scalars().first()
+    if not v:
+        raise HTTPException(404, "Véhicule introuvable")
+    return v
+
+
 @router.post("/vehicles", response_model=VehicleOut)
 async def create_vehicle(
     data: VehicleIn,
@@ -583,11 +600,6 @@ async def delete_vehicle(
     await db.delete(v)
     await db.commit()
     return {"ok": True, "message": f"{v.brand} {v.model} supprimé"}
-
-
-# ── Public catalogue (no auth) — pour le frontend ────────
-# Note: registered on admin router under /admin/vehicles/public is awkward.
-# We'll add a separate public route in main or vehicles router later.
 
 
 # ── Payment claims (échéances déclarées par les clients) ─
@@ -790,3 +802,43 @@ async def mark_notification_read(
     n.is_read = True
     await db.commit()
     return {"ok": True}
+
+
+@router.get("/backup")
+async def backup_database(
+    admin: User = Depends(get_current_admin),
+    db: AsyncSession = Depends(get_db),
+):
+    """Export complet de la base en JSON → fichier téléchargeable.
+
+    Sans pg_dump (peu fiable sur Render free) : on lit chaque table du schéma
+    déclaratif et on sérialise toutes les lignes. L'utilisateur admin reçoit
+    un .json à conserver (DATA_RECOVERY dans le README).
+    """
+    export: dict[str, list[dict]] = {}
+    for table in Base.metadata.sorted_tables:
+        rows = (await db.execute(table.select())).mappings().all()
+        records = []
+        for row in rows:
+            record = {}
+            for key, value in row.items():
+                if value is None:
+                    record[key] = None
+                elif isinstance(value, datetime | date):
+                    record[key] = value.isoformat()
+                elif isinstance(value, Decimal):
+                    record[key] = str(value)
+                elif isinstance(value, bytes):
+                    record[key] = value.hex()
+                else:
+                    record[key] = value
+            records.append(record)
+        export[table.name] = records
+
+    payload = json.dumps(export, ensure_ascii=False, indent=2)
+    stamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
+    return Response(
+        content=payload,
+        media_type="application/json",
+        headers={"Content-Disposition": f'attachment; filename="backup_{stamp}.json"'},
+    )

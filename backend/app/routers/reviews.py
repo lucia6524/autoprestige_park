@@ -1,5 +1,7 @@
 """Témoignages clients (modérés) et demandes de vente avec photos."""
 
+from datetime import datetime
+
 from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from sqlalchemy import desc, func, select
@@ -8,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.database import get_db
 from app.deps import get_current_admin
 from app.models.reviews import Review, SellRequest
+from app.models.user import User
 from app.services.email import send_review_email, send_sell_request_email
 from app.services.rate_limit import check_rate_limit, get_client_ip
 
@@ -44,7 +47,7 @@ class ReviewOut(BaseModel):
     vehicle: str
     rating: int
     message: str
-    created_at: object
+    created_at: datetime
 
     class Config:
         from_attributes = True
@@ -187,7 +190,7 @@ class ReviewModeration(BaseModel):
 
 @router.get("/admin/reviews", response_model=list[AdminReviewOut])
 async def admin_list_reviews(
-    admin: object = Depends(get_current_admin),
+    admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
     approved: bool | None = None,
 ):
@@ -202,7 +205,7 @@ async def admin_list_reviews(
 async def admin_moderate_review(
     review_id: int,
     data: ReviewModeration,
-    admin: object = Depends(get_current_admin),
+    admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
 ):
     result = await db.execute(select(Review).where(Review.id == review_id))
@@ -217,7 +220,7 @@ async def admin_moderate_review(
 @router.delete("/admin/reviews/{review_id}")
 async def admin_delete_review(
     review_id: int,
-    admin: object = Depends(get_current_admin),
+    admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
 ):
     result = await db.execute(select(Review).where(Review.id == review_id))
@@ -244,7 +247,7 @@ class AdminSellRequestOut(BaseModel):
     photos: str  # JSON array de data-URLs
     photo_count: int = 0
     status: str
-    created_at: object
+    created_at: datetime
 
     class Config:
         from_attributes = True
@@ -256,7 +259,7 @@ class SellRequestStatusUpdate(BaseModel):
 
 @router.get("/admin/sell-requests", response_model=list[AdminSellRequestOut])
 async def admin_list_sell_requests(
-    admin: object = Depends(get_current_admin),
+    admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
     status: str | None = None,
 ):
@@ -286,7 +289,7 @@ async def admin_list_sell_requests(
 async def admin_update_sell_request_status(
     sell_id: int,
     data: SellRequestStatusUpdate,
-    admin: object = Depends(get_current_admin),
+    admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
 ):
     result = await db.execute(select(SellRequest).where(SellRequest.id == sell_id))
@@ -301,7 +304,7 @@ async def admin_update_sell_request_status(
 @router.delete("/admin/sell-requests/{sell_id}")
 async def admin_delete_sell_request(
     sell_id: int,
-    admin: object = Depends(get_current_admin),
+    admin: User = Depends(get_current_admin),
     db: AsyncSession = Depends(get_db),
 ):
     result = await db.execute(select(SellRequest).where(SellRequest.id == sell_id))

@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
+from sqlalchemy import text
 
 # Journaux applicatifs visibles dans Render (Brevo, traduction, quotas…) :
 # sans niveau INFO, les succès d'envoi d'email restent invisibles.
@@ -14,7 +15,7 @@ logging.basicConfig(
 )
 
 from app.config import settings  # noqa: E402  (après logging.basicConfig, voulu)
-from app.database import init_db  # noqa: E402
+from app.database import AsyncSessionLocal, init_db  # noqa: E402
 
 # Import models so Base.metadata knows them
 from app.models import commerce, user  # noqa: F401,E402
@@ -193,4 +194,15 @@ app.include_router(reviews.router, prefix="/api")
 
 @app.get("/api/health")
 async def health():
-    return {"status": "ok", "app": settings.APP_NAME}
+    # Vérification réelle de la base : un simple SELECT 1.
+    # 200 = tout va bien ; 503 = base injoignable → les sondes (Render,
+    # UptimeRobot) peuvent ainsi détecter une panne, pas seulement une API vivante.
+    try:
+        async with AsyncSessionLocal() as session:
+            await session.execute(text("SELECT 1"))
+    except Exception:
+        return JSONResponse(
+            status_code=503,
+            content={"status": "degraded", "app": settings.APP_NAME, "db": "error"},
+        )
+    return {"status": "ok", "app": settings.APP_NAME, "db": "ok"}
