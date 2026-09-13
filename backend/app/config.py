@@ -70,11 +70,6 @@ class Settings(BaseSettings):
     SMTP_FROM: str = "noreply@autoprestige.fr"
     CONTACT_RECIPIENT_EMAIL: str = "contact@autoprestige.fr"
     BREVO_API_KEY: str = ""
-    # --- Traduction automatique (dynamique) ---
-    # Service gratuit utilisé : endpoint public Google (sans clé). Les champs
-    # ci-dessous ne servent qu'à l'API officielle payante (librement réactivable).
-    GOOGLE_TRANSLATE_API_KEY: str = ""
-    GOOGLE_TRANSLATE_API_URL: str = "https://translation.googleapis.com/language/translate/v2"
 
     OTP_EXPIRE_MINUTES: int = 10
     OTP_MAX_ATTEMPTS: int = 5          # tentatives max par code

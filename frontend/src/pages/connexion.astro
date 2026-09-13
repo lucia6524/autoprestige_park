@@ -16,7 +16,6 @@ const footer = {
 <Layout
   title="Connexion — Autohaus"
   description="Accédez à votre espace client Autohaus."
-  i18nTitle="meta.title_login"
   footer={footer}
   ownScripts
 >
@@ -186,7 +185,7 @@ const footer = {
             placeholder="Votre mot de passe"
             autocomplete="current-password"
           />
-          <button type="submit" class="reg-btn" data-i18n="auth.login_btn">Se connecter →</button>
+          <button type="submit" class="reg-btn">Se connecter →</button>
         </form>
         <p
           style="
@@ -214,7 +213,7 @@ const footer = {
             required
             placeholder="jean.dupont@gmail.com"
           />
-          <button type="submit" class="reg-btn" data-i18n="auth.send_code_btn">Envoyer le code →</button>
+          <button type="submit" class="reg-btn">Envoyer le code →</button>
         </form>
         <form id="form-otp" style="display: none">
           <div
@@ -258,8 +257,8 @@ const footer = {
             <input type="text" maxlength="1" inputmode="numeric" />
             <input type="text" maxlength="1" inputmode="numeric" />
           </div>
-          <button type="submit" class="reg-btn" data-i18n="auth.validate_btn">Valider le code →</button>
-          <button type="button" class="reg-btn reg-btn-outline" id="back" data-i18n="common.back">
+          <button type="submit" class="reg-btn">Valider le code →</button>
+          <button type="button" class="reg-btn reg-btn-outline" id="back">
             ← Retour
           </button>
         </form>
@@ -272,7 +271,7 @@ const footer = {
   </div>
 
   <script src="js/header.js" defer is:inline></script>
-  <script src="js/i18n.js" is:inline></script>
+
   <script src="js/api.js" is:inline></script>
   <script is:inline>
     // Déjà connecté → dashboard personnel

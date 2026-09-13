@@ -2,6 +2,8 @@
 // Gabarit commun : head, header statique + footer partagés, scripts communs.
 // Les pages passent leurs options footer via props (footer={...}).
 // header.js détecte le header statique et s'y branche — plus d'injection DOM.
+// Traduction : widget GTranslate free (gtranslate.net, traduction côté
+// navigateur) — config + chargement CDN ici, sélecteur dans Header.astro.
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import type { FooterOptions } from '../types';
@@ -9,7 +11,6 @@ import type { FooterOptions } from '../types';
 interface Props {
   title: string;
   description?: string;
-  i18nTitle?: string;
   footer?: FooterOptions;
   scripts?: string[];
   // Pages qui gèrent elles-mêmes leurs scripts (ex. compte, connexion,
@@ -20,7 +21,6 @@ interface Props {
 const {
   title,
   description = "Autohaus : votre spécialiste en véhicules neufs et d'occasion. Financement sur mesure, livraison rapide, garantie jusqu'à 24 mois.",
-  i18nTitle,
   footer = {},
   scripts = [],
   ownScripts = false,
@@ -36,6 +36,8 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="preconnect" href="https://ridnurabtydwlymzdexk.supabase.co" />
+    <link rel="preconnect" href="https://cdn.gtranslate.net" crossorigin />
+    <link rel="preconnect" href="https://translate.googleapis.com" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="fonts/inter-var.woff2" crossorigin />
     <link rel="stylesheet" href="css/style.css" />
     <script is:inline>
@@ -43,6 +45,69 @@ const {
       if (p !== 'light' && p !== 'dark') p = 'dark';
       document.documentElement.setAttribute('data-theme', p);
     </script>
+    <!-- GTranslate (traduction côté navigateur) : applique la langue
+         mémorisée AVANT le premier paint si le CDN est en cache — sinon le
+         court CSS .gt-wait ci-dessous masque le texte jusqu'à application. -->
+    <script is:inline>
+      window.gtranslateSettings = {
+        default_language: 'fr',
+        languages: ['fr', 'en', 'de', 'it', 'es', 'pt', 'ro'],
+        wrapper_selector: '.gtranslate_wrapper',
+        url_structure: 'none', // traduction client, aucune URL /en/
+        detect_browser_language: true, // auto-traduit les navigateurs non FR
+        native_language_names: true,
+        select_language_label: 'Choisir la langue',
+      };
+    </script>
+    <style is:global>
+      /* Sélecteur GTranslate calé sur le style du header (mode sombre/clair) */
+      .gtranslate_wrapper {
+        display: inline-flex;
+        align-items: center;
+        order: -1;
+      }
+      .gtranslate_wrapper select.gt_selector {
+        appearance: none;
+        -webkit-appearance: none;
+        border: 1px solid var(--border);
+        background: transparent;
+        color: var(--text-secondary);
+        border-radius: 8px;
+        font: 600 0.8rem/1.2 'Inter', system-ui, sans-serif;
+        padding: 6px 24px 6px 10px;
+        cursor: pointer;
+        max-width: 150px;
+        transition: border-color 0.2s ease, color 0.2s ease;
+      }
+      .gtranslate_wrapper select.gt_selector:hover,
+      .gtranslate_wrapper select.gt_selector:focus {
+        border-color: var(--accent);
+        color: var(--text-primary);
+        outline: none;
+      }
+      .gtranslate_wrapper select.gt_selector option {
+        background: #fff;
+        color: #111827;
+      }
+      html[data-theme='dark'] .gtranslate_wrapper select.gt_selector option {
+        background: #1a1a24;
+        color: #f1f1f6;
+      }
+      @media (max-width: 768px) {
+        .gtranslate_wrapper select.gt_selector {
+          max-width: 118px;
+          padding: 6px 20px 6px 8px;
+          font-size: 0.72rem;
+        }
+      }
+      /* Cache la bannière Google « Traduit par » en haut de page */
+      body {
+        top: 0 !important;
+      }
+      .skiptranslate iframe {
+        display: none !important;
+      }
+    </style>
     <!-- Overlay loader : logo Autohaus qui tourne (voir js/loader.js) -->
     <script is:inline data-ap-loader>
       (function () {
@@ -67,8 +132,7 @@ const {
           o.id = 'ap-loader-overlay';
           o.className = 'show';
           o.innerHTML =
-            '<img class="ap-logo-spin" src="../logo.png" alt="" aria-hidden="true">';
-          document.documentElement.appendChild(o);
+            '<img class="ap-logo-spin" src="logo.png" alt="" aria-hidden="true">';
         } catch (e) {}
       })();
     </script>
@@ -82,23 +146,35 @@ const {
       }
     </script>
   </head>
-  <body data-i18n-title={i18nTitle}>
+  <body>
     <Header />
 
     <slot />
 
     <Footer {...footer} />
 
-    {!ownScripts && (
-      <>
-        <script src="js/header.js" defer is:inline></script>
-        <script src="js/i18n.js" defer is:inline></script>
-        <script src="js/api.js" defer is:inline></script>
-        {scripts.map((src) => (
-          <script src={src} defer is:inline></script>
-        ))}
-        <script src="js/main.js" defer is:inline></script>
-      </>
-    )}
+    {
+      !ownScripts && (
+        <>
+          <script src="js/header.js" defer is:inline />
+          <script src="js/gtranslate.js" defer is:inline />
+          <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer is:inline />
+          <script src="js/api.js" defer is:inline />
+          {scripts.map((src) => (
+            <script src={src} defer is:inline />
+          ))}
+          <script src="js/main.js" defer is:inline />
+        </>
+      )
+    }
+
+    {
+      ownScripts && (
+        <>
+          <script src="js/gtranslate.js" defer is:inline />
+          <script src="https://cdn.gtranslate.net/widgets/latest/dropdown.js" defer is:inline />
+        </>
+      )
+    }
   </body>
 </html>

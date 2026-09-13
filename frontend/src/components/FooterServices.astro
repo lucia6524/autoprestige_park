@@ -1,28 +1,20 @@
 ---
-// Bloc "Services" du footer : liste de liens traduits
-import { SERVICE_LINKS, fText, fHref } from '../data/footer-links';
-import { getDict, type Locale } from '../i18n/site';
+// Bloc "Services" du footer : liste de liens
+import { SERVICE_LINKS } from '../data/footer-links';
 
 interface Props {
-  /** Clés i18n autorisées : sous-ensemble de SERVICE_LINKS */
+  /** Clés autorisées : sous-ensemble de SERVICE_LINKS */
   links: string[];
-  /** Build-time i18n : langue de l'arbre (absent = pages FR racine) */
-  lang?: Locale;
 }
-const { links, lang } = Astro.props;
-const ctx = lang ? { lang, dict: getDict(lang) } : undefined;
+const { links } = Astro.props;
 ---
 
 <div>
-  <h4 data-i18n="footer.services">{fText(ctx, 'footer.services', 'Services')}</h4>
+  <h4>Services</h4>
   <div class="footer-links">
     {links.map((key) => {
       const link = SERVICE_LINKS[key];
-      return (
-        <a href={fHref(ctx, link.href)} data-i18n={link.i18n}>
-          {fText(ctx, link.i18n, link.text)}
-        </a>
-      );
+      return <a href={link.href}>{link.text}</a>;
     })}
   </div>
 </div>

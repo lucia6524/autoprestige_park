@@ -5,7 +5,8 @@
 
 ## Vue d'ensemble
 
-- **Site** : vente de véhicules d'occasion, vitrine multilingue (FR/EN/DE/IT/ES/PT/RO) + e-commerce complet.
+- **Site** : vente de véhicules d'occasion, vitrine multilingue + e-commerce complet.
+- **Traduction** : widget **GTranslate free** (gtranslate.net) côté navigateur — une seule arborescence FR, aucune page /lang/, aucun dictionnaire de build. Config dans `frontend/src/layouts/Layout.astro` (`window.gtranslateSettings` + CDN dropdown.js), sélecteur dans `Header.astro` (`.gtranslate_wrapper`), filet de sécurité dans `public/js/gtranslate.js` (CDN bloqué → retour FR). Textes protégés : `data-no-translate` / `translate="no"` (marque Autohaus…).
 - **Frontend** : Astro 5 (SSG statique) → `frontend/dist/` (déployé par Render). HTML générés, pas de SPA.
 - **Backend** : FastAPI + SQLAlchemy 2 async, Python 3.13. Sans tests = CI interdite. Les pages statiques `.html` (index, vehicules, admin…) sont dans **`frontend/dist/`**, générées à partir de `frontend/src/`. Ne PAS éditer directement les `.html` du build.
 
@@ -16,7 +17,7 @@ autoprestige/
 ├── frontend/               # Source Astro
 │   ├── src/pages/          # 22 pages .astro (source des .html)
 │   ├── src/layouts/, src/components/
-│   ├── public/             # Servi tel quel : css/, js/, locales/, thumbs/ (WebP)
+│   ├── public/             # Servi tel quel : css/, js/ (gtranslate.js…), sitemap.xml, thumbs/ (WebP)
 │   └── dist/               # Build (ne pas éditer ; voir npm run build)
 ├── backend/                # API FastAPI
 │   ├── app/                # main.py, config.py, database.py, models/, routers/, services/, schemas.py, deps.py

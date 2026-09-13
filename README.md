@@ -2,7 +2,7 @@
 
 ## Contenu
 
-- Site vitrine multilingue (FR, EN, DE, IT, ES, PT, RO)
+- Site vitrine multilingue (FR source ; EN, DE, IT, ES, PT, RO via le widget GTranslate côté navigateur)
 - Catalogue 120 véhicules + pages détail
 - Backend FastAPI (auth, panier, commandes, échéancier, livraison)
 - Inscription multi-étapes + vérification email OTP
@@ -14,7 +14,7 @@ autoprestige/
 ├── frontend/          # Site Astro (statique, génération de pages .html)
 │   ├── src/pages/     # 22 pages .astro
 │   ├── src/layouts/   # Layout, Header, Footer
-│   ├── public/        # css/, js/, locales/, thumbs/ (assets servis tels quels)
+│   ├── public/        # css/, js/, thumbs/, sitemap.xml (assets servis tels quels)
 │   └── dist/          # Sortie du build (déployée par Render)
 ├── backend/           # API FastAPI (auth, véhicules, panier, commandes)
 ├── render.yaml        # Déploiement Render (site statique + API + PostgreSQL)

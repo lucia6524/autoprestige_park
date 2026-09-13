@@ -5,7 +5,6 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="Vendre mon véhicule — Autohaus"
   description="Vendez votre voiture au meilleur prix. Estimation gratuite et sans engagement. Offre sous 24h."
-  i18nTitle="meta.title_sell"
   footer={{
     nav: ['home', 'vehicles', 'financing', 'sell', 'contact'],
     services: ['warranty', 'delivery', 'maintenance', 'insurance'],
@@ -97,16 +96,16 @@ import Layout from '../layouts/Layout.astro';
           </div>
         </div>
         <div class="form-group">
-          <label data-i18n="sell.photos_label">Photos du véhicule</label>
+          <label>Photos du véhicule</label>
           <span
             style="font-size: 0.85rem; color: var(--text-muted)"
-            data-i18n="sell.photos_hint"
+           
           >
             Cliquez pour ajouter des photos (max. 6)
           </span>
           <div
             style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px"
-            data-i18n="sell.photos_formats"
+           
           >
             JPG, PNG, WebP — 1,5 Mo max par photo
           </div>

@@ -28,7 +28,6 @@ from app.routers import (  # noqa: E402
     orders,
     reviews,
     site_settings,
-    translation,
     vehicles,
 )
 
@@ -188,7 +187,6 @@ app.include_router(orders.router, prefix="/api")
 app.include_router(admin.router, prefix="/api")
 app.include_router(vehicles.router, prefix="/api")
 app.include_router(site_settings.router, prefix="/api")
-app.include_router(translation.router, prefix="/api")
 app.include_router(contact.router, prefix="/api")
 app.include_router(reviews.router, prefix="/api")
 

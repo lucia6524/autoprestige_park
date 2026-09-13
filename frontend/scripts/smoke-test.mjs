@@ -21,7 +21,6 @@ const required = [
   "404.html",
   "css",
   "js",
-  "locales",
   "thumbs",
 ];
 

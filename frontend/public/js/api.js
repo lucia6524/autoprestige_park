@@ -371,7 +371,7 @@ API.updateHeaderAuth = function() {
     el.innerHTML = `
       <div class="header-auth-user">
         <a href="${typeof pageHref === 'function' ? pageHref('compte.html') : 'compte.html'}">${safeName}</a>
-        <a href="#" id="header-logout" style="color:#dc2626;font-weight:500;">${(window.I18N && I18N.t('nav.logout') !== 'nav.logout') ? I18N.t('nav.logout') : 'Déconnexion'}</a>
+        <a href="#" id="header-logout" style="color:#dc2626;font-weight:500;">Déconnexion</a>
       </div>`;
     const btn = document.getElementById('header-logout');
     if (btn) btn.addEventListener('click', (e) => {

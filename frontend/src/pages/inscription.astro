@@ -16,7 +16,6 @@ const footer = {
 <Layout
   title="Inscription — Autohaus"
   description="Créez votre compte client Autohaus."
-  i18nTitle="meta.title_register"
   footer={footer}
   ownScripts
 >
@@ -259,7 +258,7 @@ const footer = {
               />
             </div>
           </div>
-          <button type="submit" class="reg-btn" data-i18n="auth.continue_btn">Continuer →</button>
+          <button type="submit" class="reg-btn">Continuer →</button>
         </form>
       </div>
 
@@ -282,8 +281,8 @@ const footer = {
             placeholder="+33 6 12 34 56 78"
             autocomplete="tel"
           />
-          <button type="submit" class="reg-btn" data-i18n="auth.continue_btn">Continuer →</button>
-          <button type="button" class="reg-btn reg-btn-outline" id="back-2" data-i18n="common.back">
+          <button type="submit" class="reg-btn">Continuer →</button>
+          <button type="button" class="reg-btn reg-btn-outline" id="back-2">
             ← Retour
           </button>
         </form>
@@ -313,10 +312,10 @@ const footer = {
           >
             Utilisé pour évaluer les options de financement.
           </p>
-          <button type="submit" class="reg-btn" data-i18n="auth.generate_code_btn">
+          <button type="submit" class="reg-btn">
             Générer le code de vérification →
           </button>
-          <button type="button" class="reg-btn reg-btn-outline" id="back-3" data-i18n="common.back">
+          <button type="button" class="reg-btn reg-btn-outline" id="back-3">
             ← Retour
           </button>
         </form>
@@ -463,7 +462,7 @@ const footer = {
   </div>
 
   <script src="js/header.js" defer is:inline></script>
-  <script src="js/i18n.js" is:inline></script>
+
   <script src="js/api.js" is:inline></script>
   <script is:inline>
     // Déjà connecté → dashboard personnel

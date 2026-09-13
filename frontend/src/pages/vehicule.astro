@@ -431,7 +431,7 @@ const footer = {
   <div class="detail-breadcrumb-bar">
     <div class="container">
       <nav class="detail-breadcrumb" id="breadcrumb">
-        <a href="index.html" data-i18n="nav.home">Accueil</a>
+        <a href="index.html">Accueil</a>
         <span class="sep">›</span>
         <a href="vehicules.html">Catalogue</a>
         <span class="sep">›</span>
@@ -712,30 +712,14 @@ const footer = {
         window.location.replace("404.html");
       }
 
-      // Rendu dans la langue courante + re-rendu au changement de langue :
-      // les labels de la fiche (specs, boutons) sont traduits instantanément
-      // via les clés i18n + phrasebook local, sans attendre la traduction.
+      // Rendu de la fiche. La traduction des libellés et du contenu dynamique
+      // est assurée côté navigateur par GTranslate (Layout.astro).
       let currentVehicle = null;
-      let renderedLang = null;
 
       function renderLocalized(v) {
         currentVehicle = v;
-        const lang = (window.I18N && I18N.currentLang) || "fr";
-        if (lang === renderedLang) return; // déjà rendu dans cette langue
-        renderedLang = lang;
         renderDetail(v);
-        if (window.I18N && typeof I18N.translateElement === "function") {
-          I18N.translateElement(document.getElementById("detail-content"));
-        }
       }
-
-      // Le contenu dynamique (descriptions, transmission…) est traduit par la
-      // passe en file d'attente ; la langue choisie suit l'utilisateur partout.
-      document.addEventListener("languageChanged", function () {
-        if (!currentVehicle) return;
-        renderedLang = null;
-        renderLocalized(currentVehicle);
-      });
 
       // Applique la remise « occasion » une seule fois (cohérent avec le catalogue)
       function applyUsedDiscount(v) {
@@ -841,12 +825,6 @@ const footer = {
         // Squelette immédiat : la page ne reste jamais vide pendant l'attente
         showDetailSkeleton();
 
-        // Attendre la locale initiale : le premier rendu part directement
-        // dans la bonne langue (pas de flash français re-traduit après coup).
-        if (window.I18N && typeof I18N.whenReady === "function") {
-          try { await I18N.whenReady(); } catch (_) { /* rendu quand même */ }
-        }
-
         const v = await fetchVehicle(id);
         if (!v) {
           showNotFound();
@@ -864,7 +842,6 @@ const footer = {
             .then(function (fresh) {
               if (!fresh) return;
               applyUsedDiscount(fresh);
-              renderedLang = null; // données à jour → forcer le re-rendu
               renderLocalized(fresh);
             })
             .catch(function () {

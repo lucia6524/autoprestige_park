@@ -5,7 +5,6 @@ import Layout from '../layouts/Layout.astro';
 <Layout
   title="Avis clients — Autohaus"
   description="Découvrez les avis de nos clients satisfaits. Note moyenne 4.9/5."
-  i18nTitle="meta.title_reviews"
   footer={{
     nav: ['home', 'vehicles'],
     services: ['warranty', 'delivery', 'maintenance'],
@@ -40,15 +39,15 @@ import Layout from '../layouts/Layout.astro';
       <div class="stats-grid" style="margin-bottom: 50px">
         <div class="stat-item">
           <strong id="stat-rating" data-dynamic>0</strong>
-          <span data-i18n="home.stats_rating">Note moyenne</span>
+          <span>Note moyenne</span>
         </div>
         <div class="stat-item">
           <strong id="stat-reviews" data-dynamic>0</strong>
-          <span data-i18n="reviews.stats_verified">Avis vérifiés</span>
+          <span>Avis vérifiés</span>
         </div>
         <div class="stat-item">
           <strong id="stat-satisfaction" data-dynamic>0</strong>
-          <span data-i18n="reviews.stats_satisfied">Clients satisfaits</span>
+          <span>Clients satisfaits</span>
         </div>
       </div>
 
@@ -135,12 +134,12 @@ import Layout from '../layouts/Layout.astro';
     </div>
 
     <div class="review-form" id="review-form-section">
-      <h3 style="margin-bottom: 8px" data-i18n="reviews.form_title">
+      <h3 style="margin-bottom: 8px">
         Donnez votre avis
       </h3>
       <p
         style="color: var(--text-secondary); margin-bottom: 20px; font-size: 0.95rem;"
-        data-i18n="reviews.form_subtitle"
+       
       >
         Partagez votre expérience avec Autohaus.
       </p>
@@ -153,7 +152,7 @@ import Layout from '../layouts/Layout.astro';
           <span data-v="5" title="5">★</span>
         </div>
         <div class="form-group">
-          <label data-i18n="reviews.your_name">Votre nom</label>
+          <label>Votre nom</label>
           <input
             type="text"
             name="name"
@@ -162,7 +161,7 @@ import Layout from '../layouts/Layout.astro';
           />
         </div>
         <div class="form-group">
-          <label data-i18n="reviews.email">Email</label>
+          <label>Email</label>
           <input
             type="email"
             name="email"
@@ -171,7 +170,7 @@ import Layout from '../layouts/Layout.astro';
           />
         </div>
         <div class="form-group">
-          <label data-i18n="reviews.vehicle">Véhicule acheté (optionnel)</label>
+          <label>Véhicule acheté (optionnel)</label>
           <input
             type="text"
             name="vehicle"
@@ -179,7 +178,7 @@ import Layout from '../layouts/Layout.astro';
           />
         </div>
         <div class="form-group">
-          <label data-i18n="reviews.your_review">Votre avis</label>
+          <label>Votre avis</label>
           <textarea
             name="message"
             rows="4"
@@ -193,7 +192,7 @@ import Layout from '../layouts/Layout.astro';
           style="width: 100%"
           id="review-submit"
         >
-          <span data-i18n="reviews.submit">Envoyer mon avis</span>
+          <span>Envoyer mon avis</span>
         </button>
       </form>
     </div>

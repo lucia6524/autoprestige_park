@@ -1,38 +1,12 @@
 // Données partagées pour les footers Astro.
-// Les clés correspondent aux clés i18n utilisées par locales/*.json.
-//
-// Support build-time i18n (arbres localisés /en/…) : chaque composant passe
-// un dictionnaire de locale (getDict) ; s'il est fourni, le texte affiché
-// vient du dictionnaire (repli : texte FR d'origine si la clé manque) et les
-// liens sont résolus vers l'arbre localisé quand la page existe (linkFor).
+// Les clés correspondent aux anciennes clés i18n (locales/*.json) — la
+// traduction est désormais assurée côté navigateur par GTranslate, ces
+// libellés FR servent de source unique.
 
 export interface FooterLink {
   href: string;
   i18n: string;
   text: string;
-}
-
-import type { Locale } from '../i18n/site';
-import { getDict, t as tr, linkFor, DEFAULT_LOCALE } from '../i18n/site';
-
-/** Contexte de langue courant pour les composants de footer. */
-export interface FooterLangCtx {
-  lang: Locale;
-  dict: Record<string, unknown>;
-}
-
-/** Texte résolu : dict si ctx fourni et clé présente, sinon texte FR. */
-export function fText(ctx: FooterLangCtx | undefined, key: string, fallback: string): string {
-  if (!ctx) return fallback;
-  return tr(ctx.dict, key, fallback);
-}
-
-/** Lien résolu : vers l'arbre localisé si la page existe, sinon inchangé. */
-export function fHref(ctx: FooterLangCtx | undefined, href: string): string {
-  if (!ctx || ctx.lang === DEFAULT_LOCALE) return href;
-  const file = href.split('#')[0];
-  if (!file.endsWith('.html')) return href;
-  return linkFor(file, ctx.lang) + href.slice(file.length);
 }
 
 export const NAV_LINKS: Record<string, FooterLink> = {
@@ -55,29 +29,17 @@ export const SERVICE_LINKS: Record<string, FooterLink> = {
 };
 
 // Taglines du bloc marque : "full" (index/404/vehicule) ou courte par défaut.
-// Seule la variante full porte data-i18n="footer.tagline" (comme l'original).
 export function getTagline(
   variant: 'full' | 'default' | 'custom',
-  custom?: string,
-  ctx?: FooterLangCtx
-): { text: string; i18n: boolean } {
-  if (variant === 'custom' && custom) return { text: custom, i18n: false };
+  custom?: string
+): { text: string } {
+  if (variant === 'custom' && custom) return { text: custom };
   if (variant === 'full') {
     return {
-      text: fText(
-        ctx,
-        'footer.tagline_full',
-        "Votre partenaire de confiance pour l'achat de véhicules neufs et d'occasion. Qualité, transparence et service premium."
-      ),
-      i18n: true,
+      text: "Votre partenaire de confiance pour l'achat de véhicules neufs et d'occasion. Qualité, transparence et service premium.",
     };
   }
   return {
-    text: fText(
-      ctx,
-      'footer.tagline',
-      "Votre partenaire de confiance pour l'achat de véhicules neufs et d'occasion."
-    ),
-    i18n: false,
+    text: "Votre partenaire de confiance pour l'achat de véhicules neufs et d'occasion.",
   };
 }

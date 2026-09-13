@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sitemap statique (le site est 100% FR côté serveur ; les autres langues
+     sont servies côté navigateur par GTranslate, sans URLs dédiées). -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://autohaus-park.onrender.com/index.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/vehicules.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/garantie.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/financement.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/livraison.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/a-propos.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/faq.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/contact.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/assurance.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/avis.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/camping-car.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/entretien.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/machines-agricoles.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/marques.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/mentions-legales.html</loc></url>
+  <url><loc>https://autohaus-park.onrender.com/vendre.html</loc></url>
+</urlset>

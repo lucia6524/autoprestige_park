@@ -12,11 +12,11 @@ export default defineConfig({
     format: 'file',
   },
 
-  // i18n SSG : le FR reste à la racine (URLs actuelles inchangées), les
-  // arbres localisés (/en/...) s'ajoutent à côté (voir docs/plan-seo-multilingue.md).
+  // Traduction : widget GTranslate côté navigateur (voir public/js/gtranslate.js
+  // et layouts/Layout.astro). Une seule arborescence FR, aucune page /lang/.
   i18n: {
     defaultLocale: 'fr',
-    locales: ['fr', 'en', 'de', 'it', 'es', 'pt', 'ro'],
+    locales: ['fr'],
     routing: { prefixDefaultLocale: false },
   },
 });

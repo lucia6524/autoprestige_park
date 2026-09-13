@@ -22,38 +22,25 @@
     chevronDown: '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>',
   };
 
-  // Localise un lien sur les pages traduites AU BUILD (data-static-i18n, arbres
-  // /en/, /de/, …) : si la variante locale <même fichier> existe, on garde le
-  // chemin relatif selon AP_I18N_PAGES (même source que le sélecteur de langue).
-  // Sinon on retombe sur la version FR (../). Sur les pages FR → lien inchangé.
-  function localizedPage(file) {
-    const root = document.documentElement;
-    if (!root.hasAttribute('data-static-i18n')) return file;
-    const tree = root.getAttribute('lang') || 'fr';
-    const known = (window.AP_I18N_PAGES && window.AP_I18N_PAGES[tree]) || [];
-    const base = String(file).split(/[?#]/)[0];
-    return known.includes(base) ? file : '../' + file;
-  }
-
   const PAGES = {
-    home: localizedPage('index.html'),
-    vehicles: localizedPage('vehicules.html'),
-    financing: localizedPage('financement.html'),
-    sell: localizedPage('vendre.html'),
-    contact: localizedPage('contact.html'),
-    brands: localizedPage('marques.html'),
-    warranty: localizedPage('garantie.html'),
-    rv: localizedPage('camping-car.html'),
-    agri: localizedPage('machines-agricoles.html'),
-    insurance: localizedPage('assurance.html'),
-    delivery: localizedPage('livraison.html'),
-    maintenance: localizedPage('entretien.html'),
-    faq: localizedPage('faq.html'),
-    about: localizedPage('a-propos.html'),
-    reviews: localizedPage('avis.html'),
-    login: localizedPage('connexion.html'),
-    register: localizedPage('inscription.html'),
-    account: localizedPage('compte.html'),
+    home: 'index.html',
+    vehicles: 'vehicules.html',
+    financing: 'financement.html',
+    sell: 'vendre.html',
+    contact: 'contact.html',
+    brands: 'marques.html',
+    warranty: 'garantie.html',
+    rv: 'camping-car.html',
+    agri: 'machines-agricoles.html',
+    insurance: 'assurance.html',
+    delivery: 'livraison.html',
+    maintenance: 'entretien.html',
+    faq: 'faq.html',
+    about: 'a-propos.html',
+    reviews: 'avis.html',
+    login: 'connexion.html',
+    register: 'inscription.html',
+    account: 'compte.html',
   };
 
   function currentFile() {
@@ -76,28 +63,28 @@
 
       <nav class="nav" id="main-nav" aria-label="Navigation principale">
         <div class="mobile-user" id="mobile-user"></div>
-        <a href="${PAGES.home}" class="${isActive(PAGES.home).trim()}" data-i18n="nav.home">Accueil</a>
-        <a href="${PAGES.vehicles}" class="${isActive(PAGES.vehicles).trim()}" data-i18n="nav.vehicles">Véhicules</a>
-        <a href="${PAGES.financing}" class="${isActive(PAGES.financing).trim()}" data-i18n="nav.financing">Financement</a>
-        <a href="${PAGES.sell}" class="${isActive(PAGES.sell).trim()}" data-i18n="nav.sell">Vendre</a>
-        <a href="${PAGES.contact}" class="${isActive(PAGES.contact).trim()}" data-i18n="nav.contact">Contact</a>
+        <a href="${PAGES.home}" class="${isActive(PAGES.home).trim()}">Accueil</a>
+        <a href="${PAGES.vehicles}" class="${isActive(PAGES.vehicles).trim()}">Véhicules</a>
+        <a href="${PAGES.financing}" class="${isActive(PAGES.financing).trim()}">Financement</a>
+        <a href="${PAGES.sell}" class="${isActive(PAGES.sell).trim()}">Vendre</a>
+        <a href="${PAGES.contact}" class="${isActive(PAGES.contact).trim()}">Contact</a>
 
         <div class="nav-item" id="nav-more">
-          <a href="#" class="nav-more-toggle" data-i18n="nav.more" aria-haspopup="true" aria-expanded="false">Plus ${ICONS.chevronDown}</a>
+          <a href="#" class="nav-more-toggle" aria-haspopup="true" aria-expanded="false">Plus ${ICONS.chevronDown}</a>
           <div class="dropdown" role="menu">
-            <a href="${PAGES.brands}" class="${isActive(PAGES.brands).trim()}" data-i18n="nav.brands">Marques</a>
-            <a href="${PAGES.warranty}" class="${isActive(PAGES.warranty).trim()}" data-i18n="nav.warranty">Garantie</a>
-            <a href="${PAGES.rv}" class="${isActive(PAGES.rv).trim()}" data-i18n="nav.rv">Camping-car</a>
-            <a href="${PAGES.agri}" class="${isActive(PAGES.agri).trim()}" data-i18n="nav.agri">Machines agricoles</a>
-            <a href="${PAGES.insurance}" class="${isActive(PAGES.insurance).trim()}" data-i18n="nav.insurance">Assurance</a>
-            <a href="${PAGES.delivery}" class="${isActive(PAGES.delivery).trim()}" data-i18n="nav.delivery">Livraison</a>
-            <a href="${PAGES.maintenance}" class="${isActive(PAGES.maintenance).trim()}" data-i18n="nav.maintenance">Entretien</a>
-            <a href="${PAGES.faq}" class="${isActive(PAGES.faq).trim()}" data-i18n="nav.faq">FAQ</a>
-            <a href="${PAGES.about}" class="${isActive(PAGES.about).trim()}" data-i18n="nav.about">À propos</a>
-            <a href="${PAGES.reviews}" class="${isActive(PAGES.reviews).trim()}" data-i18n="nav.reviews">Avis clients</a>
+            <a href="${PAGES.brands}" class="${isActive(PAGES.brands).trim()}">Marques</a>
+            <a href="${PAGES.warranty}" class="${isActive(PAGES.warranty).trim()}">Garantie</a>
+            <a href="${PAGES.rv}" class="${isActive(PAGES.rv).trim()}">Camping-car</a>
+            <a href="${PAGES.agri}" class="${isActive(PAGES.agri).trim()}">Machines agricoles</a>
+            <a href="${PAGES.insurance}" class="${isActive(PAGES.insurance).trim()}">Assurance</a>
+            <a href="${PAGES.delivery}" class="${isActive(PAGES.delivery).trim()}">Livraison</a>
+            <a href="${PAGES.maintenance}" class="${isActive(PAGES.maintenance).trim()}">Entretien</a>
+            <a href="${PAGES.faq}" class="${isActive(PAGES.faq).trim()}">FAQ</a>
+            <a href="${PAGES.about}" class="${isActive(PAGES.about).trim()}">À propos</a>
+            <a href="${PAGES.reviews}" class="${isActive(PAGES.reviews).trim()}">Avis clients</a>
             <div class="dropdown-divider"></div>
-            <a href="${PAGES.register}" class="${isActive(PAGES.register).trim()}" data-i18n="nav.register">Inscription</a>
-            <a href="${PAGES.login}" class="${isActive(PAGES.login).trim()}" data-i18n="nav.login">Connexion</a>
+            <a href="${PAGES.register}" class="${isActive(PAGES.register).trim()}">Inscription</a>
+            <a href="${PAGES.login}" class="${isActive(PAGES.login).trim()}">Connexion</a>
           </div>
         </div>
       </nav>
@@ -105,9 +92,9 @@
       <div class="header-actions">
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Changer le thème">${ICONS.moon}${ICONS.sun}</button>
         <div class="header-auth" id="header-auth">
-          <a href="${PAGES.login}" class="header-auth-link" data-i18n="nav.login">Connexion</a>
+          <a href="${PAGES.login}" class="header-auth-link">Connexion</a>
         </div>
-        <button type="button" class="mobile-toggle" aria-label="Menu" data-i18n-aria="header.menu" id="mobile-toggle"><span aria-hidden="true">${ICONS.menu}</span></button>
+        <button type="button" class="mobile-toggle" aria-label="Menu" id="mobile-toggle"><span aria-hidden="true">${ICONS.menu}</span></button>
       </div>
     </div>
   </header>`;
@@ -387,15 +374,6 @@
     updateMobileUser();
     initThemeToggle();
     updateSiteContactInfo();
-
-    // Re-apply translations if i18n already loaded
-    if (window.I18N && typeof window.I18N.apply === 'function') {
-      window.I18N.apply();
-    }
-    // Re-inject language switcher after header is ready
-    if (window.I18N && typeof window.I18N.injectSwitcher === 'function') {
-      window.I18N.injectSwitcher();
-    }
 
     document.dispatchEvent(new CustomEvent('headerReady'));
   }

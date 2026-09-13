@@ -38,7 +38,7 @@ async def run(langs: list[str], dry_run: bool, limit: int | None) -> int:
 
     from app.database import init_db
     from app.models.commerce import Vehicle
-    from app.routers.translation import _translate_texts
+    from app.services.translation import _translate_texts
 
     await init_db()
 

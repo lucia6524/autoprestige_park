@@ -22,22 +22,15 @@ function throttle(fn, limit) {
 // Le catalogue est servi par l'API (GET /api/vehicles) avec repli local
 // (js/vehicles-data.js) et cache localStorage pour un affichage instantané.
 
-// Chaîne JS traduite : clés de locales/<lang>.json si disponibles, sinon texte FR.
+// Chaîne JS affichée : fallback FR (la traduction est assurée côté navigateur
+// par GTranslate, qui traduit aussi le contenu injecté dynamiquement).
 function jr(key, fallback) {
-  return (window.I18N && I18N.t(key) !== key) ? I18N.t(key) : fallback;
+  return fallback;
 }
 
-// Sur les pages localisées (data-static-i18n, arbres /en/…), les liens vers des
-// pages NON localisées (compte, connexion, mentions légales…) pointent sur la
-// version FR (../). Sur les pages FR, le lien est inchangé (même logique que
-// localizedPage dans header.js, même source AP_I18N_PAGES).
+// Lien interne : pages toutes à la racine (traduction client via GTranslate,
+// aucune arborescence /lang/).
 function pageHref(file) {
-  const root = document.documentElement;
-  if (root.hasAttribute('data-static-i18n') && window.AP_I18N_PAGES) {
-    const tree = root.getAttribute('lang') || 'fr';
-    const known = window.AP_I18N_PAGES[tree] || [];
-    return known.includes(String(file).split(/[?#]/)[0]) ? file : '../' + file;
-  }
   return file;
 }
 
@@ -65,7 +58,6 @@ function _catalogRender(list = null) {
 let _netBannerTimer = null;
 
 function showNetworkBanner(mode) {
-  const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
   let banner = document.getElementById("net-status-banner");
   if (!banner) {
     banner = document.createElement("div");
@@ -245,7 +237,7 @@ function _ensureShowAllButton() {
   btn.type = "button";
   btn.id = "catalog-show-all";
   btn.className = "btn btn-primary catalog-show-all-btn";
-  btn.innerHTML = `<span data-i18n="vehicles.show_all">${jr("vehicles.show_all", "Voir tous les véhicules")}</span><span class="show-all-count"></span>`;
+  btn.innerHTML = `<span>Voir tous les véhicules</span><span class="show-all-count"></span>`;
   vehiclesGrid.after(btn);
   btn.addEventListener("click", () => {
     _showAllActive = true;
@@ -274,17 +266,15 @@ function renderVehicles(list = null) {
   const limited = (_showAllActive || filtered.length <= CATALOG_LIMIT) ? filtered : filtered.slice(0, CATALOG_LIMIT);
 
   if (resultsCount) {
-    const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
-    const word = filtered.length > 1 ? t("vehicles.results_plural", "véhicules") : t("vehicles.results", "véhicule");
+    const word = filtered.length > 1 ? "véhicules" : "véhicule";
     resultsCount.textContent = `${filtered.length} ${word}`;
   }
 
   if (filtered.length === 0) {
-    const t = (k, f) => (window.I18N && I18N.t(k) !== k) ? I18N.t(k) : f;
     vehiclesGrid.innerHTML = `
       <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-secondary);">
-        <p style="font-size:1.2rem;margin-bottom:8px;">${t("vehicles.no_results", "Aucun véhicule trouvé")}</p>
-        <p>${t("vehicles.no_results_hint", "Essayez de modifier vos filtres.")}</p>
+        <p style="font-size:1.2rem;margin-bottom:8px;">Aucun véhicule trouvé</p>
+        <p>Essayez de modifier vos filtres.</p>
       </div>`;
     _updateShowAllButton(filtered);
     return;
@@ -301,8 +291,8 @@ function renderVehicles(list = null) {
             onload="this.classList.add('visible');this.previousElementSibling.classList.add('loaded');"
             onerror="if(window.attachImgFallback){if(!this.dataset.fallbackApplied){this.dataset.fallbackApplied='1';this.src=this.dataset.originalSrc;}}this.classList.add('visible');this.previousElementSibling.classList.add('loaded');">
           <div class="vehicle-badges">
-            ${v.featured ? `<span class="badge badge-featured">${(window.I18N && I18N.t("vehicles.badge_featured") !== "vehicles.badge_featured") ? I18N.t("vehicles.badge_featured") : "★ À la une"}</span>` : ''}
-            ${v.promo ? `<span class="badge badge-promo">${(window.I18N && I18N.t("vehicles.badge_promo") !== "vehicles.badge_promo") ? I18N.t("vehicles.badge_promo") : "Promo"}</span>` : ''}
+            ${v.featured ? `<span class="badge badge-featured">★ À la une</span>` : ''}
+            ${v.promo ? `<span class="badge badge-promo">Promo</span>` : ''}
             <span class="badge badge-category">${esc(v.body_category || v.category)}</span>
           </div>
         </div>
@@ -762,14 +752,13 @@ function initCookieBanner() {
   if (localStorage.getItem("cookiesAccepted")) return;
   const bar = document.createElement("div");
   bar.className = "cookie-banner show";
-  const t = (key, fallback) => (window.I18N && I18N.t(key) !== key) ? I18N.t(key) : fallback;
   bar.innerHTML = `
     <div class="cookie-inner">
-      <p>${t('cookies.text', 'Nous utilisons des cookies pour le fonctionnement du site (thème, préférences) et améliorer votre expérience.')}
-        <a href="${pageHref('mentions-legales.html')}#cookies" style="color:var(--accent-light);">${t('cookies.learn_more', 'En savoir plus')}</a></p>
+      <p>Nous utilisons des cookies pour le fonctionnement du site (thème, préférences) et améliorer votre expérience.
+        <a href="${pageHref('mentions-legales.html')}#cookies" style="color:var(--accent-light);">En savoir plus</a></p>
       <div class="cookie-actions">
-        <button type="button" class="btn btn-outline" id="cookie-refuse">${t('cookies.refuse', 'Refuser')}</button>
-        <button type="button" class="btn btn-primary" id="cookie-accept">${t('cookies.accept', 'Accepter')}</button>
+        <button type="button" class="btn btn-outline" id="cookie-refuse">Refuser</button>
+        <button type="button" class="btn btn-primary" id="cookie-accept">Accepter</button>
       </div>
     </div>`;
   document.body.appendChild(bar);
@@ -895,9 +884,4 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", initReviewForm);
-
-// Re-render vehicles when language changes
-document.addEventListener("languageChanged", () => {
-  if (typeof renderVehicles === "function") renderVehicles();
-});
 
