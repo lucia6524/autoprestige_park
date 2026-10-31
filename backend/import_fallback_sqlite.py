@@ -21,6 +21,7 @@ now = datetime.now(UTC).replace(tzinfo=None).isoformat(sep=" ")
 with sqlite3.connect(DATABASE_FILE) as connection:
     created = 0
     skipped = 0
+    synchronized = 0
 
     for vehicle in vehicles:
         key = (
@@ -33,6 +34,19 @@ with sqlite3.connect(DATABASE_FILE) as connection:
             key,
         ).fetchone()
         if exists:
+            connection.execute(
+                "UPDATE vehicles SET price = ?, description = ?, updated_at = ? "
+                "WHERE brand = ? AND model = ? AND year = ?",
+                (
+                    float(vehicle.get("price") or 0),
+                    str(vehicle.get("description", "")),
+                    now,
+                    key[0],
+                    key[1],
+                    key[2],
+                ),
+            )
+            synchronized += 1
             skipped += 1
             continue
 
@@ -77,4 +91,7 @@ with sqlite3.connect(DATABASE_FILE) as connection:
         )
         created += 1
 
-print(f"Import termine: {created} crees, {skipped} deja presents")
+print(
+    f"Import termine: {created} crees, {synchronized} synchronises, "
+    f"{skipped} deja presents"
+)

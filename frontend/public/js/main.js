@@ -142,18 +142,6 @@ function normalizeVehicle(v) {
   return { ...v, images: Array.isArray(images) ? images : [] };
 }
 
-// Remise automatique de 2 000 € sur les véhicules d'occasion.
-// Le prix original est conservé pour afficher un prix barré (transparence).
-function applyUsedVehicleDiscount() {
-  vehicles.forEach((vehicle) => {
-    if (vehicle.type === "occasion" && !vehicle.discountApplied) {
-      vehicle.originalPrice = Number(vehicle.price);
-      vehicle.price = Math.max(0, Number(vehicle.price) - 2000);
-      vehicle.discountApplied = true;
-    }
-  });
-}
-
 const brandLogos = {
   "BMW": "https://logo.clearbit.com/bmw.com",
   "Mercedes-Benz": "https://logo.clearbit.com/mercedes-benz.com",
@@ -291,8 +279,8 @@ function renderVehicles(list = null) {
           </div>
           <div class="vehicle-price">
             <div>
-              <div class="price-main">${v.originalPrice && v.originalPrice !== v.price ? `<s class="price-old">${v.originalPrice.toLocaleString('fr-FR')} €</s> ` : ''}${v.price.toLocaleString('fr-FR')} €</div>
-              <div class="price-month">${v.originalPrice && v.originalPrice !== v.price ? jr("vehicles.discounted_price", "Prix remisé") + ' · ' : ''}ou ${v.monthly} €/mois</div>
+              <div class="price-main">${v.price.toLocaleString('fr-FR')} €</div>
+              <div class="price-month">ou ${v.monthly} €/mois</div>
             </div>
             <div style="display:flex;gap:6px;align-items:center;">
               <a href="${pageHref('vehicule.html')}?id=${v.id}" class="btn btn-outline-sm" onclick="event.stopPropagation();">${jr("detail.view", "Voir →")}</a>
@@ -527,7 +515,6 @@ async function loadPublicVehicles() {
   }
 
   // 2) Rendu immédiat (fallback local ou cache)
-  applyUsedVehicleDiscount();
   populateBrands();
   bindFilterEvents();
   renderVehicles();
@@ -546,9 +533,6 @@ async function loadPublicVehicles() {
       if (Array.isArray(managedVehicles) && managedVehicles.length) {
         vehicles = managedVehicles;
         writeVehiclesCache(managedVehicles);
-        // Même remise que les données locales, pour des prix cohérents
-        // (la page détail applique aussi cette remise aux données API)
-        applyUsedVehicleDiscount();
         renderVehicles();
       }
     }

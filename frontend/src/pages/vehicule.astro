@@ -352,20 +352,6 @@ const footer = {
       height: 76px;
     }
 
-    .detail-badge-promo {
-      display: inline-block;
-      background: var(--danger-soft, rgba(220, 38, 38, 0.14));
-      color: var(--danger);
-      font-size: 0.8rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 8px;
-    }
-    .price-old {
-      color: var(--text-muted);
-      font-weight: 600;
-      font-size: 1.2rem;
-    }
     .skeleton-card {
       background: var(--bg-card);
       border-radius: 16px;
@@ -549,10 +535,6 @@ const footer = {
           )
           .trim();
         const price = formatPrice(v.price);
-        const oldPrice =
-          v.originalPrice && Number(v.originalPrice) !== Number(v.price)
-            ? formatPrice(v.originalPrice)
-            : null;
 
         document.title = v.brand + " " + v.model + " — Autohaus";
         const bc = document.getElementById("breadcrumb-current");
@@ -596,8 +578,7 @@ const footer = {
             <h1 class="detail-title">${esc(v.brand)}<br>${esc(v.model)}</h1>
 
             <div class="detail-price-row">
-              <span class="detail-price">${oldPrice ? `<s class="price-old">${esc(oldPrice)}</s> ` : ""}${esc(price)}</span>
-              ${oldPrice ? '<span class="detail-badge-promo">− 2 000 €</span>' : ""}
+              <span class="detail-price">${esc(price)}</span>
               <span class="detail-monthly">${esc(jr("vehicles.monthly_from", "ou"))} €${esc(Number(v.monthly || 0).toLocaleString("fr-FR"))}${esc(jr("vehicles.per_month", "/mois"))}</span>
             </div>
 
@@ -728,15 +709,6 @@ const footer = {
         renderDetail(v);
       }
 
-      // Applique la remise « occasion » une seule fois (cohérent avec le catalogue)
-      function applyUsedDiscount(v) {
-        if (v && v.type === "occasion" && !v.discountApplied) {
-          v.originalPrice = Number(v.price);
-          v.price = Math.max(0, Number(v.price) - 2000);
-          v.discountApplied = true;
-        }
-      }
-
       // Récupère le véhicule : API d'abord, puis repli (cache catalogue +
       // catalogue local) — la page s'affiche même quand l'API est endormie.
       // Un timeout évite le gel de 30-60 s pendant le cold start du backend.
@@ -838,7 +810,6 @@ const footer = {
           return;
         }
 
-        applyUsedDiscount(v);
         hideDetailSkeleton();
         renderLocalized(v);
 
@@ -848,7 +819,6 @@ const footer = {
           API.getVehicle(id)
             .then(function (fresh) {
               if (!fresh) return;
-              applyUsedDiscount(fresh);
               renderLocalized(fresh);
             })
             .catch(function () {
