@@ -40,8 +40,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2023,
     "fuel": "Essence",
     "transmission": "Manuelle",
-    "mileage": 5000,
-    "price": 6500,
+    "mileage": 0,
+    "price": 13900,
     "monthly": 126,
     "type": "neuf",
     "category": "Berline",
@@ -61,7 +61,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-8-inbound6489565453475160492.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079381632-9-inbound6738111271329787427.jpg"
     ],
-    "description": "🚗 Renault Clio TCe 90 Esprit Alpine\nPrix annoncé : 3 500 €\nModèle : Renault Clio\nFinition : Esprit Alpine\nMotorisation : TCe 90 essence\nPuissance : 90/91 ch\nBoîte : Manuelle\nÉtat : Neuve\nGarantie : 24 mois"
+    "description": "🚗 Renault Clio TCe 90 Esprit Alpine\nPrix annoncé : 13 900 €\nModèle : Renault Clio\nFinition : Esprit Alpine\nMotorisation : TCe 90 essence\nPuissance : 90/91 ch\nBoîte : Manuelle\nÉtat : Neuve\nGarantie : 24 mois"
   },
   {
     "id": 3,
@@ -70,8 +70,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2026,
     "fuel": "Diesel",
     "transmission": "Manuelle",
-    "mileage": 120000,
-    "price": 6000,
+    "mileage": 0,
+    "price": 10900,
     "monthly": 116,
     "type": "neuf",
     "category": "Berline",
@@ -99,7 +99,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-16-inbound8759217145206103300.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079041337-17-inbound8969221325961447842.jpg"
     ],
-    "description": "🚗 Renault Clio 1.5 dCi 90\n\nPrix annoncé : 3 000 €\n\nModèle : Renault Clio\n\nMoteur : 1.5 dCi\n\nPuissance : 90 ch\n\nAnnée : 2015\n\nKilométrage : 120 000 km certifiés\n\nCarburant : Diesel\n\nBoîte : Manuelle\n\nÉquipement : Régulateur de vitesse\n\nHomologation UE : jusqu'en 08/2026\n"
+    "description": "🚗 Renault Clio 1.5 dCi 90\n\nPrix annoncé : 10 900 €\n\nModèle : Renault Clio\n\nMoteur : 1.5 dCi\n\nPuissance : 90 ch\n\nAnnée : 2015\n\nKilométrage : 0 km\n\nCarburant : Diesel\n\nBoîte : Manuelle\n\nÉquipement : Régulateur de vitesse\n\nHomologation UE : jusqu'en 08/2026\n"
   },
   {
     "id": 4,
@@ -182,8 +182,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2017,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 12,
-    "price": 9000,
+    "mileage": 0,
+    "price": 13900,
     "monthly": 174,
     "type": "neuf",
     "category": "SUV",
@@ -213,7 +213,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-18-inbound9027146924494384007.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787077989107-19-inbound9098044146450514767.jpg"
     ],
-    "description": "🚗 Ford Kuga 2.0 TDCi ST-Line\nPrix annoncé : 6000 €\nAnnée : 2017\nKilométrage : 120 000 km certifiés\nMoteur : 2.0 TDCi Diesel\nPuissance : 150 ch\nBoîte : Automatique\nFinition : ST-Line\nPlaces : 5\nPoids à vide : 1 641 kg\n\n"
+    "description": "🚗 Ford Kuga 2.0 TDCi ST-Line\nPrix annoncé : 13 900 €\nAnnée : 2017\nKilométrage : 0 km\nMoteur : 2.0 TDCi Diesel\nPuissance : 150 ch\nBoîte : Automatique\nFinition : ST-Line\nPlaces : 5\nPoids à vide : 1 641 kg\n\n"
   },
   {
     "id": 7,
@@ -775,8 +775,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 3000,
-    "price": 9700,
+    "mileage": 0,
+    "price": 31900,
     "monthly": 188,
     "type": "neuf",
     "category": "Berline",
@@ -794,7 +794,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066690-6-57720.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711066691-7-57721.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : A 180d AMG Line\nAnnée : 2025\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : Compacte\nKilométrage : 3 000 km\nFinition : AMG Line\nPrix : 6 700 €\nÉtat : Quasi neuve\n\nÉquipements principaux : tableau de bord numérique, grand écran avec navigation, Apple CarPlay/Android Auto, caméra de recul, radars de stationnement, LED, jantes AMG, régulateur de vitesse, démarrage sans clé et sellerie premium."
+    "description": "Marque : Mercedes-Benz\nModèle : A 180d AMG Line\nAnnée : 2025\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : Compacte\nKilométrage : 0 km\nFinition : AMG Line\nPrix : 31 900 €\nÉtat : Quasi neuve\n\nÉquipements principaux : tableau de bord numérique, grand écran avec navigation, Apple CarPlay/Android Auto, caméra de recul, radars de stationnement, LED, jantes AMG, régulateur de vitesse, démarrage sans clé et sellerie premium."
   },
   {
     "id": 24,
@@ -910,8 +910,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2026,
     "fuel": "Diesel",
     "transmission": "Manuelle",
-    "mileage": 190000,
-    "price": 5600,
+    "mileage": 0,
+    "price": 20900,
     "monthly": 108,
     "type": "neuf",
     "category": "Berline",
@@ -939,7 +939,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-16-57654.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510421562-17-57655.jpg"
     ],
-    "description": "Marque : Nissan\nModèle : X-Trail 1.6 dCi\nAnnée : 2016\nMotorisation : Diesel 1.6\nPuissance : 130 ch\nBoîte : Manuelle\nCarrosserie : SUV\nKilométrage : 190 000 km certifiés\nPrix : 2 600 €"
+    "description": "Marque : Nissan\nModèle : X-Trail 1.6 dCi\nAnnée : 2016\nMotorisation : Diesel 1.6\nPuissance : 130 ch\nBoîte : Manuelle\nCarrosserie : SUV\nKilométrage : 0 km\nPrix : 20 900 €"
   },
   {
     "id": 28,
@@ -1045,8 +1045,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2026,
     "fuel": "Essence",
     "transmission": "Automatique",
-    "mileage": 10729,
-    "price": 9000,
+    "mileage": 0,
+    "price": 13900,
     "monthly": 174,
     "type": "neuf",
     "category": "Berline",
@@ -1068,7 +1068,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-10-57598.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509325571-11-57599.jpg"
     ],
-    "description": "Marque : Hyundai\nModèle : i20 1.0 T-GDI\nAnnée : 2026\nPremière immatriculation : 02/2026\nMotorisation : Essence 1.0 T-GDI\nPuissance : 90 ch (66 kW)\nBoîte : Automatique\nCarrosserie : Citadine\nKilométrage : 10 729 km\nPrix : 6 000 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nÉquipements : Navigation, caméra de recul, régulateur de vitesse."
+    "description": "Marque : Hyundai\nModèle : i20 1.0 T-GDI\nAnnée : 2026\nPremière immatriculation : 02/2026\nMotorisation : Essence 1.0 T-GDI\nPuissance : 90 ch (66 kW)\nBoîte : Automatique\nCarrosserie : Citadine\nKilométrage : 0 km\nPrix : 13 900 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nÉquipements : Navigation, caméra de recul, régulateur de vitesse."
   },
   {
     "id": 32,
@@ -1543,8 +1543,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 19380,
-    "price": 18000,
+    "mileage": 0,
+    "price": 30900,
     "monthly": 348,
     "type": "neuf",
     "category": "Berline",
@@ -1574,7 +1574,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593446-18-57377.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505593446-19-57378.jpg"
     ],
-    "description": "Marque : Volkswagen\nModèle : Tayron 2.0 TDI DSG 4MOTION R-Line\nAnnée : 2025\nPremière immatriculation : 05/2025\nMotorisation : Diesel 2.0 TDI\nPuissance : 193 ch (142 kW)\nBoîte : Automatique DSG\nTransmission : 4MOTION – 4×4\nCarrosserie : SUV\nFinition : R-Line\nKilométrage : 19 380 km\nPlaces : 7\nPortes : 5\nPrix : 15 000 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Occasion\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)\nLivraison : 5 jours"
+    "description": "Marque : Volkswagen\nModèle : Tayron 2.0 TDI DSG 4MOTION R-Line\nAnnée : 2025\nPremière immatriculation : 05/2025\nMotorisation : Diesel 2.0 TDI\nPuissance : 193 ch (142 kW)\nBoîte : Automatique DSG\nTransmission : 4MOTION – 4×4\nCarrosserie : SUV\nFinition : R-Line\nKilométrage : 0 km\nPlaces : 7\nPortes : 5\nPrix : 30 900 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Occasion\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)\nLivraison : 5 jours"
   },
   {
     "id": 47,
@@ -1772,8 +1772,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 29500,
-    "price": 23000,
+    "mileage": 0,
+    "price": 55900,
     "monthly": 445,
     "type": "neuf",
     "category": "SUV",
@@ -1799,7 +1799,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-14-57226.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503591220-15-57227.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d 4MATIC Coupé AMG Line\nAnnée : 2025\nPremière immatriculation : 10/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV Coupé\nFinition : AMG Line\nKilométrage : 29 500 km\nPlaces : 5\nPortes : 5\nPrix : 20 000 €\nOrigine : Édition allemande\nÉtat : Occasion"
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d 4MATIC Coupé AMG Line\nAnnée : 2025\nPremière immatriculation : 10/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV Coupé\nFinition : AMG Line\nKilométrage : 0 km\nPlaces : 5\nPortes : 5\nPrix : 55 900 €\nOrigine : Édition allemande\nÉtat : Occasion"
   },
   {
     "id": 53,
@@ -1843,8 +1843,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 16000,
-    "price": 19000,
+    "mileage": 0,
+    "price": 58900,
     "monthly": 368,
     "type": "neuf",
     "category": "SUV",
@@ -1869,7 +1869,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-13-57195.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786502949761-14-57196.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d 4MATIC Coupé AMG Line\nAnnée : 2025\nPremière immatriculation : 09/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV Coupé\nFinition : AMG Line\nKilométrage : 16 000 km\nPlaces : 5\nPortes : 5\nPrix : 16 000 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d 4MATIC Coupé AMG Line\nAnnée : 2025\nPremière immatriculation : 09/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV Coupé\nFinition : AMG Line\nKilométrage : 0 km\nPlaces : 5\nPortes : 5\nPrix : 58 900 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
   },
   {
     "id": 55,
@@ -1955,8 +1955,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 15000,
-    "price": 15000,
+    "mileage": 0,
+    "price": 45900,
     "monthly": 290,
     "type": "neuf",
     "category": "SUV",
@@ -1986,7 +1986,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-18-57141.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501127940-19-57142.jpg"
     ],
-    "description": "Marque : BMW\nModèle : X3 xDrive20d M\nAnnée : 2025\nPremière immatriculation : 10/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M\nKilométrage : 15 000 km\nPlaces : 5\nPortes : 5\nPrix : 12 000 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+    "description": "Marque : BMW\nModèle : X3 xDrive20d M\nAnnée : 2025\nPremière immatriculation : 10/2025\nMotorisation : Diesel 2.0\nPuissance : 197 ch (145 kW)\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M\nKilométrage : 0 km\nPlaces : 5\nPortes : 5\nPrix : 45 900 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
   },
   {
     "id": 58,
@@ -1995,8 +1995,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Diesel",
     "transmission": "Automatique",
-    "mileage": 20500,
-    "price": 17000,
+    "mileage": 0,
+    "price": 42900,
     "monthly": 329,
     "type": "neuf",
     "category": "SUV",
@@ -2026,7 +2026,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-18-57120.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500848075-19-57121.jpg"
     ],
-    "description": "Marque : Audi\nModèle : Q5 TDI quattro S-Line\nAnnée : 2025\nPremière immatriculation : 08/2025\nMotorisation : Diesel 2.0 TDI\nPuissance : 204 ch (150 kW)\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nFinition : S-Line\nKilométrage : 20 500 km\nPlaces : 5\nPortes : 5\nÉtat : Occasion – non accidenté\nPrix : 14 000 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+    "description": "Marque : Audi\nModèle : Q5 TDI quattro S-Line\nAnnée : 2025\nPremière immatriculation : 08/2025\nMotorisation : Diesel 2.0 TDI\nPuissance : 204 ch (150 kW)\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nFinition : S-Line\nKilométrage : 0 km\nPlaces : 5\nPortes : 5\nÉtat : Occasion – non accidenté\nPrix : 42 900 €\nOrigine : Édition allemande\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
   },
   {
     "id": 59,
@@ -2241,8 +2241,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2016,
     "fuel": "Électrique",
     "transmission": "Automatique",
-    "mileage": 7548,
-    "price": 9000,
+    "mileage": 0,
+    "price": 8900,
     "monthly": 174,
     "type": "neuf",
     "category": "Berline",
@@ -2266,7 +2266,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782792-12-inbound8613304587032009188.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405782792-13-inbound9137365879588879611.jpg"
     ],
-    "description": "Marque : Peugeot\nModèle : e-2008 Allure\nAnnée : 2016\nMotorisation : Électrique\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : SUV compact\nFinition : Allure\nKilométrage : 7 548 km\nPrix : 6 000 €\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
+    "description": "Marque : Peugeot\nModèle : e-2008 Allure\nAnnée : 2016\nMotorisation : Électrique\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : SUV compact\nFinition : Allure\nKilométrage : 0 km\nPrix : 8 900 €\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)"
   },
   {
     "id": 66,
@@ -2422,8 +2422,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2026,
     "fuel": "Essence",
     "transmission": "Automatique",
-    "mileage": 68450,
-    "price": 18000,
+    "mileage": 0,
+    "price": 115900,
     "monthly": 348,
     "type": "neuf",
     "category": "SUV",
@@ -2453,7 +2453,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-18-56778.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400347725-19-56779.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLE 63 S AMG 4MATIC+\nAnnée : 2022\nMotorisation : Essence – V8 AMG\nPuissance : 612 ch\nBoîte : Automatique AMG SPEEDSHIFT 9G\nTransmission : 4MATIC+ – 4×4\nCarrosserie : SUV\nFinition : AMG GLE 63 S\nCouleur : Noir\nKilométrage : 68 450 km certifiés\nPrix : 15 000 €"
+    "description": "Marque : Mercedes-Benz\nModèle : GLE 63 S AMG 4MATIC+\nAnnée : 2022\nMotorisation : Essence – V8 AMG\nPuissance : 612 ch\nBoîte : Automatique AMG SPEEDSHIFT 9G\nTransmission : 4MATIC+ – 4×4\nCarrosserie : SUV\nFinition : AMG GLE 63 S\nCouleur : Noir\nKilométrage : 0 km\nPrix : 115 900 €"
   },
   {
     "id": 71,
@@ -3640,8 +3640,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2024,
     "fuel": "Essence",
     "transmission": "Automatique",
-    "mileage": 3826,
-    "price": 11000,
+    "mileage": 0,
+    "price": 125900,
     "monthly": 213,
     "type": "neuf",
     "category": "Berline",
@@ -3664,7 +3664,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-11-56245.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330202690-12-56246.jpg"
     ],
-    "description": "💎Prix : 8.000 €\n\n💜RS6 Avant 4.0 TFSI Quattro Bi-Turbo V8\n\n2024/2024. 3 826 km\n630 CV\nTransmission AT9\nApple CarPlayTM\nPhares LED Matrix\nÉcran tactile de 8,6\" pour la troisième personne\nAudi Virtual Cockpit 12,3\"\nSystème audio 3D Bang & Olufsen®\nRoues de 22\" + Affichage frontal\nBoîte électrique\nVitres isolées thermiques\nÉclairage de la cabine téléphonique Audi"
+    "description": "💎Prix : 125 900 €\n\n💜RS6 Avant 4.0 TFSI Quattro Bi-Turbo V8\n\n2024/2024. 3 826 km\n630 CV\nTransmission AT9\nApple CarPlayTM\nPhares LED Matrix\nÉcran tactile de 8,6\" pour la troisième personne\nAudi Virtual Cockpit 12,3\"\nSystème audio 3D Bang & Olufsen®\nRoues de 22\" + Affichage frontal\nBoîte électrique\nVitres isolées thermiques\nÉclairage de la cabine téléphonique Audi"
   },
   {
     "id": 107,
@@ -3673,8 +3673,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2025,
     "fuel": "Essence",
     "transmission": "Automatique",
-    "mileage": 9200,
-    "price": 11000,
+    "mileage": 0,
+    "price": 19900,
     "monthly": 213,
     "type": "neuf",
     "category": "Berline",
@@ -3704,7 +3704,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-18-56232.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330021984-19-56233.jpg"
     ],
-    "description": "PRIX : 8.000 €\n\n🔥 KIA PROCEED 1.5 T-GDI GT-LINE – 140 CH – DCT7 🔥\n\n✨ GT-LINE • 9 200 KM • DCT7 • TECHNOLOGIE • JBL • CAMÉRA ✨\n\n✅Découvrez cette superbe Kia ProCeed 1.5 T-GDI GT-Line, un élégant shooting brake alliant design sportif, confort premium et technologies de dernière génération.\n\n✅Avec seulement 9 200 km, une mise en circulation en 02/2025 et sa boîte automatique DCT7 à double embrayage, ce véhicule de démonstration représente une opportunité particulièrement intéressante.\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 02/2025\n• Kilométrage : seulement 9 200 km\n• Motorisation : Essence 1.5 T-GDI\n• Puissance : 103 kW – 140 CH DIN\n• Transmission : Automatique DCT7 – 7 rapports\n• Carrosserie : Break / Shooting Brake\n• Finition : GT-Line\n• État : Occasion – non accidentée\n• Statut : Véhicule de démonstration\n• Norme : Euro 6e\n• Référence : 93116\n• Disponibilité : Immédiate"
+    "description": "PRIX : 19 900 €\n\n🔥 KIA PROCEED 1.5 T-GDI GT-LINE – 140 CH – DCT7 🔥\n\n✨ GT-LINE • 9 200 KM • DCT7 • TECHNOLOGIE • JBL • CAMÉRA ✨\n\n✅Découvrez cette superbe Kia ProCeed 1.5 T-GDI GT-Line, un élégant shooting brake alliant design sportif, confort premium et technologies de dernière génération.\n\n✅Avec seulement 9 200 km, une mise en circulation en 02/2025 et sa boîte automatique DCT7 à double embrayage, ce véhicule de démonstration représente une opportunité particulièrement intéressante.\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 02/2025\n• Kilométrage : 0 km\n• Motorisation : Essence 1.5 T-GDI\n• Puissance : 103 kW – 140 CH DIN\n• Transmission : Automatique DCT7 – 7 rapports\n• Carrosserie : Break / Shooting Brake\n• Finition : GT-Line\n• État : Occasion – non accidentée\n• Statut : Véhicule de démonstration\n• Norme : Euro 6e\n• Référence : 93116\n• Disponibilité : Immédiate"
   },
   {
     "id": 108,
@@ -4033,8 +4033,8 @@ window.FALLBACK_VEHICLES = [
     "year": 2026,
     "fuel": "Essence",
     "transmission": "Automatique",
-    "mileage": 75588,
-    "price": 23000,
+    "mileage": 0,
+    "price": 25900,
     "monthly": 445,
     "type": "neuf",
     "category": "Cabriolet",
@@ -4060,7 +4060,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-14-23.webp",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785904273458-15-24.webp"
     ],
-    "description": ""
+    "description": "Prix annoncé : 25 900 €\n\n"
   },
   {
     "id": 118,
@@ -4070,7 +4070,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 0,
-    "price": 28000,
+    "price": 95900,
     "monthly": 542,
     "type": "neuf",
     "category": "Berline",
@@ -4097,7 +4097,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-15-15.webp",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1785831634411-16-16.webp"
     ],
-    "description": ""
+    "description": "Prix annoncé : 95 900 €\n\n"
   },
   {
     "id": 119,
