@@ -10,7 +10,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 100000,
-    "price": 6000,
+    "price": 10900,
     "monthly": 116,
     "type": "occasion",
     "category": "Cabriolet",
@@ -31,7 +31,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-9-inbound6674652249616721729.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787079943472-10-inbound8339741580231969049.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe E Cabriolet\nVersion : E 350 CGI\nAnnée : 04/2010\nKilométrage : 100 000 km\nMoteur : V6 essence 3.5 L\nCylindrée : 3 498 cm³\nPuissance : 292 ch / 215 kW\nBoîte de vitesses : automatique 7G-Tronic, 7 rapports\nTransmission : propulsion\nCarrosserie : Cabriolet, 2 portes\nPlaces : 4\nÉnergie : Essence\n\nFinition/version : E 350 CGI\n\nOrigine : Allemagne 🇩🇪\n\nCouleur extérieure : non précisée\n\nIntérieur : cuir\n\nÉquipements mentionnés : cuir, boîte automatique\n\nPrix annoncé : 6 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E Cabriolet\nVersion : E 350 CGI\nAnnée : 04/2010\nKilométrage : 100 000 km\nMoteur : V6 essence 3.5 L\nCylindrée : 3 498 cm³\nPuissance : 292 ch / 215 kW\nBoîte de vitesses : automatique 7G-Tronic, 7 rapports\nTransmission : propulsion\nCarrosserie : Cabriolet, 2 portes\nPlaces : 4\nÉnergie : Essence\n\nFinition/version : E 350 CGI\n\nOrigine : Allemagne 🇩🇪\n\nCouleur extérieure : non précisée\n\nIntérieur : cuir\n\nÉquipements mentionnés : cuir, boîte automatique\n\nPrix annoncé : 10 900 €"
   },
   {
     "id": 2,
@@ -109,7 +109,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 83900,
-    "price": 10500,
+    "price": 25900,
     "monthly": 203,
     "type": "occasion",
     "category": "Berline",
@@ -134,7 +134,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-13-inbound9133421003451547380.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078779879-14-inbound9212244572068724741.jpg"
     ],
-    "description": "🚗 BMW M135i xDrive M Performance\n\nPrix annoncé : 10 500€\n\nAnnée / 1ère immatriculation : 10/2020\n\nKilométrage : 83 900 km\n\nMotorisation : Essence\n\nPuissance : 306 ch (225 kW)\n\nBoîte : Automatique\n\nTransmission : xDrive 4×4\n\nFinition : M Performance\n\nÉtat : Occasion, non accidentée\n\nCatégorie : Berline"
+    "description": "🚗 BMW M135i xDrive M Performance\n\nPrix annoncé : 25 900 €\n\nAnnée / 1ère immatriculation : 10/2020\n\nKilométrage : 83 900 km\n\nMotorisation : Essence\n\nPuissance : 306 ch (225 kW)\n\nBoîte : Automatique\n\nTransmission : xDrive 4×4\n\nFinition : M Performance\n\nÉtat : Occasion, non accidentée\n\nCatégorie : Berline"
   },
   {
     "id": 5,
@@ -144,7 +144,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 48000,
-    "price": 19000,
+    "price": 85900,
     "monthly": 368,
     "type": "occasion",
     "category": "SUV",
@@ -173,7 +173,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-17-inbound8239785604934928015.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1787078417130-18-inbound8624863818187198286.jpg"
     ],
-    "description": "Marque : Mercedes-AMG\nModèle : GLE 53 4MATIC+ Coupé\nAnnée : 2022/2023\nMotorisation : Essence 3.0 L, 6 cylindres turbo + EQ Boost\nPuissance : environ 429 ch\nBoîte : Automatique AMG SPEEDSHIFT 9 rapports\nTransmission : 4MATIC+ – 4×4\nCarrosserie : SUV Coupé\nPrix : 19 000€\nGarantie annoncée : 24 mois\nOrigine : Importation allemande 🇩🇪\n"
+    "description": "Marque : Mercedes-AMG\nModèle : GLE 53 4MATIC+ Coupé\nAnnée : 2022/2023\nMotorisation : Essence 3.0 L, 6 cylindres turbo + EQ Boost\nPuissance : environ 429 ch\nBoîte : Automatique AMG SPEEDSHIFT 9 rapports\nTransmission : 4MATIC+ – 4×4\nCarrosserie : SUV Coupé\nPrix : 85 900 €\nGarantie annoncée : 24 mois\nOrigine : Importation allemande 🇩🇪\n"
   },
   {
     "id": 6,
@@ -223,7 +223,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 31786,
-    "price": 7000,
+    "price": 15900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -246,7 +246,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-11-57962.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818199079-12-57963.jpg"
     ],
-    "description": "Marque : BMW\nModèle : Série 1 120i\nAnnée : 2018\nMotorisation : Essence\nPuissance : 184 ch\nBoîte : Automatique 8 rapports (BVA8)\nKilométrage : 31 786 km certifiés\nPrix : 7 000€\nGarantie : 24 mois\nLivraison : À domicile annoncée."
+    "description": "Marque : BMW\nModèle : Série 1 120i\nAnnée : 2018\nMotorisation : Essence\nPuissance : 184 ch\nBoîte : Automatique 8 rapports (BVA8)\nKilométrage : 31 786 km certifiés\nPrix : 15 900 €\nGarantie : 24 mois\nLivraison : À domicile annoncée."
   },
   {
     "id": 8,
@@ -256,7 +256,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 31350,
-    "price": 5500,
+    "price": 25900,
     "monthly": 106,
     "type": "occasion",
     "category": "Cabriolet",
@@ -280,7 +280,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068303-12-57948.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786818068303-13-57949.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : E 400 Cabriolet AMG\nAnnée : 2015\nMotorisation : Essence\nPuissance : 333 ch\nBoîte : Automatique\nCarrosserie : Cabriolet\nKilométrage : 31 350 km\nPrix : 5 500€\nGarantie : 24 mois\nÉquipements mentionnés : Pack AMG, AirScarf, radio numérique DAB+, navigation, sellerie cuir et roue de secours."
+    "description": "Marque : Mercedes-Benz\nModèle : E 400 Cabriolet AMG\nAnnée : 2015\nMotorisation : Essence\nPuissance : 333 ch\nBoîte : Automatique\nCarrosserie : Cabriolet\nKilométrage : 31 350 km\nPrix : 25 900 €\nGarantie : 24 mois\nÉquipements mentionnés : Pack AMG, AirScarf, radio numérique DAB+, navigation, sellerie cuir et roue de secours."
   },
   {
     "id": 9,
@@ -290,7 +290,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 102000,
-    "price": 5000,
+    "price": 10900,
     "monthly": 97,
     "type": "occasion",
     "category": "SUV",
@@ -319,7 +319,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887569-17-57934.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817887569-18-57935.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLK 220 4MATIC\nAnnée : 2009\nPremière immatriculation : 06/2009\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV / 4x4\nKilométrage : 102 000 km certifiés\nPrix : 5 000€ TTC\nOrigine : Importation allemande 🇩🇪\nLivraison annoncée : 5 jours en Europe\nRemise annoncée : 15 % en cas de paiement intégral à la commande."
+    "description": "Marque : Mercedes-Benz\nModèle : GLK 220 4MATIC\nAnnée : 2009\nPremière immatriculation : 06/2009\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV / 4x4\nKilométrage : 102 000 km certifiés\nPrix : 10 900 € TTC\nOrigine : Importation allemande 🇩🇪\nLivraison annoncée : 5 jours en Europe\nRemise annoncée : 15 % en cas de paiement intégral à la commande."
   },
   {
     "id": 10,
@@ -329,7 +329,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 98000,
-    "price": 7100,
+    "price": 22900,
     "monthly": 166,
     "type": "occasion",
     "category": "SUV",
@@ -351,7 +351,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-10-57915.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817689512-11-57916.jpg"
     ],
-    "description": "Marque : Audi\nModèle : RS Q3 2.5 TFSI\nAnnée : 2016\nMotorisation : Essence 2.5 TFSI\nPuissance : 340 ch\nBoîte : Automatique\nKilométrage : 98 000 km certifiés\nCarrosserie : SUV / Off-road\nPrix : 7 100€\nTransmission : quattro (4×4)"
+    "description": "Marque : Audi\nModèle : RS Q3 2.5 TFSI\nAnnée : 2016\nMotorisation : Essence 2.5 TFSI\nPuissance : 340 ch\nBoîte : Automatique\nKilométrage : 98 000 km certifiés\nCarrosserie : SUV / Off-road\nPrix : 22 900 €\nTransmission : quattro (4×4)"
   },
   {
     "id": 11,
@@ -361,7 +361,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 113000,
-    "price": 7000,
+    "price": 14900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -380,7 +380,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-7-57902.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817524652-8-57903.jpg"
     ],
-    "description": "Marque : BMW\nModèle : Série 1 118d M Sport\nAnnée : 2020\nMotorisation : Diesel 2.0 L\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : Traction avant\nKilométrage : 133 000 km certifiés\nFinition : M Sport\nÉquipement mentionné : Toit panoramique\nPrix : 7 000€"
+    "description": "Marque : BMW\nModèle : Série 1 118d M Sport\nAnnée : 2020\nMotorisation : Diesel 2.0 L\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : Traction avant\nKilométrage : 133 000 km certifiés\nFinition : M Sport\nÉquipement mentionné : Toit panoramique\nPrix : 14 900 €"
   },
   {
     "id": 12,
@@ -390,7 +390,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 106100,
-    "price": 8900,
+    "price": 33900,
     "monthly": 172,
     "type": "occasion",
     "category": "SUV",
@@ -410,7 +410,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-8-57893.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817386264-9-57894.jpg"
     ],
-    "description": "Marque : BMW\nModèle : X4 M40d xDrive\nAnnée : 2021\nMotorisation : Diesel 3.0\nPuissance : 326 ch (240 kW)\nBoîte : Automatique Sport\nTransmission : xDrive – 4×4\nCarrosserie : SUV Coupé\nKilométrage : 106 100 km\nNorme : Euro 6d-TEMP\nPlaces : 5\nCouleur : Blanc Alpinweiss III\nPropriétaires : 1\nPrix : 8 900€"
+    "description": "Marque : BMW\nModèle : X4 M40d xDrive\nAnnée : 2021\nMotorisation : Diesel 3.0\nPuissance : 326 ch (240 kW)\nBoîte : Automatique Sport\nTransmission : xDrive – 4×4\nCarrosserie : SUV Coupé\nKilométrage : 106 100 km\nNorme : Euro 6d-TEMP\nPlaces : 5\nCouleur : Blanc Alpinweiss III\nPropriétaires : 1\nPrix : 33 900 €"
   },
   {
     "id": 13,
@@ -420,7 +420,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 283000,
-    "price": 5000,
+    "price": 9900,
     "monthly": 97,
     "type": "occasion",
     "category": "Coupé",
@@ -440,7 +440,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-8-57883.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786817217085-9-57884.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : CLS 250 CDI AMG\nAnnée : 2011\nMotorisation : Diesel 2.1 CDI\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Propulsion arrière (RWD)\nCarrosserie : Berline coupé\nKilométrage : 283 000 km\nPlaces : 4\nCouleur : Gris indium métallisé\nPrix : 5 000€\nÉquipements : Pack AMG, toit ouvrant, phares xénon et sellerie cuir."
+    "description": "Marque : Mercedes-Benz\nModèle : CLS 250 CDI AMG\nAnnée : 2011\nMotorisation : Diesel 2.1 CDI\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Propulsion arrière (RWD)\nCarrosserie : Berline coupé\nKilométrage : 283 000 km\nPlaces : 4\nCouleur : Gris indium métallisé\nPrix : 9 900€\nÉquipements : Pack AMG, toit ouvrant, phares xénon et sellerie cuir."
   },
   {
     "id": 14,
@@ -450,7 +450,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 45000,
-    "price": 9000,
+    "price": 21900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -480,7 +480,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-18-57873.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816854649-19-57874.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe A 250 4MATIC AMG Line\nAnnée : 2021\nKilométrage : 45 000 km certifiés\nMotorisation : Essence\nTransmission : 4MATIC – 4×4\nBoîte : Automatique 7G-DCT\nCarrosserie : Berline compacte\nPrix : 9 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe A 250 4MATIC AMG Line\nAnnée : 2021\nKilométrage : 45 000 km certifiés\nMotorisation : Essence\nTransmission : 4MATIC – 4×4\nBoîte : Automatique 7G-DCT\nCarrosserie : Berline compacte\nPrix : 21 900 €"
   },
   {
     "id": 15,
@@ -490,7 +490,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 57700,
-    "price": 9500,
+    "price": 50900,
     "monthly": 213,
     "type": "occasion",
     "category": "SUV",
@@ -520,7 +520,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-18-57852.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786816645929-19-57853.jpg"
     ],
-    "description": "Marque : Audi\nModèle : Q8 60 TFSI e quattro\nAnnée : 2021\nMotorisation : Hybride rechargeable Essence/Électrique\nPuissance annoncée : 340 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nKilométrage : 57 700 km certifiés\nPrix : 9 500€\nOrigine : Allemagne 🇩🇪\nGarantie : 12 mois chez le concessionnaire\nÉtat : Véhicule non-fumeur\n\n"
+    "description": "Marque : Audi\nModèle : Q8 60 TFSI e quattro\nAnnée : 2021\nMotorisation : Hybride rechargeable Essence/Électrique\nPuissance annoncée : 340 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nKilométrage : 57 700 km certifiés\nPrix : 50 900 €\nOrigine : Allemagne 🇩🇪\nGarantie : 12 mois chez le concessionnaire\nÉtat : Véhicule non-fumeur\n\n"
   },
   {
     "id": 16,
@@ -530,7 +530,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 164000,
-    "price": 4900,
+    "price": 9900,
     "monthly": 124,
     "type": "occasion",
     "category": "Berline",
@@ -555,7 +555,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-13-57827.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712918074-14-57828.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A4 2.0 TDI\nAnnée : 2012\nPremière immatriculation : 12/2012\nMotorisation : Diesel 2.0 L\nPuissance : 143 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 164 000 km certifiés\nPrix : 4 900€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nÉtat : Jamais accidenté\nServices annoncés : Véhicule contrôlé, documents fournis et plaques annoncées incluses.\n"
+    "description": "Marque : Audi\nModèle : A4 2.0 TDI\nAnnée : 2012\nPremière immatriculation : 12/2012\nMotorisation : Diesel 2.0 L\nPuissance : 143 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 164 000 km certifiés\nPrix : 9 900€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nÉtat : Jamais accidenté\nServices annoncés : Véhicule contrôlé, documents fournis et plaques annoncées incluses.\n"
   },
   {
     "id": 17,
@@ -565,7 +565,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 114300,
-    "price": 3000,
+    "price": 6900,
     "monthly": 87,
     "type": "occasion",
     "category": "Berline",
@@ -588,7 +588,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-11-57812.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712546381-12-57813.jpg"
     ],
-    "description": "Marque : Peugeot\nModèle : 208 1.2 VTi Active\nAnnée : 2013\nMotorisation : Essence 1.2 VTi\nPuissance : 82 ch\nBoîte : Automatique\nCarrosserie : Citadine\nKilométrage : 114 300 km\nPrix : 3 000€\nVIN : VF3CCHMZ0DW071125\nHomologation UE annoncée : 02/2027\nOrigine : Importation allemande 🇩🇪\nGarantie annoncée : 24 mois\nLivraison annoncée : 5 jours"
+    "description": "Marque : Peugeot\nModèle : 208 1.2 VTi Active\nAnnée : 2013\nMotorisation : Essence 1.2 VTi\nPuissance : 82 ch\nBoîte : Automatique\nCarrosserie : Citadine\nKilométrage : 114 300 km\nPrix : 6 900€\nVIN : VF3CCHMZ0DW071125\nHomologation UE annoncée : 02/2027\nOrigine : Importation allemande 🇩🇪\nGarantie annoncée : 24 mois\nLivraison annoncée : 5 jours"
   },
   {
     "id": 18,
@@ -598,7 +598,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 42000,
-    "price": 5300,
+    "price": 21900,
     "monthly": 132,
     "type": "occasion",
     "category": "SUV",
@@ -622,7 +622,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-12-57799.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712354931-13-57800.jpg"
     ],
-    "description": "Marque : SEAT\nModèle : Ateca FR\nAnnée : 2023\nMotorisation : Essence 1.5 TSI\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : SUV\nFinition : FR Full Option\nKilométrage : 42 000 km\nPrix : 5 300€\n"
+    "description": "Marque : SEAT\nModèle : Ateca FR\nAnnée : 2023\nMotorisation : Essence 1.5 TSI\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : SUV\nFinition : FR Full Option\nKilométrage : 42 000 km\nPrix : 21 900 €\n"
   },
   {
     "id": 19,
@@ -632,7 +632,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Manuelle",
     "mileage": 178000,
-    "price": 5500,
+    "price": 11900,
     "monthly": 106,
     "type": "occasion",
     "category": "SUV",
@@ -661,7 +661,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-17-57785.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786712074886-18-57786.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLA 200 Business\nAnnée : 2016\nPremière immatriculation : 01/2016\nMotorisation : Diesel 2.0\nPuissance : 136 ch\nBoîte : Manuelle\nCarrosserie : SUV compact\nKilométrage : 178 000 km\nPrix : 5 500€\nGarantie : 12 mois\n\nÉquipements principaux : intérieur cuir/tissu, bi-xénon, antibrouillards, climatisation, GPS, radar avant/arrière, USB, Isofix, ordinateur de bord, volant multifonction, limiteur de vitesse et commande vocale."
+    "description": "Marque : Mercedes-Benz\nModèle : GLA 200 Business\nAnnée : 2016\nPremière immatriculation : 01/2016\nMotorisation : Diesel 2.0\nPuissance : 136 ch\nBoîte : Manuelle\nCarrosserie : SUV compact\nKilométrage : 178 000 km\nPrix : 11 900 €\nGarantie : 12 mois\n\nÉquipements principaux : intérieur cuir/tissu, bi-xénon, antibrouillards, climatisation, GPS, radar avant/arrière, USB, Isofix, ordinateur de bord, volant multifonction, limiteur de vitesse et commande vocale."
   },
   {
     "id": 20,
@@ -671,7 +671,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 120000,
-    "price": 5500,
+    "price": 10900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -689,7 +689,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-6-57766.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711769907-7-57767.jpg"
     ],
-    "description": "Marque : SEAT\nModèle : Arona 1.0 TSI\nAnnée : 2018\nMotorisation : Essence 1.0 TSI\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : SUV urbain / Crossover\nKilométrage : 120 000 km certifiés\nPrix : 5 500€\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nÉtat : Jamais accidenté\nLivraison : Véhicule disponible sur commande\nServices annoncés : Documents et plaques inclus, véhicule contrôlé avant annonce, "
+    "description": "Marque : SEAT\nModèle : Arona 1.0 TSI\nAnnée : 2018\nMotorisation : Essence 1.0 TSI\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : SUV urbain / Crossover\nKilométrage : 120 000 km certifiés\nPrix : 10 900 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nÉtat : Jamais accidenté\nLivraison : Véhicule disponible sur commande\nServices annoncés : Documents et plaques inclus, véhicule contrôlé avant annonce, "
   },
   {
     "id": 21,
@@ -699,7 +699,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 128054,
-    "price": 4000,
+    "price": 11900,
     "monthly": 106,
     "type": "occasion",
     "category": "Berline",
@@ -728,7 +728,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-17-57758.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711466646-18-57759.jpg"
     ],
-    "description": "Marque : Volvo\nModèle : V40 Cross Country 1.6 D2\nAnnée : 2014\nMotorisation : Diesel 1.6\nPuissance : 114 ch\nBoîte : Automatique\nCarrosserie : Crossover\nKilométrage : 128 054 km certifiés\nPrix : 4 000€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison annoncée : 5 jours"
+    "description": "Marque : Volvo\nModèle : V40 Cross Country 1.6 D2\nAnnée : 2014\nMotorisation : Diesel 1.6\nPuissance : 114 ch\nBoîte : Automatique\nCarrosserie : Crossover\nKilométrage : 128 054 km certifiés\nPrix : 11 900€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison annoncée : 5 jours"
   },
   {
     "id": 22,
@@ -738,7 +738,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 18854,
-    "price": 23000,
+    "price": 85900,
     "monthly": 445,
     "type": "occasion",
     "category": "Coupé",
@@ -766,7 +766,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-16-57738.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786711278611-17-57739.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : AMG GT 43 4MATIC+\nAnnée : 2022\nPremière immatriculation : 09/2022\nMotorisation : Essence\nPuissance : 367 ch (270 kW)\nBoîte : Automatique\nTransmission : 4MATIC+ – transmission intégrale\nCarrosserie : Sport/Coupé 4 portes\nKilométrage : 18 854 km\nPlaces : 4\nPrix : 23 000€\nOrigine : Édition allemande 🇩🇪\nÉtat : Occasion, non accidenté\nGarantie : 24 mois\nLivraison annoncée : 5 jours"
+    "description": "Marque : Mercedes-Benz\nModèle : AMG GT 43 4MATIC+\nAnnée : 2022\nPremière immatriculation : 09/2022\nMotorisation : Essence\nPuissance : 367 ch (270 kW)\nBoîte : Automatique\nTransmission : 4MATIC+ – transmission intégrale\nCarrosserie : Sport/Coupé 4 portes\nKilométrage : 18 854 km\nPlaces : 4\nPrix : 85 900 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Occasion, non accidenté\nGarantie : 24 mois\nLivraison annoncée : 5 jours"
   },
   {
     "id": 23,
@@ -804,7 +804,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 113959,
-    "price": 5000,
+    "price": 8900,
     "monthly": 126,
     "type": "occasion",
     "category": "Berline",
@@ -834,7 +834,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-18-57712.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710902121-19-57713.jpg"
     ],
-    "description": "Marque : Citroën\nModèle : C4 Cactus Shine\nAnnée : 2016\nMotorisation : Diesel\nPuissance : 99 ch\nBoîte : Automatique\nCarrosserie : SUV/Crossover\nKilométrage : 113 959 km certifiés\nPrix : 5 000€\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nÉtat : Jamais accidenté\nÉquipements/services : Véhicule contrôlé, documents fournis, formalités d’importation et plaques annoncées incluses."
+    "description": "Marque : Citroën\nModèle : C4 Cactus Shine\nAnnée : 2016\nMotorisation : Diesel\nPuissance : 99 ch\nBoîte : Automatique\nCarrosserie : SUV/Crossover\nKilométrage : 113 959 km certifiés\nPrix : 8 900€\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nÉtat : Jamais accidenté\nÉquipements/services : Véhicule contrôlé, documents fournis, formalités d’importation et plaques annoncées incluses."
   },
   {
     "id": 25,
@@ -844,7 +844,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Manuelle",
     "mileage": 107000,
-    "price": 2500,
+    "price": 6500,
     "monthly": 77,
     "type": "occasion",
     "category": "Berline",
@@ -864,7 +864,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-8-57685.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786710699291-9-57686.jpg"
     ],
-    "description": "Marque : Citroën\nModèle : C3 HDi 70 Séduction\nAnnée : 2011\nMotorisation : Diesel 1.4 HDi\nPuissance : 68 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 107 000 km\nPrix : 2 500€\nVIN : VF7SC8HR0BA560638\nOrigine : Importation allemande 🇩🇪\nGarantie annoncée : 24 mois\nLivraison annoncée : 5 jours"
+    "description": "Marque : Citroën\nModèle : C3 HDi 70 Séduction\nAnnée : 2011\nMotorisation : Diesel 1.4 HDi\nPuissance : 68 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 107 000 km\nPrix : 6 500€\nVIN : VF7SC8HR0BA560638\nOrigine : Importation allemande 🇩🇪\nGarantie annoncée : 24 mois\nLivraison annoncée : 5 jours"
   },
   {
     "id": 26,
@@ -874,7 +874,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 144000,
-    "price": 8000,
+    "price": 11900,
     "monthly": 155,
     "type": "occasion",
     "category": "Berline",
@@ -901,7 +901,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-15-57671.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510715705-16-57672.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : A 180 1.6 AMG Style\nAnnée : 2014\nMotorisation : Essence 1.6 L\nPuissance : 122 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nKilométrage : 144 000 km certifiés\nPrix : 8 000€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison annoncée : 7 jours\n"
+    "description": "Marque : Mercedes-Benz\nModèle : A 180 1.6 AMG Style\nAnnée : 2014\nMotorisation : Essence 1.6 L\nPuissance : 122 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nKilométrage : 144 000 km certifiés\nPrix : 11 900€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison annoncée : 7 jours\n"
   },
   {
     "id": 27,
@@ -949,7 +949,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 88000,
-    "price": 6500,
+    "price": 18900,
     "monthly": 126,
     "type": "occasion",
     "category": "Coupé",
@@ -969,7 +969,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258649-8-57636.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510258649-9-57637.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe E 200 Coupé AMG\nAnnée : 2017\nMotorisation : Essence 2.0 L\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Coupé\nFinition : AMG\nKilométrage : 88 000 km\nPlaces : 4\nCouleur : Gris métallisé\nPrix : 6 500€\nOrigine : Importation allemande 🇩🇪\nÉtat : Jamais accidenté\nGarantie : 24 mois\nTVA : Incluse\nLivraison annoncée : 5 jours\n\nÉquipements principaux : Pack AMG, sièges multicontours électriques avec massage, caméra 360°, toit panoramique, système Burmester, Head-Up Display, suspension AIRMATIC, MULTIBEAM LED, DISTRONIC, Apple CarPlay/Android Auto et jantes AMG 20\"."
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 200 Coupé AMG\nAnnée : 2017\nMotorisation : Essence 2.0 L\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Coupé\nFinition : AMG\nKilométrage : 88 000 km\nPlaces : 4\nCouleur : Gris métallisé\nPrix : 18 900 €\nOrigine : Importation allemande 🇩🇪\nÉtat : Jamais accidenté\nGarantie : 24 mois\nTVA : Incluse\nLivraison annoncée : 5 jours\n\nÉquipements principaux : Pack AMG, sièges multicontours électriques avec massage, caméra 360°, toit panoramique, système Burmester, Head-Up Display, suspension AIRMATIC, MULTIBEAM LED, DISTRONIC, Apple CarPlay/Android Auto et jantes AMG 20\"."
   },
   {
     "id": 29,
@@ -979,7 +979,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 122415,
-    "price": 7000,
+    "price": 12900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -998,7 +998,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-7-57625.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786510070097-8-57626.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : CLA 220 CDI 2.1\nAnnée : 2016\nMotorisation : Diesel 2.1\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : Coupé 4 portes\nKilométrage : 122 415 km certifiés\nPrix : 7 000€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)\nLivraison annoncée : 5 jours\nDisponibilité : Sur commande"
+    "description": "Marque : Mercedes-Benz\nModèle : CLA 220 CDI 2.1\nAnnée : 2016\nMotorisation : Diesel 2.1\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : Coupé 4 portes\nKilométrage : 122 415 km certifiés\nPrix : 12 900 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois (pièces, moteur et main-d’œuvre)\nLivraison annoncée : 5 jours\nDisponibilité : Sur commande"
   },
   {
     "id": 30,
@@ -1008,7 +1008,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Manuelle",
     "mileage": 95000,
-    "price": 3500,
+    "price": 7500,
     "monthly": 97,
     "type": "occasion",
     "category": "Berline",
@@ -1036,7 +1036,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-16-57616.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786509676797-17-57617.jpg"
     ],
-    "description": "Marque : Kia\nModèle : Picanto / Morning 1.0 Eco Dynamics\nAnnée : 2015\nMotorisation : Essence 1.0\nPuissance : 69 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 95 000 km\nPrix : 3 500€\nVIN : KNABX511AFT878680\nOrigine : Allemagne 🇩🇪\nHomologation UE : Jusqu’en juin 2027\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : Climatisation, sièges et volant chauffants, cuir, Bluetooth, AUX/USB, régulateur de vitesse, Isofix, jantes alliage été/hiver, vitres électriques et rétroviseurs chauffants."
+    "description": "Marque : Kia\nModèle : Picanto / Morning 1.0 Eco Dynamics\nAnnée : 2015\nMotorisation : Essence 1.0\nPuissance : 69 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 95 000 km\nPrix : 7 500€\nVIN : KNABX511AFT878680\nOrigine : Allemagne 🇩🇪\nHomologation UE : Jusqu’en juin 2027\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : Climatisation, sièges et volant chauffants, cuir, Bluetooth, AUX/USB, régulateur de vitesse, Isofix, jantes alliage été/hiver, vitres électriques et rétroviseurs chauffants."
   },
   {
     "id": 31,
@@ -1078,7 +1078,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 95000,
-    "price": 6000,
+    "price": 19900,
     "monthly": 116,
     "type": "occasion",
     "category": "SUV",
@@ -1101,7 +1101,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-11-57586.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508992205-12-57587.jpg"
     ],
-    "description": "Marque : BMW\nModèle : X5 xDrive30d M Sport\nAnnée : 2014\nPremière immatriculation : 11/2014\nMotorisation : Diesel 3.0\nPuissance : 258 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 95 000 km certifiés\nPrix : 6 000€\nOrigine : Allemagne 🇩🇪\nGarantie : 24 mois, valable dans toute l’Europe\nÉquipements principaux : ACC, affichage tête haute (HUD), toit panoramique, Harman Kardon, caméra, attelage, Webasto."
+    "description": "Marque : BMW\nModèle : X5 xDrive30d M Sport\nAnnée : 2014\nPremière immatriculation : 11/2014\nMotorisation : Diesel 3.0\nPuissance : 258 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 95 000 km certifiés\nPrix : 19 900 €\nOrigine : Allemagne 🇩🇪\nGarantie : 24 mois, valable dans toute l’Europe\nÉquipements principaux : ACC, affichage tête haute (HUD), toit panoramique, Harman Kardon, caméra, attelage, Webasto."
   },
   {
     "id": 33,
@@ -1111,7 +1111,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 120000,
-    "price": 11000,
+    "price": 21900,
     "monthly": 213,
     "type": "occasion",
     "category": "Coupé",
@@ -1130,7 +1130,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-7-57573.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508735396-8-57574.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe CLS 400\nAnnée : 2015\nMotorisation : Essence – V6 3.0 Biturbo\nPuissance : 333 ch\nBoîte : Automatique 7G-TRONIC PLUS\nCarrosserie : Coupé 4 portes\nPrix : 11 000€\nTransport : Environ 5 jours après chargement"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe CLS 400\nAnnée : 2015\nMotorisation : Essence – V6 3.0 Biturbo\nPuissance : 333 ch\nBoîte : Automatique 7G-TRONIC PLUS\nCarrosserie : Coupé 4 portes\nPrix : 21 900 €\nTransport : Environ 5 jours après chargement"
   },
   {
     "id": 34,
@@ -1140,7 +1140,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 181000,
-    "price": 6500,
+    "price": 8900,
     "monthly": 126,
     "type": "occasion",
     "category": "Berline",
@@ -1170,7 +1170,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-18-57556.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508546083-19-57558.jpg"
     ],
-    "description": "Marque : BMW\nModèle : Série 1 116d Sport\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : Compacte\nKilométrage : 181 000 km\nPrix : 6 500€\nVIN : WBA1C71010J045636\nOrigine : Allemagne 🇩🇪\nHomologation UE : Jusqu’en février 2027\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : Régulateur de vitesse, DAB+, Bluetooth, Keyless, sièges chauffants, climatisation, phares xénon, jantes alliage été/hiver et volant multifonction."
+    "description": "Marque : BMW\nModèle : Série 1 116d Sport\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : Compacte\nKilométrage : 181 000 km\nPrix : 8 900€\nVIN : WBA1C71010J045636\nOrigine : Allemagne 🇩🇪\nHomologation UE : Jusqu’en février 2027\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : Régulateur de vitesse, DAB+, Bluetooth, Keyless, sièges chauffants, climatisation, phares xénon, jantes alliage été/hiver et volant multifonction."
   },
   {
     "id": 35,
@@ -1180,7 +1180,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 92000,
-    "price": 4500,
+    "price": 15900,
     "monthly": 116,
     "type": "occasion",
     "category": "Berline",
@@ -1210,7 +1210,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-18-57531.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786508194191-19-57532.jpg"
     ],
-    "description": "Marque : Škoda\nModèle : Superb 1.4 TSI DSG\nAnnée : 2018\nMotorisation : Essence 1.4 TSI\nPuissance : 150 ch\nBoîte : Automatique DSG\nTransmission : Traction avant\nCarrosserie : Berline familiale\nKilométrage : 92 000 km\nPrix : 4 500€\nVIN : TMBAB9NP4J7511633\nOrigine : Allemagne 🇩🇪\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : ACC, toit panoramique, caméra de recul, attelage, navigation, Apple CarPlay/Android Auto, sièges Alcantara chauffants, hayon électrique, Keyless, phares bi-xénon/LED et radars de stationnement."
+    "description": "Marque : Škoda\nModèle : Superb 1.4 TSI DSG\nAnnée : 2018\nMotorisation : Essence 1.4 TSI\nPuissance : 150 ch\nBoîte : Automatique DSG\nTransmission : Traction avant\nCarrosserie : Berline familiale\nKilométrage : 92 000 km\nPrix : 15 900 €\nVIN : TMBAB9NP4J7511633\nOrigine : Allemagne 🇩🇪\nGarantie : 12 mois chez le concessionnaire\nÉquipements principaux : ACC, toit panoramique, caméra de recul, attelage, navigation, Apple CarPlay/Android Auto, sièges Alcantara chauffants, hayon électrique, Keyless, phares bi-xénon/LED et radars de stationnement."
   },
   {
     "id": 36,
@@ -1220,7 +1220,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Manuelle",
     "mileage": 101000,
-    "price": 4000,
+    "price": 10900,
     "monthly": 106,
     "type": "occasion",
     "category": "Berline",
@@ -1247,7 +1247,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-15-57491.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507979552-16-57492.jpg"
     ],
-    "description": "Marque : Renault\nModèle : Clio 1.0\nAnnée : 2019\nMotorisation : Essence 1.0 L\nPuissance : 90 ch\nBoîte : Manuelle\nTransmission : Traction avant\nCarrosserie : Citadine\nKilométrage : 101 000 km\nÉmissions CO₂ : 135 g/km\nPlaces : 5\nPortes : 5\nCouleur : Noir\nPrix : 4 000€\nGarantie : 24 mois\nOrigine : Importation allemande 🇩🇪\nÉquipements : DAB, navigation, Bluetooth, régulateur de vitesse."
+    "description": "Marque : Renault\nModèle : Clio 1.0\nAnnée : 2019\nMotorisation : Essence 1.0 L\nPuissance : 90 ch\nBoîte : Manuelle\nTransmission : Traction avant\nCarrosserie : Citadine\nKilométrage : 101 000 km\nÉmissions CO₂ : 135 g/km\nPlaces : 5\nPortes : 5\nCouleur : Noir\nPrix : 10 900€\nGarantie : 24 mois\nOrigine : Importation allemande 🇩🇪\nÉquipements : DAB, navigation, Bluetooth, régulateur de vitesse."
   },
   {
     "id": 37,
@@ -1257,7 +1257,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 24100,
-    "price": 9000,
+    "price": 20900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -1284,7 +1284,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-15-57508.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507892161-16-57509.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe A 200 7G-DCT\nAnnée : 2021\nMotorisation : Essence 1.3 L\nPuissance : 163 ch\nBoîte : Automatique 7G-DCT\nTransmission : Traction avant\nCarrosserie : Berline compacte\nKilométrage : 24 100 km\nPlaces : 5\nPrix : 9 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe A 200 7G-DCT\nAnnée : 2021\nMotorisation : Essence 1.3 L\nPuissance : 163 ch\nBoîte : Automatique 7G-DCT\nTransmission : Traction avant\nCarrosserie : Berline compacte\nKilométrage : 24 100 km\nPlaces : 5\nPrix : 20 900 €"
   },
   {
     "id": 38,
@@ -1294,7 +1294,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 197250,
-    "price": 6500,
+    "price": 10900,
     "monthly": 126,
     "type": "occasion",
     "category": "Berline",
@@ -1312,7 +1312,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-6-57473.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507344938-7-57475.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : E 200\nAnnée : 2013\nMotorisation : Diesel 2.1\nPuissance : 136 ch (100 kW)\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Berline\nKilométrage : 197 250 km\nCouleur : Noir\nJantes : 19 pouces\nPlaces : 5\nPrix : 6 500€\nCT : Valide jusqu’en septembre 2026"
+    "description": "Marque : Mercedes-Benz\nModèle : E 200\nAnnée : 2013\nMotorisation : Diesel 2.1\nPuissance : 136 ch (100 kW)\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Berline\nKilométrage : 197 250 km\nCouleur : Noir\nJantes : 19 pouces\nPlaces : 5\nPrix : 10 900€\nCT : Valide jusqu’en septembre 2026"
   },
   {
     "id": 39,
@@ -1322,7 +1322,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 91800,
-    "price": 6500,
+    "price": 14900,
     "monthly": 155,
     "type": "occasion",
     "category": "Berline",
@@ -1343,7 +1343,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-9-57465.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786507152998-10-57466.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A3 Limousine 2.0 TDI Quattro S line\nAnnée : 2018\nMotorisation : Diesel 2.0 TDI\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Berline / Limousine\nFinition : S line\nKilométrage : 91 800 km certifiés\nPrix : 6 500€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison : 5 jours\nÉquipements principaux : ACC, système audio Bang & Olufsen, phares LED, toit panoramique, jantes 19\"."
+    "description": "Marque : Audi\nModèle : A3 Limousine 2.0 TDI Quattro S line\nAnnée : 2018\nMotorisation : Diesel 2.0 TDI\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Berline / Limousine\nFinition : S line\nKilométrage : 91 800 km certifiés\nPrix : 14 900 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison : 5 jours\nÉquipements principaux : ACC, système audio Bang & Olufsen, phares LED, toit panoramique, jantes 19\"."
   },
   {
     "id": 40,
@@ -1353,7 +1353,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 67935,
-    "price": 9500,
+    "price": 27900,
     "monthly": 213,
     "type": "occasion",
     "category": "Berline",
@@ -1372,7 +1372,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-7-57454.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506943485-8-57455.jpg"
     ],
-    "description": "Marque : Jaguar\nModèle : XE D200 R-Dynamic Black\nAnnée : 2023\nPremière immatriculation : 01/2023\nMotorisation : Diesel 2.0 D200\nPuissance : 204 ch (150 kW)\nBoîte : Automatique 8 rapports\nTransmission : Propulsion\nCarrosserie : Berline\nFinition : R-Dynamic Black\nKilométrage : 67 935 km\nPrix : 9 500€\nOrigine : Édition allemande 🇩🇪\nÉtat : Non accidentée\nDisponibilité : Immédiate\nÉquipements principaux : Black Pack, jantes 19\", sellerie cuir, sièges électriques chauffants à mémoire, Meridian 400 W, Pivi Pro Navigation, Apple CarPlay/Android Auto, ACC, caméra de recul, Keyless et Winter Pack."
+    "description": "Marque : Jaguar\nModèle : XE D200 R-Dynamic Black\nAnnée : 2023\nPremière immatriculation : 01/2023\nMotorisation : Diesel 2.0 D200\nPuissance : 204 ch (150 kW)\nBoîte : Automatique 8 rapports\nTransmission : Propulsion\nCarrosserie : Berline\nFinition : R-Dynamic Black\nKilométrage : 67 935 km\nPrix : 27 900 €\nOrigine : Édition allemande 🇩🇪\nÉtat : Non accidentée\nDisponibilité : Immédiate\nÉquipements principaux : Black Pack, jantes 19\", sellerie cuir, sièges électriques chauffants à mémoire, Meridian 400 W, Pivi Pro Navigation, Apple CarPlay/Android Auto, ACC, caméra de recul, Keyless et Winter Pack."
   },
   {
     "id": 41,
@@ -1382,7 +1382,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 98000,
-    "price": 6800,
+    "price": 18900,
     "monthly": 132,
     "type": "occasion",
     "category": "SUV",
@@ -1404,7 +1404,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-10-57445.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506682804-11-57446.jpg"
     ],
-    "description": "Marque : BMW\nModèle : X3 20d xDrive M Sport\nAnnée : 2017\nMotorisation : Diesel 2.0\nPuissance : 163 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 98 000 km certifiés\nPlaces : 5\nPrix : 6 800€\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison : 5 jours\nDisponibilité : Sur commande\nÉquipements : Keyless, cuir, navigation, LED/Xénon, DAB+, régulateur de vitesse, PDC, crochet d’attelage, caméra/capteurs, système multimédia."
+    "description": "Marque : BMW\nModèle : X3 20d xDrive M Sport\nAnnée : 2017\nMotorisation : Diesel 2.0\nPuissance : 163 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 98 000 km certifiés\nPlaces : 5\nPrix : 18 900 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 24 mois\nLivraison : 5 jours\nDisponibilité : Sur commande\nÉquipements : Keyless, cuir, navigation, LED/Xénon, DAB+, régulateur de vitesse, PDC, crochet d’attelage, caméra/capteurs, système multimédia."
   },
   {
     "id": 42,
@@ -1414,7 +1414,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 150000,
-    "price": 5000,
+    "price": 10900,
     "monthly": 97,
     "type": "occasion",
     "category": "Berline",
@@ -1435,7 +1435,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-9-57432.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506435792-10-57433.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe E 220 CDI Avantgarde\nAnnée : 2012\nMotorisation : Diesel 2.1 L\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 150 000 km certifiés\nFinition : Avantgarde\nPrix : 5 000€ 🇩🇪\nÉquipements : Sellerie cuir, sièges à mémoire, réglages électriques/multidirectionnels."
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 220 CDI Avantgarde\nAnnée : 2012\nMotorisation : Diesel 2.1 L\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 150 000 km certifiés\nFinition : Avantgarde\nPrix : 10 900 € 🇩🇪\nÉquipements : Sellerie cuir, sièges à mémoire, réglages électriques/multidirectionnels."
   },
   {
     "id": 43,
@@ -1445,7 +1445,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Manuelle",
     "mileage": 126000,
-    "price": 4000,
+    "price": 9900,
     "monthly": 106,
     "type": "occasion",
     "category": "Berline",
@@ -1464,7 +1464,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295621-7-57421.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506295621-8-57422.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A1 1.2 TFSI S-Line\nAnnée : 2014\nPremière mise en circulation : 03/2014\nMotorisation : Essence 1.2 TFSI\nPuissance : 85 ch (63 kW)\nBoîte : Manuelle\nCarrosserie : Citadine\nFinition : S-Line\nKilométrage : 126 000 km\nNorme : Euro 5\nPrix : 4 000€\nOrigine : Allemagne 🇩🇪"
+    "description": "Marque : Audi\nModèle : A1 1.2 TFSI S-Line\nAnnée : 2014\nPremière mise en circulation : 03/2014\nMotorisation : Essence 1.2 TFSI\nPuissance : 85 ch (63 kW)\nBoîte : Manuelle\nCarrosserie : Citadine\nFinition : S-Line\nKilométrage : 126 000 km\nNorme : Euro 5\nPrix : 9 900€\nOrigine : Allemagne 🇩🇪"
   },
   {
     "id": 44,
@@ -1474,7 +1474,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 61464,
-    "price": 8000,
+    "price": 21900,
     "monthly": 155,
     "type": "occasion",
     "category": "Break",
@@ -1504,7 +1504,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-18-57412.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786506102938-19-57413.jpg"
     ],
-    "description": "Marque : BMW\nModèle : 318d Touring Luxury Line\nAnnée : 2020\nMotorisation : Diesel 2.0\nPuissance : 150 ch (110 kW)\nBoîte : Automatique\nCarrosserie : Break / Touring\nFinition : Luxury Line\nKilométrage : 61 464 km certifiés\nPrix : 8 000€\nÉquipements : Live Cockpit, pack Innovation."
+    "description": "Marque : BMW\nModèle : 318d Touring Luxury Line\nAnnée : 2020\nMotorisation : Diesel 2.0\nPuissance : 150 ch (110 kW)\nBoîte : Automatique\nCarrosserie : Break / Touring\nFinition : Luxury Line\nKilométrage : 61 464 km certifiés\nPrix : 21 900 €\nÉquipements : Live Cockpit, pack Innovation."
   },
   {
     "id": 45,
@@ -1514,7 +1514,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 80100,
-    "price": 3500,
+    "price": 11900,
     "monthly": 97,
     "type": "occasion",
     "category": "Berline",
@@ -1534,7 +1534,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-8-57389.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505847615-9-57390.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A4 Turbo quattro\nAnnée : 2013\nMotorisation : Essence\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Berline\nKilométrage : 80 100 km certifiés\nPrix : 3 500€"
+    "description": "Marque : Audi\nModèle : A4 Turbo quattro\nAnnée : 2013\nMotorisation : Essence\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Berline\nKilométrage : 80 100 km certifiés\nPrix : 11 900€"
   },
   {
     "id": 46,
@@ -1584,7 +1584,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 65127,
-    "price": 7000,
+    "price": 17900,
     "monthly": 135,
     "type": "occasion",
     "category": "SUV",
@@ -1606,7 +1606,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-10-57348.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505251133-11-57349.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLA 180 d AMG Line\nAnnée : 2020\nPremière immatriculation : 09/2020\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : SUV compact\nFinition : AMG Line\nKilométrage : 65 127 km certifiés\nPrix : 7 000€\nOrigine : Importation allemande 🇩🇪\nÉtat : Jamais accidenté\nGarantie : 24 mois\nDisponibilité : Sur commande\nLivraison : Possible\nPaiement : Possibilité de mensualités selon les conditions indiquées"
+    "description": "Marque : Mercedes-Benz\nModèle : GLA 180 d AMG Line\nAnnée : 2020\nPremière immatriculation : 09/2020\nMotorisation : Diesel\nPuissance : 116 ch\nBoîte : Automatique\nCarrosserie : SUV compact\nFinition : AMG Line\nKilométrage : 65 127 km certifiés\nPrix : 17 900 €\nOrigine : Importation allemande 🇩🇪\nÉtat : Jamais accidenté\nGarantie : 24 mois\nDisponibilité : Sur commande\nLivraison : Possible\nPaiement : Possibilité de mensualités selon les conditions indiquées"
   },
   {
     "id": 48,
@@ -1616,7 +1616,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 39995,
-    "price": 9000,
+    "price": 25900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -1646,7 +1646,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-18-57336.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786505025510-19-57337.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : E 220 d Avantgarde\nAnnée : 2020\nPremière immatriculation : 11/2020\nMotorisation : Diesel 2.0 CDI\nPuissance : 194 ch (143 kW)\nBoîte : Automatique 9G-Tronic\nTransmission : Propulsion\nCarrosserie : Berline / Limousine\nFinition : Avantgarde\nKilométrage : 39 995 km\nCouleur : Noir Obsidienne métallisé\nPrix : 9 000€\nOrigine : Allemagne 🇩🇪\nPropriétaire : 1ère main – véhicule administratif\nÉtat : Non-fumeur, non loué, non accidenté\nEntretien : Exclusivement chez Mercedes-Benz\nDernier entretien : 28/07/2025 à 38 169 km\nDisponibilité : Immédiate\nÉquipements principaux : DISTRONIC PLUS, caméra 360°, Pack Assistance, Park-Paket, MBUX, navigation, Apple CarPlay/Android Auto, recharge sans fil, sièges chauffants, KeyFree-Start et phares LED."
+    "description": "Marque : Mercedes-Benz\nModèle : E 220 d Avantgarde\nAnnée : 2020\nPremière immatriculation : 11/2020\nMotorisation : Diesel 2.0 CDI\nPuissance : 194 ch (143 kW)\nBoîte : Automatique 9G-Tronic\nTransmission : Propulsion\nCarrosserie : Berline / Limousine\nFinition : Avantgarde\nKilométrage : 39 995 km\nCouleur : Noir Obsidienne métallisé\nPrix : 25 900 €\nOrigine : Allemagne 🇩🇪\nPropriétaire : 1ère main – véhicule administratif\nÉtat : Non-fumeur, non loué, non accidenté\nEntretien : Exclusivement chez Mercedes-Benz\nDernier entretien : 28/07/2025 à 38 169 km\nDisponibilité : Immédiate\nÉquipements principaux : DISTRONIC PLUS, caméra 360°, Pack Assistance, Park-Paket, MBUX, navigation, Apple CarPlay/Android Auto, recharge sans fil, sièges chauffants, KeyFree-Start et phares LED."
   },
   {
     "id": 49,
@@ -1656,7 +1656,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Manuelle",
     "mileage": 35541,
-    "price": 13500,
+    "price": 35900,
     "monthly": 290,
     "type": "occasion",
     "category": "Coupé",
@@ -1686,7 +1686,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-18-57289.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504405930-19-57290.jpg"
     ],
-    "description": "Marque : Honda\nModèle : Civic Type R GT 2.0 i-VTEC\nAnnée : 2019\nPremière immatriculation : 09/09/2019\nMotorisation : Essence 2.0 i-VTEC VTEC\nPuissance : 320 ch (235 kW)\nBoîte : Manuelle 6 rapports\nTransmission : Traction avant\nCarrosserie : 5 portes\nFinition : Type R GT\nKilométrage : 35 541 km\nCouleur : Sonic Grey Perleffekt\nPrix : 13 500€\nOrigine : Allemagne 🇩🇪\nPropriétaires : 2e main\nÉtat : Non accidenté, non-fumeur\nDisponibilité : Immédiate\nEntretien : Historique suivi, 4e entretien effectué récemment\nÉquipements principaux : Sièges baquets Alcantara, châssis adaptatif, échappement sport, jantes 20\", navigation, Apple CarPlay/Android Auto, caméra de recul, Keyless, phares LED, audio 11 haut-parleurs et aides à la conduite."
+    "description": "Marque : Honda\nModèle : Civic Type R GT 2.0 i-VTEC\nAnnée : 2019\nPremière immatriculation : 09/09/2019\nMotorisation : Essence 2.0 i-VTEC VTEC\nPuissance : 320 ch (235 kW)\nBoîte : Manuelle 6 rapports\nTransmission : Traction avant\nCarrosserie : 5 portes\nFinition : Type R GT\nKilométrage : 35 541 km\nCouleur : Sonic Grey Perleffekt\nPrix : 35 900 €\nOrigine : Allemagne 🇩🇪\nPropriétaires : 2e main\nÉtat : Non accidenté, non-fumeur\nDisponibilité : Immédiate\nEntretien : Historique suivi, 4e entretien effectué récemment\nÉquipements principaux : Sièges baquets Alcantara, châssis adaptatif, échappement sport, jantes 20\", navigation, Apple CarPlay/Android Auto, caméra de recul, Keyless, phares LED, audio 11 haut-parleurs et aides à la conduite."
   },
   {
     "id": 50,
@@ -1696,7 +1696,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 44131,
-    "price": 5500,
+    "price": 10900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -1726,7 +1726,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-18-57264.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786504117422-19-57265.jpg"
     ],
-    "description": "Marque : Opel\nModèle : Corsa 1.2 Elegance\nAnnée : 2020\nMotorisation : Essence 1.2\nPuissance : 100 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : Elegance\nKilométrage : 44 131 km certifiés\nPropriétaire : 1er propriétaire\nPrix : 5 500€\nLivraison : 5 jours\nÉquipements : Phares LED Matrix, sellerie cuir, sièges massants, toit panoramique."
+    "description": "Marque : Opel\nModèle : Corsa 1.2 Elegance\nAnnée : 2020\nMotorisation : Essence 1.2\nPuissance : 100 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : Elegance\nKilométrage : 44 131 km certifiés\nPropriétaire : 1er propriétaire\nPrix : 10 900 €\nLivraison : 5 jours\nÉquipements : Phares LED Matrix, sellerie cuir, sièges massants, toit panoramique."
   },
   {
     "id": 51,
@@ -1736,7 +1736,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 91000,
-    "price": 4000,
+    "price": 11900,
     "monthly": 106,
     "type": "occasion",
     "category": "SUV",
@@ -1763,7 +1763,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-15-57243.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503782203-16-57244.jpg"
     ],
-    "description": "Marque : Audi\nModèle : Q3 35 TFSI S line S tronic\nAnnée : 2014\nMotorisation : Diesel (à vérifier : « TFSI » désigne normalement une motorisation essence)\nPuissance annoncée : 313 ch (à vérifier : cette puissance paraît inhabituelle pour un Q3 35 TFSI de 2014)\nCylindrée annoncée : 3.0 L (à vérifier)\nBoîte : Automatique S tronic\nCarrosserie : SUV\nKilométrage : 91 000 km\nPlaces : 5\nPrix : 4 000€"
+    "description": "Marque : Audi\nModèle : Q3 35 TFSI S line S tronic\nAnnée : 2014\nMotorisation : Diesel (à vérifier : « TFSI » désigne normalement une motorisation essence)\nPuissance annoncée : 313 ch (à vérifier : cette puissance paraît inhabituelle pour un Q3 35 TFSI de 2014)\nCylindrée annoncée : 3.0 L (à vérifier)\nBoîte : Automatique S tronic\nCarrosserie : SUV\nKilométrage : 91 000 km\nPlaces : 5\nPrix : 11 900 €"
   },
   {
     "id": 52,
@@ -1809,7 +1809,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 87000,
-    "price": 10000,
+    "price": 30900,
     "monthly": 193,
     "type": "occasion",
     "category": "SUV",
@@ -1834,7 +1834,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-13-57210.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786503187897-14-57211.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d AMG-Line 4MATIC\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG-Line\nKilométrage : 87 000 km certifiés\nPrix : 10 000€\nGarantie : 24 mois\nÉquipements principaux : Toit panoramique, phares LED, GPS, sièges chauffants et électriques, hayon électrique, caméra/assistances de conduite, régulateur de vitesse, Bluetooth, jantes alliage."
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 220 d AMG-Line 4MATIC\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG-Line\nKilométrage : 87 000 km certifiés\nPrix : 30 900 €\nGarantie : 24 mois\nÉquipements principaux : Toit panoramique, phares LED, GPS, sièges chauffants et électriques, hayon électrique, caméra/assistances de conduite, régulateur de vitesse, Bluetooth, jantes alliage."
   },
   {
     "id": 54,
@@ -1879,7 +1879,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 112000,
-    "price": 4000,
+    "price": 17900,
     "monthly": 106,
     "type": "occasion",
     "category": "Berline",
@@ -1908,7 +1908,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-17-57180.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501807668-18-57181.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A5 2.0 TFSI Sportback Quattro S Line\nAnnée : 2017\nMotorisation : Essence 2.0 TFSI\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Sportback\nFinition : S Line\nKilométrage : 112 000 km certifiés\nPrix : 4 000€\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nLivraison : 5 jours\nDisponibilité : Sur commande\nÉquipements : ACC, cuir, crochet d’attelage, Bluetooth, navigation, caméra de recul, USB, AUX, DAB+"
+    "description": "Marque : Audi\nModèle : A5 2.0 TFSI Sportback Quattro S Line\nAnnée : 2017\nMotorisation : Essence 2.0 TFSI\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Sportback\nFinition : S Line\nKilométrage : 112 000 km certifiés\nPrix : 17 900 €\nOrigine : Importation allemande 🇩🇪\nGarantie : 18 mois\nLivraison : 5 jours\nDisponibilité : Sur commande\nÉquipements : ACC, cuir, crochet d’attelage, Bluetooth, navigation, caméra de recul, USB, AUX, DAB+"
   },
   {
     "id": 56,
@@ -1918,7 +1918,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 59800,
-    "price": 9500,
+    "price": 21900,
     "monthly": 213,
     "type": "occasion",
     "category": "Berline",
@@ -1946,7 +1946,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-16-57161.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786501613976-17-57162.jpg"
     ],
-    "description": "Marque : Jaguar\nModèle : E-PACE P200 AWD R-Dynamic S\nAnnée : 2021\nMotorisation : Essence 2.0 P200\nPuissance : 200 ch (147 kW)\nBoîte : Automatique 9 rapports\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : R-Dynamic S\nKilométrage : 59 800 km\nPrix : 9 500€\nOrigine : Édition allemande\nPropriétaire : 1ère main – ancien véhicule de leasing\nEntretien : Carnet suivi, dernière révision à 59 612 km en mars 2026\nGarantie : Possible jusqu’à 5 ans / 250 000 km selon conditions"
+    "description": "Marque : Jaguar\nModèle : E-PACE P200 AWD R-Dynamic S\nAnnée : 2021\nMotorisation : Essence 2.0 P200\nPuissance : 200 ch (147 kW)\nBoîte : Automatique 9 rapports\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : R-Dynamic S\nKilométrage : 59 800 km\nPrix : 21 900 €\nOrigine : Édition allemande\nPropriétaire : 1ère main – ancien véhicule de leasing\nEntretien : Carnet suivi, dernière révision à 59 612 km en mars 2026\nGarantie : Possible jusqu’à 5 ans / 250 000 km selon conditions"
   },
   {
     "id": 57,
@@ -2036,7 +2036,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 43700,
-    "price": 57700,
+    "price": 165900,
     "monthly": 1116,
     "type": "occasion",
     "category": "Berline",
@@ -2066,7 +2066,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-18-57094.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500504682-19-57095.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : AMG G 63\nAnnée : 2023\nMotorisation : Essence – V8 4.0L Biturbo\nPuissance : 577 ch\nCouple : 627 lb-ft (≈ 850 Nm)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nKilométrage : 27 156 miles (≈ 43 700 km)\nCouleur : MANUFAKTUR Olive Green Metallic\nPrix : 57 700€\nÉtat : Sans accident\nGarantie : 24 mois\nLivraison : 5 jours\nImportation : Allemagne 🇩🇪"
+    "description": "Marque : Mercedes-Benz\nModèle : AMG G 63\nAnnée : 2023\nMotorisation : Essence – V8 4.0L Biturbo\nPuissance : 577 ch\nCouple : 627 lb-ft (≈ 850 Nm)\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nKilométrage : 27 156 miles (≈ 43 700 km)\nCouleur : MANUFAKTUR Olive Green Metallic\nPrix : 165 900 €\nÉtat : Sans accident\nGarantie : 24 mois\nLivraison : 5 jours\nImportation : Allemagne 🇩🇪"
   },
   {
     "id": 60,
@@ -2076,7 +2076,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 175489,
-    "price": 8000,
+    "price": 11900,
     "monthly": 155,
     "type": "occasion",
     "category": "Berline",
@@ -2096,7 +2096,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-8-57074.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786500083682-9-57075.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : ML 350\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 112 ch (à vérifier : cette puissance paraît inhabituelle pour un ML 350)\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 175 489 km\nPrix : 8 000€\nÉtat : Jamais accidenté\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
+    "description": "Marque : Mercedes-Benz\nModèle : ML 350\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 112 ch (à vérifier : cette puissance paraît inhabituelle pour un ML 350)\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 175 489 km\nPrix : 11 900 €\nÉtat : Jamais accidenté\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
   },
   {
     "id": 61,
@@ -2106,7 +2106,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 71200,
-    "price": 16000,
+    "price": 35900,
     "monthly": 309,
     "type": "occasion",
     "category": "Berline",
@@ -2136,7 +2136,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-18-57003.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786411129851-19-57004.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : V 250 d Avantgarde Extralong\nAnnée : 2020\nMotorisation : Diesel\nPuissance : 190 ch\nBoîte : Automatique\nCarrosserie : Van / Monospace\nNombre de places : 8\nKilométrage : 71 200 km certifiés\nÉquipements : MBUX, portes électriques\nPrix : 16 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : V 250 d Avantgarde Extralong\nAnnée : 2020\nMotorisation : Diesel\nPuissance : 190 ch\nBoîte : Automatique\nCarrosserie : Van / Monospace\nNombre de places : 8\nKilométrage : 71 200 km certifiés\nÉquipements : MBUX, portes électriques\nPrix : 35 900 €"
   },
   {
     "id": 62,
@@ -2146,7 +2146,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 195000,
-    "price": 6000,
+    "price": 10900,
     "monthly": 116,
     "type": "occasion",
     "category": "Berline",
@@ -2168,7 +2168,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-10-56983.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410701837-11-56984.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe C C 220 BlueTEC\nAnnée : 2014\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 195 000 km certifiés\nPrix : 6 000€\nÉquipements : Caméra de recul, régulateur de vitesse, navigation"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe C C 220 BlueTEC\nAnnée : 2014\nMotorisation : Diesel\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline\nKilométrage : 195 000 km certifiés\nPrix : 10 900€\nÉquipements : Caméra de recul, régulateur de vitesse, navigation"
   },
   {
     "id": 63,
@@ -2178,7 +2178,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 60000,
-    "price": 15000,
+    "price": 40900,
     "monthly": 290,
     "type": "occasion",
     "category": "SUV",
@@ -2198,7 +2198,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516451-8-56971.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410516451-9-56972.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLC 200 Coupé AMG Premium Pack Night\nAnnée : 2024\nMotorisation : Essence\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Propulsion\nCarrosserie : SUV Coupé\nFinition : AMG\nCouleur : Noir métallisé\nIntérieur : Cuir cognac\nPrix : 15 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 200 Coupé AMG Premium Pack Night\nAnnée : 2024\nMotorisation : Essence\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Propulsion\nCarrosserie : SUV Coupé\nFinition : AMG\nCouleur : Noir métallisé\nIntérieur : Cuir cognac\nPrix : 40 900 €"
   },
   {
     "id": 64,
@@ -2208,7 +2208,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 69553,
-    "price": 5500,
+    "price": 15900,
     "monthly": 135,
     "type": "occasion",
     "category": "SUV",
@@ -2232,7 +2232,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-12-56961.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786410296908-13-56962.jpg"
     ],
-    "description": "Marque : SEAT\nModèle : Ateca FR 1.4 TSI 4Drive\nAnnée : 2018\nMotorisation : Essence 1.4 TSI\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : 4Drive – 4×4\nCarrosserie : SUV\nFinition : FR\nKilométrage : 69 553 km certifiés\nÉmissions CO₂ : 144 g/km\nCouleur : Orange\nPrix : 5 500€\nGarantie : 24 mois incluse\nÉquipements : Webasto, navigation, système Keyless, charge/équipement de recharge"
+    "description": "Marque : SEAT\nModèle : Ateca FR 1.4 TSI 4Drive\nAnnée : 2018\nMotorisation : Essence 1.4 TSI\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : 4Drive – 4×4\nCarrosserie : SUV\nFinition : FR\nKilométrage : 69 553 km certifiés\nÉmissions CO₂ : 144 g/km\nCouleur : Orange\nPrix : 15 900 €\nGarantie : 24 mois incluse\nÉquipements : Webasto, navigation, système Keyless, charge/équipement de recharge"
   },
   {
     "id": 65,
@@ -2276,7 +2276,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 131000,
-    "price": 8000,
+    "price": 24900,
     "monthly": 184,
     "type": "occasion",
     "category": "Berline",
@@ -2304,7 +2304,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-16-inbound7983607203039514244.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786405109357-17-inbound8665056111892912682.jpg"
     ],
-    "description": "Marque : Volkswagen\nModèle : T6 Transporter 4MOTION\nAnnée : 2020\nMotorisation : Diesel\nPuissance : 199 ch\nBoîte : Automatique\nTransmission : 4MOTION – 4×4\nCarrosserie : Utilitaire / Van\nKilométrage : 131 000 km certifiés\nPrix : 8 000€\nÉquipements : Phares LED, chauffage stationnaire, régulateur de vitesse adaptatif (ACC), caméra de recul"
+    "description": "Marque : Volkswagen\nModèle : T6 Transporter 4MOTION\nAnnée : 2020\nMotorisation : Diesel\nPuissance : 199 ch\nBoîte : Automatique\nTransmission : 4MOTION – 4×4\nCarrosserie : Utilitaire / Van\nKilométrage : 131 000 km certifiés\nPrix : 24 900 €\nÉquipements : Phares LED, chauffage stationnaire, régulateur de vitesse adaptatif (ACC), caméra de recul"
   },
   {
     "id": 67,
@@ -2314,7 +2314,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 89050,
-    "price": 4300,
+    "price": 18900,
     "monthly": 112,
     "type": "occasion",
     "category": "Berline",
@@ -2342,7 +2342,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-16-inbound9105912111435102217.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786402052398-17-inbound9108296376479216410.jpg"
     ],
-    "description": "Marque : Toyota\nModèle : RAV4 2.5 Active AWD Hybrid\nAnnée : 2017\nMotorisation : Hybride – Essence + Électrique\nPuissance : 298 ch\nBoîte : Automatique\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : Active\nKilométrage : 89 050 km certifiés\nPrix : 4 300€\nÉtat : Jamais accidenté\nGarantie : 24 mois incluse"
+    "description": "Marque : Toyota\nModèle : RAV4 2.5 Active AWD Hybrid\nAnnée : 2017\nMotorisation : Hybride – Essence + Électrique\nPuissance : 298 ch\nBoîte : Automatique\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : Active\nKilométrage : 89 050 km certifiés\nPrix : 18 900 €\nÉtat : Jamais accidenté\nGarantie : 24 mois incluse"
   },
   {
     "id": 68,
@@ -2352,7 +2352,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 17629,
-    "price": 7500,
+    "price": 24900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -2373,7 +2373,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-9-56812.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400912648-10-56813.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A3 40 TFSI e\nAnnée : 2022\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 204 ch\nCylindrée : 1,4 L\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : Compacte\nKilométrage : 17 629 km\nPlaces : 5\nPrix : 7 500€"
+    "description": "Marque : Audi\nModèle : A3 40 TFSI e\nAnnée : 2022\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 204 ch\nCylindrée : 1,4 L\nBoîte : Automatique\nTransmission : Traction avant\nCarrosserie : Compacte\nKilométrage : 17 629 km\nPlaces : 5\nPrix : 24 900 €"
   },
   {
     "id": 69,
@@ -2383,7 +2383,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 50000,
-    "price": 9500,
+    "price": 35900,
     "monthly": 213,
     "type": "occasion",
     "category": "Berline",
@@ -2413,7 +2413,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-18-56801.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400668094-19-56802.jpg"
     ],
-    "description": "Marque : Volkswagen\nModèle : Amarok 3.0 TDI V6 Aventura\nAnnée : 2023\nMotorisation : Diesel 3.0 TDI V6\nPuissance : 240 ch\nBoîte : Automatique\nTransmission : 4×4\nCarrosserie : Pick-up\nFinition : Aventura\nKilométrage : 50 000 km certifiés\nPrix : 9 500€\nGarantie : 24 mois\nÉquipements : Attelage, Webasto, phares Matrix LED, système audio Harman Kardon"
+    "description": "Marque : Volkswagen\nModèle : Amarok 3.0 TDI V6 Aventura\nAnnée : 2023\nMotorisation : Diesel 3.0 TDI V6\nPuissance : 240 ch\nBoîte : Automatique\nTransmission : 4×4\nCarrosserie : Pick-up\nFinition : Aventura\nKilométrage : 50 000 km certifiés\nPrix : 35 900 €\nGarantie : 24 mois\nÉquipements : Attelage, Webasto, phares Matrix LED, système audio Harman Kardon"
   },
   {
     "id": 70,
@@ -2463,7 +2463,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 14000,
-    "price": 11500,
+    "price": 35900,
     "monthly": 251,
     "type": "occasion",
     "category": "Berline",
@@ -2493,7 +2493,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-18-56757.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786400162188-19-56758.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A6 Avant 40 TDI Quattro S-Line\nAnnée : 2022\nMotorisation : Diesel\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Break / Avant\nFinition : S-Line\nKilométrage : 14 000 km certifiés\nÉquipements : Pack noir, attelage, Virtual Cockpit\nPrix : 11 500€"
+    "description": "Marque : Audi\nModèle : A6 Avant 40 TDI Quattro S-Line\nAnnée : 2022\nMotorisation : Diesel\nPuissance : 204 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Break / Avant\nFinition : S-Line\nKilométrage : 14 000 km certifiés\nÉquipements : Pack noir, attelage, Virtual Cockpit\nPrix : 35 900 €"
   },
   {
     "id": 72,
@@ -2503,7 +2503,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 65000,
-    "price": 13500,
+    "price": 30900,
     "monthly": 290,
     "type": "occasion",
     "category": "Berline",
@@ -2532,7 +2532,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883888-17-56729.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786399883889-18-56730.jpg"
     ],
-    "description": "Marque : Land Rover\nModèle : Range Rover Evoque P300e R-Dynamic SE AWD\nAnnée : 2022\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 309 ch (227 kW)\nBoîte : Automatique\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : R-Dynamic SE\nKilométrage : 65 000 km certifiés\nPrix : 13 500€\nÉquipement : Phares Matrix LED"
+    "description": "Marque : Land Rover\nModèle : Range Rover Evoque P300e R-Dynamic SE AWD\nAnnée : 2022\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 309 ch (227 kW)\nBoîte : Automatique\nTransmission : AWD – 4×4\nCarrosserie : SUV\nFinition : R-Dynamic SE\nKilométrage : 65 000 km certifiés\nPrix : 30 900 €\nÉquipement : Phares Matrix LED"
   },
   {
     "id": 73,
@@ -2542,7 +2542,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 54000,
-    "price": 9500,
+    "price": 23900,
     "monthly": 213,
     "type": "occasion",
     "category": "Berline",
@@ -2572,7 +2572,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-18-56709.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364646291-19-56710.jpg"
     ],
-    "description": "Marque : Škoda\nModèle : Kodiaq Sportline 2.0 TSI 4×4\nAnnée : 2020\nMotorisation : Essence 2.0 TSI\nPuissance : 190 ch\nBoîte : Automatique DSG\nTransmission : 4×4\nCarrosserie : SUV\nFinition : Sportline\nKilométrage : 54 000 km\nSérie : NS\nPrix : 9 500€\nDisponibilité : Immédiate"
+    "description": "Marque : Škoda\nModèle : Kodiaq Sportline 2.0 TSI 4×4\nAnnée : 2020\nMotorisation : Essence 2.0 TSI\nPuissance : 190 ch\nBoîte : Automatique DSG\nTransmission : 4×4\nCarrosserie : SUV\nFinition : Sportline\nKilométrage : 54 000 km\nSérie : NS\nPrix : 23 900 €\nDisponibilité : Immédiate"
   },
   {
     "id": 74,
@@ -2582,7 +2582,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 33000,
-    "price": 7000,
+    "price": 12900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -2605,7 +2605,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-11-56687.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786364044770-12-56688.jpg"
     ],
-    "description": "Marque : BMW\nModèle : Série 5 530e xDrive iPerformance M Sport\nAnnée : 2015\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 296 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : Berline\nFinition : M Sport\nKilométrage : 33 000 km certifiés\nPrix : 7 000€\nGarantie : 24 mois incluse"
+    "description": "Marque : BMW\nModèle : Série 5 530e xDrive iPerformance M Sport\nAnnée : 2015\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 296 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : Berline\nFinition : M Sport\nKilométrage : 33 000 km certifiés\nPrix : 12 900 €\nGarantie : 24 mois incluse"
   },
   {
     "id": 75,
@@ -2615,7 +2615,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 132600,
-    "price": 6000,
+    "price": 10900,
     "monthly": 145,
     "type": "occasion",
     "category": "Berline",
@@ -2642,7 +2642,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-15-56664.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363555851-16-56665.jpg"
     ],
-    "description": "Marque : Land Rover\nModèle : Range Rover Evoque 4×4\nAnnée : 2012\nMotorisation : Diesel\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : 4×4\nCarrosserie : SUV\nKilométrage : 132 600 km\nPrix : 6 000€\nGarantie : 24 mois inbegrepen"
+    "description": "Marque : Land Rover\nModèle : Range Rover Evoque 4×4\nAnnée : 2012\nMotorisation : Diesel\nPuissance : 150 ch\nBoîte : Automatique\nTransmission : 4×4\nCarrosserie : SUV\nKilométrage : 132 600 km\nPrix : 10 900 €\nGarantie : 24 mois inbegrepen"
   },
   {
     "id": 76,
@@ -2652,7 +2652,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 92000,
-    "price": 4000,
+    "price": 12900,
     "monthly": 106,
     "type": "occasion",
     "category": "SUV",
@@ -2681,7 +2681,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-17-56647.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786363291701-18-56648.jpg"
     ],
-    "description": "Marque : Audi\nModèle : Q3 2.0 TDI Quattro\nAnnée : 2015\nMotorisation : Diesel 2.0 L\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nKilométrage : 92 000 km\nCouleur : Blanc\nPlaces : 5\nPortes : 5\nÉmissions CO₂ : 146 g/km\nPrix : 4 000€\nÉtat : Occasion – sans accident\nGarantie : 24 mois"
+    "description": "Marque : Audi\nModèle : Q3 2.0 TDI Quattro\nAnnée : 2015\nMotorisation : Diesel 2.0 L\nPuissance : 184 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : SUV\nKilométrage : 92 000 km\nCouleur : Blanc\nPlaces : 5\nPortes : 5\nÉmissions CO₂ : 146 g/km\nPrix : 12 900 €\nÉtat : Occasion – sans accident\nGarantie : 24 mois"
   },
   {
     "id": 77,
@@ -2691,7 +2691,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 110000,
-    "price": 6000,
+    "price": 17900,
     "monthly": 116,
     "type": "occasion",
     "category": "SUV",
@@ -2716,7 +2716,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-13-56628.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362929905-14-56629.jpg"
     ],
-    "description": "Marque : BMW\nModèle : X3 20d xDrive M Sport\nAnnée : 2017\nMotorisation : Diesel 2.0\nPuissance : 190 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 110 000 km certifiés\nPrix : 6 000€\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours\nÉquipements : Toit ouvrant panoramique, attelage, navigation, régulateur de vitesse"
+    "description": "Marque : BMW\nModèle : X3 20d xDrive M Sport\nAnnée : 2017\nMotorisation : Diesel 2.0\nPuissance : 190 ch\nBoîte : Automatique\nTransmission : xDrive – 4×4\nCarrosserie : SUV\nFinition : M Sport\nKilométrage : 110 000 km certifiés\nPrix : 17 900 €\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours\nÉquipements : Toit ouvrant panoramique, attelage, navigation, régulateur de vitesse"
   },
   {
     "id": 78,
@@ -2726,7 +2726,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 119700,
-    "price": 7000,
+    "price": 24900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -2749,7 +2749,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-11-56613.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362483108-12-56614.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : V 250 d AMG 4MATIC\nAnnée : 2016\nMotorisation : Diesel\nPuissance : 190 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : Monospace / Van\nFinition : AMG\nKilométrage : 119 700 km certifiés\nNombre de places : 6\nÉquipements : Toit panoramique, console centrale\nPrix : 7 000€\nLivraison : 5 jours"
+    "description": "Marque : Mercedes-Benz\nModèle : V 250 d AMG 4MATIC\nAnnée : 2016\nMotorisation : Diesel\nPuissance : 190 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : Monospace / Van\nFinition : AMG\nKilométrage : 119 700 km certifiés\nNombre de places : 6\nÉquipements : Toit panoramique, console centrale\nPrix : 24 900 €\nLivraison : 5 jours"
   },
   {
     "id": 79,
@@ -2759,7 +2759,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Manuelle",
     "mileage": 82713,
-    "price": 4300,
+    "price": 11900,
     "monthly": 112,
     "type": "occasion",
     "category": "Berline",
@@ -2780,7 +2780,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-9-56600.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786362197095-10-56601.jpg"
     ],
-    "description": "Marque : Opel\nModèle : Grandland X\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 120 ch\nBoîte : Manuelle\nCarrosserie : SUV\nKilométrage : 82 713 km certifiés\nPrix : 4 300€\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
+    "description": "Marque : Opel\nModèle : Grandland X\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 120 ch\nBoîte : Manuelle\nCarrosserie : SUV\nKilométrage : 82 713 km certifiés\nPrix : 11 900 €\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
   },
   {
     "id": 80,
@@ -2790,7 +2790,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 59000,
-    "price": 11500,
+    "price": 19900,
     "monthly": 251,
     "type": "occasion",
     "category": "Berline",
@@ -2820,7 +2820,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-18-56589.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786361997852-19-56590.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A3 Sportback 2.0 TFSI Quattro S-Line\nAnnée : 2018\nMotorisation : Essence 2.0 TFSI\nPuissance : 190 ch\nBoîte : Automatique S tronic\nTransmission : Quattro – 4×4\nCarrosserie : Sportback\nFinition : S-Line\nKilométrage : 59 000 km certifiés\nPrix : 11 500€\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
+    "description": "Marque : Audi\nModèle : A3 Sportback 2.0 TFSI Quattro S-Line\nAnnée : 2018\nMotorisation : Essence 2.0 TFSI\nPuissance : 190 ch\nBoîte : Automatique S tronic\nTransmission : Quattro – 4×4\nCarrosserie : Sportback\nFinition : S-Line\nKilométrage : 59 000 km certifiés\nPrix : 19 900 €\nÉtat : Occasion – jamais accidentée\nTVA : Incluse\nGarantie : 24 mois\nLivraison : 5 jours"
   },
   {
     "id": 81,
@@ -2830,7 +2830,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 75500,
-    "price": 10000,
+    "price": 12900,
     "monthly": 222,
     "type": "occasion",
     "category": "Berline",
@@ -2852,7 +2852,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-10-1000056531.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786359686504-11-1000056532.jpg"
     ],
-    "description": "Prix annoncé : 10\u202f000 €\n\nOpel Grandland X Premium, Attelage de remorque, Caméra de recul, Volant chauffant\n\nAnnée : 2020\nKilométrage : 76 500 km (Certifié)\nBoîte de vitesses :  Automatique\nCarburant : Essence\nPuissance : 131 ch\nVolume du cylindre: 1,2 litres\n\nChaque véhicule est sélectionné et inspecté par nos experts pour une qualité et une fiabilité complètes.\nNous croyons en la norme que nous apportons - pas seulement une voiture, mais une expérience!\n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n"
+    "description": "Prix annoncé : 12 900 €\n\nOpel Grandland X Premium, Attelage de remorque, Caméra de recul, Volant chauffant\n\nAnnée : 2020\nKilométrage : 76 500 km (Certifié)\nBoîte de vitesses :  Automatique\nCarburant : Essence\nPuissance : 131 ch\nVolume du cylindre: 1,2 litres\n\nChaque véhicule est sélectionné et inspecté par nos experts pour une qualité et une fiabilité complètes.\nNous croyons en la norme que nous apportons - pas seulement une voiture, mais une expérience!\n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n"
   },
   {
     "id": 82,
@@ -2862,7 +2862,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 197250,
-    "price": 6000,
+    "price": 10900,
     "monthly": 116,
     "type": "occasion",
     "category": "Berline",
@@ -2881,7 +2881,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-7-56569.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352999469-8-56570.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : E 200\nAnnée : 2013\nMotorisation : Diesel 2.1\nPuissance : 136 ch\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Berline\nKilométrage : 197 250 km\nCouleur : Noir\nJantes : 19 pouces\nPlaces : 5\nPrix : 6 000€\nCT : Valide jusqu’en septembre 2026"
+    "description": "Marque : Mercedes-Benz\nModèle : E 200\nAnnée : 2013\nMotorisation : Diesel 2.1\nPuissance : 136 ch\nBoîte : Automatique\nTransmission : Propulsion (RWD)\nCarrosserie : Berline\nKilométrage : 197 250 km\nCouleur : Noir\nJantes : 19 pouces\nPlaces : 5\nPrix : 10900€\nCT : Valide jusqu’en septembre 2026"
   },
   {
     "id": 83,
@@ -2891,7 +2891,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 75000,
-    "price": 5500,
+    "price": 14900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -2910,7 +2910,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-7-56559.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352799480-8-56560.jpg"
     ],
-    "description": "Marque : Volkswagen\nModèle : Passat Highline 2.0 TSI\nAnnée : 2018\nMotorisation : Essence 2.0 TSI\nPuissance : 380 ch\nBoîte : Automatique DSG 7 rapports\nTransmission : Traction avant\nCarrosserie : Berline\nFinition : Highline\nKilométrage : 75 000 km\nAccélération 0–100 km/h : 6,8 s\nVitesse maximale : 250 km/h\nPrix : 5 500€"
+    "description": "Marque : Volkswagen\nModèle : Passat Highline 2.0 TSI\nAnnée : 2018\nMotorisation : Essence 2.0 TSI\nPuissance : 380 ch\nBoîte : Automatique DSG 7 rapports\nTransmission : Traction avant\nCarrosserie : Berline\nFinition : Highline\nKilométrage : 75 000 km\nAccélération 0–100 km/h : 6,8 s\nVitesse maximale : 250 km/h\nPrix : 14 900 €"
   },
   {
     "id": 84,
@@ -2920,7 +2920,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 155000,
-    "price": 9000,
+    "price": 14900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -2944,7 +2944,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-12-56533.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352480456-13-56534.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe E 220 d AMG\nAnnée : 2016\nMotorisation : Diesel 2.0\nPuissance : 194 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : AMG\nKilométrage : 155 000 km\nPrix : 9 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 220 d AMG\nAnnée : 2016\nMotorisation : Diesel 2.0\nPuissance : 194 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : AMG\nKilométrage : 155 000 km\nPrix : 14 900 €"
   },
   {
     "id": 85,
@@ -2954,7 +2954,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Manuelle",
     "mileage": 170000,
-    "price": 3000,
+    "price": 5900,
     "monthly": 87,
     "type": "occasion",
     "category": "Berline",
@@ -2975,7 +2975,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-9-56518.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786352282770-10-56519.jpg"
     ],
-    "description": "Marque : Citroën\nModèle : C3 1.6 HDi\nAnnée : 2012\nMotorisation : Diesel 1.6 HDi\nPuissance : 92 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 170 000 km\nPrix : 3 000€"
+    "description": "Marque : Citroën\nModèle : C3 1.6 HDi\nAnnée : 2012\nMotorisation : Diesel 1.6 HDi\nPuissance : 92 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nKilométrage : 170 000 km\nPrix : 5 900€"
   },
   {
     "id": 86,
@@ -2985,7 +2985,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 15500,
-    "price": 11000,
+    "price": 22900,
     "monthly": 213,
     "type": "occasion",
     "category": "SUV",
@@ -3014,7 +3014,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-17-56507.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334375587-18-56508.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLC 350 e 4MATIC AMG\nAnnée : 2018\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 326 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG\nKilométrage : 115 500 km\nPrix : 11 000€\nChâssis : WDC2533541F409176"
+    "description": "Marque : Mercedes-Benz\nModèle : GLC 350 e 4MATIC AMG\nAnnée : 2018\nMotorisation : Hybride rechargeable – Essence + Électrique\nPuissance : 326 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG\nKilométrage : 115 500 km\nPrix : 22 900 €\nChâssis : WDC2533541F409176"
   },
   {
     "id": 87,
@@ -3024,7 +3024,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 178700,
-    "price": 5500,
+    "price": 13900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -3045,7 +3045,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-9-56488.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334169498-10-56489.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A6 Allroad Quattro\nAnnée : 2015\nMotorisation : Diesel\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Break tout-chemin / Allroad\nKilométrage : 178 700 km\nPrix : 5 500€"
+    "description": "Marque : Audi\nModèle : A6 Allroad Quattro\nAnnée : 2015\nMotorisation : Diesel\nPuissance : 211 ch\nBoîte : Automatique\nTransmission : Quattro – 4×4\nCarrosserie : Break tout-chemin / Allroad\nKilométrage : 178 700 km\nPrix : 13 900 €"
   },
   {
     "id": 88,
@@ -3055,7 +3055,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 33200,
-    "price": 18500,
+    "price": 60900,
     "monthly": 358,
     "type": "occasion",
     "category": "SUV",
@@ -3080,7 +3080,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-13-56477.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786334021855-14-56478.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : GLE 300 d 4MATIC AMG\nAnnée : 2023\nMotorisation : Diesel 2.0\nPuissance : 272 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG\nKilométrage : 33 200 km\nPrix : 18 500€"
+    "description": "Marque : Mercedes-Benz\nModèle : GLE 300 d 4MATIC AMG\nAnnée : 2023\nMotorisation : Diesel 2.0\nPuissance : 272 ch\nBoîte : Automatique\nTransmission : 4MATIC – 4×4\nCarrosserie : SUV\nFinition : AMG\nKilométrage : 33 200 km\nPrix : 60 900 €"
   },
   {
     "id": 89,
@@ -3090,7 +3090,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 20100,
-    "price": 4500,
+    "price": 35900,
     "monthly": 116,
     "type": "occasion",
     "category": "Berline",
@@ -3110,7 +3110,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-8-56462.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333859090-9-56463.jpg"
     ],
-    "description": "Marque : MINI\nModèle : Cooper S John Cooper Works GP\nAnnée : 2020\nMotorisation : Essence\nBoîte : Automatique\nCarrosserie : Berline sportive / 3 portes\nKilométrage : 20 100 km\nPrix : 4 500€"
+    "description": "Marque : MINI\nModèle : Cooper S John Cooper Works GP\nAnnée : 2020\nMotorisation : Essence\nBoîte : Automatique\nCarrosserie : Berline sportive / 3 portes\nKilométrage : 20 100 km\nPrix : 35 900 €"
   },
   {
     "id": 90,
@@ -3120,7 +3120,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Manuelle",
     "mileage": 73050,
-    "price": 2500,
+    "price": 7900,
     "monthly": 77,
     "type": "occasion",
     "category": "Berline",
@@ -3143,7 +3143,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-11-56451.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333656423-12-56452.jpg"
     ],
-    "description": "Marque : Renault\nModèle : Clio dCi 90 Expression\nAnnée : 2013\nMotorisation : Diesel dCi\nPuissance : 90 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nFinition : Expression\nKilométrage : 73 050 km\nPrix : 2 500€"
+    "description": "Marque : Renault\nModèle : Clio dCi 90 Expression\nAnnée : 2013\nMotorisation : Diesel dCi\nPuissance : 90 ch\nBoîte : Manuelle\nCarrosserie : Citadine\nFinition : Expression\nKilométrage : 73 050 km\nPrix : 7 900€"
   },
   {
     "id": 91,
@@ -3153,7 +3153,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 67900,
-    "price": 9000,
+    "price": 23900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -3182,7 +3182,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-17-56438.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333520392-18-56439.jpg"
     ],
-    "description": "Marque : BMW\nModèle : 320i M Sport\nAnnée : 2021\nMotorisation : Essence\nPuissance : 184 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : M Sport\nKilométrage : 67 900 km\nPrix : 9 000€"
+    "description": "Marque : BMW\nModèle : 320i M Sport\nAnnée : 2021\nMotorisation : Essence\nPuissance : 184 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : M Sport\nKilométrage : 67 900 km\nPrix : 23 900 €"
   },
   {
     "id": 92,
@@ -3192,7 +3192,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 152415,
-    "price": 5500,
+    "price": 10900,
     "monthly": 106,
     "type": "occasion",
     "category": "Berline",
@@ -3216,7 +3216,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-12-56418.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333338139-13-56419.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : CLA 220 CDI 2.1\nAnnée : 2013\nMotorisation : Diesel 2.1 CDI\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline coupé\nKilométrage : 152 415 km\nPrix : 5 500€\nVIN : WDD1173031N019666"
+    "description": "Marque : Mercedes-Benz\nModèle : CLA 220 CDI 2.1\nAnnée : 2013\nMotorisation : Diesel 2.1 CDI\nPuissance : 170 ch\nBoîte : Automatique\nCarrosserie : Berline coupé\nKilométrage : 152 415 km\nPrix : 10 900 €\nVIN : WDD1173031N019666"
   },
   {
     "id": 93,
@@ -3226,7 +3226,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 8250,
-    "price": 9500,
+    "price": 12900,
     "monthly": 213,
     "type": "occasion",
     "category": "Coupé",
@@ -3246,7 +3246,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-8-56404.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333176431-9-56405.jpg"
     ],
-    "description": "Marque : Peugeot\nModèle : 208 1.2 PureTech GT Line\nAnnée : 2022\nMotorisation : Essence 1.2 PureTech\nPuissance : 130 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : GT Line\nKilométrage : 8 250 km\nNorme : Euro 6d-ISC-FCM\nPrix : 9 500€"
+    "description": "Marque : Peugeot\nModèle : 208 1.2 PureTech GT Line\nAnnée : 2022\nMotorisation : Essence 1.2 PureTech\nPuissance : 130 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : GT Line\nKilométrage : 8 250 km\nNorme : Euro 6d-ISC-FCM\nPrix : 12 900 €"
   },
   {
     "id": 94,
@@ -3256,7 +3256,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 130459,
-    "price": 7800,
+    "price": 14900,
     "monthly": 151,
     "type": "occasion",
     "category": "Berline",
@@ -3274,7 +3274,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-6-56394.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786333029118-7-56395.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : C 250 AMG Line\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 210 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : AMG Line\nKilométrage : 130 459 km\nPrix : 7 800€"
+    "description": "Marque : Mercedes-Benz\nModèle : C 250 AMG Line\nAnnée : 2018\nMotorisation : Diesel\nPuissance : 210 ch\nBoîte : Automatique\nCarrosserie : Berline\nFinition : AMG Line\nKilométrage : 130 459 km\nPrix : 14 900 €"
   },
   {
     "id": 95,
@@ -3284,7 +3284,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 133000,
-    "price": 8000,
+    "price": 13900,
     "monthly": 155,
     "type": "occasion",
     "category": "Berline",
@@ -3303,7 +3303,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-7-56385.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332892967-8-56386.jpg"
     ],
-    "description": "Marque : BMW\nModèle : Série 1 118d M Sport\nAnnée : 2020\nMotorisation : Diesel 2.0\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nFinition : M Sport\nKilométrage : 133 000 km\nPrix : 8 000€"
+    "description": "Marque : BMW\nModèle : Série 1 118d M Sport\nAnnée : 2020\nMotorisation : Diesel 2.0\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nFinition : M Sport\nKilométrage : 133 000 km\nPrix : 13 900 €"
   },
   {
     "id": 96,
@@ -3313,7 +3313,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 95000,
-    "price": 6500,
+    "price": 10900,
     "monthly": 155,
     "type": "occasion",
     "category": "Coupé",
@@ -3337,7 +3337,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-12-56376.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332618004-13-56377.jpg"
     ],
-    "description": "Marque : Peugeot\nModèle : 208 GT Line 1.2 PureTech\nAnnée : 2016\nMotorisation : Essence 1.2 PureTech\nPuissance : 110 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : GT Line\nKilométrage : 95 000 km\nPrix : 6 500€"
+    "description": "Marque : Peugeot\nModèle : 208 GT Line 1.2 PureTech\nAnnée : 2016\nMotorisation : Essence 1.2 PureTech\nPuissance : 110 ch\nBoîte : Automatique\nCarrosserie : Citadine\nFinition : GT Line\nKilométrage : 95 000 km\nPrix : 10 900€"
   },
   {
     "id": 97,
@@ -3347,7 +3347,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 134000,
-    "price": 5500,
+    "price": 10900,
     "monthly": 106,
     "type": "occasion",
     "category": "Break",
@@ -3368,7 +3368,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-9-56361.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332461799-10-56363.jpg"
     ],
-    "description": "Marque : BMW\nModèle : 320d Touring\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 163 ch\nBoîte : Automatique\nCarrosserie : Break / Touring\nKilométrage : 134 000 km\nPrix : 5 500€"
+    "description": "Marque : BMW\nModèle : 320d Touring\nAnnée : 2013\nMotorisation : Diesel\nPuissance : 163 ch\nBoîte : Automatique\nCarrosserie : Break / Touring\nKilométrage : 134 000 km\nPrix : 10 900 €"
   },
   {
     "id": 98,
@@ -3378,7 +3378,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 195000,
-    "price": 6000,
+    "price": 10900,
     "monthly": 116,
     "type": "occasion",
     "category": "Berline",
@@ -3401,7 +3401,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-11-56349.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786332275708-12-56350.jpg"
     ],
-    "description": "Marque : Mercedes-Benz\nModèle : Classe E 200 CDI Avantgarde\nAnnée : 2015\nMotorisation : Diesel\nPuissance : 136 ch\nBoîte : Automatique 7G-TRONIC\nCarrosserie : Berline\nFinition : Avantgarde\nKilométrage : 195 000 km\nPrix : 6 000€"
+    "description": "Marque : Mercedes-Benz\nModèle : Classe E 200 CDI Avantgarde\nAnnée : 2015\nMotorisation : Diesel\nPuissance : 136 ch\nBoîte : Automatique 7G-TRONIC\nCarrosserie : Berline\nFinition : Avantgarde\nKilométrage : 195 000 km\nPrix : 10 900€"
   },
   {
     "id": 99,
@@ -3411,7 +3411,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 164000,
-    "price": 3500,
+    "price": 9900,
     "monthly": 97,
     "type": "occasion",
     "category": "Berline",
@@ -3432,7 +3432,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-9-56335.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331941135-10-56336.jpg"
     ],
-    "description": "Marque : Volkswagen\nModèle : Golf 7 2.0 TDI\nAnnée : 2013\nMotorisation : Diesel 2.0 TDI\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nKilométrage : 164 000 km\nPrix : 3 500€ TTC"
+    "description": "Marque : Volkswagen\nModèle : Golf 7 2.0 TDI\nAnnée : 2013\nMotorisation : Diesel 2.0 TDI\nPuissance : 150 ch\nBoîte : Automatique\nCarrosserie : Berline compacte\nKilométrage : 164 000 km\nPrix : 9 900€ TTC"
   },
   {
     "id": 100,
@@ -3442,7 +3442,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 127000,
-    "price": 4100,
+    "price": 12900,
     "monthly": 108,
     "type": "occasion",
     "category": "Berline",
@@ -3469,7 +3469,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-15-56324.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331811622-16-56325.jpg"
     ],
-    "description": "Marque : Hyundai\nModèle : Tucson\nAnnée : 2017\nMotorisation : Diesel\nPuissance : 141 ch\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 127 000 km\nPrix : 4 100€"
+    "description": "Marque : Hyundai\nModèle : Tucson\nAnnée : 2017\nMotorisation : Diesel\nPuissance : 141 ch\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 127 000 km\nPrix : 12 900 €"
   },
   {
     "id": 101,
@@ -3479,7 +3479,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 110284,
-    "price": 7500,
+    "price": 19900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -3502,7 +3502,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-11-56307.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331402284-12-56308.jpg"
     ],
-    "description": "Marque : Audi\nModèle : A4 Avant 2.0 TDI S-Line\nAnnée : 2020\nMotorisation : Diesel 2.0 TDI\nPuissance : 163 ch\nBoîte : Automatique S tronic\nCarrosserie : Break / Avant\nFinition : Full S-Line\nKilométrage : 110 284 km\nPrix : 7 500€"
+    "description": "Marque : Audi\nModèle : A4 Avant 2.0 TDI S-Line\nAnnée : 2020\nMotorisation : Diesel 2.0 TDI\nPuissance : 163 ch\nBoîte : Automatique S tronic\nCarrosserie : Break / Avant\nFinition : Full S-Line\nKilométrage : 110 284 km\nPrix : 19 900 €"
   },
   {
     "id": 102,
@@ -3512,7 +3512,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 146000,
-    "price": 5500,
+    "price": 21900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -3531,7 +3531,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-7-56294.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786331247048-8-56295.jpg"
     ],
-    "description": "Marque : Volvo\nModèle : XC60 II\nAnnée : 2019\nMotorisation : Diesel\nPuissance : 235 ch\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 146 000 km\nPrix : 5 500€"
+    "description": "Marque : Volvo\nModèle : XC60 II\nAnnée : 2019\nMotorisation : Diesel\nPuissance : 235 ch\nBoîte : Automatique\nCarrosserie : SUV\nKilométrage : 146 000 km\nPrix : 21 900 €"
   },
   {
     "id": 103,
@@ -3541,7 +3541,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Manuelle",
     "mileage": 212000,
-    "price": 5000,
+    "price": 7900,
     "monthly": 97,
     "type": "occasion",
     "category": "Coupé",
@@ -3561,7 +3561,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-8-56285.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330970994-9-56286.jpg"
     ],
-    "description": "Marque : BMW\nModèle : 120 Coupé\nAnnée : 2009\nMotorisation : Gasoil (Diesel)\nBoîte : Manuelle\nCarrosserie : Coupé\nKilométrage : 212 000 km\nCouleur : Bleu\nPrix : 5 000€"
+    "description": "Marque : BMW\nModèle : 120 Coupé\nAnnée : 2009\nMotorisation : Gasoil (Diesel)\nBoîte : Manuelle\nCarrosserie : Coupé\nKilométrage : 212 000 km\nCouleur : Bleu\nPrix : 7 900€"
   },
   {
     "id": 104,
@@ -3571,7 +3571,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 110296,
-    "price": 4000,
+    "price": 11900,
     "monthly": 106,
     "type": "occasion",
     "category": "Berline",
@@ -3595,7 +3595,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-12-56275.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330705650-13-56276.jpg"
     ],
-    "description": "Marque : Volkswagen\nModèle : Polo 1.8 GTI DSG\nAnnée : 2016\nMotorisation : Essence 1.8 TSI\nPuissance : 192 ch\nBoîte : Automatique DSG\nCarrosserie : Coupé / 3 portes\nKilométrage : 110 296 km\nPrix : 4 000€"
+    "description": "Marque : Volkswagen\nModèle : Polo 1.8 GTI DSG\nAnnée : 2016\nMotorisation : Essence 1.8 TSI\nPuissance : 192 ch\nBoîte : Automatique DSG\nCarrosserie : Coupé / 3 portes\nKilométrage : 110 296 km\nPrix : 11 900 €"
   },
   {
     "id": 105,
@@ -3605,7 +3605,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 97000,
-    "price": 6500,
+    "price": 12900,
     "monthly": 126,
     "type": "occasion",
     "category": "Berline",
@@ -3631,7 +3631,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-14-56261.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786330535546-15-56262.jpg"
     ],
-    "description": "💎PRIX : 6 500€\n\n💜Mercedes-Benz A 180 1.6 Turbo\nRégulateur et limiteur de vitesse |\nPack AMG |\nCaméra de recul |\nSièges sport avec excellent maintien latéral\n🚗 Année : 2017\n📌 Première immatriculation : 28.12.2017\n📏 Kilométrage : 97 000 km (certifié)\n⚙️ Puissance : 122 ch\n⛽ Carburant : Essence\n🕹️ Boîte de vitesse : Automatique"
+    "description": "💎PRIX : 12 900 €\n\n💜Mercedes-Benz A 180 1.6 Turbo\nRégulateur et limiteur de vitesse |\nPack AMG |\nCaméra de recul |\nSièges sport avec excellent maintien latéral\n🚗 Année : 2017\n📌 Première immatriculation : 28.12.2017\n📏 Kilométrage : 97 000 km (certifié)\n⚙️ Puissance : 122 ch\n⛽ Carburant : Essence\n🕹️ Boîte de vitesse : Automatique"
   },
   {
     "id": 106,
@@ -3714,7 +3714,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 65590,
-    "price": 5500,
+    "price": 85900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -3744,7 +3744,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-18-56211.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329799965-19-56213.jpg"
     ],
-    "description": "PRIX : 5 500€\n\n BENTLEY FLYING SPUR S – 635 CH – V8 – 4×4 – AUTOMATIQUE 👑\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 07/2018\n• Kilométrage : 65 590 km\n• Motorisation : Essence\n• Puissance : 467 kW – 635 CH DIN\n• Transmission : Automatique\n• Transmission intégrale : 4×4\n• Carrosserie : Berline de luxe\n• Finition : Flying Spur S\n• Référence : 565NDX\n• Disponibilité : Immédiate"
+    "description": "PRIX : 85 900 €\n\n BENTLEY FLYING SPUR S – 635 CH – V8 – 4×4 – AUTOMATIQUE 👑\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 07/2018\n• Kilométrage : 65 590 km\n• Motorisation : Essence\n• Puissance : 467 kW – 635 CH DIN\n• Transmission : Automatique\n• Transmission intégrale : 4×4\n• Carrosserie : Berline de luxe\n• Finition : Flying Spur S\n• Référence : 565NDX\n• Disponibilité : Immédiate"
   },
   {
     "id": 109,
@@ -3754,7 +3754,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 72935,
-    "price": 7500,
+    "price": 22900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -3783,7 +3783,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-17-56188.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329556110-18-56189.jpg"
     ],
-    "description": "PRIX : 7 500€\n\nKIA STINGER 3.3 T-GDI GT – 366 CH – AUTOMATIQUE \n\n🏁 GT • 3.3 V6 T-GDI • HEAD-UP DISPLAY • 360° • HARMAN KARDON 🏁\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 07/2019\n• Kilométrage : 72 935 km\n• Motorisation : Essence – 3.3 T-GDI\n• Puissance : 269 kW – 366 CH DIN\n• Transmission : Boîte automatique\n• Carrosserie : Berline sportive\n• Finition : GT\n• Origine : Édition allemande\n• État : Occasion – non accidentée\n• Norme : Euro 6\n• Référence : 0273D\n• Disponibilité : Immédiate"
+    "description": "PRIX : 22 900 €\n\nKIA STINGER 3.3 T-GDI GT – 366 CH – AUTOMATIQUE \n\n🏁 GT • 3.3 V6 T-GDI • HEAD-UP DISPLAY • 360° • HARMAN KARDON 🏁\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 07/2019\n• Kilométrage : 72 935 km\n• Motorisation : Essence – 3.3 T-GDI\n• Puissance : 269 kW – 366 CH DIN\n• Transmission : Boîte automatique\n• Carrosserie : Berline sportive\n• Finition : GT\n• Origine : Édition allemande\n• État : Occasion – non accidentée\n• Norme : Euro 6\n• Référence : 0273D\n• Disponibilité : Immédiate"
   },
   {
     "id": 110,
@@ -3793,7 +3793,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 43000,
-    "price": 5500,
+    "price": 13900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -3820,7 +3820,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-15-56169.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329359169-16-56170.jpg"
     ],
-    "description": "PRIX 5 500€\n\nKIA SPORTAGE 1.6 T-GDI VISION – 177 CH – DCT7 \n\n✨ VISION • AUTOMATIQUE • NAVIGATION • CAMÉRA DE RECUL • 43 000 KM ✨\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 08/2020\n• Kilométrage : 43 000 km\n• Motorisation : Essence – 1.6 T-GDI\n• Cylindrée : 1 591 cm³\n• Puissance : 130 kW – 177 CH DIN\n• Transmission : Automatique DCT7 – 7 rapports\n• Transmission : Traction avant – 2WD\n• Carrosserie : SUV\n• Finition : Vision\n• Norme : Euro 6d-TEMP\n• Disponibilité : Immédiate"
+    "description": "PRIX : 13 900 €\n\nKIA SPORTAGE 1.6 T-GDI VISION – 177 CH – DCT7 \n\n✨ VISION • AUTOMATIQUE • NAVIGATION • CAMÉRA DE RECUL • 43 000 KM ✨\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 08/2020\n• Kilométrage : 43 000 km\n• Motorisation : Essence – 1.6 T-GDI\n• Cylindrée : 1 591 cm³\n• Puissance : 130 kW – 177 CH DIN\n• Transmission : Automatique DCT7 – 7 rapports\n• Transmission : Traction avant – 2WD\n• Carrosserie : SUV\n• Finition : Vision\n• Norme : Euro 6d-TEMP\n• Disponibilité : Immédiate"
   },
   {
     "id": 111,
@@ -3830,7 +3830,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 54000,
-    "price": 6000,
+    "price": 12900,
     "monthly": 116,
     "type": "occasion",
     "category": "Berline",
@@ -3849,7 +3849,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342128-7-1000056358.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329342129-8-1000056359.jpg"
     ],
-    "description": "Prix annoncé : 6 000€\n\n📍 Année: 11.2019\n📍 Kilométrage : 54 000  km (Certifié) \n📍 Puissance : 136 CH\n📍 Carburant : Diesel⛽ \n📍 Boîte de vitesse : Automatique \n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n\n"
+    "description": "Prix annoncé : 12 900 €\n\n📍 Année: 11.2019\n📍 Kilométrage : 54 000  km (Certifié) \n📍 Puissance : 136 CH\n📍 Carburant : Diesel⛽ \n📍 Boîte de vitesse : Automatique \n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n\n"
   },
   {
     "id": 112,
@@ -3859,7 +3859,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Manuelle",
     "mileage": 75780,
-    "price": 8500,
+    "price": 25900,
     "monthly": 193,
     "type": "occasion",
     "category": "Berline",
@@ -3888,7 +3888,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119797-17-56152.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786329119797-18-56153.jpg"
     ],
-    "description": "PRIX : 8 500€ \n\n🔥 TOYOTA GR YARIS 1.6 – HIGH PERFORMANCE – 261 CH – 4×4 🔥\n\n🏁 UNE PETITE BOMBE JAPONAISE – VÉRITABLE GR PERFORMANCE 🏁\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 10/2021\n• Kilométrage : 75 780 km\n• Motorisation : Essence\n• Cylindrée : 1 618 cm³\n• Puissance : 192 kW – 261 CH DIN\n• Transmission : Boîte manuelle\n• Transmission intégrale : 4×4\n• Finition : GR 1.6 High-Performance\n• État : Occasion – non accidentée\n• Disponibilité : Immédiate\n• Référence : 103210485"
+    "description": "PRIX : 25 900 € \n\n🔥 TOYOTA GR YARIS 1.6 – HIGH PERFORMANCE – 261 CH – 4×4 🔥\n\n🏁 UNE PETITE BOMBE JAPONAISE – VÉRITABLE GR PERFORMANCE 🏁\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 10/2021\n• Kilométrage : 75 780 km\n• Motorisation : Essence\n• Cylindrée : 1 618 cm³\n• Puissance : 192 kW – 261 CH DIN\n• Transmission : Boîte manuelle\n• Transmission intégrale : 4×4\n• Finition : GR 1.6 High-Performance\n• État : Occasion – non accidentée\n• Disponibilité : Immédiate\n• Référence : 103210485"
   },
   {
     "id": 113,
@@ -3898,7 +3898,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Diesel",
     "transmission": "Automatique",
     "mileage": 134000,
-    "price": 5500,
+    "price": 11900,
     "monthly": 106,
     "type": "occasion",
     "category": "Break",
@@ -3919,7 +3919,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-9-1000056334.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328860832-10-1000056335.jpg"
     ],
-    "description": "Prix annoncé : 5 500€\n\nModèle :BMW 320d\nTouring 163 ch automatique\nAnnée: 2013\nKILOMÉTRAGE : 134000km\nBoîte à vitesse : automatique \nCarburant : diesel\n\nÉQUIPEMENT :\n\nAntidérapant\nAntidérapant\nrégulateur de vitesse\nhayon électrique\nMiroirs électriques\nIsofix\nOrdinateur de bord\nClimatisation\nLumière LED\nLes bras du milieu\nVolant multifonction\nCarrés foncés\ndémarrage sans clé\nVolant chauffant\nVerrouillage centralisé\nVolant en cuir\n\n ✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n"
+    "description": "Prix annoncé : 11 900 €\n\nModèle :BMW 320d\nTouring 163 ch automatique\nAnnée: 2013\nKILOMÉTRAGE : 134000km\nBoîte à vitesse : automatique \nCarburant : diesel\n\nÉQUIPEMENT :\n\nAntidérapant\nAntidérapant\nrégulateur de vitesse\nhayon électrique\nMiroirs électriques\nIsofix\nOrdinateur de bord\nClimatisation\nLumière LED\nLes bras du milieu\nVolant multifonction\nCarrés foncés\ndémarrage sans clé\nVolant chauffant\nVerrouillage centralisé\nVolant en cuir\n\n ✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n"
   },
   {
     "id": 114,
@@ -3929,7 +3929,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 69825,
-    "price": 5500,
+    "price": 15900,
     "monthly": 135,
     "type": "occasion",
     "category": "Berline",
@@ -3959,7 +3959,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-18-56126.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328817858-19-56132.jpg"
     ],
-    "description": "PRIX : 5 500€\n\nKIA PROCEED 1.6 T-GDI GT – 204 CH – AUTOMATIQUE\n\n✨ GT • LED • TOIT PANORAMIQUE • ALCANTARA • NAVIGATION ✨\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 06/2020\n• Kilométrage : 69 825 km\n• Motorisation : Essence\n• Puissance : 150 kW – 204 CH DIN\n• Transmission : Boîte automatique\n• Carrosserie : Break sportif\n• Finition : GT\n• Origine : Édition allemande\n• État : Occasion – non accidentée\n• Disponibilité : Immédiate\n• Référence : 0338D"
+    "description": "PRIX : 15 900 €\n\nKIA PROCEED 1.6 T-GDI GT – 204 CH – AUTOMATIQUE\n\n✨ GT • LED • TOIT PANORAMIQUE • ALCANTARA • NAVIGATION ✨\n\n🚘 INFORMATIONS PRINCIPALES\n\n• Mise en circulation : 06/2020\n• Kilométrage : 69 825 km\n• Motorisation : Essence\n• Puissance : 150 kW – 204 CH DIN\n• Transmission : Boîte automatique\n• Carrosserie : Break sportif\n• Finition : GT\n• Origine : Édition allemande\n• État : Occasion – non accidentée\n• Disponibilité : Immédiate\n• Référence : 0338D"
   },
   {
     "id": 115,
@@ -3969,7 +3969,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Manuelle",
     "mileage": 122001,
-    "price": 5000,
+    "price": 9900,
     "monthly": 126,
     "type": "occasion",
     "category": "Berline",
@@ -3989,7 +3989,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701732-8-1000056323.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328701732-9-1000056324.jpg"
     ],
-    "description": "Prix annoncé : 5\u202f000 €\n\n◾ 🚗 Nissan Juke\n📍 Année : 06.2016\n📍 Kilométrage: 122 001 Certifié) \n📍 Puissance : 116 CH\n📍 Carburant : Essence ⛽ \n📍 Boîte de vitesse : Manuelle \n\nENVOYER UN MESSAGE UNIQUEMENT SI VOTRE ACHAT EST DANS L’IMMÉDIAT.\n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n\n"
+    "description": "Prix annoncé : 9 900 €\n\n◾ 🚗 Nissan Juke\n📍 Année : 06.2016\n📍 Kilométrage: 122 001 Certifié) \n📍 Puissance : 116 CH\n📍 Carburant : Essence ⛽ \n📍 Boîte de vitesse : Manuelle \n\nENVOYER UN MESSAGE UNIQUEMENT SI VOTRE ACHAT EST DANS L’IMMÉDIAT.\n\n✅TVA inclus \n✅Garantie de 24 mois \n✅Livraison en 5 jours \n✅Jamais eu d'accident \n\n"
   },
   {
     "id": 116,
@@ -3999,7 +3999,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 60000,
-    "price": 7500,
+    "price": 23900,
     "monthly": 174,
     "type": "occasion",
     "category": "Berline",
@@ -4024,7 +4024,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-13-56095.jpg",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1786328468720-14-56096.jpg"
     ],
-    "description": "PRIX 7 500€ \n\nTOYOTA RAV4 2.5 HYBRID BLACK EDITION – 218 CH – AUTOMATIQUE \n\nBLACK EDITION • HYBRIDE • CAMÉRA 360° • KEYLESS • NAVIGATION \n\n🚘 INFORMATIONS PRINCIPALES\n\n• Première immatriculation : 11/2020\n• Kilométrage : 60 000 km\n• Motorisation : Hybride essence / électrique\n• Moteur : 2.5 L – 2 487 cm³\n• Puissance : 160 kW – 218 CH DIN\n• Transmission : Automatique\n• Transmission : Traction avant – 2WD\n• Carrosserie : SUV\n• Finition : Black Edition\n• Couleur : Noir profond\n• Portes : 5\n• État : Occasion – non accidenté\n• Propriétaire : 1er propriétaire\n• Disponibilité : Immédiate"
+    "description": "PRIX : 23 900 € \n\nTOYOTA RAV4 2.5 HYBRID BLACK EDITION – 218 CH – AUTOMATIQUE \n\nBLACK EDITION • HYBRIDE • CAMÉRA 360° • KEYLESS • NAVIGATION \n\n🚘 INFORMATIONS PRINCIPALES\n\n• Première immatriculation : 11/2020\n• Kilométrage : 60 000 km\n• Motorisation : Hybride essence / électrique\n• Moteur : 2.5 L – 2 487 cm³\n• Puissance : 160 kW – 218 CH DIN\n• Transmission : Automatique\n• Transmission : Traction avant – 2WD\n• Carrosserie : SUV\n• Finition : Black Edition\n• Couleur : Noir profond\n• Portes : 5\n• État : Occasion – non accidenté\n• Propriétaire : 1er propriétaire\n• Disponibilité : Immédiate"
   },
   {
     "id": 117,
@@ -4107,7 +4107,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 58000,
-    "price": 6500,
+    "price": 65900,
     "monthly": 155,
     "type": "occasion",
     "category": "Coupé",
@@ -4121,7 +4121,7 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960781-2-IMG_1231.webp",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704960781-3-IMG_1232.webp"
     ],
-    "description": "Prix annoncé : 6\u202f500 €\n\nAudi E-tron GT RS directement d’Audi Allemagne, voiture de concession. Dernier service à 51 474 km La voiture bénéficie toujours d’une garantie constructeur jusqu’au 25-11-2026 ou 100 000 km Papiers d’enregistrement allemands Numéro de châssis VIN/WAUZZZFW8N7903036 Signes d’usure liés à l’âge et au kilométrage"
+    "description": "Prix annoncé : 65 900 €\n\nAudi E-tron GT RS directement d’Audi Allemagne, voiture de concession. Dernier service à 51 474 km La voiture bénéficie toujours d’une garantie constructeur jusqu’au 25-11-2026 ou 100 000 km Papiers d’enregistrement allemands Numéro de châssis VIN/WAUZZZFW8N7903036 Signes d’usure liés à l’âge et au kilométrage"
   },
   {
     "id": 120,
@@ -4131,7 +4131,7 @@ window.FALLBACK_VEHICLES = [
     "fuel": "Essence",
     "transmission": "Automatique",
     "mileage": 100000,
-    "price": 6000,
+    "price": 18900,
     "monthly": 116,
     "type": "occasion",
     "category": "Cabriolet",
@@ -4145,6 +4145,6 @@ window.FALLBACK_VEHICLES = [
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644049-2-IMG_1227.webp",
       "https://ridnurabtydwlymzdexk.supabase.co/storage/v1/object/public/cars/1784704644049-3-IMG_1228.webp"
     ],
-    "description": "Prix annoncé : 6 000€\n\nBMW 420D Cabriolet 163 ch 117 389 kilomètres originaux Euro 6 Boîte automatique Régulateur de vitesse Climatisation Navigation Radio/auxiliaire/CD Vitres électriques Sièges à réglage électrique Sièges chauffants ..."
+    "description": "Prix annoncé : 18 900 €\n\nBMW 420D Cabriolet 163 ch 117 389 kilomètres originaux Euro 6 Boîte automatique Régulateur de vitesse Climatisation Navigation Radio/auxiliaire/CD Vitres électriques Sièges à réglage électrique Sièges chauffants ..."
   }
 ];
