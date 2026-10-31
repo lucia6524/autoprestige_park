@@ -111,6 +111,10 @@
   function show(message, opts) {
     opts = opts || {};
     var type = opts.type || 'info';
+    var text = String(message || '').trim();
+    if (!text || /(momentanément indisponible|chargement.*base.*données|base.*données.*indisponible|service.*indisponible|serveur.*indisponible)/i.test(text)) {
+      return;
+    }
     injectStyle();
     var stack = getStack();
 
@@ -137,7 +141,7 @@
     }
     var msg = document.createElement('p');
     msg.className = 'nt-msg';
-    msg.textContent = message || '';
+    msg.textContent = text;
     body.appendChild(msg);
 
     var close = document.createElement('button');

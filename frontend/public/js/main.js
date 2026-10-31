@@ -57,24 +57,9 @@ function _catalogRender(list = null) {
 // temps à répondre, au lieu d'un gel silencieux.
 let _netBannerTimer = null;
 
-function showNetworkBanner(mode) {
-  let banner = document.getElementById("net-status-banner");
-  if (!banner) {
-    banner = document.createElement("div");
-    banner.id = "net-status-banner";
-    banner.className = "net-status-banner";
-    banner.innerHTML = `<span class="spinner" aria-hidden="true"></span><span id="net-status-text"></span>`;
-    document.body.appendChild(banner);
-  }
-  const offline = mode === "offline";
-  banner.classList.toggle("offline", offline);
-  banner.querySelector(".spinner").style.display = offline ? "none" : "";
-  banner.querySelector("#net-status-text").textContent = offline
-    ? "Serveur momentanément indisponible — affichage du catalogue local."
-    : "Connexion au serveur…";
-  banner.classList.add("show");
-  clearTimeout(_netBannerTimer);
-  if (offline) _netBannerTimer = setTimeout(hideNetworkBanner, 4000);
+function showNetworkBanner() {
+  // Le catalogue reste visible immédiatement. Aucun état réseau n'est affiché
+  // au visiteur pendant le rafraîchissement ou l'utilisation du repli local.
 }
 
 function hideNetworkBanner() {
@@ -567,9 +552,8 @@ async function loadPublicVehicles() {
         renderVehicles();
       }
     }
-  } catch (error) {
-    showNetworkBanner("offline");
-    console.warn("Catalogue API indisponible, utilisation du catalogue local.", error);
+  } catch (_) {
+    // Repli local silencieux : aucune erreur réseau n'est affichée au visiteur.
   }
 }
 

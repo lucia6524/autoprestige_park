@@ -34,37 +34,7 @@
     window.location.reload();
   }
 
-  function showNotice(lang) {
-    if (document.getElementById('gt-fallback-notice')) return;
-    var bar = document.createElement('div');
-    bar.id = 'gt-fallback-notice';
-    bar.setAttribute('style',
-      'position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:2147483000;' +
-      'max-width:92vw;display:flex;gap:12px;align-items:center;padding:10px 14px;' +
-      'background:#111827;color:#f9fafb;border-radius:12px;font:500 0.9rem/1.4 system-ui,sans-serif;' +
-      'box-shadow:0 8px 24px rgba(0,0,0,.35)');
-    var text = document.createElement('span');
-    text.textContent = 'Traduction ' + lang.toUpperCase() + ' indisponible (service bloqué).';
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.textContent = 'Revenir au français';
-    btn.setAttribute('style',
-      'border:none;border-radius:8px;padding:6px 12px;cursor:pointer;font-weight:700;' +
-      'background:#f9fafb;color:#111827');
-    btn.addEventListener('click', backToFrench);
-    bar.appendChild(text);
-    bar.appendChild(btn);
-    document.body.appendChild(bar);
-  }
-
-  window.setTimeout(function () {
-    var lang = targetLang();
-    if (!lang || lang === DEFAULT_LANG) return;
-    // Le widget crée son <select class="gt_selector"> dans le wrapper configuré.
-    if (!document.querySelector('.gt_selector') && !document.querySelector('.gt_switcher_wrapper')) {
-      showNotice(lang);
-    }
-  }, CHECK_DELAY_MS);
+  // La défaillance du widget reste silencieuse côté visiteur.
 
   // --- Re-traduction du contenu chargé dynamiquement -----------------------
   // GTranslate ne traduit que le DOM présent au moment du clic ; le contenu

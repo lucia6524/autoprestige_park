@@ -20,10 +20,10 @@ const API = {
   friendlyError(error, fallback = 'Une erreur est survenue. Veuillez réessayer.') {
     const message = error?.message || '';
     if (!message || /Failed to fetch|NetworkError|Impossible de contacter/i.test(message)) {
-      return 'Le service est momentanément indisponible. Veuillez réessayer dans quelques instants.';
+      return '';
     }
     if (/503|service email|SMTP|Resend/i.test(message)) {
-      return 'L’envoi est momentanément indisponible. Veuillez réessayer dans quelques instants.';
+      return '';
     }
     if (/401|Authentification|Token invalide|expiré/i.test(message)) {
       return 'Votre session a expiré. Veuillez vous reconnecter.';
@@ -133,10 +133,8 @@ const API = {
         ...options, headers, signal: controller.signal,
       });
     } catch (netErr) {
-      // Abandon (timeout) ou échec réseau : toujours le même message utilisateur.
-      throw new Error(
-        'Le service est momentanément indisponible. Veuillez réessayer dans quelques instants.'
-      );
+      // Les erreurs réseau restent silencieuses côté visiteur.
+      throw new Error('Service silencieux');
     } finally {
       clearTimeout(timer);
     }
